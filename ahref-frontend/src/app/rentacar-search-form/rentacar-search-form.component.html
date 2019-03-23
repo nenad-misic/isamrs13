@@ -1,0 +1,21 @@
+<div class="form-container">
+  <mat-form-field>
+    <input matInput placeholder="ID">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Brand">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Model">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-select placeholder="Car type">
+      <mat-option value="cabrio">Cabrio</mat-option>
+      <mat-option value="hatchback">Hatchback</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <button mat-button (click)="doSearch()">SEARCH CARS</button>
+</div>

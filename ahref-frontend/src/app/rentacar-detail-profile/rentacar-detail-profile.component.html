@@ -1,0 +1,16 @@
+<h1 mat-dialog-title>{{data.id}}</h1>
+<div mat-dialog-content fxLayout="column">
+  <mat-form-field>
+    <input matInput placeholder="Name" value="{{data.name}}">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Description" value="{{data.description}}">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Address" value="{{data.address}}">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button (click)="onSaveClick()">Save</button>
+</div>
