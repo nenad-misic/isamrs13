@@ -1,7 +1,33 @@
 exports.getRACServices = (callback) => {
     //Fetch all RAC from MongoDB.
     //Return JSON object.
-    callback("", []);
+    var dummyData = [
+        {
+            id: '1',
+            name: 'Rent a car service number one',
+            description: 'The best rent a car service in Novi Sad',
+            address: 'Bulevar Oslobodjenja 1, Novi Sad'
+        },
+        {
+            id: '2',
+            name: 'Rent a car service number two',
+            description: 'The best rent a car service in Belgrade',
+            address: 'Bulevar Kralja Aleksandra 2, Belgrade'
+        },
+        {
+            id: '3',
+            name: 'Rent a car service number three',
+            description: 'The best rent a car service in New York',
+            address: '123 6th Avenue, New York'
+        },
+        {
+            id: '4',
+            name: 'Rent a car service number four',
+            description: 'The best rent a car service in Kabul',
+            address: 'Alahu Akhbar 13, Kabul'
+        },
+    ];
+    callback("", dummyData);
 };
 
 exports.addRACService = (RAC, callback) => {
@@ -57,4 +83,22 @@ exports.deleteRACService = (id, callback) => {
     //Do backend user authentication and validation
 
     callback("", true);
+};
+
+exports.getCars = (callback) => {
+    var dummy = [
+        {
+            carId: 0,
+            model: 'Golf 7',
+            brand: 'VolksWagen',
+            carType: 'hatchback'
+        },
+        {
+            carId: 1,
+            model: 'RX7',
+            brand: 'Mazda',
+            carType: 'cabrio'
+        }
+    ];
+    callback("", dummy);
 };
