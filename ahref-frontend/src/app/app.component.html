@@ -7,15 +7,16 @@
     <mat-card>
       <mat-card-content fxLayout="column">
         <img mat-card-image src="../assets/images/logo.png">
-        <button mat-button (click)="mainViewChanged(0)">AIRLINES</button>
-        <button mat-button (click)="mainViewChanged(1)">HOTELS</button>
-        <button mat-button (click)="mainViewChanged(2)">RENT A CAR</button>
-        <button mat-button (click)="mainViewChanged(3)">PROFILE</button>
+        <button mat-button routerLink="/airlines" routerLinkActive="active">AIRLINES</button>
+        <button mat-button routerLink="/hotels" routerLinkActive="active">HOTELS</button>
+        <button mat-button routerLink="/rentacar" routerLinkActive="active">RENT A CAR SERVICES</button>
+        <button mat-button routerLink="/cars" routerLinkActive="active">CARS</button>
+        <button mat-button routerLink="/profile" routerLinkActive="active">PROFILE</button>
       </mat-card-content>
     </mat-card>
   </div>
 
   <div fxFlex="70">
-    <app-rentacar-section *ngIf="view=='rentacar'"></app-rentacar-section>
+    <router-outlet></router-outlet>
   </div>
 </div>

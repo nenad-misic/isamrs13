@@ -11,7 +11,7 @@ import { AppComponent } from './app.component';
 
 import {
   MatButtonModule,
-  MatCardModule, MatDialog, MatDialogModule,
+  MatCardModule, MatCheckboxModule, MatDialog, MatDialogModule,
   MatFormFieldModule,
   MatGridListModule,
   MatInputModule,
@@ -22,6 +22,14 @@ import { RentacarSectionComponent } from './rentacar-section/rentacar-section.co
 import { RentacarProfileComponent } from './rentacar-profile/rentacar-profile.component';
 import { RentacarSearchFormComponent } from './rentacar-search-form/rentacar-search-form.component';
 import { RentacarDetailProfileComponent } from './rentacar-detail-profile/rentacar-detail-profile.component';
+import {AppRoutingModule} from './app-routing/app-routing.module';
+import {RentacarService} from './services/rentacar.service';
+import { CarSectionComponent } from './car-section/car-section.component';
+import { CarProfileComponent } from './car-profile/car-profile.component';
+import {FormsModule} from '@angular/forms';
+import {CarService} from './services/car.service';
+import {DataService} from './services/data.service';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +37,10 @@ import { RentacarDetailProfileComponent } from './rentacar-detail-profile/rentac
     RentacarSectionComponent,
     RentacarProfileComponent,
     RentacarSearchFormComponent,
-    RentacarDetailProfileComponent
+    RentacarDetailProfileComponent,
+    CarSectionComponent,
+    CarProfileComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -42,12 +53,22 @@ import { RentacarDetailProfileComponent } from './rentacar-detail-profile/rentac
     MatOptionModule,
     MatSelectModule,
     MatInputModule,
-    MatDialogModule
+    MatDialogModule,
+    AppRoutingModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatCheckboxModule,
+    FormsModule
+
   ],
   entryComponents: [
     RentacarDetailProfileComponent
   ],
-  providers: [],
+  providers: [
+    RentacarService,
+    CarService,
+    DataService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

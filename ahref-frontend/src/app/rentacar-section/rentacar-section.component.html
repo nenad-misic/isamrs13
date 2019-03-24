@@ -1,8 +1,7 @@
 <mat-card>
   <mat-card-content>
-    <app-rentacar-search-form></app-rentacar-search-form>
-    <mat-grid-list cols="2" >
-      <mat-grid-tile *ngFor="let rac of racservices">
+    <mat-grid-list cols="2">
+      <mat-grid-tile *ngFor="let rac of racservices" [routerLink]="['/rentdetail', rac.id]">
         <app-rentacar-profile [profile]="rac"></app-rentacar-profile>
       </mat-grid-tile>
     </mat-grid-list>

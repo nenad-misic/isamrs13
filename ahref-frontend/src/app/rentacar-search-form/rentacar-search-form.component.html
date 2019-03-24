@@ -1,21 +1,24 @@
 <div class="form-container">
-  <mat-form-field>
-    <input matInput placeholder="ID">
-  </mat-form-field>
+  <form novalidate (ngSubmit)="doSearch()">
+    <mat-form-field>
+      <input matInput [(ngModel)]="search.id"  placeholder="ID" name="id" >
+    </mat-form-field>
 
-  <mat-form-field>
-    <input matInput placeholder="Brand">
-  </mat-form-field>
+    <mat-form-field>
+      <input matInput [(ngModel)]="search.brand" placeholder="Brand" name="brand">
+    </mat-form-field>
 
-  <mat-form-field>
-    <input matInput placeholder="Model">
-  </mat-form-field>
+    <mat-form-field>
+      <input matInput [(ngModel)]="search.model" placeholder="Model" name="model">
+    </mat-form-field>
 
-  <mat-form-field>
-    <mat-select placeholder="Car type">
-      <mat-option value="cabrio">Cabrio</mat-option>
-      <mat-option value="hatchback">Hatchback</mat-option>
-    </mat-select>
-  </mat-form-field>
-  <button mat-button (click)="doSearch()">SEARCH CARS</button>
+    <mat-form-field>
+      <mat-select placeholder="Car type" [(ngModel)]="search.type" name="type">
+        <mat-option value="" selected>All</mat-option>
+        <mat-option value="cabrio">Cabrio</mat-option>
+        <mat-option value="hatchback">Hatchback</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-button>SEARCH CARS</button>
+  </form>
 </div>
