@@ -4,14 +4,20 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
+var cors = require('cors');
+
 const indexRouter = require('./routes/index');
-const airportRouter = require('./Routes/airportRouter');
-const hotelRouter = require('./Routes/hotelRouter.js');
-const rentacarRouter = require('./Routes/rentacarRouter');
-const reservationsRouter = require('./Routes/reservationsRouter');
-const userRouter = require('./Routes/userRouter');
+const airportRouter = require('./routes/airportRouter');
+const hotelRouter = require('./routes/hotelRouter.js');
+const rentacarRouter = require('./routes/rentacarRouter');
+const reservationsRouter = require('./routes/reservationsRouter');
+const userRouter = require('./routes/userRouter');
+const carRouter = require('./routes/carRouter');
 
 const app = express();
+
+
+app.use(cors({origin: 'http://localhost:4200'}));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -29,6 +35,7 @@ app.use('/hotels', hotelRouter);
 app.use('/rentacars', rentacarRouter);
 app.use('/reservations', reservationsRouter);
 app.use('/users', userRouter);
+app.use('/cars', carRouter);
 
 
 // catch 404 and forward to error handler

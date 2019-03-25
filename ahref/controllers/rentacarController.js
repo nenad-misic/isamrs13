@@ -26,6 +26,12 @@ exports.getRACServices = (callback) => {
             description: 'The best rent a car service in Kabul',
             address: 'Alahu Akhbar 13, Kabul'
         },
+        {
+            id: '5',
+            name: 'Rent a car service number five',
+            description: 'The second best rent a car service in Kabul',
+            address: 'Alahu Akhbar 14, Kabul'
+        },
     ];
     callback("", dummyData);
 };
@@ -53,7 +59,11 @@ exports.deleteRACServices = (callback) => {
 exports.getRACService = (id, callback) => {
     //Fetch RAC with id id from MongoDB.
     //Return JSON object.
-    callback("", {});
+    var requestedService = [];
+    this.getRACServices((err, services) => {
+        requestedService = services.filter(service => service.id === id)[0];
+    });
+    callback("", requestedService);
 };
 
 exports.editRACService = (id, changes, callback) => {
@@ -64,18 +74,15 @@ exports.editRACService = (id, changes, callback) => {
     //Change it's attributes to new ones
     //Save it to database
     //Return True/False
-
-    this.getRACService(id, (err, data) =>{
+    this.getRACService(id, (err,data) =>{
         if(err)
             callback(err, "");
         else{
-            var hotel = data;
-            hotel.name = changes.name;
-            hotel.description = changes.description;
-            hotel.address = changes.address;
-            callback("", hotel);
+            data.description = changes.description;
+            data.address = changes.address;
+            data.name = changes.name;
         }
-    })
+    });
 };
 
 exports.deleteRACService = (id, callback) => {
@@ -88,16 +95,16 @@ exports.deleteRACService = (id, callback) => {
 exports.getCars = (callback) => {
     var dummy = [
         {
-            carId: 0,
+            id: '0',
             model: 'Golf 7',
             brand: 'VolksWagen',
-            carType: 'hatchback'
+            type: 'hatchback'
         },
         {
-            carId: 1,
+            id: '1',
             model: 'RX7',
             brand: 'Mazda',
-            carType: 'cabrio'
+            type: 'cabrio'
         }
     ];
     callback("", dummy);

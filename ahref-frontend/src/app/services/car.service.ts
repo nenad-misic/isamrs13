@@ -1,30 +1,27 @@
 import { Injectable } from '@angular/core';
 import {Car} from '../shared/car';
-import {RentACarService} from '../shared/rentacarservice';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import { HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CarService {
 
-  cars: Car[] = [
-    {
-      id: '0',
-      model: 'Golf 7',
-      brand: 'VolksWagen',
-      type: 'hatchback'
-    },
-    {
-      id: '1',
-      model: 'RX7',
-      brand: 'Mazda',
-      type: 'cabrio'
-    }
-  ];
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type':  'application/json',
+    })
+  };
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
-  getCars(): Car[] {
-    return this.cars;
+  getCars(): Observable<Car[]> {
+    return this.http.get<Car[]>('http://localhost:3000/cars');
+  }
+
+  searchCars(search: Car): Observable<Car[]> {
+    return this.http.post<Car[]>('http://localhost:3000/cars/search', search, this.httpOptions);
   }
 }

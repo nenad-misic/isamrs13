@@ -23,24 +23,25 @@ carRouter.route('/search')
         next();
     })
     .post((req,res) => {
-        var id = req.body.carId;
-        var brand = req.body.brand;
-        var model = req.body.model;
-        var carType = req.body.carType;
+        var search = req.body;
 
-        var array = [];
-        rentacarController.getCars((err,data) => array = data);
+        var searchResult = [];
+        rentacarController.getCars((err,data) => searchResult = data);
 
-        if(id !== undefined)
-            array.filter((elem)=> {return elem.carId===id});
-        if(brand !== undefined)
-            array.filter((elem)=> {return elem.brand===brand});
-        if(model !== undefined)
-            array.filter((elem)=> {return elem.model===model});
-        if(carType !== undefined)
-            array.filter((elem)=> {return elem.carType===carType});
+        if (search.id) {
+            searchResult = searchResult.filter((car) => car.id === search.id);
+        }
+        if (search.brand) {
+            searchResult = searchResult.filter((car) => car.brand === search.brand);
+        }
+        if (search.model) {
+            searchResult = searchResult.filter((car) => car.model === search.model);
+        }
+        if (search.type) {
+            searchResult = searchResult.filter((car) => car.type === search.type);
+        }
 
-        res.json(array);
+        res.json(searchResult);
     });
 
 module.exports = carRouter;

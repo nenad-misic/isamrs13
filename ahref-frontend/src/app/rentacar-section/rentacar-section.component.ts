@@ -14,7 +14,7 @@ export class RentacarSectionComponent implements OnInit {
   constructor(private rentacarService: RentacarService) { }
 
   ngOnInit() {
-    this.racservices = this.rentacarService.getServices();
+    this.rentacarService.getServices().subscribe(racservices => this.racservices = racservices);
   }
 
 }

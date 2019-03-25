@@ -19,20 +19,7 @@ export class RentacarSearchFormComponent implements OnInit {
   }
 
   doSearch(): void {
-    this.searchResult = this.carService.getCars();
-    if (this.search.id) {
-      this.searchResult = this.searchResult.filter((car) => car.id === this.search.id);
-    }
-    if (this.search.brand) {
-      this.searchResult = this.searchResult.filter((car) => car.brand === this.search.brand);
-    }
-    if (this.search.model) {
-      this.searchResult = this.searchResult.filter((car) => car.model === this.search.model);
-    }
-    if (this.search.type) {
-      this.searchResult = this.searchResult.filter((car) => car.type === this.search.type);
-    }
-    console.log(this.searchResult);
+    this.carService.searchCars(this.search).subscribe(searchResult => this.searchResult = searchResult);
     this.data.changeSearchParams(this.searchResult);
   }
 }

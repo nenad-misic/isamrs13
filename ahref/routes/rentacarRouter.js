@@ -40,14 +40,14 @@ rentacarRouter.route('/')
         //res.end("All RAC services deleted");
     });
 
-rentacarRouter.route('/:airportId')
+rentacarRouter.route('/:id')
     .all((req,res, next)=>{
         res.statusCode = 200;
         res.contentType = "text/plain";
         next();
     })
     .get((req,res) => {
-        var id = req.params.hotelId;
+        var id = req.params.id;
 
         rentacarController.getRACService(id, (err, data) => res.json(data));
         //res.end(`Returning JSON object of RAC service ${id}`);
@@ -58,21 +58,13 @@ rentacarRouter.route('/:airportId')
         res.end("Method POST not allowed.");
     })
     .put((req,res) => {
-        var id = req.params.hotelId;
-        var name = req.body.name;
-        var address = req.body.address;
-        var description = req.body.description;
-
-        changes = {
-            name: name,
-            address: address,
-            description: description
-        };
+        var id = req.params.id;
+        var changes = req.body;
         rentacarController.editRACService(id, changes, (err, data) => res.json(data));
         //res.end(`RAC service ${id} changed to ${name}, ${address} and saved to database.`)
     })
     .delete((req,res) => {
-        var id = req.params.airportId;
+        var id = req.params.id;
         rentacarController.deleteRACService(id, (err, data) => res.json(data));
         //res.end(`RAC service ${id} removed from database.`)
     });
