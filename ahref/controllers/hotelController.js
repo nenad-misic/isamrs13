@@ -1,7 +1,30 @@
+var dummyData = [
+    {
+        id: "0",
+        name: "Hotel0",
+        description: "Opis0",
+        address: "Zmaj Jovina 0"
+    },
+    {
+        id: "1",
+        name: "Hotel1",
+        description: "Opis1",
+        address: "Zmaj Jovina 1"
+    },
+    {
+        id: "2",
+        name: "Hotel2",
+        description: "Opis2",
+        address: "Zmaj Jovina 2"
+    }
+]
+
+var currentId = 2;
+
 exports.getHotels = (callback) => {
     //Fetch all hotels from MongoDB.
     //Return JSON object.
-    callback("", []);
+    callback("", dummyData);
 };
 
 exports.addHotel = (hotel, callback) => {
@@ -13,6 +36,26 @@ exports.addHotel = (hotel, callback) => {
     //On success, write whole object in mongodb
     //Return True/False
 
+    if (!hotel.name) {
+        callback("Hotel name missing!", false);
+        return;
+    }
+    if (!hotel.description) {
+        callback("Description missing!", false);
+        return;
+    }
+    if (!hotel.address) {
+        callback("Address missing!", false);
+        return;
+    }
+
+    if ((dummyData.filter((element) => element.name === hotel.name)).length > 0) {
+        callback("Name already exists", false);
+        return;
+    }
+    currentId++;
+    hotel.id = currentId.toString();
+    dummyData.push(hotel);
     callback("", true);
 };
 
@@ -20,14 +63,15 @@ exports.deleteHotels = (callback) => {
     //Truncate table in SQL and MongoDB
     //This should be available only to SysAdmin, or not be available at all
     //Return True/False
-
+    
     callback("", true);
 };
 
 exports.getHotel = (id, callback) => {
     //Fetch hotel with id hotelId from MongoDB.
     //Return JSON object.
-    callback("", {});
+    var hotel = dummyData.filter((element) => element.id === id)[0];
+    callback("", hotel);
 };
 
 exports.editHotel = (id, changes, callback) => {
@@ -39,15 +83,14 @@ exports.editHotel = (id, changes, callback) => {
     //Save it to database
     //Return True/False
 
-    this.getHotel(id, (err, data) =>{
+    this.getHotel(id, (err, data) => {
         if(err)
             callback(err, "");
         else{
-            var hotel = data;
-            hotel.name = changes.name;
-            hotel.description = changes.description;
-            hotel.address = changes.address;
-            callback("", hotel);
+            data.name = changes.name;
+            data.description = changes.description;
+            data.address = changes.address;
+            callback("", true);
         }
     })
 };

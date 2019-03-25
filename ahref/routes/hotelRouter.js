@@ -17,16 +17,7 @@ hotelRouter.route('/')
         //res.end("Returning JSON object of all hotels");
     })
     .post((req,res) => {
-        var name = req.body.name;
-        var address = req.body.address;
-        var description = req.body.description;
-
-        hotel = {
-            name: name,
-            address: address,
-            description: description
-        };
-
+        var hotel = req.body;
         hotelsController.addHotel(hotel, (err, data) => res.json(data));
         //res.end(`Hotel ${name} at ${address} saved in database.`);
     })
@@ -40,14 +31,14 @@ hotelRouter.route('/')
         //res.end("All hotels deleted");
     });
 
-hotelRouter.route('/:airportId')
+hotelRouter.route('/:id')
     .all((req,res, next)=>{
         res.statusCode = 200;
         res.contentType = "text/plain";
         next();
     })
     .get((req,res) => {
-        var id = req.params.hotelId;
+        var id = req.params.id;
 
         hotelsController.getHotel(id, (err, data) => res.json(data));
         //res.end(`Returning JSON object of hotel ${id}`);
@@ -58,16 +49,8 @@ hotelRouter.route('/:airportId')
         res.end("Method POST not allowed.");
     })
     .put((req,res) => {
-        var id = req.params.hotelId;
-        var name = req.body.name;
-        var address = req.body.address;
-        var description = req.body.description;
-
-        changes = {
-            name: name,
-            address: address,
-            description: description
-        };
+        var changes = req.body;
+        var id = req.params.id;
         hotelsController.editHotel(id, changes, (err, data) => res.json(data));
         //res.end(`Hotel ${id} changed to ${name}, ${address} and saved to database.`)
     })
