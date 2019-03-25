@@ -35,6 +35,11 @@ import {CarService} from './services/car.service';
 import {DataService} from './services/data.service';
 
 import { HttpClientModule } from '@angular/common/http';
+import { HotelSectionComponent } from './hotel-section/hotel-section.component';
+import {HotelService} from './services/hotel.service';
+import { HotelProfileComponent } from './hotel-profile/hotel-profile.component';
+import { HotelDetailProfileComponent } from './hotel-detail-profile/hotel-detail-profile.component';
+import { HotelAddFormComponent } from './hotel-add-form/hotel-add-form.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +50,11 @@ import { HttpClientModule } from '@angular/common/http';
     RentacarDetailProfileComponent,
     CarSectionComponent,
     CarProfileComponent,
-    HomeComponent
+    HomeComponent,
+    HotelSectionComponent,
+    HotelProfileComponent,
+    HotelDetailProfileComponent,
+    HotelAddFormComponent
   ],
   imports: [
     BrowserModule,
@@ -73,7 +82,8 @@ import { HttpClientModule } from '@angular/common/http';
   providers: [
     RentacarService,
     CarService,
-    DataService
+    DataService,
+    HotelService
   ],
   bootstrap: [AppComponent]
 })
