@@ -22,12 +22,17 @@ export class RentacarDetailProfileComponent implements OnInit {
 
   ngOnInit() {
     const id = this.route.snapshot.params['id'];
-    this.rentacarService.getService(id).subscribe(service => this.profile = service);
-    this.profile_new = new RentACarService();
-    this.profile_new.id = this.profile.id;
-    this.profile_new.name = this.profile.name;
-    this.profile_new.address = this.profile.address;
-    this.profile_new.description = this.profile.description;
+    this.rentacarService.getService(id).subscribe(service =>
+      {
+        this.profile = service;
+        this.profile_new = new RentACarService();
+        this.profile_new.id = this.profile.id;
+        this.profile_new.name = this.profile.name;
+        this.profile_new.address = this.profile.address;
+        this.profile_new.description = this.profile.description;
+      }
+    );
+
   }
 
   goBack(): void {
@@ -35,6 +40,7 @@ export class RentacarDetailProfileComponent implements OnInit {
   }
 
   onSaveClick(): void {
-    this.rentacarService.saveChanges(this.profile.id, this.profile_new);
+    this.rentacarService.saveChanges(this.profile.id, this.profile_new).subscribe(status => console.log(status));
+    this.location.back();
   }
 }

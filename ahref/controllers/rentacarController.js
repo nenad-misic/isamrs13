@@ -1,39 +1,55 @@
+var dummyRACS = [
+    {
+        id: '1',
+        name: 'Rent a car service number one',
+        description: 'The best rent a car service in Novi Sad',
+        address: 'Bulevar Oslobodjenja 1, Novi Sad'
+    },
+    {
+        id: '2',
+        name: 'Rent a car service number two',
+        description: 'The best rent a car service in Belgrade',
+        address: 'Bulevar Kralja Aleksandra 2, Belgrade'
+    },
+    {
+        id: '3',
+        name: 'Rent a car service number three',
+        description: 'The best rent a car service in New York',
+        address: '123 6th Avenue, New York'
+    },
+    {
+        id: '4',
+        name: 'Rent a car service number four',
+        description: 'The best rent a car service in Kabul',
+        address: 'Alahu Akhbar 13, Kabul'
+    },
+    {
+        id: '5',
+        name: 'Rent a car service number five',
+        description: 'The second best rent a car service in Kabul',
+        address: 'Alahu Akhbar 14, Kabul'
+    },
+];
+
+var dummyCars = [
+    {
+        id: '0',
+        model: 'Golf 7',
+        brand: 'VolksWagen',
+        type: 'hatchback'
+    },
+    {
+        id: '1',
+        model: 'RX7',
+        brand: 'Mazda',
+        type: 'cabrio'
+    }
+];
+
 exports.getRACServices = (callback) => {
     //Fetch all RAC from MongoDB.
     //Return JSON object.
-    var dummyData = [
-        {
-            id: '1',
-            name: 'Rent a car service number one',
-            description: 'The best rent a car service in Novi Sad',
-            address: 'Bulevar Oslobodjenja 1, Novi Sad'
-        },
-        {
-            id: '2',
-            name: 'Rent a car service number two',
-            description: 'The best rent a car service in Belgrade',
-            address: 'Bulevar Kralja Aleksandra 2, Belgrade'
-        },
-        {
-            id: '3',
-            name: 'Rent a car service number three',
-            description: 'The best rent a car service in New York',
-            address: '123 6th Avenue, New York'
-        },
-        {
-            id: '4',
-            name: 'Rent a car service number four',
-            description: 'The best rent a car service in Kabul',
-            address: 'Alahu Akhbar 13, Kabul'
-        },
-        {
-            id: '5',
-            name: 'Rent a car service number five',
-            description: 'The second best rent a car service in Kabul',
-            address: 'Alahu Akhbar 14, Kabul'
-        },
-    ];
-    callback("", dummyData);
+    callback("", dummyRACS);
 };
 
 exports.addRACService = (RAC, callback) => {
@@ -59,7 +75,7 @@ exports.deleteRACServices = (callback) => {
 exports.getRACService = (id, callback) => {
     //Fetch RAC with id id from MongoDB.
     //Return JSON object.
-    var requestedService = [];
+    var requestedService = {};
     this.getRACServices((err, services) => {
         requestedService = services.filter(service => service.id === id)[0];
     });
@@ -81,6 +97,7 @@ exports.editRACService = (id, changes, callback) => {
             data.description = changes.description;
             data.address = changes.address;
             data.name = changes.name;
+            callback("", true);
         }
     });
 };
@@ -93,19 +110,5 @@ exports.deleteRACService = (id, callback) => {
 };
 
 exports.getCars = (callback) => {
-    var dummy = [
-        {
-            id: '0',
-            model: 'Golf 7',
-            brand: 'VolksWagen',
-            type: 'hatchback'
-        },
-        {
-            id: '1',
-            model: 'RX7',
-            brand: 'Mazda',
-            type: 'cabrio'
-        }
-    ];
-    callback("", dummy);
+    callback("", dummyCars);
 };
