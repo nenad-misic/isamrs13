@@ -40,14 +40,14 @@ airportRouter.route('/')
         //res.end("All airports deleted");
     });
 
-airportRouter.route('/:airportId')
+airportRouter.route('/:id')
     .all((req,res, next)=>{
         res.statusCode = 200;
         res.contentType = "text/plain";
         next();
     })
     .get((req,res) => {
-        var id = req.params.airportId;
+        var id = req.params.id;
 
         airportController.getAirport(id, (err, data) => res.json(data));
         //res.end(`Returning JSON object of airport ${id}`);
@@ -58,16 +58,9 @@ airportRouter.route('/:airportId')
         res.end("Method POST not allowed.");
     })
     .put((req,res) => {
-        var id = req.params.airportId;
-        var name = req.body.name;
-        var address = req.body.address;
-        var description = req.body.description;
+        var id = req.params.id;
 
-        changes = {
-            name: name,
-            address: address,
-            description: description
-        };
+        var changes = req.body;
         airportController.editAirport(id, changes, (err, data) => res.json(data));
         //res.end(`Airport ${id} changed to ${name}, ${address} and saved to database.`)
     })

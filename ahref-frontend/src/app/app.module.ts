@@ -40,6 +40,11 @@ import {HotelService} from './services/hotel.service';
 import { HotelProfileComponent } from './hotel-profile/hotel-profile.component';
 import { HotelDetailProfileComponent } from './hotel-detail-profile/hotel-detail-profile.component';
 import { HotelAddFormComponent } from './hotel-add-form/hotel-add-form.component';
+import {AirlineService} from './services/airline.service';
+import { AirlineSectionComponent } from './airline-section/airline-section.component';
+import { AirlineProfileComponent } from './airline-profile/airline-profile.component';
+import { AirlineDetailProfileComponent } from './airline-detail-profile/airline-detail-profile.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +59,11 @@ import { HotelAddFormComponent } from './hotel-add-form/hotel-add-form.component
     HotelSectionComponent,
     HotelProfileComponent,
     HotelDetailProfileComponent,
-    HotelAddFormComponent
+    HotelAddFormComponent,
+    AirlineSectionComponent,
+    AirlineProfileComponent,
+    AirlineDetailProfileComponent,
+    UserProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -83,7 +92,8 @@ import { HotelAddFormComponent } from './hotel-add-form/hotel-add-form.component
     RentacarService,
     CarService,
     DataService,
-    HotelService
+    HotelService,
+    AirlineService
   ],
   bootstrap: [AppComponent]
 })

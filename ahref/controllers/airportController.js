@@ -1,7 +1,41 @@
+var dummyAirport = [
+    {
+        id: '1',
+        name: 'Airport number one',
+        description: 'The best airport in Novi Sad',
+        address: 'Bulevar Oslobodjenja 1, Novi Sad'
+    },
+    {
+        id: '2',
+        name: 'Airport number two',
+        description: 'The best airport in Belgrade',
+        address: 'Bulevar Kralja Aleksandra 2, Belgrade'
+    },
+    {
+        id: '3',
+        name: 'Airport number three',
+        description: 'The best airport in New York',
+        address: '123 6th Avenue, New York'
+    },
+    {
+        id: '4',
+        name: 'Airport number four',
+        description: 'The best airport in Kabul',
+        address: 'Alahu Akhbar 13, Kabul'
+    },
+    {
+        id: '5',
+        name: 'Airport number five',
+        description: 'The second best airport in Kabul',
+        address: 'Alahu Akhbar 14, Kabul'
+    },
+];
+
+
 exports.getAirports = (callback) => {
     //Fetch all airports from MongoDB.
     //Return JSON object.
-    callback("", []);
+    callback("", dummyAirport);
 };
 
 exports.addAirport = (airport, callback) => {
@@ -27,7 +61,11 @@ exports.deleteAirports = (callback) => {
 exports.getAirport = (id, callback) => {
     //Fetch airport with id airportID from MongoDB.
     //Return JSON object.
-    callback("", {});
+    var requestedAirport = {};
+    this.getAirports((err, airports) => {
+        requestedAirport = airports.filter(airport => airport.id === id)[0];
+    });
+    callback("", requestedAirport);
 };
 
 exports.editAirport = (id, changes, callback) => {
@@ -39,17 +77,16 @@ exports.editAirport = (id, changes, callback) => {
     //Save it to database
     //Return changed airport
 
-    this.getAirport(id, (err, data) =>{
+    this.getAirport(id, (err,data) =>{
         if(err)
             callback(err, "");
         else{
-            var airport = data;
-            airport.name = changes.name;
-            airport.description = changes.description;
-            airport.address = changes.address;
-            callback("", airport);
+            data.description = changes.description;
+            data.address = changes.address;
+            data.name = changes.name;
+            callback("", true);
         }
-    })
+    });
 };
 
 exports.deleteAirport = (id, callback) => {
