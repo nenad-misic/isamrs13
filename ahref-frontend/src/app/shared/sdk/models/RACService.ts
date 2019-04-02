@@ -1,0 +1,131 @@
+/* tslint:disable */
+import {
+  BranchOffice,
+  Car,
+  RPriceList
+} from '../index';
+
+declare var Object: any;
+export interface RACServiceInterface {
+  "name": string;
+  "address": string;
+  "latitude": number;
+  "longitude": number;
+  "description": string;
+  "rating": number;
+  "numOfRates": number;
+  "id"?: number;
+  branchOffices?: BranchOffice[];
+  cars?: Car[];
+  priceList?: RPriceList;
+}
+
+export class RACService implements RACServiceInterface {
+  "name": string;
+  "address": string;
+  "latitude": number;
+  "longitude": number;
+  "description": string;
+  "rating": number;
+  "numOfRates": number;
+  "id": number;
+  branchOffices: BranchOffice[];
+  cars: Car[];
+  priceList: RPriceList;
+  constructor(data?: RACServiceInterface) {
+    Object.assign(this, data);
+  }
+  /**
+   * The name of the model represented by this $resource,
+   * i.e. `RACService`.
+   */
+  public static getModelName() {
+    return "RACService";
+  }
+  /**
+  * @method factory
+  * @author Jonathan Casarrubias
+  * @license MIT
+  * This method creates an instance of RACService for dynamic purposes.
+  **/
+  public static factory(data: RACServiceInterface): RACService{
+    return new RACService(data);
+  }
+  /**
+  * @method getModelDefinition
+  * @author Julien Ledun
+  * @license MIT
+  * This method returns an object that represents some of the model
+  * definitions.
+  **/
+  public static getModelDefinition() {
+    return {
+      name: 'RACService',
+      plural: 'RACServices',
+      path: 'RACServices',
+      idName: 'id',
+      properties: {
+        "name": {
+          name: 'name',
+          type: 'string'
+        },
+        "address": {
+          name: 'address',
+          type: 'string'
+        },
+        "latitude": {
+          name: 'latitude',
+          type: 'number'
+        },
+        "longitude": {
+          name: 'longitude',
+          type: 'number'
+        },
+        "description": {
+          name: 'description',
+          type: 'string'
+        },
+        "rating": {
+          name: 'rating',
+          type: 'number',
+          default: 0
+        },
+        "numOfRates": {
+          name: 'numOfRates',
+          type: 'number',
+          default: 0
+        },
+        "id": {
+          name: 'id',
+          type: 'number'
+        },
+      },
+      relations: {
+        branchOffices: {
+          name: 'branchOffices',
+          type: 'BranchOffice[]',
+          model: 'BranchOffice',
+          relationType: 'hasMany',
+                  keyFrom: 'id',
+          keyTo: 'rACServiceId'
+        },
+        cars: {
+          name: 'cars',
+          type: 'Car[]',
+          model: 'Car',
+          relationType: 'hasMany',
+                  keyFrom: 'id',
+          keyTo: 'rACServiceId'
+        },
+        priceList: {
+          name: 'priceList',
+          type: 'RPriceList',
+          model: 'RPriceList',
+          relationType: 'hasOne',
+                  keyFrom: 'id',
+          keyTo: 'rACServiceId'
+        },
+      }
+    }
+  }
+}

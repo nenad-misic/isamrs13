@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Hotel} from '../shared/hotel';
+import {Hotel} from '../shared/sdk/models';
 
 @Component({
   selector: 'app-hotel-profile',

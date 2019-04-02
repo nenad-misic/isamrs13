@@ -1,0 +1,73 @@
+{
+  "name": "Flight",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "startTime": {
+      "type": "number",
+      "required": true
+    },
+    "endTime": {
+      "type": "number",
+      "required": true
+    },
+    "length": {
+      "type": "number",
+      "required": true
+    },
+    "ticketPrice": {
+      "type": "number",
+      "required": true
+    },
+    "rating": {
+      "type": "number",
+      "required": true,
+      "default": 0
+    },
+    "numOfRates": {
+      "type": "number",
+      "required": true,
+      "default": 0
+    }
+  },
+  "validations": [],
+  "relations": {
+    "airline": {
+      "type": "belongsTo",
+      "model": "Airline",
+      "foreignKey": ""
+    },
+    "seats": {
+      "type": "hasMany",
+      "model": "Seat",
+      "foreignKey": ""
+    },
+    "startDestination": {
+      "type": "hasOne",
+      "model": "Destination",
+      "foreignKey": ""
+    },
+    "endDestination": {
+      "type": "hasOne",
+      "model": "Destination",
+      "foreignKey": ""
+    },
+    "connectedDestinaions": {
+      "type": "hasMany",
+      "model": "Destination",
+      "foreignKey": ""
+    }
+  },
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "God",
+      "permission": "ALLOW"
+    }
+  ],
+  "methods": {}
+}

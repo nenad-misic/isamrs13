@@ -1,11 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 
 import { Params, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
-import { RentacarService } from '../services/rentacar.service';
-import {RentACarService} from '../shared/rentacarservice';
 
+import { API_VERSION } from '../shared/baseurl';
+import {Airline, LoopBackConfig, RACService, RACServiceApi} from '../shared/sdk';
 @Component({
   selector: 'app-rentacar-detail-profile',
   templateUrl: './rentacar-detail-profile.component.html',
@@ -13,19 +13,22 @@ import {RentACarService} from '../shared/rentacarservice';
 })
 export class RentacarDetailProfileComponent implements OnInit {
 
-  profile: RentACarService;
-  profile_new: RentACarService;
+  profile: RACService;
+  profile_new: RACService;
 
-  constructor(private rentacarService: RentacarService,
+  constructor(private rentacarService: RACServiceApi,
               private route: ActivatedRoute,
-              private location: Location) {}
+              private location: Location,
+              @Inject('baseURL') private baseURL) {
+    LoopBackConfig.setBaseURL(baseURL);
+    LoopBackConfig.setApiVersion(API_VERSION);
+  }
 
   ngOnInit() {
     const id = this.route.snapshot.params['id'];
-    this.rentacarService.getService(id).subscribe(service =>
-      {
+    this.rentacarService.findOne({where: {id: id}}).subscribe((service: RACService) => {
         this.profile = service;
-        this.profile_new = new RentACarService();
+        this.profile_new = new RACService();
         this.profile_new.id = this.profile.id;
         this.profile_new.name = this.profile.name;
         this.profile_new.address = this.profile.address;
@@ -40,7 +43,7 @@ export class RentacarDetailProfileComponent implements OnInit {
   }
 
   onSaveClick(): void {
-    this.rentacarService.saveChanges(this.profile.id, this.profile_new).subscribe(status => console.log(status));
+    this.rentacarService.updateAttributes(this.profile.id, this.profile_new).subscribe((returned: RACService) => { if (!returned) {console.log(status); }});
     this.location.back();
   }
 }

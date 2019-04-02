@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {HotelService} from '../services/hotel.service';
-import {Hotel} from '../shared/hotel';
 import {Location} from '@angular/common';
 
+import { API_VERSION } from '../shared/baseurl';
+import {Hotel, HotelApi, LoopBackConfig} from '../shared/sdk';
 @Component({
   selector: 'app-hotel-add-form',
   templateUrl: './hotel-add-form.component.html',
@@ -12,8 +13,12 @@ export class HotelAddFormComponent implements OnInit {
 
   new_hotel: Hotel;
 
-  constructor(private service: HotelService,
-              private location: Location) { }
+  constructor(private service: HotelApi,
+              private location: Location,
+              @Inject('baseURL') private baseURL) {
+    LoopBackConfig.setBaseURL(baseURL);
+    LoopBackConfig.setApiVersion(API_VERSION);
+  }
 
   ngOnInit() {
     this.new_hotel = new Hotel();
@@ -21,7 +26,7 @@ export class HotelAddFormComponent implements OnInit {
 
 
   addHotel() {
-    this.service.addHotel(this.new_hotel).subscribe((status) => console.log(status));
+    this.service.create(this.new_hotel).subscribe((hotel: Hotel) => { if (!hotel) { console.log(status); }});
     this.new_hotel = new Hotel();
 
   }

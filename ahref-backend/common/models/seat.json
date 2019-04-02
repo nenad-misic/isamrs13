@@ -1,0 +1,35 @@
+{
+  "name": "Seat",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "row": {
+      "type": "number",
+      "required": true
+    },
+    "column": {
+      "type": "number",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "flight": {
+      "type": "belongsTo",
+      "model": "Flight",
+      "foreignKey": ""
+    }
+  },
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "God",
+      "permission": "ALLOW"
+    }
+  ],
+  "methods": {}
+}

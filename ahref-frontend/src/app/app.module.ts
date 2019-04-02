@@ -8,7 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import 'hammerjs';
-
+import { baseURL } from './shared/baseurl';
 import { AppComponent } from './app.component';
 
 
@@ -45,6 +45,8 @@ import { AirlineSectionComponent } from './airline-section/airline-section.compo
 import { AirlineProfileComponent } from './airline-profile/airline-profile.component';
 import { AirlineDetailProfileComponent } from './airline-detail-profile/airline-detail-profile.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import {RACServiceApi} from './shared/sdk/services/custom';
+import {SDKBrowserModule} from './shared/sdk';
 
 @NgModule({
   declarations: [
@@ -82,18 +84,15 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     MatInputModule,
     MatCheckboxModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    SDKBrowserModule.forRoot()
 
   ],
   entryComponents: [
     RentacarDetailProfileComponent
   ],
   providers: [
-    RentacarService,
-    CarService,
-    DataService,
-    HotelService,
-    AirlineService
+    {provide: 'baseURL', useValue: baseURL}
   ],
   bootstrap: [AppComponent]
 })

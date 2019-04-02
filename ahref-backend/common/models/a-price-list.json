@@ -1,0 +1,26 @@
+{
+  "name": "APriceList",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {},
+  "validations": [],
+  "relations": {
+    "priceListItems": {
+      "type": "hasMany",
+      "model": "APriceListItem",
+      "foreignKey": ""
+    }
+  },
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "God",
+      "permission": "ALLOW"
+    }
+  ],
+  "methods": {}
+}

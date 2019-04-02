@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Car} from '../shared/car';
+import {Car} from '../shared/sdk/models';
 
 @Component({
   selector: 'app-car-profile',

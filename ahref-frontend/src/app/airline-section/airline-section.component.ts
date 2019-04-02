@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import {Airline} from '../shared/airline';
-import {AirlineService} from '../services/airline.service';
+import {Component, Inject, OnInit} from '@angular/core';
 
+import { API_VERSION } from '../shared/baseurl';
+import {Airline, AirlineApi, LoopBackConfig} from '../shared/sdk';
 
 @Component({
   selector: 'app-airline-section',
@@ -12,10 +12,14 @@ export class AirlineSectionComponent implements OnInit {
 
   airlines: Airline[];
 
-  constructor(private airlineService: AirlineService) { }
+  constructor(private airlineService: AirlineApi,
+              @Inject('baseURL') private baseURL) {
+    LoopBackConfig.setBaseURL(baseURL);
+    LoopBackConfig.setApiVersion(API_VERSION);
+  }
 
   ngOnInit() {
-    this.airlineService.getAirlines().subscribe(airlines => this.airlines = airlines);
+    this.airlineService.find().subscribe((airlines: Airline[]) => this.airlines = airlines);
   }
 
 }

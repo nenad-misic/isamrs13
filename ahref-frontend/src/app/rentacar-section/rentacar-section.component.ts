@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import {RentACarService} from '../shared/rentacarservice';
-import {RentacarService} from '../services/rentacar.service';
+import {Component, Inject, OnInit} from '@angular/core';
+import { RACService} from '../shared/sdk/models';
+import { RACServiceApi} from '../shared/sdk/services/custom';
+import { API_VERSION } from '../shared/baseurl';
+import {LoopBackConfig} from '../shared/sdk';
 
 @Component({
   selector: 'app-rentacar-section',
@@ -9,12 +11,16 @@ import {RentacarService} from '../services/rentacar.service';
 })
 export class RentacarSectionComponent implements OnInit {
 
-  racservices: RentACarService[];
+  racservices: RACService[];
 
-  constructor(private rentacarService: RentacarService) { }
+  constructor(private rentacarService: RACServiceApi,
+              @Inject('baseURL') private baseURL) {
+    LoopBackConfig.setBaseURL(baseURL);
+    LoopBackConfig.setApiVersion(API_VERSION);
+  }
 
   ngOnInit() {
-    this.rentacarService.getServices().subscribe(racservices => this.racservices = racservices);
+    this.rentacarService.find({}).subscribe((racservices: RACService[]) => this.racservices = racservices);
   }
 
 }

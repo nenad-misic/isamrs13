@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Airline} from '../shared/airline';
+import {Airline} from '../shared/sdk/models';
 
 @Component({
   selector: 'app-airline-profile',

@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
-import {Airline} from '../shared/airline';
-import {AirlineService} from '../services/airline.service';
+import { API_VERSION } from '../shared/baseurl';
+import { AirlineApi, LoopBackConfig} from '../shared/sdk';
+import { Airline } from '../shared/sdk/models';
 
 @Component({
   selector: 'app-airline-detail-profile',
@@ -14,19 +15,27 @@ export class AirlineDetailProfileComponent implements OnInit {
   profile: Airline;
   profile_new: Airline;
 
-  constructor(private airlineService: AirlineService,
+  constructor(private airlineService: AirlineApi,
               private route: ActivatedRoute,
-              private location: Location) {}
+              private location: Location,
+              @Inject('baseURL') private baseURL ) {
+    LoopBackConfig.setBaseURL(baseURL);
+    LoopBackConfig.setApiVersion(API_VERSION);
+  }
 
   ngOnInit() {
     const id = this.route.snapshot.params['id'];
-    this.airlineService.getAirline(id).subscribe(airline => {
-        this.profile = airline;
-        this.profile_new = new Airline();
-        this.profile_new.id = this.profile.id;
-        this.profile_new.name = this.profile.name;
-        this.profile_new.address = this.profile.address;
-        this.profile_new.description = this.profile.description;
+    this.airlineService.findOne({where: {id: id}}).subscribe((airline: Airline) => {
+      this.profile = airline;
+      this.profile_new = new Airline();
+      this.profile_new.id = this.profile.id;
+      this.profile_new.name = this.profile.name;
+      this.profile_new.address = this.profile.address;
+      this.profile_new.latitude = this.profile.latitude;
+      this.profile_new.longitude = this.profile.longitude;
+      this.profile_new.description = this.profile.description;
+      this.profile_new.rating = this.profile.rating;
+      this.profile_new.numOfRates = this.profile.numOfRates;
       }
     );
 
@@ -37,7 +46,7 @@ export class AirlineDetailProfileComponent implements OnInit {
   }
 
   onSaveClick(): void {
-    this.airlineService.saveChanges(this.profile.id, this.profile_new).subscribe(status => console.log(status));
+    this.airlineService.updateAttributes(this.profile.id, this.profile_new).subscribe((returned: Airline) => { if (!returned) {console.log(status); }});
     this.location.back();
   }
 }

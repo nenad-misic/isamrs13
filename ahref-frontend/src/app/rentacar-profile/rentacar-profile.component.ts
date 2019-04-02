@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {RentACarService} from '../shared/rentacarservice';
+import {RACService} from '../shared/sdk/models';
 
 @Component({
   selector: 'app-rentacar-profile',
@@ -9,7 +9,7 @@ import {RentACarService} from '../shared/rentacarservice';
 export class RentacarProfileComponent implements OnInit {
 
   @Input()
-  profile: RentACarService;
+  profile: RACService;
 
   constructor() {}
 

@@ -1,0 +1,106 @@
+{
+  "_meta": {
+    "sources": [
+      "loopback/common/models",
+      "loopback/server/models",
+      "../common/models",
+      "./models"
+    ],
+    "mixins": [
+      "loopback/common/mixins",
+      "loopback/server/mixins",
+      "../common/mixins",
+      "./mixins"
+    ]
+  },
+  "User": {
+    "dataSource": "db"
+  },
+  "AccessToken": {
+    "dataSource": "db",
+    "public": false
+  },
+  "ACL": {
+    "dataSource": "db",
+    "public": false
+  },
+  "RoleMapping": {
+    "dataSource": "db",
+    "public": false,
+    "options": {
+      "strictObjectIDCoercion": true
+    }
+  },
+  "Role": {
+    "dataSource": "db",
+    "public": false
+  },
+  "Airline": {
+    "dataSource": "db",
+    "public": true
+  },
+  "Flight": {
+    "dataSource": "db",
+    "public": true
+  },
+  "Seat": {
+    "dataSource": "db",
+    "public": true
+  },
+  "APriceList": {
+    "dataSource": "db",
+    "public": true
+  },
+  "APriceListItem": {
+    "dataSource": "db",
+    "public": true
+  },
+  "Destination": {
+    "dataSource": "db",
+    "public": true
+  },
+  "Hotel": {
+    "dataSource": "db",
+    "public": true
+  },
+  "Room": {
+    "dataSource": "db",
+    "public": true
+  },
+  "DatePrice": {
+    "dataSource": "db",
+    "public": true
+  },
+  "HPriceList": {
+    "dataSource": "db",
+    "public": true
+  },
+  "HPriceListItem": {
+    "dataSource": "db",
+    "public": true
+  },
+  "RACService": {
+    "dataSource": "db",
+    "public": true
+  },
+  "BranchOffice": {
+    "dataSource": "db",
+    "public": true
+  },
+  "Car": {
+    "dataSource": "db",
+    "public": true
+  },
+  "RPriceList": {
+    "dataSource": "db",
+    "public": true
+  },
+  "RPriceListItem": {
+    "dataSource": "db",
+    "public": true
+  },
+  "God": {
+    "dataSource": "MongoDB",
+    "public": true
+  }
+}

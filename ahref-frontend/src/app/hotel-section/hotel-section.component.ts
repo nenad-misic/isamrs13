@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import {Hotel} from '../shared/hotel';
-import {HotelService} from '../services/hotel.service';
-
+import {Component, Inject, OnInit} from '@angular/core';
+import { API_VERSION } from '../shared/baseurl';
+import {Hotel, HotelApi, LoopBackConfig} from '../shared/sdk';
 @Component({
   selector: 'app-hotel-section',
   templateUrl: './hotel-section.component.html',
@@ -11,10 +10,14 @@ export class HotelSectionComponent implements OnInit {
 
   hotels: Hotel[];
 
-  constructor(private hotelService: HotelService) { }
+  constructor(private hotelService: HotelApi,
+              @Inject('baseURL') private baseURL) {
+    LoopBackConfig.setBaseURL(baseURL);
+    LoopBackConfig.setApiVersion(API_VERSION);
+  }
 
   ngOnInit() {
-    this.hotelService.getHotels().subscribe((hotels) => this.hotels = hotels);
+    this.hotelService.find().subscribe((hotels: Hotel[]) => this.hotels = hotels);
   }
 
 }
