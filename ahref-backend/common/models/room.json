@@ -38,6 +38,12 @@
       "principalType": "ROLE",
       "principalId": "God",
       "permission": "ALLOW"
+    },
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW"
     }
   ],
   "methods": {}

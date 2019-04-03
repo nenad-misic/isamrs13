@@ -49,6 +49,7 @@ import {RACServiceApi} from './shared/sdk/services/custom';
 import {SDKBrowserModule} from './shared/sdk';
 import { AirlineAddFormComponent } from './airline-add-form/airline-add-form.component';
 import { RentacarAddFormComponent } from './rentacar-add-form/rentacar-add-form.component';
+import {RegisterComponent} from './register/register.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +70,8 @@ import { RentacarAddFormComponent } from './rentacar-add-form/rentacar-add-form.
     AirlineDetailProfileComponent,
     UserProfileComponent,
     AirlineAddFormComponent,
-    RentacarAddFormComponent
+    RentacarAddFormComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

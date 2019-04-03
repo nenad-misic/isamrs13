@@ -33,6 +33,11 @@ export class RentacarDetailProfileComponent implements OnInit {
         this.profile_new.name = this.profile.name;
         this.profile_new.address = this.profile.address;
         this.profile_new.description = this.profile.description;
+        this.profile_new.latitude = this.profile.latitude;
+        this.profile_new.longitude = this.profile.longitude;
+        this.profile_new.rating = this.profile.rating;
+        this.profile_new.numOfRates = this.profile.numOfRates;
+
       }
     );
 

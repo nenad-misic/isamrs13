@@ -19,16 +19,6 @@ export class UserProfileComponent implements OnInit {
               private location: Location) {}
 
   ngOnInit() {
-    this.loggedUserService.getLoggedUser().subscribe(user => {
-        this.profile = user;
-        this.profile_new = new User();
-        this.profile_new.username = this.profile.username;
-        this.profile_new.name = this.profile.name;
-        this.profile_new.password = this.profile.password;
-        this.profile_new.email = this.profile.email;
-      }
-    );
-
   }
 
   goBack(): void {
@@ -36,7 +26,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   onSaveClick(): void {
-    this.loggedUserService.saveChanges(this.profile_new).subscribe(status => console.log(status));
+    //this.loggedUserService.saveChanges(this.profile_new).subscribe(status => console.log(status));
     this.location.back();
   }
 
