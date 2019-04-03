@@ -1,0 +1,10 @@
+<mat-card>
+  <mat-card-content>
+    <app-users-detail></app-users-detail>
+    <mat-grid-list cols="2">
+      <mat-grid-tile *ngFor="let user of users">
+        <app-users-profile [profile]="user"></app-users-profile>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </mat-card-content>
+</mat-card>

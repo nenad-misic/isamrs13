@@ -1,0 +1,16 @@
+<div class="form-container">
+  <form novalidate (ngSubmit)="doSearch()">
+    <mat-card-content fxLayout="column">
+      <mat-form-field>
+        <input matInput placeholder="Username" [(ngModel)]="search.username" name="username">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Password" [(ngModel)]="search.password" name="password">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Email" [(ngModel)]="search.email" name="email">
+      </mat-form-field>
+    </mat-card-content>
+    <button mat-button >Search</button>
+  </form>
+</div>
