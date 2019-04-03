@@ -9,6 +9,7 @@ import {HotelDetailProfileComponent} from '../hotel-detail-profile/hotel-detail-
 import {AirlineSectionComponent} from '../airline-section/airline-section.component';
 import {AirlineDetailProfileComponent} from '../airline-detail-profile/airline-detail-profile.component';
 import {UserProfileComponent} from '../user-profile/user-profile.component';
+import {UserSectionComponent} from '../user-section/user-section.component';
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent},
@@ -20,5 +21,6 @@ export const routes: Routes = [
   { path: 'airline', component: AirlineSectionComponent },
   { path: 'airlinedetail/:id', component: AirlineDetailProfileComponent },
   { path: 'profile', component: UserProfileComponent },
+  { path: 'profiles', component: UserSectionComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' }
 ];

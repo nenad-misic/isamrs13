@@ -47,6 +47,9 @@ import { AirlineDetailProfileComponent } from './airline-detail-profile/airline-
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import {RACServiceApi} from './shared/sdk/services/custom';
 import {SDKBrowserModule} from './shared/sdk';
+import { UserSectionComponent } from './user-section/user-section.component';
+import { UsersProfileComponent } from './users-profile/users-profile.component';
+import { UsersDetailComponent } from './users-detail/users-detail.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +68,10 @@ import {SDKBrowserModule} from './shared/sdk';
     AirlineSectionComponent,
     AirlineProfileComponent,
     AirlineDetailProfileComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    UserSectionComponent,
+    UsersProfileComponent,
+    UsersDetailComponent
   ],
   imports: [
     BrowserModule,

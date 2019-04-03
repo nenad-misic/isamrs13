@@ -3,14 +3,23 @@
   <form novalidate>
     <mat-card-content fxLayout="column">
       <mat-form-field>
-        <input matInput placeholder="Name" [(ngModel)]="profile_new.name" name="name">
+        <input required matInput placeholder="Name" [(ngModel)]="profile_new.name" name="name">
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Description" [(ngModel)]="profile_new.description" name="description">
+        <input required matInput placeholder="Latitude" [(ngModel)]="profile_new.latitude" name="latitude">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input required matInput placeholder="Longitude" [(ngModel)]="profile_new.longitude" name="longitude">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input required matInput placeholder="Address" [(ngModel)]="profile_new.address" name="address">
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Address" [(ngModel)]="profile_new.address" name="address">
+        <input required matInput placeholder="Description" [(ngModel)]="profile_new.description" name="description">
       </mat-form-field>
+
     </mat-card-content>
     <mat-card-actions>
       <button mat-button (click)="goBack()">Back</button>
