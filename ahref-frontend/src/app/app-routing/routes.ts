@@ -8,8 +8,9 @@ import {HotelSectionComponent} from '../hotel-section/hotel-section.component';
 import {HotelDetailProfileComponent} from '../hotel-detail-profile/hotel-detail-profile.component';
 import {AirlineSectionComponent} from '../airline-section/airline-section.component';
 import {AirlineDetailProfileComponent} from '../airline-detail-profile/airline-detail-profile.component';
-import {UserProfileComponent} from '../user-profile/user-profile.component';
+import {UserProfileComponent} from '../user-profile/user-profile.component
 import {UserSectionComponent} from '../user-section/user-section.component';
+import {RegisterComponent} from '../register/register.component';
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent},
@@ -22,5 +23,6 @@ export const routes: Routes = [
   { path: 'airlinedetail/:id', component: AirlineDetailProfileComponent },
   { path: 'profile', component: UserProfileComponent },
   { path: 'profiles', component: UserSectionComponent },
+  { path: 'register', component: RegisterComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' }
 ];

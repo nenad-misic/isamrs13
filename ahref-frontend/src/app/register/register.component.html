@@ -1,0 +1,29 @@
+<mat-card>
+  <mat-card-title>User registration</mat-card-title>
+  <form novalidate>
+    <mat-card-content fxLayout="column">
+      <mat-form-field>
+        <input matInput placeholder="Username" [(ngModel)]="profile.username" name="username">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Password" type="password" [(ngModel)]="profile.password" name="password">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Confirm password" type="password" [(ngModel)]="passwordConfirm" name="passwordConfirm">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Name" [(ngModel)]="name" name="name">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Email" [(ngModel)]="profile.email" name="email">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Telephone" [(ngModel)]="telephone" name="telephone">
+      </mat-form-field>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button (click)="goBack()">Back</button>
+      <button mat-button (click)="onRegisterClick()">Register</button>
+    </mat-card-actions>
+  </form>
+</mat-card>

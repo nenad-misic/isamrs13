@@ -50,6 +50,9 @@ import {SDKBrowserModule} from './shared/sdk';
 import { UserSectionComponent } from './user-section/user-section.component';
 import { UsersProfileComponent } from './users-profile/users-profile.component';
 import { UsersDetailComponent } from './users-detail/users-detail.component';
+import { AirlineAddFormComponent } from './airline-add-form/airline-add-form.component';
+import { RentacarAddFormComponent } from './rentacar-add-form/rentacar-add-form.component';
+import {RegisterComponent} from './register/register.component';
 
 @NgModule({
   declarations: [
@@ -71,7 +74,10 @@ import { UsersDetailComponent } from './users-detail/users-detail.component';
     UserProfileComponent,
     UserSectionComponent,
     UsersProfileComponent,
-    UsersDetailComponent
+    UsersDetailComponent,
+    AirlineAddFormComponent,
+    RentacarAddFormComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
