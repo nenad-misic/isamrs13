@@ -1,5 +1,4 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {HotelService} from '../services/hotel.service';
 import {Location} from '@angular/common';
 
 import { API_VERSION } from '../shared/baseurl';
@@ -22,6 +21,8 @@ export class HotelAddFormComponent implements OnInit {
 
   ngOnInit() {
     this.new_hotel = new Hotel();
+    this.new_hotel.rating = 0;
+    this.new_hotel.numOfRates = 0;
   }
 
 

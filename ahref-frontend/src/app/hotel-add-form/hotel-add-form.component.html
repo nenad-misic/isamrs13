@@ -1,16 +1,32 @@
 <div class="form-container">
   <form novalidate (ngSubmit)="addHotel()">
     <mat-form-field>
-      <input matInput [(ngModel)]="new_hotel.name" placeholder="Name" name="name">
+      <input matInput required [(ngModel)]="new_hotel.name" placeholder="Name" name="name">
     </mat-form-field>
 
     <mat-form-field>
-      <input matInput [(ngModel)]="new_hotel.address" placeholder="Address" name="address">
+      <input matInput required [(ngModel)]="new_hotel.address" placeholder="Address" name="address">
     </mat-form-field>
 
     <mat-form-field>
-      <textarea matInput [(ngModel)]="new_hotel.description" placeholder="Description" name="description"></textarea>
+      <textarea matInput required [(ngModel)]="new_hotel.description" placeholder="Description" name="description"></textarea>
     </mat-form-field>
+
+    <mat-form-field>
+      <input matInput required type="number" [(ngModel)]="new_hotel.latitude" placeholder="latitude" name="latitude"/>
+    </mat-form-field>
+
+
+    <mat-form-field>
+      <input matInput required type="number" [(ngModel)]="new_hotel.longitude" placeholder="longitude" name="longitude"/>
+    </mat-form-field>
+
+
+    <mat-form-field>
+      <input matInput required type="number" [(ngModel)]="new_hotel.destinationId" placeholder="destination" name="destination"/>
+    </mat-form-field>
+
     <button mat-button>ADD HOTEL</button>
+    <p>*required</p>
   </form>
 </div>

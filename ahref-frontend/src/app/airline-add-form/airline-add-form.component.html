@@ -1,0 +1,28 @@
+<div class="form-container">
+  <form novalidate (ngSubmit)="addAirline()">
+    <mat-form-field>
+      <input matInput required [(ngModel)]="new_airline.name" placeholder="Name" name="name">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput required [(ngModel)]="new_airline.address" placeholder="Address" name="address">
+    </mat-form-field>
+
+    <mat-form-field>
+      <textarea matInput required [(ngModel)]="new_airline.description" placeholder="Description" name="description"></textarea>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput required type="number" [(ngModel)]="new_airline.latitude" placeholder="latitude" name="latitude"/>
+    </mat-form-field>
+
+
+    <mat-form-field>
+      <input matInput required type="number" [(ngModel)]="new_airline.longitude" placeholder="longitude" name="longitude"/>
+    </mat-form-field>
+
+
+    <button mat-button>ADD AIRLINE</button>
+    <p>*required</p>
+  </form>
+</div>
