@@ -1,0 +1,23 @@
+<mat-card fxLayout="row" fxLayoutAlign="center center">
+  <form novalidate>
+  <mat-card-content fxLayout="column">
+        <mat-form-field>
+          <input matInput required [(ngModel)]="username" placeholder="Username" name="username">
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput required [(ngModel)]="password" placeholder="Password" name="password">
+        </mat-form-field>
+    <span mat-line></span>
+    <mat-card *ngIf="errmsg">
+      <mat-card-content>
+        <p>{{errmsg}}</p>
+      </mat-card-content>
+    </mat-card>
+  </mat-card-content>
+
+  </form>
+  <mat-card-actions>
+    <button mat-button (click)="login()">Log in</button>
+  </mat-card-actions>
+</mat-card>

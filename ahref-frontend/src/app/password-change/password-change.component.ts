@@ -26,16 +26,11 @@ export class PasswordChangeComponent implements OnInit {
     if (this.password_original !== this.password_confirm) {
       this.errmsg = 'Passwords doesn\'t match!';
     } else {
-      if(this.password_original.length <= 5){
-        this.errmsg = 'Passwords not secure enough!';
-
-      }else{
-        this.errmsg = null;
-        const user = this.userService.getCachedCurrent();
-        user.password = this.password_original;
-        this.userService.updateAttributes(user.id, user).subscribe(success => { if (success) { console.log("success"); }});
-        this.location.back();
-      }
+      this.errmsg = null;
+      const user = this.userService.getCachedCurrent();
+      user.password = this.password_original;
+      this.userService.updateAttributes(user.id, user).subscribe(success => { if (success) { console.log(success); }});
+      this.location.back();
     }
   }
   unsubmitChange() {
