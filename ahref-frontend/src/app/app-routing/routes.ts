@@ -22,9 +22,11 @@ export const routes: Routes = [
   { path: 'hotels', component: HotelSectionComponent },
   { path: 'hoteldetail/:id', component: HotelDetailProfileComponent },
   { path: 'airline', component: AirlineSectionComponent },
-  { path: 'airlinedetail/:id', component: AirlineDetailProfileComponent },
+  { path: 'airlinedetail', component: AirlineDetailProfileComponent },
   { path: 'profile', component: UserProfileComponent },
   { path: 'profiles', component: UserSectionComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'changepassword', component: PasswordChangeComponent },
+  { path: 'login', component: LoginComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' }
 ];

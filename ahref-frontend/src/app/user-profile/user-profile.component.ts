@@ -2,7 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 import {RACServiceApi, UserApi, LoggedUserApi} from '../shared/sdk/services/custom';
-import {User} from '../shared/sdk/models';
+import {LoggedUser} from '../shared/sdk/models';
 import {LoopBackConfig} from '../shared/sdk';
 import {API_VERSION} from '../shared/baseurl';
 @Component({
@@ -12,8 +12,8 @@ import {API_VERSION} from '../shared/baseurl';
 })
 export class UserProfileComponent implements OnInit {
 
-  profile: User;
-  profile_new: User;
+  profile: LoggedUser;
+  profile_new: LoggedUser;
 
   constructor(private loggedUserService: LoggedUserApi,
               private route: ActivatedRoute,
@@ -28,8 +28,8 @@ export class UserProfileComponent implements OnInit {
     //  this.profile = user;
     //  this.profile_new = this.profile;
     // });
-    this.profile = new User({username: 'username', email: 'email', password: 'password'});
-    this.profile_new = this.profile;
+    this.profile = this.loggedUserService.getCachedCurrent();
+    this.profile_new = JSON.parse(JSON.stringify(this.profile));
   }
 
   goBack(): void {
