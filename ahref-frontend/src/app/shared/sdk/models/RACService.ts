@@ -14,7 +14,7 @@ export interface RACServiceInterface {
   "description": string;
   "rating": number;
   "numOfRates": number;
-  "id"?: number;
+  "id"?: any;
   branchOffices?: BranchOffice[];
   cars?: Car[];
   priceList?: RPriceList;
@@ -28,7 +28,7 @@ export class RACService implements RACServiceInterface {
   "description": string;
   "rating": number;
   "numOfRates": number;
-  "id": number;
+  "id": any;
   branchOffices: BranchOffice[];
   cars: Car[];
   priceList: RPriceList;
@@ -97,7 +97,7 @@ export class RACService implements RACServiceInterface {
         },
         "id": {
           name: 'id',
-          type: 'number'
+          type: 'any'
         },
       },
       relations: {

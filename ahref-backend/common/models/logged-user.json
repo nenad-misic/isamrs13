@@ -10,13 +10,27 @@
       "type": "string",
       "required": true
     },
-    "city": {
+    "image": {
       "type": "string",
       "required": true
     },
     "telephone": {
       "type": "string",
       "required": true
+    },
+    "city": {
+      "type": "string",
+      "required": true
+    },
+    "points": {
+      "type": "number",
+      "required": true,
+      "default": 0
+    },
+    "type": {
+      "type": "string",
+      "required": true,
+      "default": "regUser"
     }
   },
   "validations": [],

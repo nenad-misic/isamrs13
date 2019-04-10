@@ -14,8 +14,8 @@ export interface HotelInterface {
   "description": number;
   "rating": number;
   "numOfRates": number;
-  "id"?: number;
-  "destinationId"?: number;
+  "id"?: any;
+  "destinationId"?: any;
   destination?: Destination;
   rooms?: Room[];
   priceList?: HPriceList;
@@ -29,8 +29,8 @@ export class Hotel implements HotelInterface {
   "description": number;
   "rating": number;
   "numOfRates": number;
-  "id": number;
-  "destinationId": number;
+  "id": any;
+  "destinationId": any;
   destination: Destination;
   rooms: Room[];
   priceList: HPriceList;
@@ -99,11 +99,11 @@ export class Hotel implements HotelInterface {
         },
         "id": {
           name: 'id',
-          type: 'number'
+          type: 'any'
         },
         "destinationId": {
           name: 'destinationId',
-          type: 'number'
+          type: 'any'
         },
       },
       relations: {

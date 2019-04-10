@@ -13,9 +13,9 @@ export interface FlightInterface {
   "ticketPrice": number;
   "rating": number;
   "numOfRates": number;
-  "id"?: number;
-  "airlineId"?: number;
-  "destinationId"?: number;
+  "id"?: any;
+  "airlineId"?: any;
+  "destinationId"?: any;
   airline?: Airline;
   seats?: Seat[];
   startDestination?: Destination;
@@ -30,9 +30,9 @@ export class Flight implements FlightInterface {
   "ticketPrice": number;
   "rating": number;
   "numOfRates": number;
-  "id": number;
-  "airlineId": number;
-  "destinationId": number;
+  "id": any;
+  "airlineId": any;
+  "destinationId": any;
   airline: Airline;
   seats: Seat[];
   startDestination: Destination;
@@ -99,15 +99,15 @@ export class Flight implements FlightInterface {
         },
         "id": {
           name: 'id',
-          type: 'number'
+          type: 'any'
         },
         "airlineId": {
           name: 'airlineId',
-          type: 'number'
+          type: 'any'
         },
         "destinationId": {
           name: 'destinationId',
-          type: 'number'
+          type: 'any'
         },
       },
       relations: {

@@ -5,14 +5,14 @@ import {
 
 declare var Object: any;
 export interface RPriceListInterface {
-  "id"?: number;
-  "rACServiceId"?: number;
+  "id"?: any;
+  "rACServiceId"?: any;
   priceListItems?: RPriceListItem[];
 }
 
 export class RPriceList implements RPriceListInterface {
-  "id": number;
-  "rACServiceId": number;
+  "id": any;
+  "rACServiceId": any;
   priceListItems: RPriceListItem[];
   constructor(data?: RPriceListInterface) {
     Object.assign(this, data);
@@ -49,11 +49,11 @@ export class RPriceList implements RPriceListInterface {
       properties: {
         "id": {
           name: 'id',
-          type: 'number'
+          type: 'any'
         },
         "rACServiceId": {
           name: 'rACServiceId',
-          type: 'number'
+          type: 'any'
         },
       },
       relations: {

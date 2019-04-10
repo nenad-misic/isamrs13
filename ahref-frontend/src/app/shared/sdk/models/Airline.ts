@@ -14,7 +14,7 @@ export interface AirlineInterface {
   "description": string;
   "rating": number;
   "numOfRates": number;
-  "id"?: number;
+  "id"?: any;
   flights?: Flight[];
   priceList?: APriceList;
   destinations?: Destination[];
@@ -28,7 +28,7 @@ export class Airline implements AirlineInterface {
   "description": string;
   "rating": number;
   "numOfRates": number;
-  "id": number;
+  "id": any;
   flights: Flight[];
   priceList: APriceList;
   destinations: Destination[];
@@ -97,7 +97,7 @@ export class Airline implements AirlineInterface {
         },
         "id": {
           name: 'id',
-          type: 'number'
+          type: 'any'
         },
       },
       relations: {

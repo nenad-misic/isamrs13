@@ -5,16 +5,16 @@ export interface HPriceListItemInterface {
   "name": string;
   "price": number;
   "discount": number;
-  "id"?: number;
-  "hPriceListId"?: number;
+  "id"?: any;
+  "hPriceListId"?: any;
 }
 
 export class HPriceListItem implements HPriceListItemInterface {
   "name": string;
   "price": number;
   "discount": number;
-  "id": number;
-  "hPriceListId": number;
+  "id": any;
+  "hPriceListId": any;
   constructor(data?: HPriceListItemInterface) {
     Object.assign(this, data);
   }
@@ -62,11 +62,11 @@ export class HPriceListItem implements HPriceListItemInterface {
         },
         "id": {
           name: 'id',
-          type: 'number'
+          type: 'any'
         },
         "hPriceListId": {
           name: 'hPriceListId',
-          type: 'number'
+          type: 'any'
         },
       },
       relations: {

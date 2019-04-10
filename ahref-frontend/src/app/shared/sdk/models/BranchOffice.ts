@@ -6,17 +6,17 @@ import {
 declare var Object: any;
 export interface BranchOfficeInterface {
   "address": string;
-  "id"?: number;
-  "serviceId"?: number;
-  "rACServiceId"?: number;
+  "id"?: any;
+  "serviceId"?: any;
+  "rACServiceId"?: any;
   service?: RACService;
 }
 
 export class BranchOffice implements BranchOfficeInterface {
   "address": string;
-  "id": number;
-  "serviceId": number;
-  "rACServiceId": number;
+  "id": any;
+  "serviceId": any;
+  "rACServiceId": any;
   service: RACService;
   constructor(data?: BranchOfficeInterface) {
     Object.assign(this, data);
@@ -57,15 +57,15 @@ export class BranchOffice implements BranchOfficeInterface {
         },
         "id": {
           name: 'id',
-          type: 'number'
+          type: 'any'
         },
         "serviceId": {
           name: 'serviceId',
-          type: 'number'
+          type: 'any'
         },
         "rACServiceId": {
           name: 'rACServiceId',
-          type: 'number'
+          type: 'any'
         },
       },
       relations: {

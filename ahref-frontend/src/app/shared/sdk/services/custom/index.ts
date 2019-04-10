@@ -16,6 +16,7 @@ export * from './BranchOffice';
 export * from './Car';
 export * from './RPriceList';
 export * from './RPriceListItem';
+export * from './Email';
 export * from './LoggedUser';
 export * from './SDKModels';
 export * from './logger.service';

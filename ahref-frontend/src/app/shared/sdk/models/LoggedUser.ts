@@ -3,8 +3,11 @@
 declare var Object: any;
 export interface LoggedUserInterface {
   "name": string;
-  "city": string;
+  "image": string;
   "telephone": string;
+  "city": string;
+  "points": number;
+  "type": string;
   "realm"?: string;
   "username"?: string;
   "email": string;
@@ -16,8 +19,11 @@ export interface LoggedUserInterface {
 
 export class LoggedUser implements LoggedUserInterface {
   "name": string;
-  "city": string;
+  "image": string;
   "telephone": string;
+  "city": string;
+  "points": number;
+  "type": string;
   "realm": string;
   "username": string;
   "email": string;
@@ -62,13 +68,27 @@ export class LoggedUser implements LoggedUserInterface {
           name: 'name',
           type: 'string'
         },
-        "city": {
-          name: 'city',
+        "image": {
+          name: 'image',
           type: 'string'
         },
         "telephone": {
           name: 'telephone',
           type: 'string'
+        },
+        "city": {
+          name: 'city',
+          type: 'string'
+        },
+        "points": {
+          name: 'points',
+          type: 'number',
+          default: 0
+        },
+        "type": {
+          name: 'type',
+          type: 'string',
+          default: 'regUser'
         },
         "realm": {
           name: 'realm',

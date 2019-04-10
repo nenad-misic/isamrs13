@@ -5,14 +5,14 @@ import {
 
 declare var Object: any;
 export interface HPriceListInterface {
-  "id"?: number;
-  "hotelId"?: number;
+  "id"?: any;
+  "hotelId"?: any;
   priceListItems?: HPriceListItem[];
 }
 
 export class HPriceList implements HPriceListInterface {
-  "id": number;
-  "hotelId": number;
+  "id": any;
+  "hotelId": any;
   priceListItems: HPriceListItem[];
   constructor(data?: HPriceListInterface) {
     Object.assign(this, data);
@@ -49,11 +49,11 @@ export class HPriceList implements HPriceListInterface {
       properties: {
         "id": {
           name: 'id',
-          type: 'number'
+          type: 'any'
         },
         "hotelId": {
           name: 'hotelId',
-          type: 'number'
+          type: 'any'
         },
       },
       relations: {

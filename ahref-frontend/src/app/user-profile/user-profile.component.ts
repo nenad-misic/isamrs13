@@ -42,4 +42,10 @@ export class UserProfileComponent implements OnInit {
     this.location.back();
   }
 
+  logout() {
+    this.loggedUserService.logout();
+    this.location.back();
+  }
+
+
 }

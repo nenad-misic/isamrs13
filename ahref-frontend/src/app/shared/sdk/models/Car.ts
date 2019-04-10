@@ -11,8 +11,8 @@ export interface CarInterface {
   "rating": number;
   "numOfRates": number;
   "carType": string;
-  "id"?: number;
-  "rACServiceId"?: number;
+  "id"?: any;
+  "rACServiceId"?: any;
 }
 
 export class Car implements CarInterface {
@@ -25,8 +25,8 @@ export class Car implements CarInterface {
   "rating": number;
   "numOfRates": number;
   "carType": string;
-  "id": number;
-  "rACServiceId": number;
+  "id": any;
+  "rACServiceId": any;
   constructor(data?: CarInterface) {
     Object.assign(this, data);
   }
@@ -100,11 +100,11 @@ export class Car implements CarInterface {
         },
         "id": {
           name: 'id',
-          type: 'number'
+          type: 'any'
         },
         "rACServiceId": {
           name: 'rACServiceId',
-          type: 'number'
+          type: 'any'
         },
       },
       relations: {

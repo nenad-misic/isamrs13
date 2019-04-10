@@ -11,9 +11,9 @@ export interface DestinationInterface {
   "name": string;
   "code": string;
   "country": string;
-  "id"?: number;
-  "airlineId"?: number;
-  "flightId"?: number;
+  "id"?: any;
+  "airlineId"?: any;
+  "flightId"?: any;
   startFlights?: Flight[];
   hotels?: Hotel[];
 }
@@ -24,9 +24,9 @@ export class Destination implements DestinationInterface {
   "name": string;
   "code": string;
   "country": string;
-  "id": number;
-  "airlineId": number;
-  "flightId": number;
+  "id": any;
+  "airlineId": any;
+  "flightId": any;
   startFlights: Flight[];
   hotels: Hotel[];
   constructor(data?: DestinationInterface) {
@@ -84,15 +84,15 @@ export class Destination implements DestinationInterface {
         },
         "id": {
           name: 'id',
-          type: 'number'
+          type: 'any'
         },
         "airlineId": {
           name: 'airlineId',
-          type: 'number'
+          type: 'any'
         },
         "flightId": {
           name: 'flightId',
-          type: 'number'
+          type: 'any'
         },
       },
       relations: {

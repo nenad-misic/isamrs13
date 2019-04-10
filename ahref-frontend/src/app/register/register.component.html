@@ -3,22 +3,25 @@
   <form novalidate>
     <mat-card-content fxLayout="column">
       <mat-form-field>
-        <input matInput placeholder="Username" [(ngModel)]="profile.username" name="username">
+        <input required  matInput placeholder="Username" [(ngModel)]="profile.username" name="username">
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Password" type="password" [(ngModel)]="profile.password" name="password">
+        <input required  matInput placeholder="Password" type="password" [(ngModel)]="profile.password" name="password">
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Confirm password" type="password" [(ngModel)]="passwordConfirm" name="passwordConfirm">
+        <input required  matInput placeholder="Confirm password" type="password" [(ngModel)]="passwordConfirm" name="passwordConfirm">
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Name" [(ngModel)]="name" name="name">
+        <input required  matInput placeholder="Name" [(ngModel)]="profile.name" name="name">
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Email" [(ngModel)]="profile.email" name="email">
+        <input required matInput placeholder="Email" [(ngModel)]="profile.email" name="email">
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Telephone" [(ngModel)]="telephone" name="telephone">
+        <input required matInput placeholder="City" [(ngModel)]="profile.city" name="city">
+      </mat-form-field>
+      <mat-form-field>
+        <input required matInput placeholder="Telephone" [(ngModel)]="profile.telephone" name="telephone">
       </mat-form-field>
     </mat-card-content>
     <mat-card-actions>

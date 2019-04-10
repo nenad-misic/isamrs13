@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 import {LoggedUser} from '../shared/sdk/models';
-import {UserApi} from '../shared/sdk/services/custom';
+import {LoggedUserApi} from '../shared/sdk/services/custom';
 import {LoopBackConfig} from '../shared/sdk';
 import {API_VERSION, baseURL} from '../shared/baseurl';
 
@@ -14,9 +14,8 @@ import {API_VERSION, baseURL} from '../shared/baseurl';
 export class RegisterComponent implements OnInit {
   profile: LoggedUser;
   passwordConfirm: string;
-  name: string;
 
-  constructor(private userService: UserApi,
+  constructor(private userService: LoggedUserApi,
               private route: ActivatedRoute,
               private location: Location) {
     LoopBackConfig.setBaseURL(baseURL);
@@ -28,6 +27,7 @@ export class RegisterComponent implements OnInit {
       this.location.back();
     }
     this.profile = new LoggedUser();
+    this.profile.image = 'Images/default.png';
   }
 
   goBack(): void {

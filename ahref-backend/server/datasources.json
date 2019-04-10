@@ -12,5 +12,19 @@
     "name": "MongoDB",
     "user": "",
     "connector": "mongodb"
+  },
+  "EmailDataSource": {
+    "name": "EmailDataSource",
+    "connector": "mail",
+    "transports": [{
+      "type": "smtp",
+      "host": "smtp.gmail.com",
+      "secure": true,
+      "port": 465,
+      "auth": {
+        "user": "ahref.noreply@gmail.com",
+        "pass": "ahref123Project"
+      }
+    }]
   }
 }
