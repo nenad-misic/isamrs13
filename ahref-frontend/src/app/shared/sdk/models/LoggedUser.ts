@@ -1,7 +1,10 @@
 /* tslint:disable */
 
 declare var Object: any;
-export interface GodInterface {
+export interface LoggedUserInterface {
+  "name": string;
+  "city": string;
+  "telephone": string;
   "realm"?: string;
   "username"?: string;
   "email": string;
@@ -11,7 +14,10 @@ export interface GodInterface {
   accessTokens?: any[];
 }
 
-export class God implements GodInterface {
+export class LoggedUser implements LoggedUserInterface {
+  "name": string;
+  "city": string;
+  "telephone": string;
   "realm": string;
   "username": string;
   "email": string;
@@ -19,24 +25,24 @@ export class God implements GodInterface {
   "id": any;
   "password": string;
   accessTokens: any[];
-  constructor(data?: GodInterface) {
+  constructor(data?: LoggedUserInterface) {
     Object.assign(this, data);
   }
   /**
    * The name of the model represented by this $resource,
-   * i.e. `God`.
+   * i.e. `LoggedUser`.
    */
   public static getModelName() {
-    return "God";
+    return "LoggedUser";
   }
   /**
   * @method factory
   * @author Jonathan Casarrubias
   * @license MIT
-  * This method creates an instance of God for dynamic purposes.
+  * This method creates an instance of LoggedUser for dynamic purposes.
   **/
-  public static factory(data: GodInterface): God{
-    return new God(data);
+  public static factory(data: LoggedUserInterface): LoggedUser{
+    return new LoggedUser(data);
   }
   /**
   * @method getModelDefinition
@@ -47,11 +53,23 @@ export class God implements GodInterface {
   **/
   public static getModelDefinition() {
     return {
-      name: 'God',
-      plural: 'Gods',
-      path: 'Gods',
+      name: 'LoggedUser',
+      plural: 'LoggedUsers',
+      path: 'LoggedUsers',
       idName: 'id',
       properties: {
+        "name": {
+          name: 'name',
+          type: 'string'
+        },
+        "city": {
+          name: 'city',
+          type: 'string'
+        },
+        "telephone": {
+          name: 'telephone',
+          type: 'string'
+        },
         "realm": {
           name: 'realm',
           type: 'string'

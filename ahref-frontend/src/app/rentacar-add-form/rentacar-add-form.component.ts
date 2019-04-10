@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {Hotel, RACService} from '../shared/sdk/models';
-import {RACServiceApi} from '../shared/sdk/services/custom';
+import {RACServiceApi, LoggedUserApi} from '../shared/sdk/services/custom';
 import {Location} from '@angular/common';
 import {LoopBackConfig} from '../shared/sdk';
 import {API_VERSION} from '../shared/baseurl';
@@ -13,15 +13,22 @@ import {API_VERSION} from '../shared/baseurl';
 export class RentacarAddFormComponent implements OnInit {
 
   new_racservice: RACService;
+  type: string;
 
   constructor(private service: RACServiceApi,
               private location: Location,
-              @Inject('baseURL') private baseURL) {
+              @Inject('baseURL') private baseURL,
+              private userTypeService: LoggedUserApi) {
     LoopBackConfig.setBaseURL(baseURL);
     LoopBackConfig.setApiVersion(API_VERSION);
   }
 
   ngOnInit() {
+    if( this.userTypeService.getCachedCurrent() ){
+      this.type = this.userTypeService.getCachedCurrent().type;
+    }else{
+      this.type = '';
+    }
     this.new_racservice = new RACService();
     this.new_racservice.rating = 0;
     this.new_racservice.numOfRates = 0;

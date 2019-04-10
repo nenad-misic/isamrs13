@@ -8,7 +8,49 @@
      fxFlexFill>
 
   <div fxFlex="30" fxFlex.xs="55">
-    <mat-card>
+    <mat-card id="unregistered" *ngIf="!type">
+      <mat-card-content fxLayout="column">
+        <img mat-card-image src="../assets/images/logo.png">
+        <button mat-button routerLink="/airline" routerLinkActive="active">AIRLINES</button>
+        <button mat-button routerLink="/hotels" routerLinkActive="active">HOTELS</button>
+        <button mat-button routerLink="/rentacar" routerLinkActive="active">RENT A CAR SERVICES</button>
+        <button mat-button routerLink="/register" routerLinkActive="active">REGISTRATION</button>
+        <button mat-button routerLink="/login" routerLinkActive="active">LOGIN</button>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card id="registered" *ngIf="type === 'regUser'">
+      <mat-card-content fxLayout="column">
+        <img mat-card-image src="../assets/images/logo.png">
+        <button mat-button routerLink="/airline" routerLinkActive="active">AIRLINES</button>
+        <button mat-button routerLink="/hotels" routerLinkActive="active">HOTELS</button>
+        <button mat-button routerLink="/rentacar" routerLinkActive="active">RENT A CAR SERVICES</button>
+        <button mat-button routerLink="/profile" routerLinkActive="active">PROFILE</button>
+        <button mat-button routerLink="/profiles" routerLinkActive="active">PROFILES</button>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card id="airlineAdmin" *ngIf="type === 'airlineAdmin'">
+      <mat-card-content fxLayout="column">
+        <img mat-card-image src="../assets/images/logo.png">
+        <button mat-button routerLink="/airline" routerLinkActive="active">AIRLINES</button>
+        <button mat-button routerLink="/hotels" routerLinkActive="active">HOTELS</button>
+        <button mat-button routerLink="/rentacar" routerLinkActive="active">RENT A CAR SERVICES</button>
+        <button mat-button routerLink="/profile" routerLinkActive="active">PROFILE</button>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card id="hotelAdmin" *ngIf="type === 'hotelAdmin'">
+      <mat-card-content fxLayout="column">
+        <img mat-card-image src="../assets/images/logo.png">
+        <button mat-button routerLink="/airline" routerLinkActive="active">AIRLINES</button>
+        <button mat-button routerLink="/hotels" routerLinkActive="active">HOTELS</button>
+        <button mat-button routerLink="/rentacar" routerLinkActive="active">RENT A CAR SERVICES</button>
+        <button mat-button routerLink="/profile" routerLinkActive="active">PROFILE</button>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card id="racAdmin" *ngIf="type === 'racAdmin'">
       <mat-card-content fxLayout="column">
         <img mat-card-image src="../assets/images/logo.png">
         <button mat-button routerLink="/airline" routerLinkActive="active">AIRLINES</button>
@@ -16,8 +58,16 @@
         <button mat-button routerLink="/rentacar" routerLinkActive="active">RENT A CAR SERVICES</button>
         <button mat-button routerLink="/cars" routerLinkActive="active">CARS</button>
         <button mat-button routerLink="/profile" routerLinkActive="active">PROFILE</button>
-        <button mat-button routerLink="/profiles" routerLinkActive="active">PROFILES</button>
-        <button mat-button routerLink="/register" routerLinkActive="active">REGISTRATION</button>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card id="sysadmin" *ngIf="type === 'sysAdmin'">
+      <mat-card-content fxLayout="column">
+        <img mat-card-image src="../assets/images/logo.png">
+        <button mat-button routerLink="/airline" routerLinkActive="active">AIRLINES</button>
+        <button mat-button routerLink="/hotels" routerLinkActive="active">HOTELS</button>
+        <button mat-button routerLink="/rentacar" routerLinkActive="active">RENT A CAR SERVICES</button>
+        <button mat-button routerLink="/profile" routerLinkActive="active">PROFILE</button>
       </mat-card-content>
     </mat-card>
   </div>

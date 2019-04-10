@@ -53,6 +53,8 @@ import { UsersDetailComponent } from './users-detail/users-detail.component';
 import { AirlineAddFormComponent } from './airline-add-form/airline-add-form.component';
 import { RentacarAddFormComponent } from './rentacar-add-form/rentacar-add-form.component';
 import {RegisterComponent} from './register/register.component';
+import { PasswordChangeComponent } from './password-change/password-change.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -77,7 +79,9 @@ import {RegisterComponent} from './register/register.component';
     UsersDetailComponent,
     AirlineAddFormComponent,
     RentacarAddFormComponent,
-    RegisterComponent
+    RegisterComponent,
+    PasswordChangeComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

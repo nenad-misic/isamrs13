@@ -8,9 +8,11 @@ import {HotelSectionComponent} from '../hotel-section/hotel-section.component';
 import {HotelDetailProfileComponent} from '../hotel-detail-profile/hotel-detail-profile.component';
 import {AirlineSectionComponent} from '../airline-section/airline-section.component';
 import {AirlineDetailProfileComponent} from '../airline-detail-profile/airline-detail-profile.component';
-import {UserProfileComponent} from '../user-profile/user-profile.component
+import {UserProfileComponent} from '../user-profile/user-profile.component';
 import {UserSectionComponent} from '../user-section/user-section.component';
 import {RegisterComponent} from '../register/register.component';
+import {LoginComponent} from '../login/login.component';
+import {PasswordChangeComponent} from '../password-change/password-change.component';
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent},

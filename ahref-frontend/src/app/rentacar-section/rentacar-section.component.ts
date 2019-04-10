@@ -20,7 +20,7 @@ export class RentacarSectionComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.rentacarService.find({}).subscribe((racservices: RACService[]) => this.racservices = racservices);
+      this.rentacarService.find().subscribe((racservices: RACService[]) => this.racservices = racservices);
   }
 
 }

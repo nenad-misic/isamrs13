@@ -11,6 +11,15 @@
       <mat-form-field>
         <input matInput placeholder="Email" [(ngModel)]="profile_new.email" name="email">
       </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Telephone" [(ngModel)]="profile_new.telephone" name="telephone">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Name" [(ngModel)]="profile_new.name" name="name">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="City" [(ngModel)]="profile_new.city" name="city">
+      </mat-form-field>
     </mat-card-content>
     <mat-card-actions>
       <button mat-button (click)="goBack()">Back</button>

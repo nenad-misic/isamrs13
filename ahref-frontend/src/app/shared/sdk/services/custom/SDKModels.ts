@@ -17,7 +17,7 @@ import { BranchOffice } from '../../models/BranchOffice';
 import { Car } from '../../models/Car';
 import { RPriceList } from '../../models/RPriceList';
 import { RPriceListItem } from '../../models/RPriceListItem';
-import { God } from '../../models/God';
+import { LoggedUser } from '../../models/LoggedUser';
 
 export interface Models { [name: string]: any }
 
@@ -42,7 +42,7 @@ export class SDKModels {
     Car: Car,
     RPriceList: RPriceList,
     RPriceListItem: RPriceListItem,
-    God: God,
+    LoggedUser: LoggedUser,
     
   };
 

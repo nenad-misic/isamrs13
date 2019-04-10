@@ -1,11 +1,10 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
-import {RACServiceApi, UserApi} from '../shared/sdk/services/custom';
+import {RACServiceApi, UserApi, LoggedUserApi} from '../shared/sdk/services/custom';
 import {User} from '../shared/sdk/models';
 import {LoopBackConfig} from '../shared/sdk';
 import {API_VERSION} from '../shared/baseurl';
-
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
@@ -16,7 +15,7 @@ export class UserProfileComponent implements OnInit {
   profile: User;
   profile_new: User;
 
-  constructor(private loggedUserService: UserApi,
+  constructor(private loggedUserService: LoggedUserApi,
               private route: ActivatedRoute,
               private location: Location,
               @Inject('baseURL') private baseURL) {

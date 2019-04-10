@@ -1,4 +1,4 @@
-<div class="form-container">
+<div class="form-container" *ngIf="type=='sysAdmin'">
   <form novalidate (ngSubmit)="addHotel()">
     <mat-form-field>
       <input matInput required [(ngModel)]="new_hotel.name" placeholder="Name" name="name">

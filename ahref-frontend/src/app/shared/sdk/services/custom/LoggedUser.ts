@@ -9,15 +9,15 @@ import { LoopBackFilter, SDKToken, AccessToken } from '../../models/BaseModels';
 import { ErrorHandler } from '../core/error.service';
 import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { God } from '../../models/God';
+import { LoggedUser } from '../../models/LoggedUser';
 import { SocketConnection } from '../../sockets/socket.connections';
 
 
 /**
- * Api services for the `God` model.
+ * Api services for the `LoggedUser` model.
  */
 @Injectable()
-export class GodApi extends BaseLoopBackApi {
+export class LoggedUserApi extends BaseLoopBackApi {
 
   constructor(
     @Inject(HttpClient) protected http: HttpClient,
@@ -32,7 +32,7 @@ export class GodApi extends BaseLoopBackApi {
   /**
    * Find a related item by id for accessTokens.
    *
-   * @param {any} id God id
+   * @param {any} id LoggedUser id
    *
    * @param {any} fk Foreign key for accessTokens
    *
@@ -42,13 +42,13 @@ export class GodApi extends BaseLoopBackApi {
    *
    * <em>
    * (The remote method definition does not provide any description.
-   * This usually means the response is a `God` object.)
+   * This usually means the response is a `LoggedUser` object.)
    * </em>
    */
   public findByIdAccessTokens(id: any, fk: any, customHeaders?: Function): Observable<any> {
     let _method: string = "GET";
     let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
-    "/Gods/:id/accessTokens/:fk";
+    "/LoggedUsers/:id/accessTokens/:fk";
     let _routeParams: any = {
       id: id,
       fk: fk
@@ -62,7 +62,7 @@ export class GodApi extends BaseLoopBackApi {
   /**
    * Delete a related item by id for accessTokens.
    *
-   * @param {any} id God id
+   * @param {any} id LoggedUser id
    *
    * @param {any} fk Foreign key for accessTokens
    *
@@ -75,7 +75,7 @@ export class GodApi extends BaseLoopBackApi {
   public destroyByIdAccessTokens(id: any, fk: any, customHeaders?: Function): Observable<any> {
     let _method: string = "DELETE";
     let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
-    "/Gods/:id/accessTokens/:fk";
+    "/LoggedUsers/:id/accessTokens/:fk";
     let _routeParams: any = {
       id: id,
       fk: fk
@@ -89,7 +89,7 @@ export class GodApi extends BaseLoopBackApi {
   /**
    * Update a related item by id for accessTokens.
    *
-   * @param {any} id God id
+   * @param {any} id LoggedUser id
    *
    * @param {any} fk Foreign key for accessTokens
    *
@@ -103,13 +103,13 @@ export class GodApi extends BaseLoopBackApi {
    *
    * <em>
    * (The remote method definition does not provide any description.
-   * This usually means the response is a `God` object.)
+   * This usually means the response is a `LoggedUser` object.)
    * </em>
    */
   public updateByIdAccessTokens(id: any, fk: any, data: any = {}, customHeaders?: Function): Observable<any> {
     let _method: string = "PUT";
     let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
-    "/Gods/:id/accessTokens/:fk";
+    "/LoggedUsers/:id/accessTokens/:fk";
     let _routeParams: any = {
       id: id,
       fk: fk
@@ -123,9 +123,9 @@ export class GodApi extends BaseLoopBackApi {
   }
 
   /**
-   * Queries accessTokens of God.
+   * Queries accessTokens of LoggedUser.
    *
-   * @param {any} id God id
+   * @param {any} id LoggedUser id
    *
    * @param {object} filter 
    *
@@ -135,13 +135,13 @@ export class GodApi extends BaseLoopBackApi {
    *
    * <em>
    * (The remote method definition does not provide any description.
-   * This usually means the response is a `God` object.)
+   * This usually means the response is a `LoggedUser` object.)
    * </em>
    */
   public getAccessTokens(id: any, filter: LoopBackFilter = {}, customHeaders?: Function): Observable<any> {
     let _method: string = "GET";
     let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
-    "/Gods/:id/accessTokens";
+    "/LoggedUsers/:id/accessTokens";
     let _routeParams: any = {
       id: id
     };
@@ -155,7 +155,7 @@ export class GodApi extends BaseLoopBackApi {
   /**
    * Creates a new instance in accessTokens of this model.
    *
-   * @param {any} id God id
+   * @param {any} id LoggedUser id
    *
    * @param {object} data Request data.
    *
@@ -167,13 +167,13 @@ export class GodApi extends BaseLoopBackApi {
    *
    * <em>
    * (The remote method definition does not provide any description.
-   * This usually means the response is a `God` object.)
+   * This usually means the response is a `LoggedUser` object.)
    * </em>
    */
   public createAccessTokens(id: any, data: any = {}, customHeaders?: Function): Observable<any> {
     let _method: string = "POST";
     let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
-    "/Gods/:id/accessTokens";
+    "/LoggedUsers/:id/accessTokens";
     let _routeParams: any = {
       id: id
     };
@@ -188,7 +188,7 @@ export class GodApi extends BaseLoopBackApi {
   /**
    * Deletes all accessTokens of this model.
    *
-   * @param {any} id God id
+   * @param {any} id LoggedUser id
    *
    * @returns {object} An empty reference that will be
    *   populated with the actual data once the response is returned
@@ -199,7 +199,7 @@ export class GodApi extends BaseLoopBackApi {
   public deleteAccessTokens(id: any, customHeaders?: Function): Observable<any> {
     let _method: string = "DELETE";
     let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
-    "/Gods/:id/accessTokens";
+    "/LoggedUsers/:id/accessTokens";
     let _routeParams: any = {
       id: id
     };
@@ -210,9 +210,9 @@ export class GodApi extends BaseLoopBackApi {
   }
 
   /**
-   * Counts accessTokens of God.
+   * Counts accessTokens of LoggedUser.
    *
-   * @param {any} id God id
+   * @param {any} id LoggedUser id
    *
    * @param {object} where Criteria to match model instances
    *
@@ -227,7 +227,7 @@ export class GodApi extends BaseLoopBackApi {
   public countAccessTokens(id: any, where: any = {}, customHeaders?: Function): Observable<any> {
     let _method: string = "GET";
     let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
-    "/Gods/:id/accessTokens/count";
+    "/LoggedUsers/:id/accessTokens/count";
     let _routeParams: any = {
       id: id
     };
@@ -251,13 +251,13 @@ export class GodApi extends BaseLoopBackApi {
    *
    * <em>
    * (The remote method definition does not provide any description.
-   * This usually means the response is a `God` object.)
+   * This usually means the response is a `LoggedUser` object.)
    * </em>
    */
   public patchOrCreate(data: any = {}, customHeaders?: Function): Observable<any> {
     let _method: string = "PATCH";
     let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
-    "/Gods";
+    "/LoggedUsers";
     let _routeParams: any = {};
     let _postBody: any = {
       data: data
@@ -270,7 +270,7 @@ export class GodApi extends BaseLoopBackApi {
   /**
    * Patch attributes for a model instance and persist it into the data source.
    *
-   * @param {any} id God id
+   * @param {any} id LoggedUser id
    *
    * @param {object} data Request data.
    *
@@ -282,13 +282,13 @@ export class GodApi extends BaseLoopBackApi {
    *
    * <em>
    * (The remote method definition does not provide any description.
-   * This usually means the response is a `God` object.)
+   * This usually means the response is a `LoggedUser` object.)
    * </em>
    */
   public patchAttributes(id: any, data: any = {}, customHeaders?: Function): Observable<any> {
     let _method: string = "PATCH";
     let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
-    "/Gods/:id";
+    "/LoggedUsers/:id";
     let _routeParams: any = {
       id: id
     };
@@ -328,7 +328,7 @@ export class GodApi extends BaseLoopBackApi {
   public login(credentials: any, include: any = 'user', rememberMe: boolean = true, customHeaders?: Function): Observable<any> {
     let _method: string = "POST";
     let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
-    "/Gods/login";
+    "/LoggedUsers/login";
     let _routeParams: any = {};
     let _postBody: any = {
       credentials: credentials
@@ -366,7 +366,7 @@ export class GodApi extends BaseLoopBackApi {
   public logout(customHeaders?: Function): Observable<any> {
     let _method: string = "POST";
     let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
-    "/Gods/logout";
+    "/LoggedUsers/logout";
     let _routeParams: any = {};
     let _postBody: any = {};
     let _urlParams: any = {};
@@ -379,7 +379,7 @@ export class GodApi extends BaseLoopBackApi {
   /**
    * Trigger user's identity verification with configured verifyOptions
    *
-   * @param {any} id God id
+   * @param {any} id LoggedUser id
    *
    * @param {object} data Request data.
    *
@@ -394,7 +394,7 @@ export class GodApi extends BaseLoopBackApi {
   public verify(id: any, customHeaders?: Function): Observable<any> {
     let _method: string = "POST";
     let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
-    "/Gods/:id/verify";
+    "/LoggedUsers/:id/verify";
     let _routeParams: any = {
       id: id
     };
@@ -422,7 +422,7 @@ export class GodApi extends BaseLoopBackApi {
   public confirm(uid: any, token: any, redirect: any = {}, customHeaders?: Function): Observable<any> {
     let _method: string = "GET";
     let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
-    "/Gods/confirm";
+    "/LoggedUsers/confirm";
     let _routeParams: any = {};
     let _postBody: any = {};
     let _urlParams: any = {};
@@ -449,7 +449,7 @@ export class GodApi extends BaseLoopBackApi {
   public resetPassword(options: any, customHeaders?: Function): Observable<any> {
     let _method: string = "POST";
     let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
-    "/Gods/reset";
+    "/LoggedUsers/reset";
     let _routeParams: any = {};
     let _postBody: any = {
       options: options
@@ -477,7 +477,7 @@ export class GodApi extends BaseLoopBackApi {
   public changePassword(oldPassword: any, newPassword: any, customHeaders?: Function): Observable<any> {
     let _method: string = "POST";
     let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
-    "/Gods/change-password";
+    "/LoggedUsers/change-password";
     let _routeParams: any = {};
     let _postBody: any = {
       data: {
@@ -506,7 +506,7 @@ export class GodApi extends BaseLoopBackApi {
   public setPassword(newPassword: any, customHeaders?: Function): Observable<any> {
     let _method: string = "POST";
     let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
-    "/Gods/reset-password";
+    "/LoggedUsers/reset-password";
     let _routeParams: any = {};
     let _postBody: any = {
       data: {
@@ -521,7 +521,7 @@ export class GodApi extends BaseLoopBackApi {
   /**
    * Creates a new instance in accessTokens of this model.
    *
-   * @param {any} id God id
+   * @param {any} id LoggedUser id
    *
    * @param {object} data Request data.
    *
@@ -533,13 +533,13 @@ export class GodApi extends BaseLoopBackApi {
    *
    * <em>
    * (The remote method definition does not provide any description.
-   * This usually means the response is a `God` object.)
+   * This usually means the response is a `LoggedUser` object.)
    * </em>
    */
   public createManyAccessTokens(id: any, data: any[] = [], customHeaders?: Function): Observable<any> {
     let _method: string = "POST";
     let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
-    "/Gods/:id/accessTokens";
+    "/LoggedUsers/:id/accessTokens";
     let _routeParams: any = {
       id: id
     };
@@ -552,8 +552,8 @@ export class GodApi extends BaseLoopBackApi {
   }
   /**
    * @ngdoc method
-   * @name sdk.God#getCurrent
-   * @methodOf sdk.God
+   * @name sdk.LoggedUser#getCurrent
+   * @methodOf sdk.LoggedUser
    *
    * @description
    *
@@ -566,7 +566,7 @@ export class GodApi extends BaseLoopBackApi {
    */
   public getCurrent(filter: LoopBackFilter = {}): Observable<any> {
     let _method: string = "GET";
-    let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() + "/Gods" + "/:id";
+    let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() + "/LoggedUsers" + "/:id";
     let id: any = this.auth.getCurrentUserId();
     if (id == null)
     id = '__anonymous__';
@@ -578,8 +578,8 @@ export class GodApi extends BaseLoopBackApi {
   }
   /**
    * Get data of the currently logged user that was returned by the last
-   * call to {@link sdk.God#login} or
-   * {@link sdk.God#getCurrent}. Return null when there
+   * call to {@link sdk.LoggedUser#login} or
+   * {@link sdk.LoggedUser#getCurrent}. Return null when there
    * is no user logged in or the data of the current user were not fetched
    * yet.
    *
@@ -590,7 +590,7 @@ export class GodApi extends BaseLoopBackApi {
   }
   /**
    * Get data of the currently logged access tokern that was returned by the last
-   * call to {@link sdk.God#login}
+   * call to {@link sdk.LoggedUser#login}
    *
    * @returns object An AccessToken instance.
    */
@@ -598,7 +598,7 @@ export class GodApi extends BaseLoopBackApi {
     return this.auth.getToken();
   }
   /**
-   * @name sdk.God#isAuthenticated
+   * @name sdk.LoggedUser#isAuthenticated
    *
    * @returns {boolean} True if the current user is authenticated (logged in).
    */
@@ -607,7 +607,7 @@ export class GodApi extends BaseLoopBackApi {
   }
 
   /**
-   * @name sdk.God#getCurrentId
+   * @name sdk.LoggedUser#getCurrentId
    *
    * @returns object Id of the currently logged-in user or null.
    */
@@ -617,9 +617,9 @@ export class GodApi extends BaseLoopBackApi {
 
   /**
    * The name of the model represented by this $resource,
-   * i.e. `God`.
+   * i.e. `LoggedUser`.
    */
   public getModelName() {
-    return "God";
+    return "LoggedUser";
   }
 }

@@ -65,7 +65,7 @@ import { BranchOfficeApi } from './services/custom/BranchOffice';
 import { CarApi } from './services/custom/Car';
 import { RPriceListApi } from './services/custom/RPriceList';
 import { RPriceListItemApi } from './services/custom/RPriceListItem';
-import { GodApi } from './services/custom/God';
+import { LoggedUserApi } from './services/custom/LoggedUser';
 /**
 * @module SDKBrowserModule
 * @description
@@ -113,7 +113,7 @@ export class SDKBrowserModule {
         CarApi,
         RPriceListApi,
         RPriceListItemApi,
-        GodApi,
+        LoggedUserApi,
         internalStorageProvider,
         { provide: SDKStorage, useClass: StorageBrowser },
         { provide: SocketDriver, useClass: SocketBrowser }

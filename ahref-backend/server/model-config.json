@@ -99,7 +99,7 @@
     "dataSource": "db",
     "public": true
   },
-  "God": {
+  "LoggedUser": {
     "dataSource": "MongoDB",
     "public": true
   }
