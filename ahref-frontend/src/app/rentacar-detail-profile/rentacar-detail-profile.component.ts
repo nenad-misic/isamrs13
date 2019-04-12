@@ -5,7 +5,7 @@ import { Location } from '@angular/common';
 
 
 import { API_VERSION } from '../shared/baseurl';
-import {Airline, LoopBackConfig, RACService, RACServiceApi} from '../shared/sdk';
+import {Airline, LoopBackConfig, RACService, RACServiceApi, LoggedUserApi, UserApi} from '../shared/sdk';
 @Component({
   selector: 'app-rentacar-detail-profile',
   templateUrl: './rentacar-detail-profile.component.html',
@@ -15,11 +15,13 @@ export class RentacarDetailProfileComponent implements OnInit {
 
   profile: RACService;
   profile_new: RACService;
+  readOnly = true;
 
   constructor(private rentacarService: RACServiceApi,
               private route: ActivatedRoute,
               private location: Location,
-              @Inject('baseURL') private baseURL) {
+              @Inject('baseURL') private baseURL,
+              private userApi: LoggedUserApi) {
     LoopBackConfig.setBaseURL(baseURL);
     LoopBackConfig.setApiVersion(API_VERSION);
   }
@@ -37,7 +39,13 @@ export class RentacarDetailProfileComponent implements OnInit {
         this.profile_new.longitude = this.profile.longitude;
         this.profile_new.rating = this.profile.rating;
         this.profile_new.numOfRates = this.profile.numOfRates;
+        this.profile_new.loggedUserId = this.profile.loggedUserId;
 
+        if (this.profile.loggedUserId === this.userApi.getCachedCurrent().id){
+          this.readOnly = false;
+        } else{
+          this.readOnly = true;
+        }
       }
     );
 

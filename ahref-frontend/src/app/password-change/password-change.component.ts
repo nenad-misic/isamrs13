@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {Location} from '@angular/common';
-import {LoggedUserApi} from '../shared/sdk/services/custom';
+import {LoggedUserApi, RACServiceApi} from '../shared/sdk/services/custom';
+import {LoopBackConfig} from '../shared/sdk';
+import {API_VERSION} from '../shared/baseurl';
 
 @Component({
   selector: 'app-password-change',
@@ -14,7 +16,10 @@ export class PasswordChangeComponent implements OnInit {
   errmsg: string;
 
   constructor(private userService: LoggedUserApi,
-              private location: Location) { }
+              private location: Location,
+              @Inject('baseURL') private baseURL) {
+    LoopBackConfig.setBaseURL(baseURL);
+    LoopBackConfig.setApiVersion(API_VERSION); }
 
   ngOnInit() {
     if (!this.userService.getCachedCurrent()){

@@ -14,6 +14,7 @@ import { SocketConnection } from '../../sockets/socket.connections';
 import { Destination } from '../../models/Destination';
 import { Room } from '../../models/Room';
 import { HPriceList } from '../../models/HPriceList';
+import { LoggedUser } from '../../models/LoggedUser';
 
 
 /**
@@ -271,6 +272,36 @@ export class HotelApi extends BaseLoopBackApi {
     };
     let _postBody: any = {};
     let _urlParams: any = {};
+    let result = this.request(_method, _url, _routeParams, _urlParams, _postBody, null, customHeaders);
+    return result;
+  }
+
+  /**
+   * Fetches belongsTo relation loggedUser.
+   *
+   * @param {any} id Hotel id
+   *
+   * @param {boolean} refresh 
+   *
+   * @returns {object} An empty reference that will be
+   *   populated with the actual data once the response is returned
+   *   from the server.
+   *
+   * <em>
+   * (The remote method definition does not provide any description.
+   * This usually means the response is a `Hotel` object.)
+   * </em>
+   */
+  public getLoggedUser(id: any, refresh: any = {}, customHeaders?: Function): Observable<any> {
+    let _method: string = "GET";
+    let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
+    "/Hotels/:id/loggedUser";
+    let _routeParams: any = {
+      id: id
+    };
+    let _postBody: any = {};
+    let _urlParams: any = {};
+    if (typeof refresh !== 'undefined' && refresh !== null) _urlParams.refresh = refresh;
     let result = this.request(_method, _url, _routeParams, _urlParams, _postBody, null, customHeaders);
     return result;
   }

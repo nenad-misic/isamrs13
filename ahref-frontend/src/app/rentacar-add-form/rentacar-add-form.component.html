@@ -21,6 +21,13 @@
       <input matInput required type="number" [(ngModel)]="new_racservice.longitude" placeholder="longitude" name="longitude"/>
     </mat-form-field>
 
+    <mat-form-field>
+      <input matInput required type="email" [(ngModel)]="email" placeholder="Admin email" name="adminemail"/>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput required [(ngModel)]="city" placeholder="City" name="city"/>
+    </mat-form-field>
 
     <button mat-button>ADD RACService</button>
     <p>*required</p>

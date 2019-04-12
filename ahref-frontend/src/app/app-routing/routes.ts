@@ -13,12 +13,16 @@ import {UserSectionComponent} from '../user-section/user-section.component';
 import {RegisterComponent} from '../register/register.component';
 import {LoginComponent} from '../login/login.component';
 import {PasswordChangeComponent} from '../password-change/password-change.component';
+import {CarSectionFilteredComponent} from '../car-section-filtered/car-section-filtered.component';
+import {CarDetailProfileComponent} from '../car-detail-profile/car-detail-profile.component';
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent},
   { path: 'rentacar', component: RentacarSectionComponent },
   { path: 'rentdetail/:id', component: RentacarDetailProfileComponent },
   { path: 'cars', component: CarSectionComponent },
+  { path: 'cars/:id', component: CarSectionFilteredComponent },
+  { path: 'cardetail/:id', component: CarDetailProfileComponent },
   { path: 'hotels', component: HotelSectionComponent },
   { path: 'hoteldetail/:id', component: HotelDetailProfileComponent },
   { path: 'airline', component: AirlineSectionComponent },

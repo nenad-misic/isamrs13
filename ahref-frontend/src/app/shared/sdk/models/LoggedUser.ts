@@ -1,4 +1,9 @@
 /* tslint:disable */
+import {
+  Airline,
+  Hotel,
+  RACService
+} from '../index';
 
 declare var Object: any;
 export interface LoggedUserInterface {
@@ -15,6 +20,9 @@ export interface LoggedUserInterface {
   "id"?: any;
   "password"?: string;
   accessTokens?: any[];
+  airline?: Airline;
+  hotel?: Hotel;
+  racservice?: RACService;
 }
 
 export class LoggedUser implements LoggedUserInterface {
@@ -31,6 +39,9 @@ export class LoggedUser implements LoggedUserInterface {
   "id": any;
   "password": string;
   accessTokens: any[];
+  airline: Airline;
+  hotel: Hotel;
+  racservice: RACService;
   constructor(data?: LoggedUserInterface) {
     Object.assign(this, data);
   }
@@ -123,6 +134,30 @@ export class LoggedUser implements LoggedUserInterface {
           relationType: 'hasMany',
                   keyFrom: 'id',
           keyTo: 'userId'
+        },
+        airline: {
+          name: 'airline',
+          type: 'Airline',
+          model: 'Airline',
+          relationType: 'hasOne',
+                  keyFrom: 'id',
+          keyTo: 'loggedUserId'
+        },
+        hotel: {
+          name: 'hotel',
+          type: 'Hotel',
+          model: 'Hotel',
+          relationType: 'hasOne',
+                  keyFrom: 'id',
+          keyTo: 'loggedUserId'
+        },
+        racservice: {
+          name: 'racservice',
+          type: 'RACService',
+          model: 'RACService',
+          relationType: 'hasOne',
+                  keyFrom: 'id',
+          keyTo: 'loggedUserId'
         },
       }
     }

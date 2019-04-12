@@ -38,6 +38,11 @@
       "type": "hasMany",
       "model": "Flight",
       "foreignKey": ""
+    },
+    "rACServices": {
+      "type": "hasMany",
+      "model": "RACService",
+      "foreignKey": ""
     }
   },
   "acls": [

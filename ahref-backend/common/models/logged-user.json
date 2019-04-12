@@ -34,7 +34,30 @@
     }
   },
   "validations": [],
-  "relations": {},
-  "acls": [],
+  "relations": {
+    "airline": {
+      "type": "hasOne",
+      "model": "Airline",
+      "foreignKey": ""
+    },
+    "hotel": {
+      "type": "hasOne",
+      "model": "Hotel",
+      "foreignKey": ""
+    },
+    "racservice": {
+      "type": "hasOne",
+      "model": "RACService",
+      "foreignKey": ""
+    }
+  },
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "sysAdmin",
+      "permission": "ALLOW"
+    }
+  ],
   "methods": {}
 }

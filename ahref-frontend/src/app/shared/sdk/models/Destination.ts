@@ -1,7 +1,8 @@
 /* tslint:disable */
 import {
   Flight,
-  Hotel
+  Hotel,
+  RACService
 } from '../index';
 
 declare var Object: any;
@@ -16,6 +17,7 @@ export interface DestinationInterface {
   "flightId"?: any;
   startFlights?: Flight[];
   hotels?: Hotel[];
+  rACServices?: RACService[];
 }
 
 export class Destination implements DestinationInterface {
@@ -29,6 +31,7 @@ export class Destination implements DestinationInterface {
   "flightId": any;
   startFlights: Flight[];
   hotels: Hotel[];
+  rACServices: RACService[];
   constructor(data?: DestinationInterface) {
     Object.assign(this, data);
   }
@@ -108,6 +111,14 @@ export class Destination implements DestinationInterface {
           name: 'hotels',
           type: 'Hotel[]',
           model: 'Hotel',
+          relationType: 'hasMany',
+                  keyFrom: 'id',
+          keyTo: 'destinationId'
+        },
+        rACServices: {
+          name: 'rACServices',
+          type: 'RACService[]',
+          model: 'RACService',
           relationType: 'hasMany',
                   keyFrom: 'id',
           keyTo: 'destinationId'

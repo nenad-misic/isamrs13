@@ -2,7 +2,8 @@
 import {
   Destination,
   Room,
-  HPriceList
+  HPriceList,
+  LoggedUser
 } from '../index';
 
 declare var Object: any;
@@ -16,9 +17,11 @@ export interface HotelInterface {
   "numOfRates": number;
   "id"?: any;
   "destinationId"?: any;
+  "loggedUserId"?: any;
   destination?: Destination;
   rooms?: Room[];
   priceList?: HPriceList;
+  loggedUser?: LoggedUser;
 }
 
 export class Hotel implements HotelInterface {
@@ -31,9 +34,11 @@ export class Hotel implements HotelInterface {
   "numOfRates": number;
   "id": any;
   "destinationId": any;
+  "loggedUserId": any;
   destination: Destination;
   rooms: Room[];
   priceList: HPriceList;
+  loggedUser: LoggedUser;
   constructor(data?: HotelInterface) {
     Object.assign(this, data);
   }
@@ -105,6 +110,10 @@ export class Hotel implements HotelInterface {
           name: 'destinationId',
           type: 'any'
         },
+        "loggedUserId": {
+          name: 'loggedUserId',
+          type: 'any'
+        },
       },
       relations: {
         destination: {
@@ -130,6 +139,14 @@ export class Hotel implements HotelInterface {
           relationType: 'hasOne',
                   keyFrom: 'id',
           keyTo: 'hotelId'
+        },
+        loggedUser: {
+          name: 'loggedUser',
+          type: 'LoggedUser',
+          model: 'LoggedUser',
+          relationType: 'belongsTo',
+                  keyFrom: 'loggedUserId',
+          keyTo: 'id'
         },
       }
     }

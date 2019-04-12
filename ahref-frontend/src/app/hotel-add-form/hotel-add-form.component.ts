@@ -14,8 +14,8 @@ export class HotelAddFormComponent implements OnInit {
   type: string;
   constructor(private service: HotelApi,
               private location: Location,
-              @Inject('baseURL') private baseURL,
-              private userTypeService: LoggedUserApi) {
+              private userTypeService: LoggedUserApi,
+              @Inject('baseURL') private baseURL) {
     LoopBackConfig.setBaseURL(baseURL);
     LoopBackConfig.setApiVersion(API_VERSION);
   }

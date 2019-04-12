@@ -53,6 +53,16 @@
       "type": "hasOne",
       "model": "RPriceList",
       "foreignKey": ""
+    },
+    "loggedUser": {
+      "type": "belongsTo",
+      "model": "LoggedUser",
+      "foreignKey": ""
+    },
+    "destination": {
+      "type": "belongsTo",
+      "model": "Destination",
+      "foreignKey": ""
     }
   },
   "acls": [

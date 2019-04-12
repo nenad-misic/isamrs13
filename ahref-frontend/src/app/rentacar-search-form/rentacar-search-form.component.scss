@@ -6,3 +6,8 @@
 .form-container > * {
   width: 100%;
 }
+form {
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+}

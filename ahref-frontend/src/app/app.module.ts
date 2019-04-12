@@ -30,22 +30,16 @@ import { CarSectionComponent } from './car-section/car-section.component';
 import { CarProfileComponent } from './car-profile/car-profile.component';
 import { HomeComponent } from './home/home.component';
 
-import {RentacarService} from './services/rentacar.service';
-import {CarService} from './services/car.service';
-import {DataService} from './services/data.service';
 
 import { HttpClientModule } from '@angular/common/http';
 import { HotelSectionComponent } from './hotel-section/hotel-section.component';
-import {HotelService} from './services/hotel.service';
 import { HotelProfileComponent } from './hotel-profile/hotel-profile.component';
 import { HotelDetailProfileComponent } from './hotel-detail-profile/hotel-detail-profile.component';
 import { HotelAddFormComponent } from './hotel-add-form/hotel-add-form.component';
-import {AirlineService} from './services/airline.service';
 import { AirlineSectionComponent } from './airline-section/airline-section.component';
 import { AirlineProfileComponent } from './airline-profile/airline-profile.component';
 import { AirlineDetailProfileComponent } from './airline-detail-profile/airline-detail-profile.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
-import {RACServiceApi} from './shared/sdk/services/custom';
 import {SDKBrowserModule} from './shared/sdk';
 import { UserSectionComponent } from './user-section/user-section.component';
 import { UsersProfileComponent } from './users-profile/users-profile.component';
@@ -55,6 +49,10 @@ import { RentacarAddFormComponent } from './rentacar-add-form/rentacar-add-form.
 import {RegisterComponent} from './register/register.component';
 import { PasswordChangeComponent } from './password-change/password-change.component';
 import { LoginComponent } from './login/login.component';
+import { CarAddFormComponent } from './car-add-form/car-add-form.component';
+import { CarSectionFilteredComponent } from './car-section-filtered/car-section-filtered.component';
+import { CarDetailProfileComponent } from './car-detail-profile/car-detail-profile.component';
+import { RacserviceSearchFormComponent } from './racservice-search-form/racservice-search-form.component';
 
 @NgModule({
   declarations: [
@@ -81,7 +79,11 @@ import { LoginComponent } from './login/login.component';
     RentacarAddFormComponent,
     RegisterComponent,
     PasswordChangeComponent,
-    LoginComponent
+    LoginComponent,
+    CarAddFormComponent,
+    CarSectionFilteredComponent,
+    CarDetailProfileComponent,
+    RacserviceSearchFormComponent
   ],
   imports: [
     BrowserModule,
