@@ -1,36 +1,33 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {Router, RouterEvent} from '@angular/router';
+import {LoggedUserApi} from './shared/sdk/services/custom';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit  {
   title = 'ahref-frontend';
-  view: string;
 
-  mainViewChanged(viewId: number): void {
-    switch (viewId) {
-      case 0: {
-        this.view = 'airlines';
-        break;
+  type: string;
+
+  constructor(private userTypeService: LoggedUserApi,
+              private router: Router) {
+    this.router.events.subscribe((event: RouterEvent) => {
+      if( this.userTypeService.getCachedCurrent() ){
+        this.type = this.userTypeService.getCachedCurrent().type;
+      }else{
+        this.type = '';
       }
-      case 1: {
-        this.view = 'hotels';
-        break;
-      }
-      case 2: {
-        this.view = 'rentacar';
-        break;
-      }
-      case 3: {
-        this.view = 'profile';
-        break;
-      }
-      default: {
-        this.view = '';
-        break;
-      }
+    });
+  }
+
+  ngOnInit() {
+    if( this.userTypeService.getCachedCurrent() ){
+      this.type = this.userTypeService.getCachedCurrent().type;
+    }else{
+      this.type = '';
     }
   }
 }

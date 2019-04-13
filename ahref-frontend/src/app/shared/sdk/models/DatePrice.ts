@@ -4,15 +4,15 @@ declare var Object: any;
 export interface DatePriceInterface {
   "price": number;
   "startDate": number;
-  "id"?: number;
-  "roomId"?: number;
+  "id"?: any;
+  "roomId"?: any;
 }
 
 export class DatePrice implements DatePriceInterface {
   "price": number;
   "startDate": number;
-  "id": number;
-  "roomId": number;
+  "id": any;
+  "roomId": any;
   constructor(data?: DatePriceInterface) {
     Object.assign(this, data);
   }
@@ -56,11 +56,11 @@ export class DatePrice implements DatePriceInterface {
         },
         "id": {
           name: 'id',
-          type: 'number'
+          type: 'any'
         },
         "roomId": {
           name: 'roomId',
-          type: 'number'
+          type: 'any'
         },
       },
       relations: {

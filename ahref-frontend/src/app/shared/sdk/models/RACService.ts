@@ -1,8 +1,10 @@
 /* tslint:disable */
 import {
+  Destination,
   BranchOffice,
   Car,
-  RPriceList
+  RPriceList,
+  LoggedUser
 } from '../index';
 
 declare var Object: any;
@@ -14,10 +16,14 @@ export interface RACServiceInterface {
   "description": string;
   "rating": number;
   "numOfRates": number;
-  "id"?: number;
+  "id"?: any;
+  "destinationId"?: any;
+  "loggedUserId"?: any;
+  destination?: Destination;
   branchOffices?: BranchOffice[];
   cars?: Car[];
   priceList?: RPriceList;
+  loggedUser?: LoggedUser;
 }
 
 export class RACService implements RACServiceInterface {
@@ -28,10 +34,14 @@ export class RACService implements RACServiceInterface {
   "description": string;
   "rating": number;
   "numOfRates": number;
-  "id": number;
+  "id": any;
+  "destinationId": any;
+  "loggedUserId": any;
+  destination: Destination;
   branchOffices: BranchOffice[];
   cars: Car[];
   priceList: RPriceList;
+  loggedUser: LoggedUser;
   constructor(data?: RACServiceInterface) {
     Object.assign(this, data);
   }
@@ -97,10 +107,26 @@ export class RACService implements RACServiceInterface {
         },
         "id": {
           name: 'id',
-          type: 'number'
+          type: 'any'
+        },
+        "destinationId": {
+          name: 'destinationId',
+          type: 'any'
+        },
+        "loggedUserId": {
+          name: 'loggedUserId',
+          type: 'any'
         },
       },
       relations: {
+        destination: {
+          name: 'destination',
+          type: 'Destination',
+          model: 'Destination',
+          relationType: 'belongsTo',
+                  keyFrom: 'destinationId',
+          keyTo: 'id'
+        },
         branchOffices: {
           name: 'branchOffices',
           type: 'BranchOffice[]',
@@ -124,6 +150,14 @@ export class RACService implements RACServiceInterface {
           relationType: 'hasOne',
                   keyFrom: 'id',
           keyTo: 'rACServiceId'
+        },
+        loggedUser: {
+          name: 'loggedUser',
+          type: 'LoggedUser',
+          model: 'LoggedUser',
+          relationType: 'belongsTo',
+                  keyFrom: 'loggedUserId',
+          keyTo: 'id'
         },
       }
     }

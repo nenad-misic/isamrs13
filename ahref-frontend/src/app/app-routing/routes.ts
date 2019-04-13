@@ -8,21 +8,29 @@ import {HotelSectionComponent} from '../hotel-section/hotel-section.component';
 import {HotelDetailProfileComponent} from '../hotel-detail-profile/hotel-detail-profile.component';
 import {AirlineSectionComponent} from '../airline-section/airline-section.component';
 import {AirlineDetailProfileComponent} from '../airline-detail-profile/airline-detail-profile.component';
-import {UserProfileComponent} from '../user-profile/user-profile.component
+import {UserProfileComponent} from '../user-profile/user-profile.component';
 import {UserSectionComponent} from '../user-section/user-section.component';
 import {RegisterComponent} from '../register/register.component';
+import {LoginComponent} from '../login/login.component';
+import {PasswordChangeComponent} from '../password-change/password-change.component';
+import {CarSectionFilteredComponent} from '../car-section-filtered/car-section-filtered.component';
+import {CarDetailProfileComponent} from '../car-detail-profile/car-detail-profile.component';
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent},
   { path: 'rentacar', component: RentacarSectionComponent },
   { path: 'rentdetail/:id', component: RentacarDetailProfileComponent },
   { path: 'cars', component: CarSectionComponent },
+  { path: 'cars/:id', component: CarSectionFilteredComponent },
+  { path: 'cardetail/:id', component: CarDetailProfileComponent },
   { path: 'hotels', component: HotelSectionComponent },
   { path: 'hoteldetail/:id', component: HotelDetailProfileComponent },
   { path: 'airline', component: AirlineSectionComponent },
-  { path: 'airlinedetail/:id', component: AirlineDetailProfileComponent },
+  { path: 'airlinedetail', component: AirlineDetailProfileComponent },
   { path: 'profile', component: UserProfileComponent },
   { path: 'profiles', component: UserSectionComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'changepassword', component: PasswordChangeComponent },
+  { path: 'login', component: LoginComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' }
 ];

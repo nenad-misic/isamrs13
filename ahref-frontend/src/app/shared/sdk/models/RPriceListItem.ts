@@ -4,15 +4,15 @@ declare var Object: any;
 export interface RPriceListItemInterface {
   "price": number;
   "carType": string;
-  "id"?: number;
-  "rPriceListId"?: number;
+  "id"?: any;
+  "rPriceListId"?: any;
 }
 
 export class RPriceListItem implements RPriceListItemInterface {
   "price": number;
   "carType": string;
-  "id": number;
-  "rPriceListId": number;
+  "id": any;
+  "rPriceListId": any;
   constructor(data?: RPriceListItemInterface) {
     Object.assign(this, data);
   }
@@ -56,11 +56,11 @@ export class RPriceListItem implements RPriceListItemInterface {
         },
         "id": {
           name: 'id',
-          type: 'number'
+          type: 'any'
         },
         "rPriceListId": {
           name: 'rPriceListId',
-          type: 'number'
+          type: 'any'
         },
       },
       relations: {

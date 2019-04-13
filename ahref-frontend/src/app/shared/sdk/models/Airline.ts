@@ -2,7 +2,8 @@
 import {
   Flight,
   APriceList,
-  Destination
+  Destination,
+  LoggedUser
 } from '../index';
 
 declare var Object: any;
@@ -14,10 +15,12 @@ export interface AirlineInterface {
   "description": string;
   "rating": number;
   "numOfRates": number;
-  "id"?: number;
+  "id"?: any;
+  "loggedUserId"?: any;
   flights?: Flight[];
   priceList?: APriceList;
   destinations?: Destination[];
+  loggedUser?: LoggedUser;
 }
 
 export class Airline implements AirlineInterface {
@@ -28,10 +31,12 @@ export class Airline implements AirlineInterface {
   "description": string;
   "rating": number;
   "numOfRates": number;
-  "id": number;
+  "id": any;
+  "loggedUserId": any;
   flights: Flight[];
   priceList: APriceList;
   destinations: Destination[];
+  loggedUser: LoggedUser;
   constructor(data?: AirlineInterface) {
     Object.assign(this, data);
   }
@@ -97,7 +102,11 @@ export class Airline implements AirlineInterface {
         },
         "id": {
           name: 'id',
-          type: 'number'
+          type: 'any'
+        },
+        "loggedUserId": {
+          name: 'loggedUserId',
+          type: 'any'
         },
       },
       relations: {
@@ -124,6 +133,14 @@ export class Airline implements AirlineInterface {
           relationType: 'hasMany',
                   keyFrom: 'id',
           keyTo: 'airlineId'
+        },
+        loggedUser: {
+          name: 'loggedUser',
+          type: 'LoggedUser',
+          model: 'LoggedUser',
+          relationType: 'belongsTo',
+                  keyFrom: 'loggedUserId',
+          keyTo: 'id'
         },
       }
     }

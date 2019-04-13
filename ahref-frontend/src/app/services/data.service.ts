@@ -6,7 +6,7 @@ import {Car} from '../shared/sdk/models';
   providedIn: 'root'
 })
 export class DataService {
-
+  //car data service
   private searchParamsSource = new BehaviorSubject<Car[]>([]);
   currentSearchParams = this.searchParamsSource.asObservable();
 

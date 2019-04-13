@@ -1,7 +1,8 @@
 /* tslint:disable */
 import {
   Flight,
-  Hotel
+  Hotel,
+  RACService
 } from '../index';
 
 declare var Object: any;
@@ -11,11 +12,12 @@ export interface DestinationInterface {
   "name": string;
   "code": string;
   "country": string;
-  "id"?: number;
-  "airlineId"?: number;
-  "flightId"?: number;
+  "id"?: any;
+  "airlineId"?: any;
+  "flightId"?: any;
   startFlights?: Flight[];
   hotels?: Hotel[];
+  rACServices?: RACService[];
 }
 
 export class Destination implements DestinationInterface {
@@ -24,11 +26,12 @@ export class Destination implements DestinationInterface {
   "name": string;
   "code": string;
   "country": string;
-  "id": number;
-  "airlineId": number;
-  "flightId": number;
+  "id": any;
+  "airlineId": any;
+  "flightId": any;
   startFlights: Flight[];
   hotels: Hotel[];
+  rACServices: RACService[];
   constructor(data?: DestinationInterface) {
     Object.assign(this, data);
   }
@@ -84,15 +87,15 @@ export class Destination implements DestinationInterface {
         },
         "id": {
           name: 'id',
-          type: 'number'
+          type: 'any'
         },
         "airlineId": {
           name: 'airlineId',
-          type: 'number'
+          type: 'any'
         },
         "flightId": {
           name: 'flightId',
-          type: 'number'
+          type: 'any'
         },
       },
       relations: {
@@ -108,6 +111,14 @@ export class Destination implements DestinationInterface {
           name: 'hotels',
           type: 'Hotel[]',
           model: 'Hotel',
+          relationType: 'hasMany',
+                  keyFrom: 'id',
+          keyTo: 'destinationId'
+        },
+        rACServices: {
+          name: 'rACServices',
+          type: 'RACService[]',
+          model: 'RACService',
           relationType: 'hasMany',
                   keyFrom: 'id',
           keyTo: 'destinationId'

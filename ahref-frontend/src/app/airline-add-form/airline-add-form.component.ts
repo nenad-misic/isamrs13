@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {Airline} from '../shared/sdk/models';
-import {AirlineApi} from '../shared/sdk/services/custom';
+import {AirlineApi, LoggedUserApi} from '../shared/sdk/services/custom';
 import {LoopBackConfig} from '../shared/sdk';
 import {API_VERSION} from '../shared/baseurl';
 import {Location} from '@angular/common';
@@ -13,8 +13,10 @@ import {Location} from '@angular/common';
 export class AirlineAddFormComponent implements OnInit {
 
   new_airline: Airline;
+  type: string;
 
   constructor(private service: AirlineApi,
+              private userTypeService: LoggedUserApi,
               private location: Location,
               @Inject('baseURL') private baseURL) {
     LoopBackConfig.setBaseURL(baseURL);
@@ -22,6 +24,11 @@ export class AirlineAddFormComponent implements OnInit {
   }
 
   ngOnInit() {
+    if( this.userTypeService.getCachedCurrent() ){
+      this.type = this.userTypeService.getCachedCurrent().type;
+    }else{
+      this.type = '';
+    }
     this.new_airline = new Airline();
     this.new_airline.rating = 0;
     this.new_airline.numOfRates = 0;
@@ -29,8 +36,14 @@ export class AirlineAddFormComponent implements OnInit {
 
   addAirline() {
 
-    this.service.create(this.new_airline).subscribe((airline: Airline) => { if (!airline) { console.log(status); }});
+    this.service.create(this.new_airline).subscribe((airline: Airline) => {
+      if (!airline) {
+        console.log(status);
+      }
+    });
     this.new_airline = new Airline();
   }
 
+
 }
+

@@ -9,8 +9,8 @@ export interface RoomInterface {
   "numOfBeds": number;
   "rating": number;
   "numOfRates": number;
-  "id"?: number;
-  "hotelId"?: number;
+  "id"?: any;
+  "hotelId"?: any;
   datePrices?: DatePrice[];
 }
 
@@ -19,8 +19,8 @@ export class Room implements RoomInterface {
   "numOfBeds": number;
   "rating": number;
   "numOfRates": number;
-  "id": number;
-  "hotelId": number;
+  "id": any;
+  "hotelId": any;
   datePrices: DatePrice[];
   constructor(data?: RoomInterface) {
     Object.assign(this, data);
@@ -74,11 +74,11 @@ export class Room implements RoomInterface {
         },
         "id": {
           name: 'id',
-          type: 'number'
+          type: 'any'
         },
         "hotelId": {
           name: 'hotelId',
-          type: 'number'
+          type: 'any'
         },
       },
       relations: {

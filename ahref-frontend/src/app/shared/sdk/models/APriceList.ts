@@ -5,14 +5,14 @@ import {
 
 declare var Object: any;
 export interface APriceListInterface {
-  "id"?: number;
-  "airlineId"?: number;
+  "id"?: any;
+  "airlineId"?: any;
   priceListItems?: APriceListItem[];
 }
 
 export class APriceList implements APriceListInterface {
-  "id": number;
-  "airlineId": number;
+  "id": any;
+  "airlineId": any;
   priceListItems: APriceListItem[];
   constructor(data?: APriceListInterface) {
     Object.assign(this, data);
@@ -49,11 +49,11 @@ export class APriceList implements APriceListInterface {
       properties: {
         "id": {
           name: 'id',
-          type: 'number'
+          type: 'any'
         },
         "airlineId": {
           name: 'airlineId',
-          type: 'number'
+          type: 'any'
         },
       },
       relations: {

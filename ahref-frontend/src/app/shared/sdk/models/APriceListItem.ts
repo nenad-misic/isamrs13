@@ -4,15 +4,15 @@ declare var Object: any;
 export interface APriceListItemInterface {
   "name": string;
   "price": number;
-  "id"?: number;
-  "aPriceListId"?: number;
+  "id"?: any;
+  "aPriceListId"?: any;
 }
 
 export class APriceListItem implements APriceListItemInterface {
   "name": string;
   "price": number;
-  "id": number;
-  "aPriceListId": number;
+  "id": any;
+  "aPriceListId": any;
   constructor(data?: APriceListItemInterface) {
     Object.assign(this, data);
   }
@@ -56,11 +56,11 @@ export class APriceListItem implements APriceListItemInterface {
         },
         "id": {
           name: 'id',
-          type: 'number'
+          type: 'any'
         },
         "aPriceListId": {
           name: 'aPriceListId',
-          type: 'number'
+          type: 'any'
         },
       },
       relations: {

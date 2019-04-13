@@ -7,16 +7,16 @@ declare var Object: any;
 export interface SeatInterface {
   "row": number;
   "column": number;
-  "id"?: number;
-  "flightId"?: number;
+  "id"?: any;
+  "flightId"?: any;
   flight?: Flight;
 }
 
 export class Seat implements SeatInterface {
   "row": number;
   "column": number;
-  "id": number;
-  "flightId": number;
+  "id": any;
+  "flightId": any;
   flight: Flight;
   constructor(data?: SeatInterface) {
     Object.assign(this, data);
@@ -61,11 +61,11 @@ export class Seat implements SeatInterface {
         },
         "id": {
           name: 'id',
-          type: 'number'
+          type: 'any'
         },
         "flightId": {
           name: 'flightId',
-          type: 'number'
+          type: 'any'
         },
       },
       relations: {

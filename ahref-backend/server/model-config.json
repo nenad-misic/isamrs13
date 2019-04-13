@@ -14,93 +14,99 @@
     ]
   },
   "User": {
-    "dataSource": "db"
+    "dataSource": "MongoDB"
   },
   "AccessToken": {
-    "dataSource": "db",
+    "dataSource": "MongoDB",
     "public": false
   },
   "ACL": {
-    "dataSource": "db",
+    "dataSource": "MongoDB",
     "public": false
   },
   "RoleMapping": {
-    "dataSource": "db",
+    "dataSource": "MongoDB",
     "public": false,
     "options": {
       "strictObjectIDCoercion": true
     }
   },
   "Role": {
-    "dataSource": "db",
+    "dataSource": "MongoDB",
     "public": false
   },
   "Airline": {
-    "dataSource": "db",
+    "dataSource": "MongoDB",
     "public": true
   },
   "Flight": {
-    "dataSource": "db",
+    "dataSource": "MongoDB",
     "public": true
   },
   "Seat": {
-    "dataSource": "db",
+    "dataSource": "MongoDB",
     "public": true
   },
   "APriceList": {
-    "dataSource": "db",
+    "dataSource": "MongoDB",
     "public": true
   },
   "APriceListItem": {
-    "dataSource": "db",
+    "dataSource": "MongoDB",
     "public": true
   },
   "Destination": {
-    "dataSource": "db",
+    "dataSource": "MongoDB",
     "public": true
   },
   "Hotel": {
-    "dataSource": "db",
+    "dataSource": "MongoDB",
     "public": true
   },
   "Room": {
-    "dataSource": "db",
+    "dataSource": "MongoDB",
     "public": true
   },
   "DatePrice": {
-    "dataSource": "db",
+    "dataSource": "MongoDB",
     "public": true
   },
   "HPriceList": {
-    "dataSource": "db",
+    "dataSource": "MongoDB",
     "public": true
   },
   "HPriceListItem": {
-    "dataSource": "db",
+    "dataSource": "MongoDB",
     "public": true
   },
   "RACService": {
-    "dataSource": "db",
+    "dataSource": "MongoDB",
     "public": true
   },
   "BranchOffice": {
-    "dataSource": "db",
+    "dataSource": "MongoDB",
     "public": true
   },
   "Car": {
-    "dataSource": "db",
+    "dataSource": "MongoDB",
     "public": true
   },
   "RPriceList": {
-    "dataSource": "db",
+    "dataSource": "MongoDB",
     "public": true
   },
   "RPriceListItem": {
-    "dataSource": "db",
-    "public": true
-  },
-  "God": {
     "dataSource": "MongoDB",
     "public": true
+  },
+  "Email": {
+    "dataSource": "EmailDataSource"
+  },
+  "LoggedUser": {
+    "dataSource": "MongoDB",
+    "public": true,
+    "options": {
+      "emailVerificationRequired": true
+    }
   }
 }

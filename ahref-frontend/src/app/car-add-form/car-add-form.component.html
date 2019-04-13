@@ -1,0 +1,31 @@
+<mat-card class="form-container">
+  <div *ngIf="type=='racAdmin'">
+    <form novalidate>
+      <mat-form-field>
+        <input matInput required [(ngModel)]="new_car.name" placeholder="Name" name="name">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput required [(ngModel)]="new_car.brand" placeholder="Brand" name="model">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput required [(ngModel)]="new_car.model" placeholder="Model" name="brand">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput type="number" required [(ngModel)]="new_car.year" placeholder="Year" name="year">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput type="number" required [(ngModel)]="new_car.numOfSeats" placeholder="Number of seats" name="numOfSeats">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput type="number" required [(ngModel)]="new_car.fuelConsumption" placeholder="Fuel consumption" name="fuelConsumption">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput required [(ngModel)]="new_car.carType" placeholder="Car type" name="carType">
+      </mat-form-field>
+
+      <mat-card-actions>
+      <button mat-button (click)="addCar()">ADD CAR</button>
+      </mat-card-actions>
+    </form>
+  </div>
+</mat-card>

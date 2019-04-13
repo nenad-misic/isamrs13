@@ -53,6 +53,11 @@
       "type": "hasMany",
       "model": "Destination",
       "foreignKey": ""
+    },
+    "loggedUser": {
+      "type": "belongsTo",
+      "model": "LoggedUser",
+      "foreignKey": ""
     }
   },
   "acls": [
