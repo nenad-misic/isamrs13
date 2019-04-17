@@ -15,6 +15,10 @@ import {LoginComponent} from '../login/login.component';
 import {PasswordChangeComponent} from '../password-change/password-change.component';
 import {CarSectionFilteredComponent} from '../car-section-filtered/car-section-filtered.component';
 import {CarDetailProfileComponent} from '../car-detail-profile/car-detail-profile.component';
+import {FlightSectionComponent} from '../flight-section/flight-section.component';
+import {FlightDetailProfileComponent} from '../flight-detail-profile/flight-detail-profile.component';
+import {FlightSectionFilteredComponent} from '../flight-section-filtered/flight-section-filtered.component';
+import {SeatsComponent} from '../seats/seats.component';
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent},
@@ -26,11 +30,15 @@ export const routes: Routes = [
   { path: 'hotels', component: HotelSectionComponent },
   { path: 'hoteldetail/:id', component: HotelDetailProfileComponent },
   { path: 'airline', component: AirlineSectionComponent },
-  { path: 'airlinedetail', component: AirlineDetailProfileComponent },
+  { path: 'airlinedetail/:id', component: AirlineDetailProfileComponent },
+  { path: 'flights', component: FlightSectionComponent },
+  { path: 'flights/:id', component: FlightSectionFilteredComponent },
+  { path: 'flightdetail/:id', component: FlightDetailProfileComponent },
   { path: 'profile', component: UserProfileComponent },
   { path: 'profiles', component: UserSectionComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'changepassword', component: PasswordChangeComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'seats/:id', component: SeatsComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' }
 ];

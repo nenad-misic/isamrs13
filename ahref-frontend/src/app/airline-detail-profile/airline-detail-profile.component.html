@@ -1,7 +1,8 @@
 <mat-card>
-  <mat-card-title>{{profile_new.id}}</mat-card-title>
+  <mat-card-title>{{profile_new.name}}</mat-card-title>
   <form novalidate>
-    <mat-card-content fxLayout="column">
+    <mat-card-content fxLayout="column" *ngIf="readOnly">
+      <app-flight-add-form [airline]="profile_new"></app-flight-add-form>
       <mat-form-field>
         <input required matInput placeholder="Name" [(ngModel)]="profile_new.name" name="name">
       </mat-form-field>
@@ -19,11 +20,31 @@
       <mat-form-field>
         <input required matInput placeholder="Description" [(ngModel)]="profile_new.description" name="description">
       </mat-form-field>
+    </mat-card-content>
+    <mat-card-content fxLayout="column" *ngIf="!readOnly">
+      <mat-form-field>
+        <input required matInput placeholder="Name" [(ngModel)]="profile_new.name" name="name">
+      </mat-form-field>
+      <mat-form-field>
+        <input required matInput placeholder="Latitude" [(ngModel)]="profile_new.latitude" name="latitude">
+      </mat-form-field>
 
+      <mat-form-field>
+        <input required matInput placeholder="Longitude" [(ngModel)]="profile_new.longitude" name="longitude">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input required matInput placeholder="Address" [(ngModel)]="profile_new.address" name="address">
+      </mat-form-field>
+      <mat-form-field>
+        <input required matInput placeholder="Description" [(ngModel)]="profile_new.description" name="description">
+      </mat-form-field>
     </mat-card-content>
     <mat-card-actions>
       <button mat-button (click)="goBack()">Back</button>
       <button mat-button (click)="onSaveClick()">Save</button>
+      <button mat-button [routerLink]="['/flights', profile_new.id]">List flights</button>
     </mat-card-actions>
   </form>
 </mat-card>
+

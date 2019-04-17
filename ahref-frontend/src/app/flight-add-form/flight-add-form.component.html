@@ -1,0 +1,36 @@
+<mat-card class="form-container">
+  <div *ngIf="type=='airlineAdmin'">
+    <form novalidate>
+      <mat-form-field>
+        <input matInput type="number" required [(ngModel)]="new_flight.startTime" placeholder="Start Time" name="starttime">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput type="number" required [(ngModel)]="new_flight.endTime" placeholder="End Time" name="endtime">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput type="number" required [(ngModel)]="new_flight.length" placeholder="Length" name="brand">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput type="number" required [(ngModel)]="new_flight.ticketPrice" placeholder="Ticket Price" name="price">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput required [(ngModel)]="cityStart" placeholder="Start destination city" name="cityStart">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput required [(ngModel)]="cityEnd" placeholder="End destination city" name="cityEnd">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput type="number" required [(ngModel)]="row" placeholder="Number of rows for seats" name="row">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput type="number" required [(ngModel)]="col" placeholder="Number of columns for seats" name="col">
+      </mat-form-field>
+
+
+      <mat-card-actions>
+
+        <button mat-button (click)="addFlight()">ADD FLIGHT</button>
+      </mat-card-actions>
+    </form>
+  </div>
+</mat-card>

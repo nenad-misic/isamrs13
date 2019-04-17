@@ -53,6 +53,14 @@ import { CarAddFormComponent } from './car-add-form/car-add-form.component';
 import { CarSectionFilteredComponent } from './car-section-filtered/car-section-filtered.component';
 import { CarDetailProfileComponent } from './car-detail-profile/car-detail-profile.component';
 import { RacserviceSearchFormComponent } from './racservice-search-form/racservice-search-form.component';
+import { AirlineSearchFormComponent } from './airline-search-form/airline-search-form.component';
+import { FlightSectionComponent } from './flight-section/flight-section.component';
+import { FlightProfileComponent } from './flight-profile/flight-profile.component';
+import { FlightSearchFormComponent } from './flight-search-form/flight-search-form.component';
+import { FlightDetailProfileComponent } from './flight-detail-profile/flight-detail-profile.component';
+import { FlightAddFormComponent } from './flight-add-form/flight-add-form.component';
+import { FlightSectionFilteredComponent } from './flight-section-filtered/flight-section-filtered.component';
+import { SeatsComponent } from './seats/seats.component';
 
 @NgModule({
   declarations: [
@@ -83,7 +91,15 @@ import { RacserviceSearchFormComponent } from './racservice-search-form/racservi
     CarAddFormComponent,
     CarSectionFilteredComponent,
     CarDetailProfileComponent,
-    RacserviceSearchFormComponent
+    RacserviceSearchFormComponent,
+    AirlineSearchFormComponent,
+    FlightSectionComponent,
+    FlightProfileComponent,
+    FlightSearchFormComponent,
+    FlightDetailProfileComponent,
+    FlightAddFormComponent,
+    FlightSectionFilteredComponent,
+    SeatsComponent
   ],
   imports: [
     BrowserModule,

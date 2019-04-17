@@ -1,0 +1,31 @@
+.taken{
+  background-color: rgba(255, 0, 0, 0.3);
+  width: 100%;
+  border: 1px solid rgba(0,0,0,0.5);
+  height: 100%;
+}
+
+.nonTaken{
+  background-color: rgba(0, 255, 0, 0.3);
+  width: 100%;
+  border: 1px solid rgba(0,0,0,0.5);
+  height: 100%;
+}
+
+.nonTaken:hover{
+  background-color: rgba(0,255,0, 0.6);
+}
+.taken:hover{
+  background-color: rgba(255,0,0, 0.6);
+}
+td{
+  padding: 10px;
+  width: 30px;
+  height: 30px;
+}
+
+
+span{
+  height: 50px;
+  width: 50px;
+}
