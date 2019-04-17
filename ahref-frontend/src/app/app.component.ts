@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router, RouterEvent} from '@angular/router';
 import {LoggedUserApi} from './shared/sdk/services/custom';
+import {User} from './shared/sdk/models';
 
 @Component({
   selector: 'app-root',

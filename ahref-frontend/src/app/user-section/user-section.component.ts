@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {User} from '../shared/sdk/models';
-import {LoopBackConfig, UserApi} from '../shared/sdk';
+import {LoggedUserApi, LoopBackConfig, UserApi} from '../shared/sdk';
 import {API_VERSION} from '../shared/baseurl';
 import {UserdataService} from '../services/userdata.service';
 
@@ -12,16 +12,23 @@ import {UserdataService} from '../services/userdata.service';
 export class UserSectionComponent implements OnInit {
 
   users: User[];
+  readOnly: boolean;
 
   constructor(private userService: UserApi,
               private data: UserdataService,
-              @Inject('baseURL') private baseURL) {
+              @Inject('baseURL') private baseURL,
+              private userApi: LoggedUserApi) {
     LoopBackConfig.setBaseURL(baseURL);
     LoopBackConfig.setApiVersion(API_VERSION);
   }
 
   ngOnInit(): void {
     this.data.currentSearchParams.subscribe(searchList => this.users = searchList );
+    if ('sysAdmin' === this.userApi.getCachedCurrent().type) {
+      this.readOnly = false;
+    } else {
+      this.readOnly = true;
+    }
   }
 
 

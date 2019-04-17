@@ -1,0 +1,14 @@
+
+  <div *ngIf="type=='hotelAdmin'">
+    <form novalidate>
+        <mat-form-field>
+          <input matInput type="number" required [(ngModel)]="new_room.floor" placeholder="Floor" name="floor">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput type="number" required [(ngModel)]="new_room.numOfBeds" placeholder="NumberOfBeds" name="numOfBeds">
+        </mat-form-field>
+        <mat-card-actions>
+          <button mat-button (click)="addRoom()">ADD ROOM</button>
+        </mat-card-actions>
+    </form>
+  </div>
