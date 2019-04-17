@@ -24,9 +24,9 @@ export class AirlineAddFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    if( this.userTypeService.getCachedCurrent() ){
+    if (this.userTypeService.getCachedCurrent() ) {
       this.type = this.userTypeService.getCachedCurrent().type;
-    }else{
+    } else {
       this.type = '';
     }
     this.new_airline = new Airline();

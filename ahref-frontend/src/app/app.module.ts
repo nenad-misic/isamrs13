@@ -62,6 +62,14 @@ import { AdditionalServicesSectionComponent } from './additional-services-sectio
 import { AdditionalServiceProfileComponent } from './additional-service-profile/additional-service-profile.component';
 import { AdditionalServiceAddFormComponent } from './additional-service-add-form/additional-service-add-form.component';
 import { HotelSearchFormComponent } from './hotel-search-form/hotel-search-form.component';
+import { AirlineSearchFormComponent } from './airline-search-form/airline-search-form.component';
+import { FlightSectionComponent } from './flight-section/flight-section.component';
+import { FlightProfileComponent } from './flight-profile/flight-profile.component';
+import { FlightSearchFormComponent } from './flight-search-form/flight-search-form.component';
+import { FlightDetailProfileComponent } from './flight-detail-profile/flight-detail-profile.component';
+import { FlightAddFormComponent } from './flight-add-form/flight-add-form.component';
+import { FlightSectionFilteredComponent } from './flight-section-filtered/flight-section-filtered.component';
+import { SeatsComponent } from './seats/seats.component';
 
 @NgModule({
   declarations: [
@@ -101,7 +109,15 @@ import { HotelSearchFormComponent } from './hotel-search-form/hotel-search-form.
     AdditionalServicesSectionComponent,
     AdditionalServiceProfileComponent,
     AdditionalServiceAddFormComponent,
-    HotelSearchFormComponent
+    HotelSearchFormComponent,
+    AirlineSearchFormComponent,
+    FlightSectionComponent,
+    FlightProfileComponent,
+    FlightSearchFormComponent,
+    FlightDetailProfileComponent,
+    FlightAddFormComponent,
+    FlightSectionFilteredComponent,
+    SeatsComponent
   ],
   imports: [
     BrowserModule,

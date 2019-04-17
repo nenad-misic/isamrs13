@@ -17,6 +17,10 @@ import {CarSectionFilteredComponent} from '../car-section-filtered/car-section-f
 import {CarDetailProfileComponent} from '../car-detail-profile/car-detail-profile.component';
 import {RoomDetailProfileComponent} from '../room-detail-profile/room-detail-profile.component';
 import {AdditionalServicesSectionComponent} from '../additional-services-section/additional-services-section.component';
+import {FlightSectionComponent} from '../flight-section/flight-section.component';
+import {FlightDetailProfileComponent} from '../flight-detail-profile/flight-detail-profile.component';
+import {FlightSectionFilteredComponent} from '../flight-section-filtered/flight-section-filtered.component';
+import {SeatsComponent} from '../seats/seats.component';
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent},
@@ -28,7 +32,10 @@ export const routes: Routes = [
   { path: 'hotels', component: HotelSectionComponent },
   { path: 'hoteldetail/:id', component: HotelDetailProfileComponent },
   { path: 'airline', component: AirlineSectionComponent },
-  { path: 'airlinedetail', component: AirlineDetailProfileComponent },
+  { path: 'airlinedetail/:id', component: AirlineDetailProfileComponent },
+  { path: 'flights', component: FlightSectionComponent },
+  { path: 'flights/:id', component: FlightSectionFilteredComponent },
+  { path: 'flightdetail/:id', component: FlightDetailProfileComponent },
   { path: 'profile', component: UserProfileComponent },
   { path: 'profiles', component: UserSectionComponent },
   { path: 'register', component: RegisterComponent },
@@ -37,5 +44,7 @@ export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'roomdetail/:id', component: RoomDetailProfileComponent},
   { path: 'additionalservices/:id', component: AdditionalServicesSectionComponent},
-  { path: 'users', component: UserSectionComponent}
+  { path: 'users', component: UserSectionComponent},
+  { path: 'seats/:id', component: SeatsComponent },
+  { path: '', redirectTo: '/home', pathMatch: 'full' }
 ];

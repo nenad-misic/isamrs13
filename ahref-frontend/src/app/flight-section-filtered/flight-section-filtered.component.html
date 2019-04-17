@@ -1,0 +1,9 @@
+<mat-card>
+  <mat-card-content>
+    <mat-grid-list cols="2">
+      <mat-grid-tile *ngFor="let flight of flights" [routerLink]="['/flightdetail', flight.id]">
+        <app-flight-profile [profile]="flight"></app-flight-profile>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </mat-card-content>
+</mat-card>
