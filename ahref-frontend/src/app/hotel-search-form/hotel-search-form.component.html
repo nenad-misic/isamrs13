@@ -1,0 +1,14 @@
+<div class="form-container">
+  <form novalidate (ngSubmit)="doSearch()">
+
+    <mat-form-field>
+      <input matInput [(ngModel)]="search.name" placeholder="Name" name="name">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput [(ngModel)]="search.destinationId" placeholder="Destination" name="destination">
+    </mat-form-field>
+
+    <button mat-button>SEARCH HOTELS</button>
+  </form>
+</div>

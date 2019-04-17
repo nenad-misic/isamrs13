@@ -15,6 +15,8 @@ import {LoginComponent} from '../login/login.component';
 import {PasswordChangeComponent} from '../password-change/password-change.component';
 import {CarSectionFilteredComponent} from '../car-section-filtered/car-section-filtered.component';
 import {CarDetailProfileComponent} from '../car-detail-profile/car-detail-profile.component';
+import {RoomDetailProfileComponent} from '../room-detail-profile/room-detail-profile.component';
+import {AdditionalServicesSectionComponent} from '../additional-services-section/additional-services-section.component';
 import {FlightSectionComponent} from '../flight-section/flight-section.component';
 import {FlightDetailProfileComponent} from '../flight-detail-profile/flight-detail-profile.component';
 import {FlightSectionFilteredComponent} from '../flight-section-filtered/flight-section-filtered.component';
@@ -39,6 +41,10 @@ export const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'changepassword', component: PasswordChangeComponent },
   { path: 'login', component: LoginComponent },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: 'roomdetail/:id', component: RoomDetailProfileComponent},
+  { path: 'additionalservices/:id', component: AdditionalServicesSectionComponent},
+  { path: 'users', component: UserSectionComponent},
   { path: 'seats/:id', component: SeatsComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' }
 ];

@@ -1,21 +1,22 @@
 import {Component, Inject, Input, OnInit} from '@angular/core';
-import {Car} from '../shared/sdk/models';
+import {Room} from '../shared/sdk/models';
 import {LoopBackConfig} from '../shared/sdk';
 import {API_VERSION} from '../shared/baseurl';
 
 @Component({
-  selector: 'app-car-profile',
-  templateUrl: './car-profile.component.html',
-  styleUrls: ['./car-profile.component.scss']
+  selector: 'app-room-profile',
+  templateUrl: './room-profile.component.html',
+  styleUrls: ['./room-profile.component.scss']
 })
-export class CarProfileComponent implements OnInit {
+export class RoomProfileComponent implements OnInit {
 
   @Input()
-  profile: Car;
+  room: Room;
 
   constructor(@Inject('baseURL') private baseURL) {
     LoopBackConfig.setBaseURL(baseURL);
-    LoopBackConfig.setApiVersion(API_VERSION); }
+    LoopBackConfig.setApiVersion(API_VERSION);
+  }
 
   ngOnInit() {
   }

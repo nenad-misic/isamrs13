@@ -17,7 +17,7 @@ import {
   MatCardModule, MatCheckboxModule, MatDialog, MatDialogModule,
   MatFormFieldModule,
   MatGridListModule,
-  MatInputModule,
+  MatInputModule, MatListModule,
   MatOptionModule,
   MatSelectModule
 } from '@angular/material';
@@ -53,6 +53,15 @@ import { CarAddFormComponent } from './car-add-form/car-add-form.component';
 import { CarSectionFilteredComponent } from './car-section-filtered/car-section-filtered.component';
 import { CarDetailProfileComponent } from './car-detail-profile/car-detail-profile.component';
 import { RacserviceSearchFormComponent } from './racservice-search-form/racservice-search-form.component';
+import { RoomProfileComponent } from './room-profile/room-profile.component';
+import { RoomAddFormComponent } from './room-add-form/room-add-form.component';
+import { RoomDetailProfileComponent } from './room-detail-profile/room-detail-profile.component';
+import { RoomSectionComponent } from './room-section/room-section.component';
+import { AddUserFormComponent } from './add-user-form/add-user-form.component';
+import { AdditionalServicesSectionComponent } from './additional-services-section/additional-services-section.component';
+import { AdditionalServiceProfileComponent } from './additional-service-profile/additional-service-profile.component';
+import { AdditionalServiceAddFormComponent } from './additional-service-add-form/additional-service-add-form.component';
+import { HotelSearchFormComponent } from './hotel-search-form/hotel-search-form.component';
 import { AirlineSearchFormComponent } from './airline-search-form/airline-search-form.component';
 import { FlightSectionComponent } from './flight-section/flight-section.component';
 import { FlightProfileComponent } from './flight-profile/flight-profile.component';
@@ -92,6 +101,15 @@ import { SeatsComponent } from './seats/seats.component';
     CarSectionFilteredComponent,
     CarDetailProfileComponent,
     RacserviceSearchFormComponent,
+    RoomProfileComponent,
+    RoomAddFormComponent,
+    RoomDetailProfileComponent,
+    RoomSectionComponent,
+    AddUserFormComponent,
+    AdditionalServicesSectionComponent,
+    AdditionalServiceProfileComponent,
+    AdditionalServiceAddFormComponent,
+    HotelSearchFormComponent,
     AirlineSearchFormComponent,
     FlightSectionComponent,
     FlightProfileComponent,
@@ -113,6 +131,7 @@ import { SeatsComponent } from './seats/seats.component';
     MatSelectModule,
     MatInputModule,
     MatDialogModule,
+    MatListModule,
     AppRoutingModule,
     MatFormFieldModule,
     MatInputModule,

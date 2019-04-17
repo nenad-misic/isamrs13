@@ -1,0 +1,40 @@
+<mat-card fxLayout="row" fxLayoutAlign="center center">
+  <form novalidate>
+    <mat-card-content fxLayout="column">
+      <mat-form-field>
+        <input matInput required [(ngModel)]="new_user.username" placeholder="Username" name="username">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput required [(ngModel)]="new_user.password" placeholder="Password" name="password">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input required  matInput placeholder="Confirm password" type="password" [(ngModel)]="passwordConfirm" name="passwordConfirm">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput required [(ngModel)]="new_user.email" placeholder="Email" name="email">
+      </mat-form-field>
+      <mat-form-field>
+        <input required  matInput placeholder="Name" [(ngModel)]="new_user.name" name="name">
+      </mat-form-field>
+      <mat-form-field>
+        <input required matInput placeholder="City" [(ngModel)]="new_user.city" name="city">
+      </mat-form-field>
+      <mat-form-field>
+        <input required matInput placeholder="Telephone" [(ngModel)]="new_user.telephone" name="telephone">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-select [(value)]="selected_type">
+          <mat-option *ngFor="let type of types"  value="{{type}}">{{type}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button (click)="addUser()">Add user</button>
+    </mat-card-actions>
+  </form>
+</mat-card>

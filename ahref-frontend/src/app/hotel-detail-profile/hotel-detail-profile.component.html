@@ -1,21 +1,62 @@
 <mat-card>
-  <mat-card-title>{{profile_new.id}}</mat-card-title>
+  <mat-card-title>{{profile_new.name}}</mat-card-title>
   <form novalidate>
-    <mat-card-content fxLayout="column">
+    <mat-card-content fxLayout="column" *ngIf="!readOnly">
       <mat-form-field>
-        <input matInput placeholder="Name" [(ngModel)]="profile_new.name" name="name">
+        <input matInput required placeholder="Name" [(ngModel)]="profile_new.name" name="name">
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Description" [(ngModel)]="profile_new.description" name="description">
+        <input matInput required placeholder="Description" [(ngModel)]="profile_new.description" name="description">
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Address" [(ngModel)]="profile_new.address" name="address">
+        <input matInput required placeholder="Address" [(ngModel)]="profile_new.address" name="address">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput required placeholder="Latitude" [(ngModel)]="profile_new.latitude" name="latitude">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput required placeholder="Longitude" [(ngModel)]="profile_new.longitude" name="longitude">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput required placeholder="Rating" [(ngModel)]="profile_new.rating" name="rating">
+      </mat-form-field>
+    </mat-card-content>
+    <mat-card-content fxLayout="column" *ngIf="readOnly">
+      <mat-form-field>
+        <input matInput required placeholder="Name" [(ngModel)]="profile_new.name" readonly name="name">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput required placeholder="Description" [(ngModel)]="profile_new.description" readonly name="description">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput required placeholder="Address" [(ngModel)]="profile_new.address" readonly name="address">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput required placeholder="Latitude" [(ngModel)]="profile_new.latitude" readonly name="latitude">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput required placeholder="Longitude" [(ngModel)]="profile_new.longitude" readonly name="longitude">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput required placeholder="Rating" [(ngModel)]="profile_new.rating" readonly name="rating">
       </mat-form-field>
     </mat-card-content>
     <mat-card-actions>
       <button mat-button (click)="goBack()">Back</button>
       <button mat-button (click)="onSaveClick()">Save</button>
+      <button mat-button (click)="onAddServClick()">Additinal services</button>
     </mat-card-actions>
   </form>
+  <app-room-add-form [hotel]="profile_new" *ngIf="!readOnly"></app-room-add-form>
+  <mat-card>
+    <mat-card-content>
+      <mat-grid-list cols="2">
+        <mat-grid-tile *ngFor="let room of profile_new.rooms">
+          <app-room-profile [room]="room"  [routerLink]="['/roomdetail/' + room.id]"></app-room-profile>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </mat-card-content>
+  </mat-card>
+
 </mat-card>
 
