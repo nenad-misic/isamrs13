@@ -2,4 +2,11 @@
   <h1>
     WELCOME TO AHREF!
   </h1>
+  <input type="date" name="start" [(ngModel)]="startDate" placeholder="start date">
+  <input type="date" name="end" [(ngModel)]="endDate" placeholder="end date">
+  <input type="string" name="car" [(ngModel)]="car" list="cars" placeholder="car model">
+  <datalist id="cars">
+    <option *ngFor="let c of cars" value="{{c.id}}">
+  </datalist>
+  <button (click)="test()">KLIKNI ME</button>
 </div>

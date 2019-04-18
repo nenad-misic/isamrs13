@@ -18,5 +18,8 @@ export * from './RPriceList';
 export * from './RPriceListItem';
 export * from './Email';
 export * from './LoggedUser';
+export * from './CarReservation';
+export * from './SCar';
+export * from './MCarReservation';
 export * from './SDKModels';
 export * from './logger.service';

@@ -28,5 +28,15 @@
         }
       }
     ]
+  },
+  "postgres": {
+    "host": "localhost",
+    "port": 5432,
+    "url": "",
+    "database": "AHREF",
+    "password": "password",
+    "name": "postgres",
+    "user": "postgres",
+    "connector": "postgresql"
   }
 }
