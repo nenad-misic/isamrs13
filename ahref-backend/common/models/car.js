@@ -6,13 +6,21 @@ module.exports = function(Car) {
       function(ctx, model, next) {
         flag = true;
         doDelete(Car, ctx, model, next, function(e) {
-          if (!flag) {
-            flag = false;
-            next(e);
-          }
+          flag = false;
+          next(e);
         });
       });
 
+  Car.beforeRemote('replaceById',
+    function(ctx, model, next) {
+      console.log('dammnson');
+      flagUpdate = true;
+      doUpdate(Car, ctx, model, next, function(e) {
+        console.log('tusi')
+        flagUpdate = false;
+        next(e);
+      });
+    });
 
   Car.getMatching = function(racid, startDate, endDate, startDestination, endDestination, numOfSeats, carType, cb) {
     var results = [];
@@ -43,7 +51,6 @@ module.exports = function(Car) {
                 }
 
                 if (len === 0) {
-                  console.log(results);
                   cb(null, results);
                 }
               });
@@ -86,47 +93,86 @@ function doDelete(Car, ctx, model, next, errorCallback) {
       'SELECT * FROM sCar WHERE mongoId = $1 FOR UPDATE;'
       , [ctx.req.params.id], function(err, data) {
         sCar.findOne({where: {mongoId: ctx.req.params.id}}).then((car)=>{
-          console.log(ctx.req.params.id);
           sqlCarReservation.find({
             where: {sCarId: car.id},
           }).then((data)=> {
             var cnt = data.length;
-            console.log('Broj rezervacija na tom: ' + cnt);
             data.forEach((element) => {
               if (flag) {
                 var end1 = element.endDate.getTime();
-                console.log(end1);
                 var today = new Date().getTime();
-                console.log(today);
                 if (end1 > today) {
+                  flag = false;
                   tx.rollback(function(err) {
                     if (err && flag) errorCallback(err);
 
                     var error = new Error('Car has pending reservation' +
                       ' and cannot be deleted');
                     error.statusCode = error.status = 404;
-                    if (flag) {
-                      console.log('prijavljujem!');
-                      flag = false;
-                      errorCallback(error);
-                    }
+                    errorCallback(error);
                   });
                 }
               }
 
               cnt--;
-
             });
             if (cnt === 0 && flag) {
               sCar.deleteById(car.id)
                 .then((res) => {
                   tx.commit(function(err) {
                     if (err && flag)  errorCallback(err);
-                    console.log('commiteddown');
                     flag = false;
                     next();
                   });
                 });
+            }
+          });
+        });
+      });
+  });
+}
+function doUpdate(Car, ctx, model, next, errorCallbackUpdate) {
+  // models
+  var sqlCarReservation = Car.app.models.CarReservation;
+  var sCar = Car.app.models.sCar;
+  // data source
+  var postgres = sCar.app.dataSources.postgres;
+  // begin transaction
+  sqlCarReservation.beginTransaction({
+    isolationLevel: sqlCarReservation.Transaction.READ_COMMITTED,
+  }, function(err, tx) {
+    if (err) errorCallbackUpdate(err);
+    // lock car for update
+    postgres.connector.execute(
+      'SELECT * FROM sCar WHERE mongoId = $1 FOR UPDATE;'
+      , [ctx.req.params.id], function(err, data) {
+        sCar.findOne({where: {mongoId: ctx.req.params.id}}).then((car)=>{
+          sqlCarReservation.find({
+            where: {sCarId: car.id},
+          }).then((data)=> {
+            var cnt = data.length;
+            data.forEach((element) => {
+              if (flagUpdate) {
+                var end1 = element.endDate.getTime();
+                var today = new Date().getTime();
+                if (end1 > today) {
+                  flagUpdate = false;
+                  tx.rollback(function(err) {
+                    if (err && flagUpdate) errorCallbackUpdate(err);
+
+                    var error = new Error('Car has pending reservation' +
+                      ' and cannot be modified');
+                    error.statusCode = error.status = 404;
+                    errorCallbackUpdate(error);
+                  });
+                }
+              }
+
+              cnt--;
+            });
+            if (cnt === 0 && flagUpdate) {
+              flagUpdate = false;
+              next();
             }
           });
         });

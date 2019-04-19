@@ -1,5 +1,12 @@
+<mat-card *ngIf="errmsg">
+  <mat-card-content>
+    <p>{{errmsg}}</p>
+  </mat-card-content>
+</mat-card>
+
 <mat-card>
   <mat-card-title>{{car.name}}</mat-card-title>
+
   <form novalidate>
     <mat-card-content fxLayout="column" *ngIf="!readOnly">
       <mat-form-field>
