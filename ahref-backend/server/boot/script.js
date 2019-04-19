@@ -45,6 +45,41 @@ module.exports = function(app) {
 
 
 
+  LoggedUser.find({where: {type: 'racAdmin'}}).then((users) => {
+
+    var Role = app.models.Role;
+    var RoleMapping = app.models.RoleMapping;
+
+    users.forEach((user) => {
+      Role.findOne({name: 'racAdmin'}, (err, role) => {
+
+        if (!role) {
+          Role.create({
+            name: 'racAdmin',
+          }, (err, role) => {
+            if (err) throw (err);
+            console.log("New Role: ", role);
+
+            role.principals.create({
+              principalType: RoleMapping.USER,
+              principalId: user.id,
+            }, (err, principal) => {
+              if (err) throw (err);
+            });
+          });
+        }
+        else {
+          role.principals.create({
+            principalType: RoleMapping.USER,
+            principalId: user.id,
+          }, (err, principal) => {
+            if (err) throw (err);
+          });
+        }
+      })
+    })
+  });
+
 
   // THIS CODE WILL BE DELETED WHEN THE SYS-ADMINS FUNCTIONALITY TO ADD OTHER ADMINS IN IMPLEMENTED
   LoggedUser.findOne({ username: 'racAdmin' }, (err, users) => {
@@ -58,7 +93,7 @@ module.exports = function(app) {
         var Role = app.models.Role;
         var RoleMapping = app.models.RoleMapping;
 
-        Role.findOne({name: 'arcAdmin'}, (err, role) => {
+        Role.findOne({name: 'racAdmin'}, (err, role) => {
 
           if (!role) {
             Role.create({

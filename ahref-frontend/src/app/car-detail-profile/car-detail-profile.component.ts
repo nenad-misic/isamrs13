@@ -59,7 +59,6 @@ export class CarDetailProfileComponent implements OnInit {
 
   onDeleteClick(): void {
     // additional checks needed (will be implemented when the reservations arrive)
-    this.carApi.deleteById(this.car.id).subscribe((completed) => this.errmsg = '', (err) => this.errmsg = err);
-    this.location.back();
+    this.carApi.deleteById(this.car.id).subscribe((completed) => this.location.back(), (err) => this.errmsg = err);
   }
 }
