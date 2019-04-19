@@ -92,6 +92,53 @@ export class CarApi extends BaseLoopBackApi {
   }
 
   /**
+   * <em>
+         * (The remote method definition does not provide any description.)
+         * </em>
+   *
+   * @param {object} data Request data.
+   *
+   *  - `racid` – `{string}` - 
+   *
+   *  - `startDate` – `{string}` - 
+   *
+   *  - `endDate` – `{string}` - 
+   *
+   *  - `startDestination` – `{string}` - 
+   *
+   *  - `endDestination` – `{string}` - 
+   *
+   *  - `numOfSeats` – `{string}` - 
+   *
+   *  - `carType` – `{string}` - 
+   *
+   * @returns {object} An empty reference that will be
+   *   populated with the actual data once the response is returned
+   *   from the server.
+   *
+   * Data properties:
+   *
+   *  - `retval` – `{object}` - 
+   */
+  public getMatching(racid: any, startDate: any, endDate: any, startDestination: any, endDestination: any, numOfSeats: any, carType: any, customHeaders?: Function): Observable<any> {
+    let _method: string = "POST";
+    let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
+    "/Cars/getMatching";
+    let _routeParams: any = {};
+    let _postBody: any = {};
+    let _urlParams: any = {};
+    if (typeof racid !== 'undefined' && racid !== null) _urlParams.racid = racid;
+    if (typeof startDate !== 'undefined' && startDate !== null) _urlParams.startDate = startDate;
+    if (typeof endDate !== 'undefined' && endDate !== null) _urlParams.endDate = endDate;
+    if (typeof startDestination !== 'undefined' && startDestination !== null) _urlParams.startDestination = startDestination;
+    if (typeof endDestination !== 'undefined' && endDestination !== null) _urlParams.endDestination = endDestination;
+    if (typeof numOfSeats !== 'undefined' && numOfSeats !== null) _urlParams.numOfSeats = numOfSeats;
+    if (typeof carType !== 'undefined' && carType !== null) _urlParams.carType = carType;
+    let result = this.request(_method, _url, _routeParams, _urlParams, _postBody, null, customHeaders);
+    return result;
+  }
+
+  /**
    * The name of the model represented by this $resource,
    * i.e. `Car`.
    */

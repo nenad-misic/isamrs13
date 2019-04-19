@@ -6,6 +6,8 @@ import {
 declare var Object: any;
 export interface CarReservationInterface {
   "timeStamp"?: Date;
+  "startDate"?: Date;
+  "endDate"?: Date;
   "id"?: number;
   "sCarId"?: number;
   sCar?: SCar;
@@ -13,6 +15,8 @@ export interface CarReservationInterface {
 
 export class CarReservation implements CarReservationInterface {
   "timeStamp": Date;
+  "startDate": Date;
+  "endDate": Date;
   "id": number;
   "sCarId": number;
   sCar: SCar;
@@ -51,6 +55,14 @@ export class CarReservation implements CarReservationInterface {
       properties: {
         "timeStamp": {
           name: 'timeStamp',
+          type: 'Date'
+        },
+        "startDate": {
+          name: 'startDate',
+          type: 'Date'
+        },
+        "endDate": {
+          name: 'endDate',
           type: 'Date'
         },
         "id": {

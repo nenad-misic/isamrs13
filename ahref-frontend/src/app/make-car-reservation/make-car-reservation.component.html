@@ -1,0 +1,37 @@
+<mat-card *ngIf="errmsg">
+  <mat-card-content>
+    <p>
+      {{errmsg}}
+    </p>
+  </mat-card-content>
+</mat-card>
+
+<div>
+  <h2>Start date: </h2>
+  <p>{{info.startDate}}</p>
+</div>
+<div>
+  <h2>Start destination: </h2>
+  <p>{{info.startDestination}}</p>
+</div>
+<div>
+  <h2>End date: </h2>
+  <p>{{info.endDate}}</p>
+</div>
+<div>
+  <h2>End destination: </h2>
+  <p>{{info.endDestination}}</p>
+</div>
+<div>
+  <h2>Car:</h2>
+  <app-car-profile [profile]="car"></app-car-profile>
+</div>
+
+<div>
+  <h2>Total cost: </h2>
+  <p>666.32 $</p>
+</div>
+
+
+<button mat-button (click)="onConfirm()">Confirm</button>
+<button mat-button (click)="onDecline()">Decline</button>

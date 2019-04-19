@@ -6,6 +6,8 @@ import {
 declare var Object: any;
 export interface MCarReservationInterface {
   "timeStamp"?: Date;
+  "startDate"?: Date;
+  "endDate"?: Date;
   "id"?: any;
   "carId"?: any;
   car?: Car;
@@ -13,6 +15,8 @@ export interface MCarReservationInterface {
 
 export class MCarReservation implements MCarReservationInterface {
   "timeStamp": Date;
+  "startDate": Date;
+  "endDate": Date;
   "id": any;
   "carId": any;
   car: Car;
@@ -51,6 +55,14 @@ export class MCarReservation implements MCarReservationInterface {
       properties: {
         "timeStamp": {
           name: 'timeStamp',
+          type: 'Date'
+        },
+        "startDate": {
+          name: 'startDate',
+          type: 'Date'
+        },
+        "endDate": {
+          name: 'endDate',
           type: 'Date'
         },
         "id": {

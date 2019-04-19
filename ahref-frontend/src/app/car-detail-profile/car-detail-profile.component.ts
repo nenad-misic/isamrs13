@@ -15,6 +15,7 @@ export class CarDetailProfileComponent implements OnInit {
 
   car: Car;
   readOnly: boolean;
+  reservable: boolean;
   errmsg: string;
 
   constructor(private route: ActivatedRoute,
@@ -28,6 +29,11 @@ export class CarDetailProfileComponent implements OnInit {
 
   ngOnInit() {
     const id = this.route.snapshot.params['id'];
+    if (this.loggedUserApi.getCachedCurrent().type === 'regUser') {
+      this.reservable = true;
+    }else{
+      this.reservable = false;
+    }
     this.carApi.findById(id).subscribe((car: Car) => {
       this.car = car;
       this.racServiceApi.findById(car.rACServiceId).subscribe((racService: RACService) => {

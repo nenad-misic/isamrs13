@@ -1,0 +1,35 @@
+<div class="form-container">
+  <form novalidate (ngSubmit)="doSearch()">
+
+    <mat-form-field>
+      <input matInput required [(ngModel)]="startDate" type="date" placeholder="Start date" name="startDate">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input list="destinations" matInput required [(ngModel)]="startDestination" placeholder="Start destination" name="startDestination">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput required [(ngModel)]="endDate" type="date" placeholder="End date" name="endDate">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input list="destinations" matInput required [(ngModel)]="endDestination" placeholder="End destination" name="endDestination">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput required [(ngModel)]="carType" placeholder="Car type" name="carType">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput required [(ngModel)]="numOfSeats" type="number" placeholder="Number of seats" name="numOfSeats">
+    </mat-form-field>
+
+    <button mat-button>SEARCH RAC SERVICES</button>
+
+
+    <datalist id="destinations">
+      <option *ngFor="let d of destinations" value="{{d.city}}, {{d.state}}">
+    </datalist>
+  </form>
+</div>
