@@ -67,6 +67,9 @@ import { RPriceListApi } from './services/custom/RPriceList';
 import { RPriceListItemApi } from './services/custom/RPriceListItem';
 import { EmailApi } from './services/custom/Email';
 import { LoggedUserApi } from './services/custom/LoggedUser';
+import { CarReservationApi } from './services/custom/CarReservation';
+import { SCarApi } from './services/custom/SCar';
+import { MCarReservationApi } from './services/custom/MCarReservation';
 /**
 * @module SDKBrowserModule
 * @description
@@ -116,6 +119,9 @@ export class SDKBrowserModule {
         RPriceListItemApi,
         EmailApi,
         LoggedUserApi,
+        CarReservationApi,
+        SCarApi,
+        MCarReservationApi,
         internalStorageProvider,
         { provide: SDKStorage, useClass: StorageBrowser },
         { provide: SocketDriver, useClass: SocketBrowser }

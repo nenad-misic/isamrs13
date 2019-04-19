@@ -19,6 +19,9 @@ import { RPriceList } from '../../models/RPriceList';
 import { RPriceListItem } from '../../models/RPriceListItem';
 import { Email } from '../../models/Email';
 import { LoggedUser } from '../../models/LoggedUser';
+import { CarReservation } from '../../models/CarReservation';
+import { SCar } from '../../models/SCar';
+import { MCarReservation } from '../../models/MCarReservation';
 
 export interface Models { [name: string]: any }
 
@@ -45,6 +48,9 @@ export class SDKModels {
     RPriceListItem: RPriceListItem,
     Email: Email,
     LoggedUser: LoggedUser,
+    CarReservation: CarReservation,
+    SCar: SCar,
+    MCarReservation: MCarReservation,
     
   };
 

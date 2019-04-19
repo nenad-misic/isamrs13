@@ -52,6 +52,8 @@
       <button mat-button (click)="goBack()">Back</button>
       <button mat-button *ngIf="!readOnly" (click)="onSaveClick()">Save</button>
       <button mat-button *ngIf="!readOnly" (click)="onDeleteClick()">Delete</button>
+
+      <button mat-button *ngIf="reservable" [routerLink]="['/carreserve', car.id]">Make reservation</button>
     </mat-card-actions>
   </form>
 </mat-card>

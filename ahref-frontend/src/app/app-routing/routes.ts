@@ -21,6 +21,7 @@ import {FlightSectionComponent} from '../flight-section/flight-section.component
 import {FlightDetailProfileComponent} from '../flight-detail-profile/flight-detail-profile.component';
 import {FlightSectionFilteredComponent} from '../flight-section-filtered/flight-section-filtered.component';
 import {SeatsComponent} from '../seats/seats.component';
+import {MakeCarReservationComponent} from '../make-car-reservation/make-car-reservation.component';
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent},
@@ -46,5 +47,6 @@ export const routes: Routes = [
   { path: 'additionalservices/:id', component: AdditionalServicesSectionComponent},
   { path: 'users', component: UserSectionComponent},
   { path: 'seats/:id', component: SeatsComponent },
+  { path: 'carreserve/:id', component: MakeCarReservationComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' }
 ];

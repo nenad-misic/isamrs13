@@ -70,6 +70,9 @@ import { FlightDetailProfileComponent } from './flight-detail-profile/flight-det
 import { FlightAddFormComponent } from './flight-add-form/flight-add-form.component';
 import { FlightSectionFilteredComponent } from './flight-section-filtered/flight-section-filtered.component';
 import { SeatsComponent } from './seats/seats.component';
+import { RacReservationSearchFormComponent } from './rac-reservation-search-form/rac-reservation-search-form.component';
+import { ReservationsComponent } from './reservations/reservations.component';
+import { MakeCarReservationComponent } from './make-car-reservation/make-car-reservation.component';
 
 @NgModule({
   declarations: [
@@ -117,7 +120,10 @@ import { SeatsComponent } from './seats/seats.component';
     FlightDetailProfileComponent,
     FlightAddFormComponent,
     FlightSectionFilteredComponent,
-    SeatsComponent
+    SeatsComponent,
+    RacReservationSearchFormComponent,
+    ReservationsComponent,
+    MakeCarReservationComponent
   ],
   imports: [
     BrowserModule,

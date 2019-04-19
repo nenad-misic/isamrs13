@@ -3,6 +3,7 @@ import {Car, RACService} from '../shared/sdk/models';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 import {RACServiceApi} from '../shared/sdk/services/custom';
+import {DataService} from '../services/data.service';
 
 @Component({
   selector: 'app-car-section-filtered',
@@ -14,19 +15,17 @@ export class CarSectionFilteredComponent implements OnInit {
   cars: Car[];
   errmsg: string;
 
+  id: string;
   constructor(private route: ActivatedRoute,
               private location: Location,
               private racServiceApi: RACServiceApi,
+              private data: DataService,
               @Inject('baseURL') private baseURL) { }
 
   ngOnInit() {
-    const id = this.route.snapshot.params['id'];
-    this.racServiceApi.findById(id,{include: 'cars'}).subscribe((racService: RACService) => {
-      this.cars = racService.cars;
-      this.errmsg = '';
-    }, (err) => {
-      this.errmsg = err;
-    });
+    this.id = this.route.snapshot.params['id'];
+    this.data.currentSearchParams.subscribe(searchList => this.cars = searchList );
+
   }
 
 }

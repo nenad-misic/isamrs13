@@ -1,0 +1,29 @@
+{
+  "name": "CarReservation",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "timeStamp": {
+      "type": "date"
+    },
+    "startDate": {
+      "type": "date"
+    },
+    "endDate": {
+      "type": "date"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "sCar": {
+      "type": "belongsTo",
+      "model": "sCar",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

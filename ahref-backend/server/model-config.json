@@ -108,5 +108,17 @@
     "options": {
       "emailVerificationRequired": true
     }
+  },
+  "CarReservation": {
+    "dataSource": "postgres",
+    "public": true
+  },
+  "sCar": {
+    "dataSource": "postgres",
+    "public": true
+  },
+  "mCarReservation": {
+    "dataSource": "MongoDB",
+    "public": true
   }
 }
