@@ -73,6 +73,7 @@ import { SeatsComponent } from './seats/seats.component';
 import { RacReservationSearchFormComponent } from './rac-reservation-search-form/rac-reservation-search-form.component';
 import { ReservationsComponent } from './reservations/reservations.component';
 import { MakeCarReservationComponent } from './make-car-reservation/make-car-reservation.component';
+import { AdditionalServiceDetailsComponent } from './additional-service-details/additional-service-details.component';
 
 @NgModule({
   declarations: [
@@ -123,7 +124,8 @@ import { MakeCarReservationComponent } from './make-car-reservation/make-car-res
     SeatsComponent,
     RacReservationSearchFormComponent,
     ReservationsComponent,
-    MakeCarReservationComponent
+    MakeCarReservationComponent,
+    AdditionalServiceDetailsComponent
   ],
   imports: [
     BrowserModule,

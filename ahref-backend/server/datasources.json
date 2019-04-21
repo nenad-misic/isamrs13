@@ -34,7 +34,7 @@
     "port": 5432,
     "url": "",
     "database": "AHREF",
-    "password": "password",
+    "password": "admin",
     "name": "postgres",
     "user": "postgres",
     "connector": "postgresql"

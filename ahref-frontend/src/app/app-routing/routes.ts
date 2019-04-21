@@ -48,5 +48,6 @@ export const routes: Routes = [
   { path: 'users', component: UserSectionComponent},
   { path: 'seats/:id', component: SeatsComponent },
   { path: 'carreserve/:id', component: MakeCarReservationComponent },
+  { path: 'hotel/:hotelId/additionalservice/:aserviceId'},
   { path: '', redirectTo: '/home', pathMatch: 'full' }
 ];
