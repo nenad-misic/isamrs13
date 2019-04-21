@@ -6,7 +6,7 @@
   <mat-card-content>
     <mat-grid-list cols="2">
       <mat-grid-tile *ngFor="let price of hPriceList">
-        <app-additional-service-profile [aservice]="price"></app-additional-service-profile>
+        <app-additional-service-profile [routerLink]="['/hotel/' + hotelId + '/aservice/' + price.id]" [aservice]="price"></app-additional-service-profile>
       </mat-grid-tile>
     </mat-grid-list>
   </mat-card-content>

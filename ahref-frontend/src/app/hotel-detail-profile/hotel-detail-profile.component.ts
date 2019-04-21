@@ -50,8 +50,4 @@ export class HotelDetailProfileComponent implements OnInit {
     this.location.back();
   }
 
-  onAddServClick() {
-    this.location.go('/additionalservices/' + this.profile.id);
-  }
-
 }

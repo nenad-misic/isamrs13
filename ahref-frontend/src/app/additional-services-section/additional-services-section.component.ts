@@ -12,6 +12,7 @@ import {API_VERSION} from '../shared/baseurl';
 })
 export class AdditionalServicesSectionComponent implements OnInit {
 
+  hotelId: string;
   hPriceList: HPriceList;
   readOnly: boolean;
 
@@ -26,6 +27,7 @@ export class AdditionalServicesSectionComponent implements OnInit {
 
   ngOnInit() {
     const id = this.route.snapshot.params['id'];
+    this.hotelId = id;
     this.hotelService.findOne({where: {id: id}, include: 'priceList'}).subscribe((profile: Hotel) => {
       this.hPriceList = profile.priceList;
       if (profile.id === this.userApi.getCachedCurrent().hotelId) {

@@ -120,5 +120,17 @@
   "mCarReservation": {
     "dataSource": "MongoDB",
     "public": true
+  },
+  "sRoom": {
+    "dataSource": "postgres",
+    "public": true
+  },
+  "roomReservation": {
+    "dataSource": "postgres",
+    "public": true
+  },
+  "mRoomReservation": {
+    "dataSource": "MongoDB",
+    "public": true
   }
 }
