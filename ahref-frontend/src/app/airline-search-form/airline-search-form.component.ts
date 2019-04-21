@@ -40,12 +40,11 @@ export class AirlineSearchFormComponent implements OnInit {
     this.destinationApi.find({where: filter}).subscribe((searchResult: Destination[]) => {
       this.searchResult = [];
       searchResult.forEach((element) => {
-        this.airlineApi.find().subscribe((airlineSearchResult: Airline[]) => {
+        this.airlineApi.find({include: 'destinations'}).subscribe((airlineSearchResult: Airline[]) => {
           airlineSearchResult.forEach((element1) => {
-            this.searchResult.push(element1);
-            //  element1.destinations.forEach((element2) => {
-            //      if (element2.id === element.id) {
-            //         this.searchResult.push(element1);
+             // element1.destinations.forEach((element2) => {
+            //    if (element2.id === element.id) {
+                     this.searchResult.push(element1);
             //       }
             //    });
           });

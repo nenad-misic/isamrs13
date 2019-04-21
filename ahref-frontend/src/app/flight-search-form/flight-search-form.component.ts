@@ -36,19 +36,19 @@ export class FlightSearchFormComponent implements OnInit {
       // @ts-ignore
       filter.country = this.country;
     }
-    //this.destinationApi.find({where: filter}).subscribe((searchResult: Destination[]) => {
+    // this.destinationApi.find({where: filter}).subscribe((searchResult: Destination[]) => {
       this.searchResult = [];
     //  searchResult.forEach((element) => {
-        this.flightApi.find().subscribe((flightSearchResult: Flight[]) => {
+        this.flightApi.find({include: 'startDestination'}).subscribe((flightSearchResult: Flight[]) => {
           flightSearchResult.forEach((element1) => {
-           // if (element1.startDestination.id === element.id || element1.endDestination.id === element.id) {
+    //        if (element1.startDestination.id === element.id) {
               this.searchResult.push(element1);
-          //  }
+    //        }
           });
         });
     //  });
       this.data.changeSearchParams(this.searchResult);
-    //});
+    // });
   }
 
 }

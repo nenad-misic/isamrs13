@@ -13,7 +13,8 @@ import {API_VERSION} from '../shared/baseurl';
 })
 export class UsersDetailComponent implements OnInit {
 
-  search: User = new User();
+  username: String;
+  email: String;
   searchResult: User[] = [];
 
   constructor(private userService: UserApi,
@@ -27,14 +28,26 @@ export class UsersDetailComponent implements OnInit {
   }
 
   doSearch(): void {
-   // this.userService.searchUsers(this.search).subscribe(searchResult => {
-    //   this.searchResult = searchResult;
-    //   this.data.changeSearchParams(this.searchResult);
-    // });
-    this.searchResult = [new User({username: 'username', email: 'email', password: 'password'}),
-      new User({username: 'username2', email: 'email2', password: 'password2'}),
-      new User({username: 'username3', email: 'email3', password: 'password3'})
-    ];
+    const filter = {};
+    if (this.username) {
+      // @ts-ignore
+      filter.username = this.username;
+    }
+    if (this.email) {
+      // @ts-ignore
+      filter.email = this.email;
+    }
+
+
+   this.userService.find({where: filter}).subscribe((searchResult: User[]) => {
+      this.searchResult = searchResult;
+      this.data.changeSearchParams(this.searchResult);
+    });
+
+    // this.searchResult = [new User({username: 'username', email: 'email', password: 'password'}),
+    //  new User({username: 'username2', email: 'email2', password: 'password2'}),
+    //  new User({username: 'username3', email: 'email3', password: 'password3'})
+    // ];
     this.data.changeSearchParams((this.searchResult));
   }
 
