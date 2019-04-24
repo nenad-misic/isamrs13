@@ -11,11 +11,15 @@ export class AdditionalServiceAddFormComponent implements OnInit {
 
   @Input()
   aservices: HPriceList;
-  new_aservice: HPriceListItem;
+
+  new_aservice: HPriceListItem = new HPriceListItem();
 
   constructor(private aserviceApi: HPriceListApi) { }
 
   ngOnInit() {
+    this.aserviceApi.findOne({where: {id: this.aservices.id}, include: 'priceListItems'} ).subscribe((as: HPriceList) => {
+      this.aservices = as;
+    });
     this.new_aservice = new HPriceListItem();
   }
 

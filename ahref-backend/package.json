@@ -11,7 +11,6 @@
     "posttest": "npm run lint"
   },
   "dependencies": {
-    "@mean-expert/loopback-sdk-builder": "^2.3.1",
     "compression": "^1.0.3",
     "cors": "^2.5.2",
     "helmet": "^3.10.0",
@@ -24,6 +23,7 @@
     "strong-error-handler": "^3.0.0"
   },
   "devDependencies": {
+    "@mean-expert/loopback-sdk-builder": "^2.3.1",
     "eslint": "^3.17.1",
     "eslint-config-loopback": "^8.0.0"
   },

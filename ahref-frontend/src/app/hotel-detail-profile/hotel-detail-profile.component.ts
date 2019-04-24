@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Location} from '@angular/common';
 
 import { API_VERSION } from '../shared/baseurl';
@@ -22,6 +22,7 @@ export class HotelDetailProfileComponent implements OnInit {
               private location: Location,
               @Inject('baseURL') private baseURL,
               private userApi: LoggedUserApi,
+              private router: Router,
               private roomApi: RoomApi) {
     LoopBackConfig.setBaseURL(baseURL);
     LoopBackConfig.setApiVersion(API_VERSION);
@@ -33,9 +34,9 @@ export class HotelDetailProfileComponent implements OnInit {
       this.profile = profile;
       this.profile_new = JSON.parse(JSON.stringify(this.profile)); // YAAS deep copy
       if (this.profile.id === this.userApi.getCachedCurrent().hotelId) {
-        this.readOnly = true;
-      } else {
         this.readOnly = false;
+      } else {
+        this.readOnly = true;
       }
     });
   }
@@ -50,4 +51,11 @@ export class HotelDetailProfileComponent implements OnInit {
     this.location.back();
   }
 
+  addServClicked() {
+    this.router.navigateByUrl('/additionalservices/' + this.profile_new.id);
+  }
+
+  makeReservationClicked() {
+    this.router.navigateByUrl('roomreservations/' + this.profile_new.id);
+  }
 }

@@ -1,0 +1,20 @@
+<app-room-reservation-search-form [hotelId]="hotelId"></app-room-reservation-search-form>
+<mat-card>
+  <mat-card-content>
+    <mat-list *ngFor="let item of aservices">
+      <mat-list-item>
+        <mat-checkbox (click)="checkClicked(item)">{{item.name}}: {{item.price}}$</mat-checkbox>
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button (click)="makeReservationClicked()">Make reservation</button>
+  </mat-card-actions>
+  <mat-card-content>
+    <mat-grid-list cols="2">
+      <mat-grid-tile *ngFor="let room of rooms" [routerLink]="">
+        <app-room-profile [room]="room"></app-room-profile>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </mat-card-content>
+</mat-card>

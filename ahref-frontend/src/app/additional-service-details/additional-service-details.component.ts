@@ -49,4 +49,10 @@ export class AdditionalServiceDetailsComponent implements OnInit {
     });
   }
 
+  deleteClicked() {
+    this.aserviceApi.deleteById(this.aservice.id).subscribe(()=>{
+      this.location.back();
+    })
+  }
+
 }

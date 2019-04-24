@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {HotelApi, LoggedUserApi} from '../shared/sdk/services/custom';
+import {HotelApi, HPriceListApi, LoggedUserApi} from '../shared/sdk/services/custom';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 import {Hotel, HPriceList, LoopBackConfig} from '../shared/sdk';
@@ -13,10 +13,11 @@ import {API_VERSION} from '../shared/baseurl';
 export class AdditionalServicesSectionComponent implements OnInit {
 
   hotelId: string;
-  hPriceList: HPriceList;
+  hPriceList: HPriceList = new HPriceList();
   readOnly: boolean;
 
   constructor(private hotelService: HotelApi,
+              private aserviceApi: HPriceListApi,
               private route: ActivatedRoute,
               private location: Location,
               @Inject('baseURL') private baseURL,
@@ -29,13 +30,18 @@ export class AdditionalServicesSectionComponent implements OnInit {
     const id = this.route.snapshot.params['id'];
     this.hotelId = id;
     this.hotelService.findOne({where: {id: id}, include: 'priceList'}).subscribe((profile: Hotel) => {
-      this.hPriceList = profile.priceList;
+      this.aserviceApi.findOne({where: {id: profile.priceList.id}, include: 'priceListItems'}).subscribe((priceList: HPriceList) => {
+        this.hPriceList = priceList;
+      });
       if (profile.id === this.userApi.getCachedCurrent().hotelId) {
-        this.readOnly = true;
-      } else {
         this.readOnly = false;
+      } else {
+        this.readOnly = true;
       }
     });
   }
 
+  goBack(): void {
+    this.location.back();
+  }
 }

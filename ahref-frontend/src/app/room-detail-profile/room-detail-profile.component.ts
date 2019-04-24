@@ -37,9 +37,9 @@ export class RoomDetailProfileComponent implements OnInit {
       this.room = room;
       this.hotelApi.findById(room.hotelId).subscribe((hotel: Hotel) => {
         if (hotel.id === this.loggedUserApi.getCachedCurrent().hotelId) {
-          this.readOnly = true;
-        } else {
           this.readOnly = false;
+        } else {
+          this.readOnly = true;
         }
       });
     });
@@ -55,7 +55,9 @@ export class RoomDetailProfileComponent implements OnInit {
   }
 
   onDeleteClick() {
-    this.roomApi.deleteById(this.room.id).subscribe(() => {});
+    this.roomApi.deleteById(this.room.id).subscribe(() => {
+      this.errmsg='';
+    });
     this.location.back();
   }
 

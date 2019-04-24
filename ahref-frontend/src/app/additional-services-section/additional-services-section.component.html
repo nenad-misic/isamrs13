@@ -1,12 +1,12 @@
 
 <app-additional-service-add-form *ngIf="!readOnly" [aservices]="hPriceList"></app-additional-service-add-form>
-
+<button mat-button (click)="goBack()">BACK</button>
 <mat-card>
   <mat-card-title>Additinal services</mat-card-title>
   <mat-card-content>
     <mat-grid-list cols="2">
-      <mat-grid-tile *ngFor="let price of hPriceList">
-        <app-additional-service-profile [routerLink]="['/hotel/' + hotelId + '/aservice/' + price.id]" [aservice]="price"></app-additional-service-profile>
+      <mat-grid-tile *ngFor="let price of hPriceList.priceListItems">
+        <app-additional-service-profile [routerLink]="['/aservice/' + price.id]" [aservice]="price"></app-additional-service-profile>
       </mat-grid-tile>
     </mat-grid-list>
   </mat-card-content>
