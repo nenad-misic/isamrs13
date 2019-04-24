@@ -6,6 +6,7 @@ var flag = true;
 module.exports = function(Mcarreservation) {
   Mcarreservation.beforeRemote('create',
     function(ctx, model, next) {
+      console.log('here');
       flag = true;
       doReservation(Mcarreservation, ctx, model, next, function(e) {
         flag = false;

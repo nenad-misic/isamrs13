@@ -23,3 +23,4 @@ export * from './SCar';
 export * from './MCarReservation';
 export * from './BaseModels';
 export * from './FireLoopRef';
+export * from './SRoom'

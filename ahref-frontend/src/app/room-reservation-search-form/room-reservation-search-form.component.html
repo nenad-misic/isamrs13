@@ -1,0 +1,25 @@
+<div class="form-container">
+  <form novalidate (ngSubmit)="doSearch()">
+    <mat-form-field>
+      <mat-form-field>
+        <input matInput required [(ngModel)]="startDate" type="date" placeholder="Start date" name="startDate">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput required [(ngModel)]="endDate" type="date" placeholder="End date" name="endDate">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput required [(ngModel)]="numberOfGuests" type="number" placeholder="Number of guests" name="numberOfGuests">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput required [(ngModel)]="lowPrice" type="number" placeholder="Minimum price" name="lowPrice">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput required [(ngModel)]="highPrice" type="number" placeholder="Maximum price" name="highPrice">
+      </mat-form-field>
+    </mat-form-field>
+    <button mat-button>Search</button>
+  </form>
+</div>

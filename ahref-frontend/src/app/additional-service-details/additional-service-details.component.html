@@ -29,5 +29,6 @@
   <mat-card-actions>
     <button mat-button (click)="goBack()">BACK</button>
     <button mat-button *ngIf="!readOnly" (click)="editClicked()">EDIT</button>
+    <button mat-button *ngIf="!readOnly" (click)="deleteClicked()">DELETE</button>
   </mat-card-actions>
 </mat-card>

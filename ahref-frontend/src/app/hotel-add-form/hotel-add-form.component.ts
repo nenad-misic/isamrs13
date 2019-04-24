@@ -2,7 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {Location} from '@angular/common';
 
 import { API_VERSION } from '../shared/baseurl';
-import {Hotel, HotelApi, LoopBackConfig, LoggedUserApi} from '../shared/sdk';
+import {Hotel, HotelApi, LoopBackConfig, LoggedUserApi, HPriceList} from '../shared/sdk';
 @Component({
   selector: 'app-hotel-add-form',
   templateUrl: './hotel-add-form.component.html',
@@ -33,8 +33,15 @@ export class HotelAddFormComponent implements OnInit {
 
 
   addHotel() {
-    this.service.create(this.new_hotel).subscribe((hotel: Hotel) => { if (!hotel) { console.log(status); }});
-    this.new_hotel = new Hotel();
+    this.service.create(this.new_hotel).subscribe((hotel: Hotel) => {
+        if (!hotel) { console.log(status);
+
+        const priceList: HPriceList = new HPriceList();
+        priceList.hotelId = this.new_hotel.id;
+        this.service.createPriceList(this.new_hotel.id, priceList);
+        this.new_hotel = new Hotel();
+
+      }});
 
   }
 
