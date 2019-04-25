@@ -1,4 +1,4 @@
-<div class="form-container">
+<div class="form-container" *ngIf="search">
   <form novalidate (ngSubmit)="doSearch()">
 
     <mat-form-field>
@@ -11,4 +11,9 @@
 
     <button mat-button>SEARCH HOTELS</button>
   </form>
+</div>
+
+
+<div [hidden]="search" class="mat-spinner-container">
+  <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
 </div>

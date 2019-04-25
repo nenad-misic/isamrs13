@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card *ngIf="cars">
   <mat-card-content>
     <app-rentacar-search-form></app-rentacar-search-form>
     <mat-grid-list cols="2">
@@ -8,3 +8,7 @@
     </mat-grid-list>
   </mat-card-content>
 </mat-card>
+
+<div [hidden]="cars" class="mat-spinner-container">
+  <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
+</div>

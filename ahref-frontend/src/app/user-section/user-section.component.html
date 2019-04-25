@@ -1,7 +1,7 @@
 
 <app-add-user-form *ngIf="!readOnly"></app-add-user-form>
 
-<mat-card>
+<mat-card *ngIf="users">
   <mat-card-content>
     <app-users-detail></app-users-detail>
     <mat-grid-list cols="2">
@@ -11,3 +11,7 @@
     </mat-grid-list>
   </mat-card-content>
 </mat-card>
+
+<div [hidden]="users" class="mat-spinner-container">
+  <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
+</div>

@@ -5,6 +5,9 @@ var boot = require('loopback-boot');
 
 var app = module.exports = loopback();
 
+// 1 second delay on server in testing purpose
+// app.use(function(req, res, next) { setTimeout(next, 1000); });
+
 app.start = function() {
   // start the web server
   return app.listen(function() {

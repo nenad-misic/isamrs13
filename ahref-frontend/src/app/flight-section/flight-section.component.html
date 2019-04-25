@@ -1,5 +1,5 @@
 <app-flight-search-form></app-flight-search-form>
-<mat-card>
+<mat-card *ngIf="flights">
   <mat-card-content>
     <mat-grid-list cols="2">
       <mat-grid-tile *ngFor="let flight of flights" [routerLink]="['/flightdetail', flight.id]">
@@ -8,3 +8,6 @@
     </mat-grid-list>
   </mat-card-content>
 </mat-card>
+<div [hidden]="flights" class="mat-spinner-container">
+  <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
+</div>

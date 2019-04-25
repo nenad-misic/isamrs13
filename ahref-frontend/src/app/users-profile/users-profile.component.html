@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card *ngIf="profile">
   <hr>
   <mat-card-content>
     <h3>Username: </h3>
@@ -7,3 +7,7 @@
     <p>{{profile.email}}</p>
   </mat-card-content>
 </mat-card>
+
+<div [hidden]="profile" class="mat-spinner-container">
+  <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
+</div>

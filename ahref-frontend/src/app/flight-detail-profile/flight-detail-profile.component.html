@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card *ngIf="flight">
   <mat-card-title>{{flight.id}}</mat-card-title>
   <form novalidate>
     <mat-card-content fxLayout="column" *ngIf="!readOnly">
@@ -43,3 +43,8 @@
     </mat-card-actions>
   </form>
 </mat-card>
+
+
+<div [hidden]="flight" class="mat-spinner-container">
+  <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
+</div>

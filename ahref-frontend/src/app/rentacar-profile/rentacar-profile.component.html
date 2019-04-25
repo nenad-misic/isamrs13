@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card *ngIf="profile">
   <mat-card-title>{{profile.name}}</mat-card-title>
   <hr>
   <mat-card-content>
@@ -12,3 +12,7 @@
     <p>{{profile.rating}}</p>
   </mat-card-content>
 </mat-card>
+
+<div [hidden]="profile" class="mat-spinner-container">
+  <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
+</div>
