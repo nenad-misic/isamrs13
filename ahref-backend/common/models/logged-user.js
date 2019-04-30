@@ -3,11 +3,16 @@ var config = require('../../server/config.json');
 var path = require('path');
 
 module.exports = function(Loggeduser) {
+  Loggeduser.afterRemote('**', function(ctx, modelInstance, next)  {
+    console.log('Loggeduser remote method: ' + ctx.method.name);
+    next();
+  });
+
     Loggeduser.afterRemote('create', function(ctx, modelInstance, next) {
         var Role = Loggeduser.app.models.Role;
         var RoleMapping = Loggeduser.app.models.RoleMapping;
         if(ctx.result.type === "regUser"){
-            Role.findOne({name: 'regUser'}, (err, role) => {
+            Role.findOne({where: {name: 'regUser'}}, (err, role) => {
                 if(!role){
                     Role.create({
                         name: 'regUser'
@@ -27,7 +32,7 @@ module.exports = function(Loggeduser) {
                         principalId: ctx.result.id
                     }, (err, principal) => {
                         if (err) throw(err);
-                    });             
+                    });
                 }
             })
             var options = {
@@ -39,13 +44,13 @@ module.exports = function(Loggeduser) {
                 redirect: 'http://localhost:4200',
                 user: ctx.result
               };
-          
+
               ctx.result.verify(options, function(err, response, next) {
                 if (err) return next(err);
-          
+
                 console.log('> verification email sent:', response);
               });
-              
+
         } else if (ctx.result.type === "hotelAdmin") {
             Role.findOne({where: {name: "hotelAdmin"}}, (err, role) => {
                 if (!role) {
@@ -57,7 +62,7 @@ module.exports = function(Loggeduser) {
                             principalId: ctx.result.id
                         }, (err, principal) => {
                             if (err) throw(err);
-                        });  
+                        });
                     })
                 } else {
                     role.principals.create({
@@ -65,7 +70,7 @@ module.exports = function(Loggeduser) {
                         principalId: ctx.result.id
                     }, (err, principal) => {
                         if (err) throw(err);
-                    });  
+                    });
                 }
             })
         } else if (ctx.result.type === "racAdmin") {
@@ -79,7 +84,7 @@ module.exports = function(Loggeduser) {
                             principalId: ctx.result.id
                         }, (err, principal) => {
                             if (err) throw(err);
-                        });  
+                        });
                     })
                 } else {
                     role.principals.create({
@@ -87,7 +92,7 @@ module.exports = function(Loggeduser) {
                         principalId: ctx.result.id
                     }, (err, principal) => {
                         if (err) throw(err);
-                    });  
+                    });
                 }
             })
 
@@ -102,7 +107,7 @@ module.exports = function(Loggeduser) {
                             principalId: ctx.result.id
                         }, (err, principal) => {
                             if (err) throw(err);
-                        });  
+                        });
                     })
                 } else {
                     role.principals.create({
@@ -110,7 +115,7 @@ module.exports = function(Loggeduser) {
                         principalId: ctx.result.id
                     }, (err, principal) => {
                         if (err) throw(err);
-                    });  
+                    });
                 }
             })
 
@@ -125,7 +130,7 @@ module.exports = function(Loggeduser) {
                             principalId: ctx.result.id
                         }, (err, principal) => {
                             if (err) throw(err);
-                        });  
+                        });
                     })
                 } else {
                     role.principals.create({
@@ -133,7 +138,7 @@ module.exports = function(Loggeduser) {
                         principalId: ctx.result.id
                     }, (err, principal) => {
                         if (err) throw(err);
-                    });  
+                    });
                 }
             })
 
@@ -148,4 +153,4 @@ module.exports = function(Loggeduser) {
 
 
 
-    
+

@@ -2,6 +2,11 @@
 var flag = true;
 var flagUpdate = true;
 module.exports = function(Car) {
+  Car.afterRemote('**', function(ctx, modelInstance, next)  {
+    console.log('Car remote method: ' + ctx.method.name);
+    next();
+  });
+
   Car.beforeRemote('deleteById',
       function(ctx, model, next) {
         flag = true;

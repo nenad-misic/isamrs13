@@ -3,6 +3,11 @@ var flag = true;
 var flagUpdate = true;
 
 module.exports = function(Room) {
+  Room.afterRemote('**', function(ctx, modelInstance, next)  {
+    console.log('Room remote method: ' + ctx.method.name);
+    next();
+  });
+
     Room.beforeRemote('deleteById',
       function(ctx, model, next) {
         flag = true;
@@ -20,7 +25,7 @@ module.exports = function(Room) {
         next(e);
       });
     });
-    
+
   Room.getMatching = function(roomid, startDate, endDate, numberOfGuests, requiredRooms, lowPrice, hightPrice, cb) {
     var totalBeds = 0;
     requiredRooms = [numberOfGuests];
@@ -113,7 +118,7 @@ function doDelete(Room, ctx, model, next, errorCallback) {
                     flag = false;
                     tx.rollback(function(err) {
                       if (err && flag) errorCallback(err);
-  
+
                       var error = new Error('Room has pending reservation' +
                         ' and cannot be deleted');
                       error.statusCode = error.status = 404;
@@ -121,7 +126,7 @@ function doDelete(Room, ctx, model, next, errorCallback) {
                     });
                   }
                 }
-  
+
                 cnt--;
               });
               if (cnt === 0 && flag) {
@@ -167,7 +172,7 @@ function doDelete(Room, ctx, model, next, errorCallback) {
                     flagUpdate = false;
                     tx.rollback(function(err) {
                       if (err && flagUpdate) errorCallback(err);
-  
+
                       var error = new Error('Room has pending reservation' +
                         ' and cannot be modified');
                       error.statusCode = error.status = 404;
@@ -175,7 +180,7 @@ function doDelete(Room, ctx, model, next, errorCallback) {
                     });
                   }
                 }
-  
+
                 cnt--;
               });
               if (cnt === 0 && flagUpdate) {
