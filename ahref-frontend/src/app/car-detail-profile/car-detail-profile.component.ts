@@ -53,11 +53,11 @@ export class CarDetailProfileComponent implements OnInit {
   }
 
   onSaveClick(): void {
-    this.carApi.updateAttributes(this.car.id, this.car).subscribe((returned: Car) => { this.errmsg = ''; this.location.back(); }, (err) => {this.errmsg = err.message;});
+    this.racServiceApi.updateByIdCars(this.car.rACServiceId, this.car.id, this.car).subscribe((returned: Car) => { this.errmsg = ''; this.location.back(); }, (err) => {this.errmsg = err.message;});
   }
 
   onDeleteClick(): void {
     // additional checks needed (will be implemented when the reservations arrive)
-    this.carApi.deleteById(this.car.id).subscribe((completed) => this.location.back(), (err) => this.errmsg = err.message);
+    this.racServiceApi.destroyByIdCars(this.car.rACServiceId, this.car.id).subscribe((completed) => this.location.back(), (err) => this.errmsg = err.message);
   }
 }

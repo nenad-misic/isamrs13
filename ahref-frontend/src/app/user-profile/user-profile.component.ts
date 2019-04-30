@@ -38,7 +38,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   onSaveClick(): void {
-    //this.loggedUserService.saveChanges(this.profile_new).subscribe(status => console.log(status));
+    this.loggedUserService.patchAttributes(this.profile_new.id, this.profile_new).subscribe((status) => console.log(status));
     this.profile = this.profile_new;
     this.location.back();
   }

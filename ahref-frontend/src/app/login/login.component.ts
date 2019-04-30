@@ -31,16 +31,21 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
+    this.waiting = true;
     this.userService.login({username: this.username, password: this.password}).subscribe((returned) => {
       if (returned) {
         this.errmsg = null;
+        this.waiting = false;
         this.router.navigate(['/home']);
       } else {
         this.errmsg = 'Invalid credentials. Try again!';
         this.password = '';
         this.waiting = false;
       }
+    }, (err) => {
+      this.errmsg = 'Invalid credentials. Try again!';
+      this.password = '';
+      this.waiting = false;
     });
-    this.waiting = true;
   }
 }
