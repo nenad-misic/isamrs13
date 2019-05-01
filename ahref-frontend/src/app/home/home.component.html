@@ -1,5 +1,11 @@
-<div class="container">
-  <h1>
-    WELCOME TO AHREF!
-  </h1>
+<section class="mat-typography">
+<div class="container" *ngIf="user">
+  <h1>Welcome back, {{user.name}}</h1>
 </div>
+<div class="container" *ngIf="!user">
+  <h1>Welcome, visitor!</h1>
+</div>
+<img mat-card-image src="../assets/images/airplane.png">
+
+
+</section>

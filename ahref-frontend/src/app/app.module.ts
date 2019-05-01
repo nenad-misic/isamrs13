@@ -78,6 +78,8 @@ import { CarOfRacComponent } from './car-of-rac/car-of-rac.component';
 import { RoomSearchComponent } from './room-search/room-search.component';
 import {BarRatingModule} from 'ngx-bar-rating';
 
+import { AgmCoreModule } from '@agm/core';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -153,6 +155,9 @@ import {BarRatingModule} from 'ngx-bar-rating';
     HttpClientModule,
     MatProgressSpinnerModule,
     BarRatingModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyBf77UiLC2QLbjq5UK6rVHIQHk2uJcwdU4'
+    }),
     SDKBrowserModule.forRoot()
 
   ],
