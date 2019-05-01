@@ -5,7 +5,7 @@
 
 <mat-card *ngIf="cars">
   <mat-card-content>
-    <mat-grid-list cols="2">
+    <mat-grid-list cols="2" rowHeight="3:4">
       <mat-grid-tile *ngFor="let car of cars" [routerLink]="['/cardetail', car.id]">
         <app-car-profile [profile]="car"></app-car-profile>
       </mat-grid-tile>

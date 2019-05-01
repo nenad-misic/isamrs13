@@ -74,6 +74,9 @@ import { MakeCarReservationComponent } from './make-car-reservation/make-car-res
 import { AdditionalServiceDetailsComponent } from './additional-service-details/additional-service-details.component';
 import { RoomReservationSectionComponent } from './room-reservation-section/room-reservation-section.component';
 import { RoomReservationSearchFormComponent } from './room-reservation-search-form/room-reservation-search-form.component';
+import { CarOfRacComponent } from './car-of-rac/car-of-rac.component';
+import { RoomSearchComponent } from './room-search/room-search.component';
+import {BarRatingModule} from 'ngx-bar-rating';
 
 @NgModule({
   declarations: [
@@ -125,7 +128,9 @@ import { RoomReservationSearchFormComponent } from './room-reservation-search-fo
     MakeCarReservationComponent,
     AdditionalServiceDetailsComponent,
     RoomReservationSectionComponent,
-    RoomReservationSearchFormComponent
+    RoomReservationSearchFormComponent,
+    CarOfRacComponent,
+    RoomSearchComponent
   ],
   imports: [
     BrowserModule,
@@ -147,6 +152,7 @@ import { RoomReservationSearchFormComponent } from './room-reservation-search-fo
     FormsModule,
     HttpClientModule,
     MatProgressSpinnerModule,
+    BarRatingModule,
     SDKBrowserModule.forRoot()
 
   ],

@@ -22,6 +22,9 @@ import { LoggedUser } from '../../models/LoggedUser';
 import { CarReservation } from '../../models/CarReservation';
 import { SCar } from '../../models/SCar';
 import { MCarReservation } from '../../models/MCarReservation';
+import { SRoom } from '../../models/SRoom';
+import { RoomReservation } from '../../models/RoomReservation';
+import { MRoomReservation } from '../../models/MRoomReservation';
 
 export interface Models { [name: string]: any }
 
@@ -51,6 +54,9 @@ export class SDKModels {
     CarReservation: CarReservation,
     SCar: SCar,
     MCarReservation: MCarReservation,
+    SRoom: SRoom,
+    RoomReservation: RoomReservation,
+    MRoomReservation: MRoomReservation,
     
   };
 

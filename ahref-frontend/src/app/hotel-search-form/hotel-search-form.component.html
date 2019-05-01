@@ -1,19 +1,27 @@
-<div class="form-container" *ngIf="search">
-  <form novalidate (ngSubmit)="doSearch()">
+<div class="form-container">
+  <form (ngSubmit)="doSearch()">
 
     <mat-form-field>
-      <input matInput [(ngModel)]="search.name" placeholder="Name" name="name">
+      <input matInput [(ngModel)]="name" placeholder="City" name="city">
     </mat-form-field>
 
     <mat-form-field>
-      <input matInput [(ngModel)]="search.destinationId" placeholder="Destination" name="destination">
+      <input matInput [(ngModel)]="country" placeholder="Country" name="country">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput [(ngModel)]="hotelname" placeholder="Hotel name" name="hotelname">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input required matInput type="date" [(ngModel)]="startDate" placeholder="Start date" name="startDate">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input required matInput type="date" [(ngModel)]="endDate" placeholder="End date" name="endDate">
     </mat-form-field>
 
     <button mat-button>SEARCH HOTELS</button>
   </form>
-</div>
-
-
-<div [hidden]="search" class="mat-spinner-container">
-  <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
+  <button mat-button (click)="showAll()">SHOW ALL</button>
 </div>
