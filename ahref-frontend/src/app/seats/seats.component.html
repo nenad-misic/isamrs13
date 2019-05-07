@@ -5,13 +5,14 @@
     <table class="seats">
       <tr *ngFor="let row of rows">
         <td *ngFor="let col of cols">
-          <div *ngIf="seatExists(row, col) && seatTaken(row, col)" ngClass="taken" (click)="seatClicked(row, col)"></div>
+          <div *ngIf="seatExists(row, col) && seatTaken(row, col)" ngClass="taken"></div>
           <div *ngIf="seatExists(row, col) && !seatTaken(row, col)" ngClass="nonTaken" (click)="seatClicked(row, col)"></div>
         </td>
       </tr>
     </table>
     <span></span>
     <p *ngIf="msg">{{msg}}</p>
+    <button mat-button (click)="reserveSeats()" [routerLink]="['/passengerinfo', flight.id]" >Fill information about passengers</button>
 
   </mat-card-content>
 </mat-card>

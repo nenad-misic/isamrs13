@@ -1,7 +1,7 @@
 
 <app-airline-add-form></app-airline-add-form>
 <app-airline-search-form></app-airline-search-form>
-<mat-card>
+<mat-card *ngIf="airlines">
   <mat-card-content>
     <mat-grid-list cols="2">
       <mat-grid-tile *ngFor="let airline of airlines" [routerLink]="['/airlinedetail', airline.id]">
@@ -10,3 +10,7 @@
     </mat-grid-list>
   </mat-card-content>
 </mat-card>
+
+<div [hidden]="airlines" class="mat-spinner-container">
+  <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
+</div>

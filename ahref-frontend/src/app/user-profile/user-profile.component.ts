@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Location} from '@angular/common';
 import {RACServiceApi, UserApi, LoggedUserApi} from '../shared/sdk/services/custom';
 import {LoggedUser} from '../shared/sdk/models';
@@ -18,6 +18,7 @@ export class UserProfileComponent implements OnInit {
   constructor(private loggedUserService: LoggedUserApi,
               private route: ActivatedRoute,
               private location: Location,
+              private router: Router,
               @Inject('baseURL') private baseURL) {
     LoopBackConfig.setBaseURL(baseURL);
     LoopBackConfig.setApiVersion(API_VERSION);
@@ -37,14 +38,14 @@ export class UserProfileComponent implements OnInit {
   }
 
   onSaveClick(): void {
-    //this.loggedUserService.saveChanges(this.profile_new).subscribe(status => console.log(status));
+    this.loggedUserService.patchAttributes(this.profile_new.id, this.profile_new).subscribe((status) => console.log(status));
     this.profile = this.profile_new;
     this.location.back();
   }
 
   logout() {
     this.loggedUserService.logout();
-    this.location.back();
+    this.router.navigate(['/home']);
   }
 
 

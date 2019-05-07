@@ -1,14 +1,20 @@
-<mat-card>
-  <mat-card-title>{{profile.name}}</mat-card-title>
+<mat-card *ngIf="profile">
+  <mat-card-header>
+    <mat-card-title>{{profile.name}}</mat-card-title>
+    <mat-card-subtitle>{{destination.city}}, {{destination.state}}</mat-card-subtitle>
+  </mat-card-header>
   <hr>
   <mat-card-content>
-    <h3>ID: </h3>
-    <p>{{profile.id}}</p>
-    <h3>Address: </h3>
-    <p>{{profile.address}}</p>
     <h3>Description: </h3>
     <p>{{profile.description}}</p>
-    <h3>Rating: </h3>
-    <p>{{profile.rating}}</p>
+    <h3>Address: </h3>
+    <p>{{profile.address}}</p>
   </mat-card-content>
+  <hr>
+  <bar-rating [(rate)]="rate" [max]="4" [theme]="'horizontal'" [showText]="true" [readOnly]="true"
+              [titles]="['Bad', 'Mediocre' , 'Good', 'Awesome']"></bar-rating>
 </mat-card>
+
+<div [hidden]="profile" class="mat-spinner-container">
+  <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
+</div>

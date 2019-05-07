@@ -1,5 +1,4 @@
-
-<mat-card>
+<mat-card *ngIf="aservice">
   <mat-card-content>
     <h3>ID: </h3>
     <p>{{aservice.id}}</p>
@@ -9,3 +8,7 @@
     <p>{{aservice.price}}</p>
   </mat-card-content>
 </mat-card>
+
+<div [hidden]="aservice" class="mat-spinner-container">
+  <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
+</div>

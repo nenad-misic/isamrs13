@@ -1,4 +1,4 @@
-<mat-card fxLayout="row" fxLayoutAlign="center center">
+<mat-card fxLayout="row" fxLayoutAlign="center center" *ngIf="!waiting">
   <form novalidate>
   <mat-card-content fxLayout="column">
         <mat-form-field>
@@ -21,3 +21,7 @@
     <button mat-button (click)="login()">Log in</button>
   </mat-card-actions>
 </mat-card>
+
+<div [hidden]="!waiting" class="mat-spinner-container">
+  <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
+</div>

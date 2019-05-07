@@ -2,7 +2,7 @@
 <app-rentacar-add-form></app-rentacar-add-form>
 <app-racservice-search-form></app-racservice-search-form>
 <mat-card>
-  <mat-card-content>
+  <mat-card-content *ngIf="racservices">
     <mat-grid-list cols="2">
       <mat-grid-tile *ngFor="let rac of racservices" [routerLink]="['/rentdetail', rac.id]">
         <app-rentacar-profile [profile]="rac"></app-rentacar-profile>
@@ -10,3 +10,7 @@
     </mat-grid-list>
   </mat-card-content>
 </mat-card>
+
+<div [hidden]="racservices" class="mat-spinner-container">
+  <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
+</div>

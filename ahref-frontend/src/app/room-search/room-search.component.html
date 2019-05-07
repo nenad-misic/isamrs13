@@ -1,0 +1,22 @@
+<mat-card class="form-container">
+  <mat-card-title>Room search</mat-card-title>
+  <form (ngSubmit)="doSearch()" fxLayout="column">
+
+    <mat-form-field>
+      <input required matInput type="date" [(ngModel)]="startDate" placeholder="Start date" name="startDate">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input required matInput [(ngModel)]="numOfNights" placeholder="Number of nights" name="numOfNights">
+    </mat-form-field>
+
+    <mat-card class="numofrooms">
+      <mat-card-title>Number of rooms needed</mat-card-title>
+      <mat-form-field class="roomInput" *ngFor="let cat of roomCategories">
+        <input matInput [(ngModel)]="neededRooms[cat]" placeholder="Number of {{cat}} rooms" name="{{cat}}">
+      </mat-form-field>
+    </mat-card>
+    <button mat-button>SEARCH ROOMS</button>
+  </form>
+  <button mat-button (click)="showAll()">SHOW ALL</button>
+</mat-card>

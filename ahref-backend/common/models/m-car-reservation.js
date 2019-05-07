@@ -4,6 +4,11 @@
 var flag = true;
 // SQL car reservation before-hook
 module.exports = function(Mcarreservation) {
+  Mcarreservation.afterRemote('**', function(ctx, modelInstance, next)  {
+    console.log('Mcarreservation remote method: ' + ctx.method.name);
+    next();
+  });
+
   Mcarreservation.beforeRemote('create',
     function(ctx, model, next) {
       console.log('here');

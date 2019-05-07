@@ -19,7 +19,7 @@ import {
   MatFormFieldModule,
   MatGridListModule,
   MatInputModule, MatListModule,
-  MatOptionModule,
+  MatOptionModule, MatProgressSpinnerModule,
   MatSelectModule
 } from '@angular/material';
 
@@ -57,7 +57,6 @@ import { RacserviceSearchFormComponent } from './racservice-search-form/racservi
 import { RoomProfileComponent } from './room-profile/room-profile.component';
 import { RoomAddFormComponent } from './room-add-form/room-add-form.component';
 import { RoomDetailProfileComponent } from './room-detail-profile/room-detail-profile.component';
-import { RoomSectionComponent } from './room-section/room-section.component';
 import { AddUserFormComponent } from './add-user-form/add-user-form.component';
 import { AdditionalServicesSectionComponent } from './additional-services-section/additional-services-section.component';
 import { AdditionalServiceProfileComponent } from './additional-service-profile/additional-service-profile.component';
@@ -72,11 +71,15 @@ import { FlightAddFormComponent } from './flight-add-form/flight-add-form.compon
 import { FlightSectionFilteredComponent } from './flight-section-filtered/flight-section-filtered.component';
 import { SeatsComponent } from './seats/seats.component';
 import { RacReservationSearchFormComponent } from './rac-reservation-search-form/rac-reservation-search-form.component';
-import { ReservationsComponent } from './reservations/reservations.component';
 import { MakeCarReservationComponent } from './make-car-reservation/make-car-reservation.component';
 import { AdditionalServiceDetailsComponent } from './additional-service-details/additional-service-details.component';
 import { RoomReservationSectionComponent } from './room-reservation-section/room-reservation-section.component';
 import { RoomReservationSearchFormComponent } from './room-reservation-search-form/room-reservation-search-form.component';
+import { CarOfRacComponent } from './car-of-rac/car-of-rac.component';
+import { RoomSearchComponent } from './room-search/room-search.component';
+import {BarRatingModule} from 'ngx-bar-rating';
+
+import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
   declarations: [
@@ -111,7 +114,6 @@ import { RoomReservationSearchFormComponent } from './room-reservation-search-fo
     RoomProfileComponent,
     RoomAddFormComponent,
     RoomDetailProfileComponent,
-    RoomSectionComponent,
     AddUserFormComponent,
     AdditionalServicesSectionComponent,
     AdditionalServiceProfileComponent,
@@ -126,11 +128,12 @@ import { RoomReservationSearchFormComponent } from './room-reservation-search-fo
     FlightSectionFilteredComponent,
     SeatsComponent,
     RacReservationSearchFormComponent,
-    ReservationsComponent,
     MakeCarReservationComponent,
     AdditionalServiceDetailsComponent,
     RoomReservationSectionComponent,
-    RoomReservationSearchFormComponent
+    RoomReservationSearchFormComponent,
+    CarOfRacComponent,
+    RoomSearchComponent
   ],
   imports: [
     BrowserModule,
@@ -151,9 +154,13 @@ import { RoomReservationSearchFormComponent } from './room-reservation-search-fo
     MatCheckboxModule,
     FormsModule,
     HttpClientModule,
-    SDKBrowserModule.forRoot(),
-    ToastrModule.forRoot()
-
+    ToastrModule.forRoot(),
+    MatProgressSpinnerModule,
+    BarRatingModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyBf77UiLC2QLbjq5UK6rVHIQHk2uJcwdU4'
+    }),
+    SDKBrowserModule.forRoot()
   ],
   entryComponents: [
     RentacarDetailProfileComponent

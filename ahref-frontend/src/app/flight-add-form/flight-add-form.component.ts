@@ -18,6 +18,9 @@ export class FlightAddFormComponent implements OnInit {
   airline: Airline;
   type: string;
   seats: Seat[] = [];
+  seatZ: Seat;
+  startDate: Date;
+  endDate: Date;
   new_flight: Flight;
   cityStart: string;
   cityEnd: string;
@@ -41,30 +44,30 @@ export class FlightAddFormComponent implements OnInit {
 
   addFlight() {
     this.new_flight.airlineId = this.airline.id;
-    for ( let i = 1; i <= this.row; i++) {
-      for ( let j = 1; j <= this.col; j++) {
-        const seat = new Seat();
-        seat.row = i;
-        console.log('Ovo je ', seat.row);
-        seat.column = j;
-        seat.flightId = this.new_flight.id;
-        this.seats.push(seat);
-        // this.flightApi.createSeats(this.new_flight.id, seat).subscribe((seatz) => {});
-      }
-    }
-
-    this.new_flight.seats = this.seats;
 
     this.destinationApi.findOne({where: {name: this.cityStart}}).subscribe((destination: Destination) => {
-      this.new_flight.startDestination = destination;
+      this.new_flight.startDestination = destination.id;
       this.destinationApi.findOne({where: {name: this.cityEnd}}).subscribe((destination2: Destination) => {
-        this.new_flight.endDestination = destination2;
-        this.airlineApi.createFlights(this.airline.id, this.new_flight).subscribe((flight: Flight) => {
-          console.log('Success');
-          this.errmsg = '';
-        }, (err) => {
-          console.log('No end destination!');
-          this.errmsg = err;
+        this.new_flight.endDestination = destination2.id;
+         this.airlineApi.createFlights(this.airline.id, this.new_flight).subscribe((flight: Flight) => {
+           console.log('Success');
+           flight.seats = [];
+           for ( let i = 1; i <= this.row; i++) {
+             for ( let j = 1; j <= this.col; j++) {
+               this.seatZ = new Seat();
+               this.seatZ.row = i;
+               this.seatZ.column = j;
+               this.seatZ.flightId = flight.id;
+               this.flightApi.createSeats(flight.id, this.seatZ).subscribe((seatCreated: Seat) => {
+                 flight.seats.push(seatCreated.id);
+               });
+             }
+           }
+           this.airlineApi.updateByIdFlights(flight.id, flight);
+           this.errmsg = '';
+           }, (err) => {
+            console.log('No end destination!');
+             this.errmsg = err;
         });
       });
     }, (err) => {

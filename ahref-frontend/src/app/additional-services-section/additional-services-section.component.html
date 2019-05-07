@@ -1,9 +1,13 @@
 
-<app-additional-service-add-form *ngIf="!readOnly" [aservices]="hPriceList"></app-additional-service-add-form>
+<app-additional-service-add-form *ngIf="!readOnly && hPriceList" [aservices]="hPriceList"></app-additional-service-add-form>
+<div [hidden]="hPriceList">
+  <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
+</div>
+
 <button mat-button (click)="goBack()">BACK</button>
-<mat-card>
+<mat-card *ngIf="hPriceList">
   <mat-card-title>Additinal services</mat-card-title>
-  <mat-card-content>
+  <mat-card-content *ngIf="hPriceList.priceListItems">
     <mat-grid-list cols="2">
       <mat-grid-tile *ngFor="let price of hPriceList.priceListItems">
         <app-additional-service-profile [routerLink]="['/aservice/' + price.id]" [aservice]="price"></app-additional-service-profile>
@@ -11,3 +15,7 @@
     </mat-grid-list>
   </mat-card-content>
 </mat-card>
+
+<div [hidden]="!waiting" class="mat-spinner-container">
+  <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
+</div>

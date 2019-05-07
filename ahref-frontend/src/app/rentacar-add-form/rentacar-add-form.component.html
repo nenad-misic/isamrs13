@@ -1,4 +1,4 @@
-<div class="form-container" *ngIf="type=='sysAdmin'">
+<div class="form-container" *ngIf="type=='sysAdmin' && new_racservice">
   <form novalidate (ngSubmit)="addRACService()">
     <mat-form-field>
       <input matInput required [(ngModel)]="new_racservice.name" placeholder="Name" name="name">
@@ -32,4 +32,8 @@
     <button mat-button>ADD RACService</button>
     <p>*required</p>
   </form>
+</div>
+
+<div [hidden]="new_racservice" class="mat-spinner-container">
+  <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
 </div>

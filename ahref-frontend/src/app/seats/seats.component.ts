@@ -3,6 +3,7 @@ import {Flight, Seat} from '../shared/sdk/models';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 import {AirlineApi, FlightApi} from '../shared/sdk/services/custom';
+import {routes} from '../app-routing/routes';
 
 @Component({
   selector: 'app-seats',
@@ -11,8 +12,9 @@ import {AirlineApi, FlightApi} from '../shared/sdk/services/custom';
 })
 export class SeatsComponent implements OnInit {
 
+  flight: Flight;
   seatlist: Seat[] = [];
-  taken: boolean[] = [];
+  taken: Seat[] = [];
   nor: number;
   noc: number;
   rows: number[];
@@ -29,25 +31,18 @@ export class SeatsComponent implements OnInit {
 
     const id = this.route.snapshot.params['id'];
     this.flightApi.findById(id, {include : 'seats'}).subscribe((flight: Flight) => {
-      console.log('Dosao', flight.id);
-     // this.seatlist = flight.seats;
+      this.flight = flight;
+      this.seatlist = this.flight.seats;
+      console.log('Sta ', this.seatlist);
     });
 
+
     this.nor = 5;
-    this.noc = 10;
+    this.noc = 5;
 
 
-    this.rows = Array(this.nor).fill(0).map((x, i) => i);
-    this.cols = Array(this.noc).fill(0).map((x, i) => i);
-
-    for (let r = 0; r < this.nor; r++) {
-      for (let c = 0; c < this.noc; c++) {
-        const seat = new Seat();
-        seat.row = r;
-        seat.column = c;
-        this.seatlist.push(seat);
-      }
-    }
+    this.rows = Array(this.nor).fill(1).map((x, i) => i);
+    this.cols = Array(this.noc).fill(1).map((x, i) => i);
   }
 
   seatExists(row: number, col: number): boolean {
@@ -60,9 +55,9 @@ export class SeatsComponent implements OnInit {
   }
 
   seatTaken(row: number, col: number): boolean {
-    for (let i = 0; i < this.seatlist.length; i++) {
-      if (this.seatlist[i].row === row && this.seatlist[i].column === col ) {
-        return this.taken[i];
+    for (let i = 0; i < this.taken.length; i++) {
+      if (this.taken[i] && this.taken[i].row === row && this.taken[i].column === col ) {
+        return true;
       }
     }
     return false;
@@ -71,16 +66,16 @@ export class SeatsComponent implements OnInit {
   seatClicked(row: number, col: number): void {
     for (let i = 0; i < this.seatlist.length; i++) {
       if (this.seatlist[i].row === row && this.seatlist[i].column === col ) {
-        if (this.taken[i]) {
-          this.msg = 'Selected seat is taken and reservation button should be disabled for you idioto. Row:' + row + ', Col:' + col;
-          return;
-        } else {
-          this.msg = 'Good job padre! You have successfully selected your seat! Row:' + row + ', Col:' + col;
-          return;
-        }
+        this.msg = 'Good job padre! You have successfully selected your seat! Row:' + row + ', Col:' + col;
+        this.taken[i] = this.seatlist[i];
+        return;
       }
     }
     this.msg = '';
   }
 
+
+  reserveSeats() {
+    console.log('Ovde rezervisem te karte valjda?');
+  }
 }

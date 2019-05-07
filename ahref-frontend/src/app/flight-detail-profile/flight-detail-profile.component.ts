@@ -30,6 +30,8 @@ export class FlightDetailProfileComponent implements OnInit {
     const id = this.route.snapshot.params['id'];
     this.flightApi.findById(id).subscribe((flight: Flight) => {
       this.flight = flight;
+      console.log('AFKakSF');
+      console.log('NZMZ ', this.flight.startDestination);
       this.airlineApi.findById(flight.airlineId).subscribe((airline: Airline) => {
         if (airline.loggedUserId === this.loggedUserApi.getCachedCurrent().id) {
           this.readOnly = false;

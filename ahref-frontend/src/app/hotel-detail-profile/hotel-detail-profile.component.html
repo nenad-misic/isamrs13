@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card *ngIf="profile_new">
   <mat-card-title>{{profile_new.name}}</mat-card-title>
   <form novalidate>
     <mat-card-content fxLayout="column" *ngIf="!readOnly">
@@ -49,6 +49,7 @@
     </mat-card-actions>
   </form>
   <app-room-add-form [hotel]="profile_new" *ngIf="!readOnly"></app-room-add-form>
+  <app-room-search [hotelid]="profile_new.id"></app-room-search>
   <mat-card>
     <mat-card-content>
       <mat-grid-list cols="2">
@@ -61,3 +62,6 @@
 
 </mat-card>
 
+<div [hidden]="profile_new" class="mat-spinner-container">
+  <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
+</div>
