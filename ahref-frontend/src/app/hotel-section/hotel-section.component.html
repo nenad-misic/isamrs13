@@ -1,7 +1,7 @@
 
 <app-hotel-add-form></app-hotel-add-form>
 <app-hotel-search-form></app-hotel-search-form>
-<mat-card>
+<mat-card *ngIf="hotels">
   <mat-card-content>
     <mat-grid-list cols="2">
       <mat-grid-tile *ngFor="let hotel of hotels" [routerLink]="['/hoteldetail', hotel.id]">
@@ -10,3 +10,7 @@
     </mat-grid-list>
   </mat-card-content>
 </mat-card>
+
+<div [hidden]="hotels" class="mat-spinner-container">
+  <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
+</div>

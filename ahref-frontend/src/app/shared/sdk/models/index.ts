@@ -21,6 +21,8 @@ export * from './LoggedUser';
 export * from './CarReservation';
 export * from './SCar';
 export * from './MCarReservation';
+export * from './SRoom';
+export * from './RoomReservation';
+export * from './MRoomReservation';
 export * from './BaseModels';
 export * from './FireLoopRef';
-export * from './SRoom'

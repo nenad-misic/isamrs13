@@ -3,7 +3,12 @@
 
 var flag = true;
 module.exports = function(Mroomreservation) {
-    Mroomreservation.beforeRemote('create', 
+    Mroomreservation.afterRemote('**', function(ctx, modelInstance, next)  {
+      console.log('Mroomreservation remote method: ' + ctx.method.name);
+      next();
+    });
+
+    Mroomreservation.beforeRemote('create',
         function(ctx, model, next) {
             flag = true;
             doReservation(Mroomreservation, ctx, model, next, function(e){
@@ -54,13 +59,13 @@ function doReservation(Mroomreservation, ctx, model, next, errorCallback) {
                         if (foundOne) {
                             tx.rollback(function(err) {
                                 if (err && flag) errorCallback(err);
-    
+
                                 var error = new Error('Room is not available');
                                 error.statusCode = error.status = 404;
                                 if (flag) errorCallback(error);
                             });
                         }
-                        
+
                         if (err && flag) {
                             tx.rollback(function(err) {
                               if (err && flag) errorCallback(err);

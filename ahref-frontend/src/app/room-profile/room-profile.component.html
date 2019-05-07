@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card *ngIf="room">
   <mat-card-content>
     <h3>ID: </h3>
     <p>{{room.id}}</p>
@@ -10,3 +10,6 @@
     <p>{{room.rating}}</p>
   </mat-card-content>
 </mat-card>
+<div [hidden]="room" class="mat-spinner-container">
+  <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
+</div>

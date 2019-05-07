@@ -1,4 +1,4 @@
-<div class="form-container" *ngIf="type=='sysAdmin'">
+<div class="form-container" *ngIf="type=='sysAdmin' && new_hotel">
   <form novalidate (ngSubmit)="addHotel()">
     <mat-form-field>
       <input matInput required [(ngModel)]="new_hotel.name" placeholder="Name" name="name">
@@ -29,4 +29,7 @@
     <button mat-button>ADD HOTEL</button>
     <p>*required</p>
   </form>
+</div>
+<div [hidden]="new_hotel" class="mat-spinner-container">
+  <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
 </div>

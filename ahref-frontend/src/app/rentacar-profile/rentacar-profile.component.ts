@@ -1,6 +1,6 @@
 import {Component, Inject, Input, OnInit} from '@angular/core';
 import {RACService} from '../shared/sdk/models';
-import {RACServiceApi} from '../shared/sdk/services/custom';
+import {DestinationApi, RACServiceApi} from '../shared/sdk/services/custom';
 import {LoopBackConfig} from '../shared/sdk';
 import {API_VERSION} from '../shared/baseurl';
 
@@ -14,11 +14,19 @@ export class RentacarProfileComponent implements OnInit {
   @Input()
   profile: RACService;
 
-  constructor(@Inject('baseURL') private baseURL) {
+  destination = {city: '', state: ''};
+
+  rate = Math.floor(Math.random() * 4) + 1;
+
+  constructor(@Inject('baseURL') private baseURL,
+              private dapi: DestinationApi) {
     LoopBackConfig.setBaseURL(baseURL);
-    LoopBackConfig.setApiVersion(API_VERSION);}
+    LoopBackConfig.setApiVersion(API_VERSION);
+  }
 
   ngOnInit() {
+    // @ts-ignore
+    this.dapi.findOne({where: {id: this.profile.destinationId}}).subscribe((dest) => this.destination = dest );
   }
 
 }

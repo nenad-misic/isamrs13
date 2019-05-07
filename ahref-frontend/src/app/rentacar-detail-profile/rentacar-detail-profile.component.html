@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card *ngIf="profile_new">
   <mat-card-title>{{profile_new.name}}</mat-card-title>
   <form novalidate>
   <mat-card-content fxLayout="column" *ngIf="!readOnly">
@@ -41,11 +41,21 @@
     <mat-form-field>
       <input matInput required placeholder="Rating" [(ngModel)]="profile_new.rating" readonly name="rating">
     </mat-form-field>
+
+
+    <agm-map [latitude]="profile_new.latitude" [longitude]="profile_new.longitude">
+      <agm-marker [latitude]="profile_new.latitude" [longitude]="profile_new.longitude"></agm-marker>
+    </agm-map>
+
   </mat-card-content>
   <mat-card-actions>
     <button mat-button (click)="goBack()">Back</button>
-    <button mat-button (click)="onSaveClick()">Save</button>
-    <button mat-button [routerLink]="['/cars', profile_new.id]">List cars</button>
+    <button mat-button *ngIf="!readOnly" (click)="onSaveClick()">Save</button>
+    <button mat-button [routerLink]="['/cars', profile_new.id]">Search cars</button>
+    <button mat-button [routerLink]="['/allcars', profile_new.id]">List all cars</button>
   </mat-card-actions>
   </form>
 </mat-card>
+<div [hidden]="profile_new" class="mat-spinner-container">
+  <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
+</div>

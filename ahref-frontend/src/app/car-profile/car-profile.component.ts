@@ -12,12 +12,19 @@ export class CarProfileComponent implements OnInit {
 
   @Input()
   profile: Car;
-
+  rate = Math.floor(Math.random() * 4) + 1;
+  picturePath: string;
   constructor(@Inject('baseURL') private baseURL) {
     LoopBackConfig.setBaseURL(baseURL);
     LoopBackConfig.setApiVersion(API_VERSION); }
 
   ngOnInit() {
+    this.picturePath = this.baseURL + '/carImages/' + this.profile.id + '.jpg';
+  }
+
+  changePicPath(): void {
+    console.log('Here we go!');
+    this.picturePath = this.baseURL + '/carImages/' + 'missing.png';
   }
 
 }

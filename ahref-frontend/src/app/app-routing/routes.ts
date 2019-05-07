@@ -22,8 +22,9 @@ import {FlightDetailProfileComponent} from '../flight-detail-profile/flight-deta
 import {FlightSectionFilteredComponent} from '../flight-section-filtered/flight-section-filtered.component';
 import {SeatsComponent} from '../seats/seats.component';
 import {MakeCarReservationComponent} from '../make-car-reservation/make-car-reservation.component';
-import {AdditionalServiceDetailsComponent} from "../additional-service-details/additional-service-details.component";
-import {RoomReservationSectionComponent} from "../room-reservation-section/room-reservation-section.component";
+import {AdditionalServiceDetailsComponent} from '../additional-service-details/additional-service-details.component';
+import {RoomReservationSectionComponent} from '../room-reservation-section/room-reservation-section.component';
+import {CarOfRacComponent} from '../car-of-rac/car-of-rac.component';
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent},
@@ -31,6 +32,7 @@ export const routes: Routes = [
   { path: 'rentdetail/:id', component: RentacarDetailProfileComponent },
   { path: 'cars', component: CarSectionComponent },
   { path: 'cars/:id', component: CarSectionFilteredComponent },
+  { path: 'allcars/:id', component: CarOfRacComponent },
   { path: 'cardetail/:id', component: CarDetailProfileComponent },
   { path: 'hotels', component: HotelSectionComponent },
   { path: 'hoteldetail/:id', component: HotelDetailProfileComponent },

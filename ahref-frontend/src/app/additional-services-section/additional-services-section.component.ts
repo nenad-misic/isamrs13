@@ -15,7 +15,7 @@ export class AdditionalServicesSectionComponent implements OnInit {
   hotelId: string;
   hPriceList: HPriceList = new HPriceList();
   readOnly: boolean;
-
+  waiting = false;
   constructor(private hotelService: HotelApi,
               private aserviceApi: HPriceListApi,
               private route: ActivatedRoute,
@@ -27,11 +27,13 @@ export class AdditionalServicesSectionComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.waiting = true;
     const id = this.route.snapshot.params['id'];
     this.hotelId = id;
     this.hotelService.findOne({where: {id: id}, include: 'priceList'}).subscribe((profile: Hotel) => {
       this.aserviceApi.findOne({where: {id: profile.priceList.id}, include: 'priceListItems'}).subscribe((priceList: HPriceList) => {
         this.hPriceList = priceList;
+        this.waiting = false;
       });
       if (profile.id === this.userApi.getCachedCurrent().hotelId) {
         this.readOnly = false;

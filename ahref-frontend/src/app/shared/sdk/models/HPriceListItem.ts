@@ -7,6 +7,7 @@ export interface HPriceListItemInterface {
   "discount": number;
   "id"?: any;
   "hPriceListId"?: any;
+  "mRoomReservationId"?: any;
 }
 
 export class HPriceListItem implements HPriceListItemInterface {
@@ -15,6 +16,7 @@ export class HPriceListItem implements HPriceListItemInterface {
   "discount": number;
   "id": any;
   "hPriceListId": any;
+  "mRoomReservationId": any;
   constructor(data?: HPriceListItemInterface) {
     Object.assign(this, data);
   }
@@ -66,6 +68,10 @@ export class HPriceListItem implements HPriceListItemInterface {
         },
         "hPriceListId": {
           name: 'hPriceListId',
+          type: 'any'
+        },
+        "mRoomReservationId": {
+          name: 'mRoomReservationId',
           type: 'any'
         },
       },
