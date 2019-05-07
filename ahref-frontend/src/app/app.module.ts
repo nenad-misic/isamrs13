@@ -6,6 +6,7 @@ import {AppRoutingModule} from './app-routing/app-routing.module';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { ToastrModule } from 'ngx-toastr';
 
 import 'hammerjs';
 import { baseURL } from './shared/baseurl';
@@ -153,13 +154,13 @@ import { AgmCoreModule } from '@agm/core';
     MatCheckboxModule,
     FormsModule,
     HttpClientModule,
+    ToastrModule.forRoot(),
     MatProgressSpinnerModule,
     BarRatingModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBf77UiLC2QLbjq5UK6rVHIQHk2uJcwdU4'
     }),
     SDKBrowserModule.forRoot()
-
   ],
   entryComponents: [
     RentacarDetailProfileComponent

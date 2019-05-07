@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {Airline} from '../shared/sdk/models';
+import {Airline, LoggedUser} from '../shared/sdk/models';
 import {AirlineApi, LoggedUserApi} from '../shared/sdk/services/custom';
 import {LoopBackConfig} from '../shared/sdk';
 import {API_VERSION} from '../shared/baseurl';
@@ -14,6 +14,7 @@ export class AirlineAddFormComponent implements OnInit {
 
   new_airline: Airline;
   type: string;
+  email: string;
 
   constructor(private service: AirlineApi,
               private userTypeService: LoggedUserApi,
@@ -35,13 +36,27 @@ export class AirlineAddFormComponent implements OnInit {
   }
 
   addAirline() {
-
-    this.service.create(this.new_airline).subscribe((airline: Airline) => {
-      if (!airline) {
-        console.log(status);
+    this.userTypeService.findOne({where: {email: this.email}}).subscribe((user: LoggedUser) => {
+      if (user) {
+        if (user.type === 'airlineAdmin' && !user.airline) {
+          this.new_airline.loggedUser = user;
+          this.service.create(this.new_airline).subscribe((airline: Airline) => {
+            if (!airline) {
+              console.log(status);
+            }
+            this.userTypeService.updateAirline(user.id, this.new_airline).subscribe((returnedUser) => {
+              console.log('ok');
+            }, (err) => {
+              console.log(err);
+            });
+            this.new_airline = new Airline();
+          });
+          
+        }
       }
+    }, (err) => {
+      console.log(err);
     });
-    this.new_airline = new Airline();
   }
 
 
