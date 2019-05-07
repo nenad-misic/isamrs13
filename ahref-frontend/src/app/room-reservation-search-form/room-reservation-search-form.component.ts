@@ -43,7 +43,7 @@ export class RoomReservationSearchFormComponent implements OnInit {
       this.numberOfGuests,
       this.lowPrice,
       this.highPrice,
-      this.requiredRooms).subscribe((rooms) => {
+      { rooms: this.requiredRooms}).subscribe((rooms) => {
         this.data.changeSearchParams(rooms.retval);
     });
   }

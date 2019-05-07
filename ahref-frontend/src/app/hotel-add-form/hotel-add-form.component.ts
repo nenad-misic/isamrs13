@@ -2,7 +2,10 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {Location} from '@angular/common';
 
 import { API_VERSION } from '../shared/baseurl';
-import {Hotel, HotelApi, LoopBackConfig, LoggedUserApi, HPriceList} from '../shared/sdk';
+import {Hotel, HotelApi, LoopBackConfig, LoggedUserApi, HPriceList, LoggedUser} from '../shared/sdk';
+
+import { ToastrService } from 'ngx-toastr';
+
 @Component({
   selector: 'app-hotel-add-form',
   templateUrl: './hotel-add-form.component.html',
@@ -12,9 +15,12 @@ export class HotelAddFormComponent implements OnInit {
 
   new_hotel: Hotel;
   type: string;
+  email: string;
+
   constructor(private service: HotelApi,
               private location: Location,
               private userTypeService: LoggedUserApi,
+              private toastr: ToastrService,
               @Inject('baseURL') private baseURL) {
     LoopBackConfig.setBaseURL(baseURL);
     LoopBackConfig.setApiVersion(API_VERSION);
@@ -33,15 +39,34 @@ export class HotelAddFormComponent implements OnInit {
 
 
   addHotel() {
-    this.service.create(this.new_hotel).subscribe((hotel: Hotel) => {
-        if (!hotel) { console.log(status);
+    this.userTypeService.findOne({where: {email: this.email}}).subscribe((user: LoggedUser) => {
+      if (user) {
+        if (user.type === "hotelAdmin" && !user.hotel) {
+          this.new_hotel.loggedUserId = user.id;
+          this.service.create(this.new_hotel).subscribe((hotel: Hotel) => {
+            if (!hotel) { console.log(status);
+            
+            this.userTypeService.updateHotel(user.id, this.new_hotel).subscribe((returnUser) => {
+              this.toastr.success('Hello world!', 'Toastr fun!');
+              console.log('ok');
 
-        const priceList: HPriceList = new HPriceList();
-        priceList.hotelId = this.new_hotel.id;
-        this.service.createPriceList(this.new_hotel.id, priceList);
-        this.new_hotel = new Hotel();
-
-      }});
+            }, (err) => {
+              console.log(err);
+            })
+            const priceList: HPriceList = new HPriceList();
+            priceList.hotelId = this.new_hotel.id;
+            this.service.createPriceList(this.new_hotel.id, priceList);
+            this.new_hotel = new Hotel();
+            this.toastr.success('Hello world!', 'Toastr fun!');
+    
+          }}, (err) => {
+            console.log(err);
+          });
+        }
+      }
+    }, (err) => {
+      console.log(err);
+    });
 
   }
 

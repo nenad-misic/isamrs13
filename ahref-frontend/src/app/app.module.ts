@@ -6,6 +6,7 @@ import {AppRoutingModule} from './app-routing/app-routing.module';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { ToastrModule } from 'ngx-toastr';
 
 import 'hammerjs';
 import { baseURL } from './shared/baseurl';
@@ -150,7 +151,8 @@ import { RoomReservationSearchFormComponent } from './room-reservation-search-fo
     MatCheckboxModule,
     FormsModule,
     HttpClientModule,
-    SDKBrowserModule.forRoot()
+    SDKBrowserModule.forRoot(),
+    ToastrModule.forRoot()
 
   ],
   entryComponents: [
