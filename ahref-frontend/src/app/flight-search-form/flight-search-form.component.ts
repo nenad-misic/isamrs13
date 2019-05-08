@@ -12,8 +12,10 @@ import {FlightDataService} from '../services/flight-data.service';
 })
 export class FlightSearchFormComponent implements OnInit {
 
-  name = '';
-  country = '';
+  startDest = '';
+  endDest = '';
+  startDate: Date;
+  endDate: Date;
   searchResult: Flight[] = [];
   constructor(private flightApi: FlightApi,
               private destinationApi: DestinationApi,
@@ -28,27 +30,51 @@ export class FlightSearchFormComponent implements OnInit {
 
   doSearch(): void {
     const filter = {};
-    if (this.name) {
+    const filter2 = {};
+    if (this.startDest) {
       // @ts-ignore
-      filter.name = this.name;
+      filter.name = this.startDest;
     }
-    if (this.country) {
+    if (this.endDest) {
       // @ts-ignore
-      filter.country = this.country;
+      filter2.name = this.endDest;
     }
-    // this.destinationApi.find({where: filter}).subscribe((searchResult: Destination[]) => {
-      this.searchResult = [];
-    //  searchResult.forEach((element) => {
-        this.flightApi.find({include: 'startDestination'}).subscribe((flightSearchResult: Flight[]) => {
-          flightSearchResult.forEach((element1) => {
-    //        if (element1.startDestination.id === element.id) {
-              this.searchResult.push(element1);
-    //        }
+
+    this.destinationApi.find({where: filter}).subscribe((searchResult: Destination[]) => {
+      this.destinationApi.find({where: filter2}).subscribe((searchResult2: Destination[]) => {
+        this.searchResult = [];
+        searchResult.forEach((startE) => {
+          searchResult2.forEach((endE) => {
+            this.flightApi.find({include: ['startDestination', 'endDestination']}).subscribe((flightSearchResult: Flight[]) => {
+
+              flightSearchResult.forEach((element1) => {
+                this.flightApi.findById(element1.id, { include: ['startDestination', 'endDestination']}).subscribe((flightE: Flight) => {
+                  console.log(flightE);
+                  let dejt = true;
+                  if(this.startDate){
+                    if(flightE.startTime < new Date(this.startDate).getTime()){
+                      dejt = false;
+                    }
+                  }
+
+                  if(this.startDate){
+                    if(flightE.endTime > new Date(this.endDate).getTime()){
+                      dejt = false;
+                    }
+                  }
+
+                  if (dejt && flightE.startDestination.id === startE.id && flightE.endDestination.id === endE.id) {
+                    this.searchResult.push(flightE);
+                  }
+                });
+
+              });
+            });
           });
         });
-    //  });
-      this.data.changeSearchParams(this.searchResult);
-    // });
+        this.data.changeSearchParams(this.searchResult);
+      });
+    });
   }
 
 }

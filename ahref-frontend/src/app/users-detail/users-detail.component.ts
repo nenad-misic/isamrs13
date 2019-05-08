@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {User} from '../shared/sdk/models';
-import {UserApi} from '../shared/sdk/services/custom';
+import {LoggedUser, User} from '../shared/sdk/models';
+import {LoggedUserApi, UserApi} from '../shared/sdk/services/custom';
 import {UserdataService} from '../services/userdata.service';
 import {DataService} from '../services/data.service';
 import {LoopBackConfig} from '../shared/sdk';
@@ -17,7 +17,7 @@ export class UsersDetailComponent implements OnInit {
   email: String;
   searchResult: User[] = [];
 
-  constructor(private userService: UserApi,
+  constructor(private userService: LoggedUserApi,
               private data: UserdataService,
               @Inject('baseURL') private baseURL) {
     LoopBackConfig.setBaseURL(baseURL);
@@ -39,16 +39,30 @@ export class UsersDetailComponent implements OnInit {
     }
 
 
-   this.userService.find({where: filter}).subscribe((searchResult: User[]) => {
-      this.searchResult = searchResult;
-      this.data.changeSearchParams(this.searchResult);
+   this.userService.find({where: filter}).subscribe((searchResult: LoggedUser[]) => {
+
+     if('sysAdmin' !== this.userService.getCachedCurrent().type){
+       searchResult.forEach((user)=>{
+
+         if(user.username !== this.userService.getCachedCurrent().username && user.type ==='regUser'){
+            this.searchResult.push(user);
+         }
+
+       });
+
+     }else{
+       searchResult.forEach((user)=>{
+
+         if(user.type !== 'sysAdmin'){
+           this.searchResult.push(user);
+         }
+
+       });
+
+     }
+     this.data.changeSearchParams(this.searchResult);
     });
 
-    // this.searchResult = [new User({username: 'username', email: 'email', password: 'password'}),
-    //  new User({username: 'username2', email: 'email2', password: 'password2'}),
-    //  new User({username: 'username3', email: 'email3', password: 'password3'})
-    // ];
-    this.data.changeSearchParams((this.searchResult));
   }
 
 

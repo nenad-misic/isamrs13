@@ -1,25 +1,31 @@
+/* tslint:disable */
+import { Injectable, Inject, Optional } from '@angular/core';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { SDKModels } from './SDKModels';
+import { BaseLoopBackApi } from '../core/base.service';
+import { LoopBackConfig } from '../../lb.config';
+import { LoopBackAuth } from '../core/auth.service';
+import { LoopBackFilter,  } from '../../models/BaseModels';
+import { ErrorHandler } from '../core/error.service';
+import { Observable, Subject } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Room } from '../../models/Room';
+import { SocketConnection } from '../../sockets/socket.connections';
+import { DatePrice } from '../../models/DatePrice';
+
+
 /**
  * Api services for the `Room` model.
  */
-import {BaseLoopBackApi, ErrorHandler, LoopBackAuth} from "../core";
-import {Inject, Injectable, Optional} from "@angular/core";
-import {LoopBackConfig} from "../../lb.config";
-import {SocketConnection} from "../../sockets/socket.connections";
-import {LoopBackFilter} from "../../models";
-import {SDKModels} from "./SDKModels";
-import {Observable} from "rxjs";
-import {HttpClient} from "@angular/common/http";
-
-
 @Injectable()
 export class RoomApi extends BaseLoopBackApi {
 
   constructor(
-      @Inject(HttpClient) protected http: HttpClient,
-      @Inject(SocketConnection) protected connection: SocketConnection,
-      @Inject(SDKModels) protected models: SDKModels,
-      @Inject(LoopBackAuth) protected auth: LoopBackAuth,
-      @Optional() @Inject(ErrorHandler) protected errorHandler: ErrorHandler
+    @Inject(HttpClient) protected http: HttpClient,
+    @Inject(SocketConnection) protected connection: SocketConnection,
+    @Inject(SDKModels) protected models: SDKModels,
+    @Inject(LoopBackAuth) protected auth: LoopBackAuth,
+    @Optional() @Inject(ErrorHandler) protected errorHandler: ErrorHandler
   ) {
     super(http,  connection,  models, auth, errorHandler);
   }
@@ -43,7 +49,7 @@ export class RoomApi extends BaseLoopBackApi {
   public findByIdDatePrices(id: any, fk: any, customHeaders?: Function): Observable<any> {
     let _method: string = "GET";
     let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
-        "/Rooms/:id/datePrices/:fk";
+    "/Rooms/:id/datePrices/:fk";
     let _routeParams: any = {
       id: id,
       fk: fk
@@ -70,7 +76,7 @@ export class RoomApi extends BaseLoopBackApi {
   public destroyByIdDatePrices(id: any, fk: any, customHeaders?: Function): Observable<any> {
     let _method: string = "DELETE";
     let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
-        "/Rooms/:id/datePrices/:fk";
+    "/Rooms/:id/datePrices/:fk";
     let _routeParams: any = {
       id: id,
       fk: fk
@@ -104,7 +110,7 @@ export class RoomApi extends BaseLoopBackApi {
   public updateByIdDatePrices(id: any, fk: any, data: any = {}, customHeaders?: Function): Observable<any> {
     let _method: string = "PUT";
     let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
-        "/Rooms/:id/datePrices/:fk";
+    "/Rooms/:id/datePrices/:fk";
     let _routeParams: any = {
       id: id,
       fk: fk
@@ -122,7 +128,7 @@ export class RoomApi extends BaseLoopBackApi {
    *
    * @param {any} id Room id
    *
-   * @param {object} filter
+   * @param {object} filter 
    *
    * @returns {object[]} An empty reference that will be
    *   populated with the actual data once the response is returned
@@ -136,7 +142,7 @@ export class RoomApi extends BaseLoopBackApi {
   public getDatePrices(id: any, filter: LoopBackFilter = {}, customHeaders?: Function): Observable<any> {
     let _method: string = "GET";
     let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
-        "/Rooms/:id/datePrices";
+    "/Rooms/:id/datePrices";
     let _routeParams: any = {
       id: id
     };
@@ -168,7 +174,7 @@ export class RoomApi extends BaseLoopBackApi {
   public createDatePrices(id: any, data: any = {}, customHeaders?: Function): Observable<any> {
     let _method: string = "POST";
     let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
-        "/Rooms/:id/datePrices";
+    "/Rooms/:id/datePrices";
     let _routeParams: any = {
       id: id
     };
@@ -194,7 +200,7 @@ export class RoomApi extends BaseLoopBackApi {
   public deleteDatePrices(id: any, customHeaders?: Function): Observable<any> {
     let _method: string = "DELETE";
     let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
-        "/Rooms/:id/datePrices";
+    "/Rooms/:id/datePrices";
     let _routeParams: any = {
       id: id
     };
@@ -217,12 +223,12 @@ export class RoomApi extends BaseLoopBackApi {
    *
    * Data properties:
    *
-   *  - `count` – `{number}` -
+   *  - `count` – `{number}` - 
    */
   public countDatePrices(id: any, where: any = {}, customHeaders?: Function): Observable<any> {
     let _method: string = "GET";
     let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
-        "/Rooms/:id/datePrices/count";
+    "/Rooms/:id/datePrices/count";
     let _routeParams: any = {
       id: id
     };
@@ -252,7 +258,7 @@ export class RoomApi extends BaseLoopBackApi {
   public patchOrCreate(data: any = {}, customHeaders?: Function): Observable<any> {
     let _method: string = "PATCH";
     let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
-        "/Rooms";
+    "/Rooms";
     let _routeParams: any = {};
     let _postBody: any = {
       data: data
@@ -283,7 +289,7 @@ export class RoomApi extends BaseLoopBackApi {
   public patchAttributes(id: any, data: any = {}, customHeaders?: Function): Observable<any> {
     let _method: string = "PATCH";
     let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
-        "/Rooms/:id";
+    "/Rooms/:id";
     let _routeParams: any = {
       id: id
     };
@@ -297,23 +303,24 @@ export class RoomApi extends BaseLoopBackApi {
 
   /**
    * <em>
-   * (The remote method definition does not provide any description.)
-   * </em>
+         * (The remote method definition does not provide any description.)
+         * </em>
    *
+   * @param {object} data Request data.
    *
-   *  - `roomid` – `{string}` -
+   *  - `roomid` – `{string}` - 
    *
-   *  - `startDate` – `{string}` -
+   *  - `startDate` – `{string}` - 
    *
-   *  - `endDate` – `{string}` -
+   *  - `endDate` – `{string}` - 
    *
-   *  - `numberOfGuests` – `{number}` -
+   *  - `numberOfGuests` – `{number}` - 
    *
-   *  - `lowPrice` – `{string}` -
+   *  - `lowPrice` – `{string}` - 
    *
-   *  - `hightPrice` – `{string}` -
+   *  - `hightPrice` – `{string}` - 
    *
-   *  - `requiredRooms` – `{any}` -
+   *  - `requiredRooms` – `{any}` - 
    *
    * @returns {object} An empty reference that will be
    *   populated with the actual data once the response is returned
@@ -321,21 +328,12 @@ export class RoomApi extends BaseLoopBackApi {
    *
    * Data properties:
    *
-   *  - `retval` – `{object}` -
-   * @param roomid
-   * @param startDate
-   * @param endDate
-   * @param numberOfGuests
-   * @param lowPrice
-   * @param hightPrice
-   * @param requiredRooms
-   * @param customHeaders
+   *  - `retval` – `{object}` - 
    */
-  public getMatching(roomid: any, startDate: any, endDate: any, numberOfGuests: any, lowPrice: any = {},
-                     hightPrice: any = {}, requiredRooms: any, customHeaders?: Function): Observable<any> {
+  public getMatching(roomid: any, startDate: any, endDate: any, numberOfGuests: any, lowPrice: any = {}, hightPrice: any = {}, requiredRooms: any, customHeaders?: Function): Observable<any> {
     let _method: string = "POST";
     let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
-        "/Rooms/getMatching";
+    "/Rooms/getMatching";
     let _routeParams: any = {};
     let _postBody: any = {};
     let _urlParams: any = {};
@@ -371,7 +369,7 @@ export class RoomApi extends BaseLoopBackApi {
   public createManyDatePrices(id: any, data: any[] = [], customHeaders?: Function): Observable<any> {
     let _method: string = "POST";
     let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
-        "/Rooms/:id/datePrices";
+    "/Rooms/:id/datePrices";
     let _routeParams: any = {
       id: id
     };

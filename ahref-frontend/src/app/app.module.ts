@@ -44,6 +44,7 @@ import {SDKBrowserModule} from './shared/sdk';
 import { UserSectionComponent } from './user-section/user-section.component';
 import { UsersProfileComponent } from './users-profile/users-profile.component';
 import { UsersDetailComponent } from './users-detail/users-detail.component';
+import { UsersDetailProfileComponent } from './users-detail-profile/users-detail-profile.component';
 import { AirlineAddFormComponent } from './airline-add-form/airline-add-form.component';
 import { RentacarAddFormComponent } from './rentacar-add-form/rentacar-add-form.component';
 import {RegisterComponent} from './register/register.component';
@@ -76,6 +77,12 @@ import { MakeCarReservationComponent } from './make-car-reservation/make-car-res
 import { AdditionalServiceDetailsComponent } from './additional-service-details/additional-service-details.component';
 import { RoomReservationSectionComponent } from './room-reservation-section/room-reservation-section.component';
 import { RoomReservationSearchFormComponent } from './room-reservation-search-form/room-reservation-search-form.component';
+import { PassengerInfoComponent } from './passenger-info/passenger-info.component';
+import { PassengerInfoProfileComponent } from './passenger-info-profile/passenger-info-profile.component';
+import {FriendsListComponent} from './friends-list/friends-list.component';
+import { FriendsListRequestsComponent } from './friends-list-requests/friends-list-requests.component';
+import { FlightInviteComponent } from './flight-invite/flight-invite.component';
+import { FlightInviteProfileComponent } from './flight-invite-profile/flight-invite-profile.component';
 
 @NgModule({
   declarations: [
@@ -98,6 +105,7 @@ import { RoomReservationSearchFormComponent } from './room-reservation-search-fo
     UserSectionComponent,
     UsersProfileComponent,
     UsersDetailComponent,
+    UsersDetailProfileComponent,
     AirlineAddFormComponent,
     RentacarAddFormComponent,
     RegisterComponent,
@@ -129,7 +137,13 @@ import { RoomReservationSearchFormComponent } from './room-reservation-search-fo
     MakeCarReservationComponent,
     AdditionalServiceDetailsComponent,
     RoomReservationSectionComponent,
-    RoomReservationSearchFormComponent
+    RoomReservationSearchFormComponent,
+    PassengerInfoComponent,
+    PassengerInfoProfileComponent,
+    FriendsListComponent,
+    FriendsListRequestsComponent,
+    FlightInviteComponent,
+    FlightInviteProfileComponent
   ],
   imports: [
     BrowserModule,

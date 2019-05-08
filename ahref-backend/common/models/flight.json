@@ -46,12 +46,12 @@
       "foreignKey": ""
     },
     "startDestination": {
-      "type": "hasOne",
+      "type": "belongsTo",
       "model": "Destination",
       "foreignKey": ""
     },
     "endDestination": {
-      "type": "hasOne",
+      "type": "belongsTo",
       "model": "Destination",
       "foreignKey": ""
     },

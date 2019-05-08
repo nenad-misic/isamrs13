@@ -21,6 +21,14 @@ export * from './LoggedUser';
 export * from './CarReservation';
 export * from './SCar';
 export * from './MCarReservation';
+export * from './SRoom';
+export * from './RoomReservation';
+export * from './MRoomReservation';
+export * from './MFlightReservation';
+export * from './FlightReservation';
+export * from './SFlight';
+export * from './SSeat';
+export * from './Friendship';
+export * from './Passenger';
 export * from './BaseModels';
 export * from './FireLoopRef';
-export * from './SRoom'

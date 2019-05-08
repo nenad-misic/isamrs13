@@ -5,7 +5,7 @@
   <mat-card-content>
     <app-users-detail></app-users-detail>
     <mat-grid-list cols="2">
-      <mat-grid-tile *ngFor="let user of users">
+      <mat-grid-tile *ngFor="let user of users" [routerLink]="['/profiles',user.id]">
         <app-users-profile [profile]="user"></app-users-profile>
       </mat-grid-tile>
     </mat-grid-list>
