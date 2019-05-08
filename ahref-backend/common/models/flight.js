@@ -20,6 +20,10 @@ module.exports = function(Flight) {
         next(e);
       });
     });
+  Flight.afterRemote('**', function(ctx, modelInstance, next)  {
+    console.log('Flight remote method: ' + ctx.method.name);
+    next();
+  });
 };
 
 function doDelete(Flight, ctx, model, next, errorCallback) {

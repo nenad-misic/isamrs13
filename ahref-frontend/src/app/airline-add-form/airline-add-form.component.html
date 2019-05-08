@@ -1,4 +1,4 @@
-<div class="form-container" *ngIf="type=='sysAdmin'">
+<div class="form-container" *ngIf="type=='sysAdmin' && new_airline">
   <form novalidate (ngSubmit)="addAirline()">
     <mat-form-field>
       <input matInput required [(ngModel)]="new_airline.name" placeholder="Name" name="name">
@@ -21,7 +21,15 @@
       <input matInput required type="number" [(ngModel)]="new_airline.longitude" placeholder="longitude" name="longitude"/>
     </mat-form-field>
 
+    <mat-form-field>
+      <input matInput required type="email" [(ngModel)]="email" placeholder="Admin email" name="adminemail"/>
+    </mat-form-field>
+    
     <button mat-button>ADD AIRLINE</button>
     <p>*required</p>
   </form>
+</div>
+
+<div [hidden]="new_airline" class="mat-spinner-container">
+  <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
 </div>

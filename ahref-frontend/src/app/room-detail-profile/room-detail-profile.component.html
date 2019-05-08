@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card *ngIf="room">
   <mat-card-title>Room details</mat-card-title>
   <form novalidate>
     <mat-card-content fxLayout="column" *ngIf="!readOnly">
@@ -49,4 +49,7 @@
   <mat-list *ngFor="let price of room.datePrices">
     <mat-list-item >{{getDate(price.startDate).toLocaleDateString()}}: {{price.price}} <button mat-button (click)="deletePrice(price)">Delete</button></mat-list-item>
   </mat-list>
+</div>
+<div [hidden]="room" class="mat-spinner-container">
+  <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
 </div>

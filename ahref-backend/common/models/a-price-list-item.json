@@ -21,14 +21,21 @@
     {
       "accessType": "*",
       "principalType": "ROLE",
-      "principalId": "God",
-      "permission": "ALLOW"
+      "principalId": "$everyone",
+      "permission": "DENY"
     },
     {
-      "accessType": "*",
+      "accessType": "READ",
       "principalType": "ROLE",
       "principalId": "$everyone",
       "permission": "ALLOW"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "airlineAdmin",
+      "permission": "ALLOW",
+      "property": "create"
     }
   ],
   "methods": {}

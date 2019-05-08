@@ -1,10 +1,17 @@
-<app-rac-reservation-search-form [racId]="id"></app-rac-reservation-search-form>
-<mat-card>
+<app-rac-reservation-search-form *ngIf="id" [racId]="id"></app-rac-reservation-search-form>
+<div [hidden]="id">
+  <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
+</div>
+
+<mat-card *ngIf="cars">
   <mat-card-content>
-    <mat-grid-list cols="2">
+    <mat-grid-list cols="2" rowHeight="3:4">
       <mat-grid-tile *ngFor="let car of cars" [routerLink]="['/cardetail', car.id]">
         <app-car-profile [profile]="car"></app-car-profile>
       </mat-grid-tile>
     </mat-grid-list>
   </mat-card-content>
 </mat-card>
+<div [hidden]="cars" class="mat-spinner-container">
+  <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
+</div>

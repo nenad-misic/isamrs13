@@ -13,6 +13,10 @@ module.exports = function(Seat) {
       });
 
   
+  Seat.afterRemote('**', function(ctx, modelInstance, next)  {
+    console.log('Seat remote method: ' + ctx.method.name);
+    next();
+  });
 };
 
 function doDelete(Seat, ctx, model, next, errorCallback) {

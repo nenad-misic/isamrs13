@@ -1,5 +1,4 @@
-
-<div>
+<div *ngIf="new_aservice">
   <form novalidate>
     <mat-form-field>
       <input matInput required [(ngModel)]="new_aservice.name" placeholder="Name" name="name">
@@ -16,3 +15,6 @@
   </form>
 </div>
 
+<div [hidden]="new_aservice">
+  <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
+</div>

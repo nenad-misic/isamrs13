@@ -1,4 +1,4 @@
-<mat-card class="form-container">
+<mat-card class="form-container" *ngIf="new_flight">
   <div *ngIf="type=='airlineAdmin'">
     <form novalidate>
       <mat-form-field>
@@ -34,3 +34,7 @@
     </form>
   </div>
 </mat-card>
+
+<div [hidden]="new_flight" class="mat-spinner-container">
+  <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
+</div>

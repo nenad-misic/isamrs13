@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card *ngIf="profile_new">
   <mat-card-title>{{profile_new.username}}</mat-card-title>
   <form novalidate>
     <mat-card-content fxLayout="column">
@@ -22,8 +22,11 @@
         <button mat-button (click)="goBack()">Back</button>
         <button mat-button (click)="onSaveClick()">Save</button>
         <button mat-button routerLink="/changepassword">Change password</button>
-  
+
         <button mat-button (click)="logout()">LOGOUT</button>
       </mat-card-actions>
   </form>
 </mat-card>
+<div [hidden]="profile_new" class="mat-spinner-container">
+  <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
+</div>

@@ -5,6 +5,7 @@ import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 import {LoopBackConfig} from '../shared/sdk';
 import {API_VERSION} from '../shared/baseurl';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-room-detail-profile',
@@ -25,6 +26,7 @@ export class RoomDetailProfileComponent implements OnInit {
                private hotelApi: HotelApi,
                private roomApi: RoomApi,
                private priceApi: DatePriceApi,
+               private toastr: ToastrService,
                @Inject('baseURL') private baseURL) {
     LoopBackConfig.setBaseURL(baseURL);
     LoopBackConfig.setApiVersion(API_VERSION);
@@ -49,16 +51,21 @@ export class RoomDetailProfileComponent implements OnInit {
     this.new_price.roomId = this.room.id;
     console.log(this.new_date);
     this.new_price.startDate = new Date(this.new_date).getTime();
-    this.roomApi.createDatePrices(this.room.id, this.new_price).subscribe(() => {
+    this.roomApi.createDatePrices(this.room.id, this.new_price).subscribe((param) => {
+      this.toastr.success(this.new_price.startDate + ": " + this.new_price.price, 'Price added');
       this.new_price = new DatePrice();
+    }, (err) => {
+      this.toastr.error(err.message, 'ERROR');
     });
   }
 
   onDeleteClick() {
-    this.roomApi.deleteById(this.room.id).subscribe(() => {
-      this.errmsg='';
+    this.roomApi.deleteById(this.room.id).subscribe((param) => {
+      this.toastr.success(this.new_price.startDate + ": " + this.new_price.price, 'Room deleted');
+      this.location.back();
+    }, (err) => {
+      this.toastr.error(err.message, 'ERROR');
     });
-    this.location.back();
   }
 
   goBack(): void {
@@ -75,6 +82,10 @@ export class RoomDetailProfileComponent implements OnInit {
   }
 
   deletePrice(price: DatePrice) {
-    this.priceApi.deleteById(price.id).subscribe(() => {});
+    this.priceApi.deleteById(price.id).subscribe(() => {
+      this.toastr.success(price.startDate + ": " + price.price, 'Price deleted');
+    }, (err) => {
+      this.toastr.error(err.message, 'ERROR');
+    });
   }
 }

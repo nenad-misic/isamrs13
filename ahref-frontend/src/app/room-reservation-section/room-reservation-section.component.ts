@@ -48,6 +48,6 @@ export class RoomReservationSectionComponent implements OnInit {
   }
 
   makeReservationClicked() {
-
+    
   }
 }

@@ -6,6 +6,7 @@ import {AppRoutingModule} from './app-routing/app-routing.module';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { ToastrModule } from 'ngx-toastr';
 
 import 'hammerjs';
 import { baseURL } from './shared/baseurl';
@@ -18,7 +19,7 @@ import {
   MatFormFieldModule,
   MatGridListModule,
   MatInputModule, MatListModule,
-  MatOptionModule,
+  MatOptionModule, MatProgressSpinnerModule,
   MatSelectModule
 } from '@angular/material';
 
@@ -57,7 +58,6 @@ import { RacserviceSearchFormComponent } from './racservice-search-form/racservi
 import { RoomProfileComponent } from './room-profile/room-profile.component';
 import { RoomAddFormComponent } from './room-add-form/room-add-form.component';
 import { RoomDetailProfileComponent } from './room-detail-profile/room-detail-profile.component';
-import { RoomSectionComponent } from './room-section/room-section.component';
 import { AddUserFormComponent } from './add-user-form/add-user-form.component';
 import { AdditionalServicesSectionComponent } from './additional-services-section/additional-services-section.component';
 import { AdditionalServiceProfileComponent } from './additional-service-profile/additional-service-profile.component';
@@ -72,7 +72,6 @@ import { FlightAddFormComponent } from './flight-add-form/flight-add-form.compon
 import { FlightSectionFilteredComponent } from './flight-section-filtered/flight-section-filtered.component';
 import { SeatsComponent } from './seats/seats.component';
 import { RacReservationSearchFormComponent } from './rac-reservation-search-form/rac-reservation-search-form.component';
-import { ReservationsComponent } from './reservations/reservations.component';
 import { MakeCarReservationComponent } from './make-car-reservation/make-car-reservation.component';
 import { AdditionalServiceDetailsComponent } from './additional-service-details/additional-service-details.component';
 import { RoomReservationSectionComponent } from './room-reservation-section/room-reservation-section.component';
@@ -83,6 +82,11 @@ import {FriendsListComponent} from './friends-list/friends-list.component';
 import { FriendsListRequestsComponent } from './friends-list-requests/friends-list-requests.component';
 import { FlightInviteComponent } from './flight-invite/flight-invite.component';
 import { FlightInviteProfileComponent } from './flight-invite-profile/flight-invite-profile.component';
+import { CarOfRacComponent } from './car-of-rac/car-of-rac.component';
+import { RoomSearchComponent } from './room-search/room-search.component';
+import {BarRatingModule} from 'ngx-bar-rating';
+
+import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
   declarations: [
@@ -118,7 +122,6 @@ import { FlightInviteProfileComponent } from './flight-invite-profile/flight-inv
     RoomProfileComponent,
     RoomAddFormComponent,
     RoomDetailProfileComponent,
-    RoomSectionComponent,
     AddUserFormComponent,
     AdditionalServicesSectionComponent,
     AdditionalServiceProfileComponent,
@@ -133,7 +136,6 @@ import { FlightInviteProfileComponent } from './flight-invite-profile/flight-inv
     FlightSectionFilteredComponent,
     SeatsComponent,
     RacReservationSearchFormComponent,
-    ReservationsComponent,
     MakeCarReservationComponent,
     AdditionalServiceDetailsComponent,
     RoomReservationSectionComponent,
@@ -143,7 +145,9 @@ import { FlightInviteProfileComponent } from './flight-invite-profile/flight-inv
     FriendsListComponent,
     FriendsListRequestsComponent,
     FlightInviteComponent,
-    FlightInviteProfileComponent
+    FlightInviteProfileComponent,
+    CarOfRacComponent,
+    RoomSearchComponent
   ],
   imports: [
     BrowserModule,
@@ -164,8 +168,13 @@ import { FlightInviteProfileComponent } from './flight-invite-profile/flight-inv
     MatCheckboxModule,
     FormsModule,
     HttpClientModule,
+    ToastrModule.forRoot(),
+    MatProgressSpinnerModule,
+    BarRatingModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyBf77UiLC2QLbjq5UK6rVHIQHk2uJcwdU4'
+    }),
     SDKBrowserModule.forRoot()
-
   ],
   entryComponents: [
     RentacarDetailProfileComponent

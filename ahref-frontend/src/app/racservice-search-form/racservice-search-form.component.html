@@ -1,5 +1,5 @@
 <div class="form-container">
-  <form novalidate (ngSubmit)="doSearch()">
+  <form (ngSubmit)="doSearch()">
 
     <mat-form-field>
       <input matInput [(ngModel)]="name" placeholder="City" name="city">
@@ -9,6 +9,20 @@
       <input matInput [(ngModel)]="country" placeholder="Country" name="country">
     </mat-form-field>
 
+    <mat-form-field>
+      <input matInput [(ngModel)]="racname" placeholder="Rent a car service name" name="racname">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input required matInput type="date" [(ngModel)]="startDate" placeholder="Start date" name="startDate">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input required matInput type="date" [(ngModel)]="endDate" placeholder="End date" name="endDate">
+    </mat-form-field>
+
+
     <button mat-button>SEARCH RAC SERVICES</button>
   </form>
+  <button mat-button (click)="showAll()">SHOW ALL</button>
 </div>

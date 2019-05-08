@@ -1,5 +1,5 @@
 
-<mat-card>
+<mat-card *ngIf="aservice">
   <mat-card-content *ngIf="!readOnly">
     <form novalidate>
       <mat-form-field>
@@ -32,3 +32,7 @@
     <button mat-button *ngIf="!readOnly" (click)="deleteClicked()">DELETE</button>
   </mat-card-actions>
 </mat-card>
+
+<div [hidden]="aservice" class="mat-spinner-container">
+  <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
+</div>

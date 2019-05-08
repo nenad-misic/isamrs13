@@ -5,6 +5,7 @@ import {CarApi, LoggedUserApi, RACServiceApi} from '../shared/sdk/services/custo
 import {Car, RACService} from '../shared/sdk/models';
 import {LoopBackConfig} from '../shared/sdk';
 import {API_VERSION} from '../shared/baseurl';
+import {CarReservationDataService} from '../services/car-reservation-data.service';
 
 @Component({
   selector: 'app-car-detail-profile',
@@ -23,6 +24,7 @@ export class CarDetailProfileComponent implements OnInit {
               private carApi: CarApi,
               private racServiceApi: RACServiceApi,
               private loggedUserApi: LoggedUserApi,
+              private infoData: CarReservationDataService,
               @Inject('baseURL') private baseURL) {
     LoopBackConfig.setBaseURL(baseURL);
     LoopBackConfig.setApiVersion(API_VERSION); }
@@ -30,8 +32,14 @@ export class CarDetailProfileComponent implements OnInit {
   ngOnInit() {
     const id = this.route.snapshot.params['id'];
     if (this.loggedUserApi.getCachedCurrent().type === 'regUser') {
-      this.reservable = true;
-    }else{
+      this.infoData.currentSearchParams.subscribe((val) => {
+        if (val.startDate && val.endDate) {
+          this.reservable = true;
+        } else {
+          this.reservable = false;
+        }
+      });
+    } else {
       this.reservable = false;
     }
     this.carApi.findById(id).subscribe((car: Car) => {
@@ -53,11 +61,11 @@ export class CarDetailProfileComponent implements OnInit {
   }
 
   onSaveClick(): void {
-    this.carApi.updateAttributes(this.car.id, this.car).subscribe((returned: Car) => { this.errmsg = ''; this.location.back(); }, (err) => {this.errmsg = err.message;});
+    this.racServiceApi.updateByIdCars(this.car.rACServiceId, this.car.id, this.car).subscribe((returned: Car) => { this.errmsg = ''; this.location.back(); }, (err) => {this.errmsg = err.message;});
   }
 
   onDeleteClick(): void {
     // additional checks needed (will be implemented when the reservations arrive)
-    this.carApi.deleteById(this.car.id).subscribe((completed) => this.location.back(), (err) => this.errmsg = err.message);
+    this.racServiceApi.destroyByIdCars(this.car.rACServiceId, this.car.id).subscribe((completed) => this.location.back(), (err) => this.errmsg = err.message);
   }
 }

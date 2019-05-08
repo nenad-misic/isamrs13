@@ -1,4 +1,4 @@
-<mat-card fxLayout="row" fxLayoutAlign="center center">
+<mat-card *ngIf="new_user" fxLayout="row" fxLayoutAlign="center center">
   <form novalidate>
     <mat-card-content fxLayout="column">
       <mat-form-field>
@@ -38,3 +38,7 @@
     </mat-card-actions>
   </form>
 </mat-card>
+
+<div [hidden]="new_user">
+  <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
+</div>
