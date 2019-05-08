@@ -37,9 +37,9 @@ export class AirlineSearchFormComponent implements OnInit {
       filter.country = this.country;
     }
 
-    this.destinationApi.find({where: filter}).subscribe((searchResult: Destination[]) => {
+    //this.destinationApi.find({where: filter}).subscribe((searchResult: Destination[]) => {
       this.searchResult = [];
-      searchResult.forEach((element) => {
+    //searchResult.forEach((element) => {
         this.airlineApi.find({include: 'destinations'}).subscribe((airlineSearchResult: Airline[]) => {
           airlineSearchResult.forEach((element1) => {
              // element1.destinations.forEach((element2) => {
@@ -49,9 +49,9 @@ export class AirlineSearchFormComponent implements OnInit {
             //    });
           });
         });
-      });
+    //});
       this.data.changeSearchParams(this.searchResult);
-    });
+    //});
   }
 
 }

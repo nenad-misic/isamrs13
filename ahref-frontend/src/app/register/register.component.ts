@@ -36,6 +36,7 @@ export class RegisterComponent implements OnInit {
 
   onRegisterClick(): void {
     if (this.passwordConfirm === this.profile.password) {
+      this.profile.emailVerified = true;
       this.userService.create(this.profile).subscribe((user: LoggedUser) => {if (!user) { console.log('errore di fatale'); } });
       this.location.back();
     }

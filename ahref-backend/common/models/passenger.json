@@ -1,0 +1,29 @@
+{
+  "name": "Passenger",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "passport": {
+      "type": "string"
+    },
+    "telephone": {
+      "type": "string"
+    },
+    "city": {
+      "type": "string"
+    },
+    "taken": {
+      "type": "boolean"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}
