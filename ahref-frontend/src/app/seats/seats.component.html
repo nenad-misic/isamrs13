@@ -12,7 +12,7 @@
     </table>
     <span></span>
     <p *ngIf="msg">{{msg}}</p>
-    <button mat-button (click)="reserveSeats()" [routerLink]="['/passengerinfo', flight.id]" >Fill information about passengers</button>
+    <button mat-button (click)="reserveSeats()" [routerLink]="['/flightinvite', flight.id]" >Fill information about passengers</button>
 
   </mat-card-content>
 </mat-card>

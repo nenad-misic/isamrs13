@@ -1,0 +1,24 @@
+{
+  "name": "sFlight",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "mongoId": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "sSeats": {
+      "type": "hasMany",
+      "model": "sSeat",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

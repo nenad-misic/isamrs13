@@ -16,6 +16,8 @@ export interface FlightInterface {
   "id"?: any;
   "airlineId"?: any;
   "destinationId"?: any;
+  "startDestinationId"?: any;
+  "endDestinationId"?: any;
   airline?: Airline;
   seats?: Seat[];
   startDestination?: Destination;
@@ -33,6 +35,8 @@ export class Flight implements FlightInterface {
   "id": any;
   "airlineId": any;
   "destinationId": any;
+  "startDestinationId": any;
+  "endDestinationId": any;
   airline: Airline;
   seats: Seat[];
   startDestination: Destination;
@@ -109,6 +113,14 @@ export class Flight implements FlightInterface {
           name: 'destinationId',
           type: 'any'
         },
+        "startDestinationId": {
+          name: 'startDestinationId',
+          type: 'any'
+        },
+        "endDestinationId": {
+          name: 'endDestinationId',
+          type: 'any'
+        },
       },
       relations: {
         airline: {
@@ -131,17 +143,17 @@ export class Flight implements FlightInterface {
           name: 'startDestination',
           type: 'Destination',
           model: 'Destination',
-          relationType: 'hasOne',
-                  keyFrom: 'id',
-          keyTo: 'flightId'
+          relationType: 'belongsTo',
+                  keyFrom: 'startDestinationId',
+          keyTo: 'id'
         },
         endDestination: {
           name: 'endDestination',
           type: 'Destination',
           model: 'Destination',
-          relationType: 'hasOne',
-                  keyFrom: 'id',
-          keyTo: 'flightId'
+          relationType: 'belongsTo',
+                  keyFrom: 'endDestinationId',
+          keyTo: 'id'
         },
         connectedDestinaions: {
           name: 'connectedDestinaions',

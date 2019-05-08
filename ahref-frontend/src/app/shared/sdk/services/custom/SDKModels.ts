@@ -25,6 +25,12 @@ import { MCarReservation } from '../../models/MCarReservation';
 import { SRoom } from '../../models/SRoom';
 import { RoomReservation } from '../../models/RoomReservation';
 import { MRoomReservation } from '../../models/MRoomReservation';
+import { MFlightReservation } from '../../models/MFlightReservation';
+import { FlightReservation } from '../../models/FlightReservation';
+import { SFlight } from '../../models/SFlight';
+import { SSeat } from '../../models/SSeat';
+import { Friendship } from '../../models/Friendship';
+import { Passenger } from '../../models/Passenger';
 
 export interface Models { [name: string]: any }
 
@@ -57,6 +63,12 @@ export class SDKModels {
     SRoom: SRoom,
     RoomReservation: RoomReservation,
     MRoomReservation: MRoomReservation,
+    MFlightReservation: MFlightReservation,
+    FlightReservation: FlightReservation,
+    SFlight: SFlight,
+    SSeat: SSeat,
+    Friendship: Friendship,
+    Passenger: Passenger,
     
   };
 

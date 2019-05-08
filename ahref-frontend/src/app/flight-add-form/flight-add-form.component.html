@@ -2,10 +2,10 @@
   <div *ngIf="type=='airlineAdmin'">
     <form novalidate>
       <mat-form-field>
-        <input matInput type="number" required [(ngModel)]="new_flight.startTime" placeholder="Start Time" name="starttime">
+        <input matInput type="date" required [(ngModel)]="startDate" placeholder="Start Time" name="starttime">
       </mat-form-field>
       <mat-form-field>
-        <input matInput type="number" required [(ngModel)]="new_flight.endTime" placeholder="End Time" name="endtime">
+        <input matInput type="date" required [(ngModel)]="endDate" placeholder="End Time" name="endtime">
       </mat-form-field>
       <mat-form-field>
         <input matInput type="number" required [(ngModel)]="new_flight.length" placeholder="Length" name="brand">

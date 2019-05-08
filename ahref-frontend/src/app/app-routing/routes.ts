@@ -22,6 +22,16 @@ import {FlightDetailProfileComponent} from '../flight-detail-profile/flight-deta
 import {FlightSectionFilteredComponent} from '../flight-section-filtered/flight-section-filtered.component';
 import {SeatsComponent} from '../seats/seats.component';
 import {MakeCarReservationComponent} from '../make-car-reservation/make-car-reservation.component';
+import {AdditionalServiceDetailsComponent} from "../additional-service-details/additional-service-details.component";
+import {RoomReservationSectionComponent} from "../room-reservation-section/room-reservation-section.component";
+import {PassengerInfoProfileComponent} from '../passenger-info-profile/passenger-info-profile.component';
+import {PassengerInfoComponent} from '../passenger-info/passenger-info.component';
+import {UsersDetailComponent} from '../users-detail/users-detail.component';
+import {UsersDetailProfileComponent} from '../users-detail-profile/users-detail-profile.component';
+import {FriendsListComponent} from '../friends-list/friends-list.component';
+import {FriendsListRequestsComponent} from '../friends-list-requests/friends-list-requests.component';
+import {FlightInviteComponent} from '../flight-invite/flight-invite.component';
+import {FlightInviteProfileComponent} from '../flight-invite-profile/flight-invite-profile.component';
 import {AdditionalServiceDetailsComponent} from '../additional-service-details/additional-service-details.component';
 import {RoomReservationSectionComponent} from '../room-reservation-section/room-reservation-section.component';
 import {CarOfRacComponent} from '../car-of-rac/car-of-rac.component';
@@ -54,5 +64,12 @@ export const routes: Routes = [
   { path: 'carreserve/:id', component: MakeCarReservationComponent },
   { path: 'aservice/:aserviceId', component: AdditionalServiceDetailsComponent},
   { path: 'roomreservations/:hotelId', component: RoomReservationSectionComponent},
+  { path: 'passengerinfo/:id', component: PassengerInfoComponent },
+  { path: 'passengerdetail/:flight', component: PassengerInfoProfileComponent },
+  { path: 'profiles/:id', component: UsersDetailProfileComponent },
+  { path: 'friends', component: FriendsListComponent },
+  { path: 'requests', component: FriendsListRequestsComponent },
+  { path: 'flightinvite/:id', component: FlightInviteComponent },
+  { path: 'flightinvite/:flight/:id', component: FlightInviteProfileComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' }
 ];

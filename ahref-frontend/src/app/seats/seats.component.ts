@@ -1,8 +1,8 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {Flight, Seat} from '../shared/sdk/models';
+import {Flight, MFlightReservation, Passenger, Seat} from '../shared/sdk/models';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
-import {AirlineApi, FlightApi} from '../shared/sdk/services/custom';
+import {AirlineApi, FlightApi, LoggedUserApi, MFlightReservationApi, PassengerApi} from '../shared/sdk/services/custom';
 import {routes} from '../app-routing/routes';
 
 @Component({
@@ -15,6 +15,7 @@ export class SeatsComponent implements OnInit {
   flight: Flight;
   seatlist: Seat[] = [];
   taken: Seat[] = [];
+  send: Seat[] = [];
   nor: number;
   noc: number;
   rows: number[];
@@ -25,6 +26,9 @@ export class SeatsComponent implements OnInit {
               private location: Location,
               private airlineApi: AirlineApi,
               private flightApi: FlightApi,
+              private reserve: MFlightReservationApi,
+              private userApi: LoggedUserApi,
+              private passApi: PassengerApi,
               @Inject('baseURL') private baseURL) { }
 
   ngOnInit() {
@@ -34,15 +38,29 @@ export class SeatsComponent implements OnInit {
       this.flight = flight;
       this.seatlist = this.flight.seats;
       console.log('Sta ', this.seatlist);
+
+      this.nor = this.seatlist[this.seatlist.length - 1].row+1;
+      this.noc = this.seatlist[this.seatlist.length - 1].column+1;
+
+
+      this.rows = Array(this.nor).fill(1).map((x, i) => i);
+      this.cols = Array(this.noc).fill(1).map((x, i) => i);
+
+      this.reserve.find({include: 'seat'}).subscribe((reservations: MFlightReservation[])=>{
+        reservations.forEach((element) =>{
+          if(element.flightId === id){
+            this.seatlist.forEach((sit)=>{
+              if(sit.id === element.seatId){
+                this.taken.push(sit);
+              }
+            });
+          }
+        });
+      });
+
     });
 
 
-    this.nor = 5;
-    this.noc = 5;
-
-
-    this.rows = Array(this.nor).fill(1).map((x, i) => i);
-    this.cols = Array(this.noc).fill(1).map((x, i) => i);
   }
 
   seatExists(row: number, col: number): boolean {
@@ -67,7 +85,8 @@ export class SeatsComponent implements OnInit {
     for (let i = 0; i < this.seatlist.length; i++) {
       if (this.seatlist[i].row === row && this.seatlist[i].column === col ) {
         this.msg = 'Good job padre! You have successfully selected your seat! Row:' + row + ', Col:' + col;
-        this.taken[i] = this.seatlist[i];
+        this.taken.push(this.seatlist[i]);
+        this.send.push(this.seatlist[i]);
         return;
       }
     }
@@ -76,6 +95,25 @@ export class SeatsComponent implements OnInit {
 
 
   reserveSeats() {
-    console.log('Ovde rezervisem te karte valjda?');
+
+    for(let i=0;i < this.send.length; i++){
+
+      const flightrez = new MFlightReservation();
+      flightrez.flightId = this.route.snapshot.params['id'];
+      flightrez.seatId = this.send[i].id;
+      flightrez.userId = this.userApi.getCachedCurrent().id;
+
+      const pasn = new Passenger();
+      pasn.name = this.userApi.getCachedCurrent().name;
+      pasn.city = this.userApi.getCachedCurrent().city;
+      pasn.telephone = this.userApi.getCachedCurrent().telephone;
+      pasn.passport = '1111';
+      pasn.taken = i == 0;
+
+      this.passApi.create(pasn).subscribe((p:Passenger)=> {flightrez.passengerId = p.id; this.reserve.create(flightrez).subscribe(()=> console.log('Created'));});
+
+
+    }
+
   }
 }
