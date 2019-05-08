@@ -3,6 +3,7 @@ import {Car, RACService} from '../shared/sdk/models';
 import {CarApi, LoggedUserApi, RACServiceApi} from '../shared/sdk/services/custom';
 import {LoopBackConfig} from '../shared/sdk';
 import {API_VERSION} from '../shared/baseurl';
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-car-add-form',
@@ -19,6 +20,7 @@ export class CarAddFormComponent implements OnInit {
   constructor(private carApi: CarApi,
               private loggedUserApi: LoggedUserApi,
               private racServiceApi: RACServiceApi,
+              private toastr: ToastrService,
               @Inject('baseURL') private baseURL) {
     LoopBackConfig.setBaseURL(baseURL);
     LoopBackConfig.setApiVersion(API_VERSION);
@@ -33,9 +35,9 @@ export class CarAddFormComponent implements OnInit {
   addCar() {
     this.new_car.rACServiceId = this.racService.id;
     this.racServiceApi.createCars(this.racService.id, this.new_car).subscribe((car) => {
-      this.errmsg = '';
+      this.toastr.success(this.new_car.name, 'Car added')
     }, (err) => {
-      this.errmsg = err;
+      this.toastr.error(err.message, 'ERROR');
     });
   }
 

@@ -5,6 +5,7 @@ import {LoopBackConfig} from '../shared/sdk';
 import {API_VERSION} from '../shared/baseurl';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-flight-detail-profile',
@@ -22,6 +23,7 @@ export class FlightDetailProfileComponent implements OnInit {
               private flightApi: FlightApi,
               private airlineApi: AirlineApi,
               private loggedUserApi: LoggedUserApi,
+              private toastr: ToastrService,
               @Inject('baseURL') private baseURL) {
     LoopBackConfig.setBaseURL(baseURL);
     LoopBackConfig.setApiVersion(API_VERSION); }
@@ -49,13 +51,17 @@ export class FlightDetailProfileComponent implements OnInit {
   }
 
   onSaveClick(): void {
-    this.flightApi.updateAttributes(this.flight.id, this.flight).subscribe((returned: Flight) => { this.errmsg = ''; }, (err) => {this.errmsg = err; });
+    this.flightApi.updateAttributes(this.flight.id, this.flight).subscribe((returned: Flight) => {
+      this.toastr.success(this.flight.airline.name, 'Flight updated')
+      }, (err) => {
+      this.toastr.error(err.message, 'ERROR')
+    });
     this.location.back();
   }
 
   onDeleteClick(): void {
     // additional checks needed (will be implemented when the reservations arrive)
-    this.flightApi.deleteById(this.flight.id).subscribe((completed) => this.errmsg = '', (err) => this.errmsg = err);
+    this.flightApi.deleteById(this.flight.id).subscribe((completed) => this.toastr.success(this.flight.airline.name, 'Flight deleted'), (err) => this.toastr.error(err.message, 'ERROR'));
     this.location.back();
   }
 }

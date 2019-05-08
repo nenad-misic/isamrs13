@@ -73,7 +73,11 @@ export class RoomDetailProfileComponent implements OnInit {
   }
 
   onSaveClick(): void {
-    this.roomApi.updateAttributes(this.room.id, this.room).subscribe((returned: Room) => { this.errmsg = ''; }, (err) => {this.errmsg = err;});
+    this.roomApi.updateAttributes(this.room.id, this.room).subscribe((returned: Room) => {
+      this.toastr.success('Room updated')
+      }, (err) => {
+      this.toastr.error(err.message, 'ERROR');
+    });
     this.location.back();
   }
 

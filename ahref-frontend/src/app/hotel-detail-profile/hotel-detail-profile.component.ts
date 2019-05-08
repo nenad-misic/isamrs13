@@ -5,6 +5,7 @@ import {Location} from '@angular/common';
 import { API_VERSION } from '../shared/baseurl';
 import {HotelApi, LoggedUserApi, LoopBackConfig, Room, RoomApi} from '../shared/sdk';
 import { Hotel } from '../shared/sdk/models';
+import {ToastrService} from "ngx-toastr";
 @Component({
   selector: 'app-hotel-detail-profile',
   templateUrl: './hotel-detail-profile.component.html',
@@ -23,6 +24,7 @@ export class HotelDetailProfileComponent implements OnInit {
               @Inject('baseURL') private baseURL,
               private userApi: LoggedUserApi,
               private router: Router,
+              private toastr: ToastrService,
               private roomApi: RoomApi) {
     LoopBackConfig.setBaseURL(baseURL);
     LoopBackConfig.setApiVersion(API_VERSION);
@@ -41,9 +43,21 @@ export class HotelDetailProfileComponent implements OnInit {
     });
   }
 
+  onDeleteClick() {
+    this.hotelService.deleteById(this.profile.id).subscribe(() =>{
+      this.toastr.success(this.profile.name, 'Hotel deleted')
+    }, (err) => {
+      this.toastr.error(err.message, 'ERROR')
+    })
+  }
+
   onSaveClick() {
     this.hotelService.updateAttributes(this.profile.id, this.profile_new).subscribe(
-      (returned: Hotel) => { if (!returned) {console.log(status); }});
+      () => {
+        this.toastr.success(this.profile_new.name, 'Hotel updated')
+      }, (err) => {
+        this.toastr.error(err.message, 'ERROR')
+      });
     this.location.back();
   }
 

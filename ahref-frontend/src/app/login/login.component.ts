@@ -4,6 +4,7 @@ import {LoggedUserApi, RACServiceApi} from '../shared/sdk/services/custom';
 import {LoopBackConfig} from '../shared/sdk';
 import {API_VERSION} from '../shared/baseurl';
 import {Router} from '@angular/router';
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-login',
@@ -19,6 +20,7 @@ export class LoginComponent implements OnInit {
   constructor(private userService: LoggedUserApi,
               private location: Location,
               private router: Router,
+              private toastr: ToastrService,
               @Inject('baseURL') private baseURL) {
     LoopBackConfig.setBaseURL(baseURL);
     LoopBackConfig.setApiVersion(API_VERSION); }
@@ -34,16 +36,16 @@ export class LoginComponent implements OnInit {
     this.waiting = true;
     this.userService.login({username: this.username, password: this.password}).subscribe((returned) => {
       if (returned) {
-        this.errmsg = null;
+        this.toastr.success('Login successful', 'Welcome');
         this.waiting = false;
         this.router.navigate(['/home']);
       } else {
-        this.errmsg = 'Invalid credentials. Try again!';
+        this.toastr.error('Try again', 'Invalid credentials');
         this.password = '';
         this.waiting = false;
       }
     }, (err) => {
-      this.errmsg = 'Invalid credentials. Try again!';
+      this.toastr.error(err.message, 'ERROR');
       this.password = '';
       this.waiting = false;
     });

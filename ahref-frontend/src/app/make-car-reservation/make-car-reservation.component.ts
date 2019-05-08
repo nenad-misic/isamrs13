@@ -4,6 +4,7 @@ import {CarApi, MCarReservationApi} from '../shared/sdk/services/custom';
 import {CarReservationInfo} from '../shared/carReservationInfo';
 import {Car} from '../shared/sdk/models';
 import {ActivatedRoute} from '@angular/router';
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-make-car-reservation',
@@ -19,6 +20,7 @@ export class MakeCarReservationComponent implements OnInit {
   constructor(private carReservationData: CarReservationDataService,
               private mCarReservationApi: MCarReservationApi,
               private route: ActivatedRoute,
+              private toastr: ToastrService,
               private carApi: CarApi) { }
 
   ngOnInit() {
@@ -29,11 +31,11 @@ export class MakeCarReservationComponent implements OnInit {
 
   onConfirm() {
     this.mCarReservationApi.create({carId: this.car.id, timeStamp: new Date(), startDate:  new Date(this.info.startDate).getTime(), endDate: new Date(this.info.endDate).getTime()}).
-    subscribe((created) => this.errmsg = 'Successfully reserved vehicle!', (err) => this.errmsg = err.message);
+    subscribe((created) => this.toastr.success('Reservation successful'), (err) => this.toastr.error(err.message, 'ERROR'));
     return;
   }
 
   onDecline() {
-    this.errmsg = 'Successfully gave up on this beautiful vehicle!';
+    this.toastr.success('Reservation canceled')
   }
 }
