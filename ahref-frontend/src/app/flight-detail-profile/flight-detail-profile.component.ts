@@ -5,6 +5,7 @@ import {LoopBackConfig} from '../shared/sdk';
 import {API_VERSION} from '../shared/baseurl';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
+import {ToastrService} from "ngx-toastr";
 import {and} from '@angular/router/src/utils/collection';
 
 @Component({
@@ -27,6 +28,7 @@ export class FlightDetailProfileComponent implements OnInit {
               private airlineApi: AirlineApi,
               private seatApi: SeatApi,
               private loggedUserApi: LoggedUserApi,
+              private toastr: ToastrService,
               private destinationApi: DestinationApi,
               @Inject('baseURL') private baseURL) {
     LoopBackConfig.setBaseURL(baseURL);
@@ -74,7 +76,11 @@ export class FlightDetailProfileComponent implements OnInit {
   }
 
   onSaveClick(): void {
-    this.flightApi.updateAttributes(this.flight.id, this.flight).subscribe((returned: Flight) => { this.errmsg = ''; }, (err) => {this.errmsg = err; });
+    this.flightApi.updateAttributes(this.flight.id, this.flight).subscribe((returned: Flight) => {
+      this.toastr.success(this.flight.airline.name, 'Flight updated')
+      }, (err) => {
+      this.toastr.error(err.message, 'ERROR')
+    });
     this.location.back();
   }
 

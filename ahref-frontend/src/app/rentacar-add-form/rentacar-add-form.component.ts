@@ -4,6 +4,7 @@ import {RACServiceApi, LoggedUserApi, DestinationApi} from '../shared/sdk/servic
 import {Location} from '@angular/common';
 import {LoopBackConfig} from '../shared/sdk';
 import {API_VERSION} from '../shared/baseurl';
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-rentacar-add-form',
@@ -20,6 +21,7 @@ export class RentacarAddFormComponent implements OnInit {
               private location: Location,
               @Inject('baseURL') private baseURL,
               private userTypeService: LoggedUserApi,
+              private toastr: ToastrService,
               private destinationApi: DestinationApi) {
     LoopBackConfig.setBaseURL(baseURL);
     LoopBackConfig.setApiVersion(API_VERSION);
@@ -71,14 +73,16 @@ export class RentacarAddFormComponent implements OnInit {
             this.new_racservice.destinationId = destination.id;
             this.service.create(this.new_racservice).subscribe((racservice: RACService) => {
               this.userTypeService.updateRacservice(user.id, racservice).subscribe((returnedUser) => {
-                console.log('ok');
+                this.toastr.success(this.new_racservice.name, 'RAC service added')
+                this.new_racservice = new RACService();
               }, (err) => {
                 // fix error!
-                console.log(err);
+                this.toastr.error(err.message, 'ERROR');
+                this.new_racservice = new RACService();
               });
-              this.new_racservice = new RACService();
             }, (err) => {
-              console.log('No such destination!');
+              this.toastr.error(err.message, 'ERROR');
+              this.new_racservice = new RACService();
             });
 
 

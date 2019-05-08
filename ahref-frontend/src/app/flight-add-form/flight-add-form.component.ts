@@ -6,6 +6,7 @@ import {LoopBackConfig} from '../shared/sdk';
 import {API_VERSION} from '../shared/baseurl';
 import {forEach} from '@angular/router/src/utils/collection';
 import {range} from 'rxjs';
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-flight-add-form',
@@ -31,6 +32,7 @@ export class FlightAddFormComponent implements OnInit {
               private loggedUserApi: LoggedUserApi,
               private airlineApi: AirlineApi,
               @Inject('baseURL') private baseURL,
+              private toastr: ToastrService,
               private destinationApi: DestinationApi) {
     LoopBackConfig.setBaseURL(baseURL);
     LoopBackConfig.setApiVersion(API_VERSION);
@@ -63,34 +65,29 @@ export class FlightAddFormComponent implements OnInit {
     this.destinationApi.findOne({where: {name: this.cityStart}}).subscribe((destination: Destination) => {
       this.new_flight.startDestinationId = destination.id;
       this.destinationApi.findOne({where: {name: this.cityEnd}}).subscribe((destination2: Destination) => {
-        this.new_flight.endDestinationId = destination2.id;
-        this.airlineApi.createFlights(this.airline.id, this.new_flight).subscribe((flight: Flight) => {
-          console.log('Flight ', flight);
-          flight.seats = [];
-          for ( let i = 1; i <= this.row; i++) {
-            for ( let j = 1; j <= this.col; j++) {
-              this.seatZ = new Seat();
-              this.seatZ.row = i;
-              this.seatZ.column = j;
-              this.seatZ.flightId = flight.id;
-              this.flightApi.createSeats(flight.id, this.seatZ).subscribe((seatCreated: Seat) => {
-                flight.seats.push(seatCreated.id);
-              });
-            }
-          }
-
-          flight.startDestinationId = destination.id;
-          flight.endDestinationId = destination2.id;
-          this.airlineApi.updateByIdFlights(flight.id, flight);
-          this.errmsg = '';
-        }, (err) => {
-          console.log('No end destination!');
-          this.errmsg = err;
+        this.new_flight.endDestination = destination2.id;
+         this.airlineApi.createFlights(this.airline.id, this.new_flight).subscribe((flight: Flight) => {
+           console.log('Success');
+           flight.seats = [];
+           for ( let i = 1; i <= this.row; i++) {
+             for ( let j = 1; j <= this.col; j++) {
+               this.seatZ = new Seat();
+               this.seatZ.row = i;
+               this.seatZ.column = j;
+               this.seatZ.flightId = flight.id;
+               this.flightApi.createSeats(flight.id, this.seatZ).subscribe((seatCreated: Seat) => {
+                 flight.seats.push(seatCreated.id);
+               });
+             }
+           }
+           this.airlineApi.updateByIdFlights(flight.id, flight);
+           this.toastr.success(destination.name + ' - ' + destination2.name, 'Flight added')
+           }, (err) => {
+           this.toastr.error(err.message, 'ERROR')
         });
       });
     }, (err) => {
-      this.errmsg = err;
-      console.log('No start destination!');
+      this.toastr.error(err.message, 'ERROR')
     });
 
   }

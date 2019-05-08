@@ -46,26 +46,26 @@ export class HotelAddFormComponent implements OnInit {
           this.service.create(this.new_hotel).subscribe((hotel: Hotel) => {
             if (!hotel) { console.log(status);
             
-            this.userTypeService.updateHotel(user.id, this.new_hotel).subscribe((returnUser) => {
-              this.toastr.success('Hello world!', 'Toastr fun!');
-              console.log('ok');
-
+            this.userTypeService.updateHotel(user.id, this.new_hotel).subscribe(() => {
+              this.toastr.success(this.new_hotel.name, 'Hotel added');
+              this.new_hotel = new Hotel();
+              const priceList: HPriceList = new HPriceList();
+              priceList.hotelId = this.new_hotel.id;
+              this.service.createPriceList(this.new_hotel.id, priceList);
             }, (err) => {
-              console.log(err);
-            })
-            const priceList: HPriceList = new HPriceList();
-            priceList.hotelId = this.new_hotel.id;
-            this.service.createPriceList(this.new_hotel.id, priceList);
-            this.new_hotel = new Hotel();
-            this.toastr.success('Hello world!', 'Toastr fun!');
+              this.toastr.error(err.message, 'ERROR');
+              this.new_hotel = new Hotel();
+            });
     
           }}, (err) => {
-            console.log(err);
+            this.toastr.error(err.message, 'ERROR');
+            this.new_hotel = new Hotel();
           });
         }
       }
     }, (err) => {
-      console.log(err);
+      this.toastr.error(err.message, 'ERROR');
+      this.new_hotel = new Hotel();
     });
 
   }

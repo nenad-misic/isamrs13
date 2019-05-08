@@ -4,6 +4,7 @@ import {AirlineApi, LoggedUserApi} from '../shared/sdk/services/custom';
 import {LoopBackConfig} from '../shared/sdk';
 import {API_VERSION} from '../shared/baseurl';
 import {Location} from '@angular/common';
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-airline-add-form',
@@ -19,6 +20,7 @@ export class AirlineAddFormComponent implements OnInit {
   constructor(private service: AirlineApi,
               private userTypeService: LoggedUserApi,
               private location: Location,
+              private toastr: ToastrService,
               @Inject('baseURL') private baseURL) {
     LoopBackConfig.setBaseURL(baseURL);
     LoopBackConfig.setApiVersion(API_VERSION);
@@ -46,16 +48,17 @@ export class AirlineAddFormComponent implements OnInit {
             }
             this.userTypeService.updateAirline(user.id, this.new_airline).subscribe((returnedUser) => {
               console.log('ok');
+              this.toastr.success(this.new_airline.name, 'Airline added')
+              this.new_airline = new Airline();
             }, (err) => {
-              console.log(err);
+              this.toastr.error(err.message, 'ERROR');
             });
-            this.new_airline = new Airline();
           });
           
         }
       }
     }, (err) => {
-      console.log(err);
+      this.toastr.error(err.message, 'ERROR');
     });
   }
 

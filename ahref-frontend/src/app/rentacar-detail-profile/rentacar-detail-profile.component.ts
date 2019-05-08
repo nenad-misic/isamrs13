@@ -6,6 +6,7 @@ import { Location } from '@angular/common';
 
 import { API_VERSION } from '../shared/baseurl';
 import {Airline, LoopBackConfig, RACService, RACServiceApi, LoggedUserApi, UserApi} from '../shared/sdk';
+import {ToastrService} from "ngx-toastr";
 @Component({
   selector: 'app-rentacar-detail-profile',
   templateUrl: './rentacar-detail-profile.component.html',
@@ -20,6 +21,7 @@ export class RentacarDetailProfileComponent implements OnInit {
   constructor(private rentacarService: RACServiceApi,
               private route: ActivatedRoute,
               private location: Location,
+              private toastr: ToastrService,
               @Inject('baseURL') private baseURL,
               private userApi: LoggedUserApi) {
     LoopBackConfig.setBaseURL(baseURL);
@@ -56,7 +58,12 @@ export class RentacarDetailProfileComponent implements OnInit {
   }
 
   onSaveClick(): void {
-    this.rentacarService.updateAttributes(this.profile.id, this.profile_new).subscribe((returned: RACService) => { if (!returned) {console.log(status); }});
+    this.rentacarService.updateAttributes(this.profile.id, this.profile_new).subscribe((returned: RACService) => {
+      if (!returned) {console.log(status); }
+      this.toastr.success(this.profile.name, 'RAC service updated')
+    }, (err) => {
+      this.toastr.error(err.message, 'ERROR');
+    });
     this.location.back();
   }
 }

@@ -1,6 +1,7 @@
 import {Component, Inject, Input, OnInit} from '@angular/core';
 import {CarApi, DatePrice, Hotel, HotelApi, LoggedUserApi, LoopBackConfig, Room} from '../shared/sdk';
 import {API_VERSION} from '../shared/baseurl';
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-room-add-form',
@@ -18,6 +19,7 @@ export class RoomAddFormComponent implements OnInit {
   constructor(private carApi: CarApi,
               private loggedUserApi: LoggedUserApi,
               private hotelApi: HotelApi,
+              private toastr: ToastrService,
               @Inject('baseURL') private baseURL) {
     LoopBackConfig.setBaseURL(baseURL);
     LoopBackConfig.setApiVersion(API_VERSION);
@@ -35,11 +37,12 @@ export class RoomAddFormComponent implements OnInit {
     this.new_room.rating = 0;
     this.new_room.numOfRates = 0;
     this.hotelApi.createRooms(this.hotel.id, this.new_room).subscribe((room) => {
-      this.errmsg = '';
+      this.toastr.success('Beds: ' + this.new_room.numOfBeds, 'Room added');
+      this.new_room = new Room();
     }, (err) => {
-      this.errmsg = err;
+      this.toastr.error(err.message, 'ERROR');
+      this.new_room = new Room();
     });
-    this.new_room = new Room();
   }
 
   addPrice() {

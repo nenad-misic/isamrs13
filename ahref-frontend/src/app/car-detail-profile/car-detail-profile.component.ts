@@ -6,6 +6,7 @@ import {Car, RACService} from '../shared/sdk/models';
 import {LoopBackConfig} from '../shared/sdk';
 import {API_VERSION} from '../shared/baseurl';
 import {CarReservationDataService} from '../services/car-reservation-data.service';
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-car-detail-profile',
@@ -25,6 +26,7 @@ export class CarDetailProfileComponent implements OnInit {
               private racServiceApi: RACServiceApi,
               private loggedUserApi: LoggedUserApi,
               private infoData: CarReservationDataService,
+              private toastr: ToastrService,
               @Inject('baseURL') private baseURL) {
     LoopBackConfig.setBaseURL(baseURL);
     LoopBackConfig.setApiVersion(API_VERSION); }
@@ -61,11 +63,19 @@ export class CarDetailProfileComponent implements OnInit {
   }
 
   onSaveClick(): void {
-    this.racServiceApi.updateByIdCars(this.car.rACServiceId, this.car.id, this.car).subscribe((returned: Car) => { this.errmsg = ''; this.location.back(); }, (err) => {this.errmsg = err.message;});
+    this.racServiceApi.updateByIdCars(this.car.rACServiceId, this.car.id, this.car).subscribe((returned: Car) => {
+      this.toastr.success(this.car.name, 'Car updated');
+      this.location.back();
+      }, (err) => {
+      this.toastr.error(err.message, 'ERROR');
+    });
   }
 
   onDeleteClick(): void {
     // additional checks needed (will be implemented when the reservations arrive)
-    this.racServiceApi.destroyByIdCars(this.car.rACServiceId, this.car.id).subscribe((completed) => this.location.back(), (err) => this.errmsg = err.message);
+    this.racServiceApi.destroyByIdCars(this.car.rACServiceId, this.car.id).subscribe((completed) => {
+      this.toastr.success(this.car.name, 'Car deleted');
+      this.location.back()
+    }, (err) => this.toastr.error(err.message, 'ERROR'));
   }
 }

@@ -4,6 +4,7 @@ import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 import {HPriceListItemApi, LoggedUserApi, LoopBackConfig} from '../shared/sdk';
 import {API_VERSION} from '../shared/baseurl';
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-additional-service-details',
@@ -21,6 +22,7 @@ export class AdditionalServiceDetailsComponent implements OnInit {
               private location: Location,
               private loggedUserApi: LoggedUserApi,
               private aserviceApi: HPriceListItemApi,
+              private toastr: ToastrService,
               @Inject('baseURL') private baseURL) {
     LoopBackConfig.setBaseURL(baseURL);
     LoopBackConfig.setApiVersion(API_VERSION);
@@ -45,13 +47,19 @@ export class AdditionalServiceDetailsComponent implements OnInit {
 
   editClicked() {
     this.aserviceApi.updateAttributes(this.aservice.id, this.aservice).subscribe(() => {
+      this.toastr.success(this.aservice.name, 'Additional service updated');
       this.location.back();
+    }, (err) => {
+      this.toastr.error(err.message, 'ERROR');
     });
   }
 
   deleteClicked() {
     this.aserviceApi.deleteById(this.aservice.id).subscribe(()=>{
+      this.toastr.success(this.aservice.name, 'Additional service deleted');
       this.location.back();
+    }, (err) => {
+      this.toastr.error(err.message, 'ERROR');
     })
   }
 
