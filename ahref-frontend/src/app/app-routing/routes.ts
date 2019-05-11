@@ -25,6 +25,7 @@ import {MakeCarReservationComponent} from '../make-car-reservation/make-car-rese
 import {AdditionalServiceDetailsComponent} from '../additional-service-details/additional-service-details.component';
 import {RoomReservationSectionComponent} from '../room-reservation-section/room-reservation-section.component';
 import {CarOfRacComponent} from '../car-of-rac/car-of-rac.component';
+import {MakeRoomReservationComponent} from "../make-room-reservation/make-room-reservation.component";
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent},
@@ -54,5 +55,6 @@ export const routes: Routes = [
   { path: 'carreserve/:id', component: MakeCarReservationComponent },
   { path: 'aservice/:aserviceId', component: AdditionalServiceDetailsComponent},
   { path: 'roomreservations/:hotelId', component: RoomReservationSectionComponent},
+  { path: 'roomreserve/:id', component: MakeRoomReservationComponent},
   { path: '', redirectTo: '/home', pathMatch: 'full' }
 ];

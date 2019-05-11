@@ -80,6 +80,7 @@ import { RoomSearchComponent } from './room-search/room-search.component';
 import {BarRatingModule} from 'ngx-bar-rating';
 
 import { AgmCoreModule } from '@agm/core';
+import { MakeRoomReservationComponent } from './make-room-reservation/make-room-reservation.component';
 
 @NgModule({
   declarations: [
@@ -133,7 +134,8 @@ import { AgmCoreModule } from '@agm/core';
     RoomReservationSectionComponent,
     RoomReservationSearchFormComponent,
     CarOfRacComponent,
-    RoomSearchComponent
+    RoomSearchComponent,
+    MakeRoomReservationComponent
   ],
   imports: [
     BrowserModule,

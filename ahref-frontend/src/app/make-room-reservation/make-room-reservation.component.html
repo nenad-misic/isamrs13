@@ -1,0 +1,26 @@
+
+<div>
+  <h2>Start date: </h2>
+  <p>{{info.startDate}}</p>
+</div>
+<div>
+  <h2>End date: </h2>
+  <p>{{info.endDate}}</p>
+</div>
+<div>
+  <h2>Additional services</h2>
+  <p *ngFor="let aservice of info.additionalServices">- {{aservice.name}}, {{aservice.price}}rsd</p>
+</div>
+<div>
+  <h2>Room:</h2>
+  <app-room-profile [room]="room"></app-room-profile>
+</div>
+
+<div>
+  <h2>Total cost: </h2>
+  <p>666.32 $</p>
+</div>
+
+
+<button mat-button (click)="onConfirm()">Confirm</button>
+<button mat-button (click)="onDecline()">Decline</button>

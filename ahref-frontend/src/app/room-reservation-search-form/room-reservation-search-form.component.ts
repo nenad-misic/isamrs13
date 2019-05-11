@@ -5,6 +5,8 @@ import {CarReservationDataService} from "../services/car-reservation-data.servic
 import {Hotel, HPriceList, HPriceListItem, LoopBackConfig, Room} from "../shared/sdk";
 import {API_VERSION} from "../shared/baseurl";
 import {RoomDataServiceService} from "../services/room-data-service.service";
+import {RoomReservationDataService} from "../services/room-reservation-data.service";
+import {RoomReservationInfo} from "../shared/room-reservation-info";
 
 @Component({
   selector: 'app-room-reservation-search-form',
@@ -26,6 +28,7 @@ export class RoomReservationSearchFormComponent implements OnInit {
 
   constructor(private roomApi: RoomApi,
               private data: RoomDataServiceService,
+              private roomReservationData: RoomReservationDataService,
               @Inject('baseURL') private baseURL) {
     LoopBackConfig.setBaseURL(baseURL);
     LoopBackConfig.setApiVersion(API_VERSION);
@@ -45,6 +48,10 @@ export class RoomReservationSearchFormComponent implements OnInit {
       this.highPrice,
       { rooms: this.requiredRooms}).subscribe((rooms) => {
         this.data.changeSearchParams(rooms.retval);
+        var info = new RoomReservationInfo();
+        info.startDate = this.startDate;
+        info.endDate = this.endDate;
+        this.roomReservationData.changeSearchParams(info);
     });
   }
 }
