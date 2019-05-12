@@ -1,0 +1,21 @@
+table {
+  width: 100%;
+}
+
+mat-card {
+  margin: 15px;
+}
+
+.mat-row:hover {
+  background-color: rgba(125,204,135,0.4);
+  cursor: pointer;
+}
+
+.mat-card-header:hover {
+  background-color: rgba(125,135,204,0.35);
+  cursor: pointer;
+}
+
+.mat-card-title {
+  margin: 15% 15%;
+}
