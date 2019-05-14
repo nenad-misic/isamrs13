@@ -54,7 +54,6 @@ export class AirlineAddFormComponent implements OnInit {
               this.toastr.error(err.message, 'ERROR');
             });
           });
-          
         }
       }
     }, (err) => {

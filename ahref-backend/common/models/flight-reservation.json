@@ -1,0 +1,23 @@
+{
+  "name": "FlightReservation",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "timeStamp": {
+      "type": "date"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "sSeat": {
+      "type": "belongsTo",
+      "model": "sSeat",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

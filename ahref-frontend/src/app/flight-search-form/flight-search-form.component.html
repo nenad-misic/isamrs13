@@ -2,11 +2,19 @@
   <form novalidate (ngSubmit)="doSearch()">
 
     <mat-form-field>
-      <input matInput [(ngModel)]="name" placeholder="City" name="city">
+      <input matInput [(ngModel)]="startDest" placeholder="Start Destination" name="city">
     </mat-form-field>
 
     <mat-form-field>
-      <input matInput [(ngModel)]="country" placeholder="Country" name="country">
+      <input matInput [(ngModel)]="endDest" placeholder="End Destination" name="country">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input type="date" [(ngModel)]="startDate" placeholder="Start Date" name="country">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input type="date" [(ngModel)]="endDate" placeholder="End Date" name="country">
     </mat-form-field>
 
     <button mat-button>SEARCH FLIGHTS</button>

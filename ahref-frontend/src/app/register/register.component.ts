@@ -47,6 +47,7 @@ export class RegisterComponent implements OnInit {
       });
     } else {
       this.toastr.error('Passwords must match')
+      this.location.back();
     }
   }
 

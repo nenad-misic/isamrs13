@@ -1,0 +1,12 @@
+<mat-card>
+  <mat-card-content>
+    <mat-grid-list cols="2">
+      <mat-grid-tile *ngFor="let user of users" [routerLink]="['/passengerdetail', flightId]">
+        <app-users-profile [profile]="user"></app-users-profile>
+      </mat-grid-tile>
+    </mat-grid-list>
+    <mat-card-actions fxLayout="column">
+      <button mat-button [routerLink]="['/home']">FINISH</button>
+    </mat-card-actions>
+  </mat-card-content>
+</mat-card>

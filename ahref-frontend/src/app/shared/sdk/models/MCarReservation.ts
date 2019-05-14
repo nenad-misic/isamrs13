@@ -1,6 +1,7 @@
 /* tslint:disable */
 import {
-  Car
+  Car,
+  LoggedUser
 } from '../index';
 
 declare var Object: any;
@@ -8,18 +9,26 @@ export interface MCarReservationInterface {
   "timeStamp"?: Date;
   "startDate"?: Date;
   "endDate"?: Date;
+  "carRate": number;
+  "racRate": number;
   "id"?: any;
   "carId"?: any;
+  "loggedUserId"?: any;
   car?: Car;
+  loggedUser?: LoggedUser;
 }
 
 export class MCarReservation implements MCarReservationInterface {
   "timeStamp": Date;
   "startDate": Date;
   "endDate": Date;
+  "carRate": number;
+  "racRate": number;
   "id": any;
   "carId": any;
+  "loggedUserId": any;
   car: Car;
+  loggedUser: LoggedUser;
   constructor(data?: MCarReservationInterface) {
     Object.assign(this, data);
   }
@@ -65,12 +74,26 @@ export class MCarReservation implements MCarReservationInterface {
           name: 'endDate',
           type: 'Date'
         },
+        "carRate": {
+          name: 'carRate',
+          type: 'number',
+          default: -1
+        },
+        "racRate": {
+          name: 'racRate',
+          type: 'number',
+          default: -1
+        },
         "id": {
           name: 'id',
           type: 'any'
         },
         "carId": {
           name: 'carId',
+          type: 'any'
+        },
+        "loggedUserId": {
+          name: 'loggedUserId',
           type: 'any'
         },
       },
@@ -81,6 +104,14 @@ export class MCarReservation implements MCarReservationInterface {
           model: 'Car',
           relationType: 'belongsTo',
                   keyFrom: 'carId',
+          keyTo: 'id'
+        },
+        loggedUser: {
+          name: 'loggedUser',
+          type: 'LoggedUser',
+          model: 'LoggedUser',
+          relationType: 'belongsTo',
+                  keyFrom: 'loggedUserId',
           keyTo: 'id'
         },
       }
