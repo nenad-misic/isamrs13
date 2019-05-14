@@ -1,0 +1,48 @@
+{
+  "name": "mFlightReservation",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "timeStamp": {
+      "type": "date"
+    },
+    "flightRate": {
+      "type": "number",
+      "required": true,
+      "default": -1
+    },
+    "airlineRate": {
+      "type": "number",
+      "required": true,
+      "default": -1
+    }
+  },
+  "validations": [],
+  "relations": {
+    "flight": {
+      "type": "belongsTo",
+      "model": "Flight",
+      "foreignKey": ""
+    },
+    "seat": {
+      "type": "belongsTo",
+      "model": "Seat",
+      "foreignKey": ""
+    },
+    "user": {
+      "type": "belongsTo",
+      "model": "LoggedUser",
+      "foreignKey": ""
+    },
+    "passenger": {
+      "type": "belongsTo",
+      "model": "Passenger",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

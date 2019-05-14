@@ -132,5 +132,29 @@
   "mRoomReservation": {
     "dataSource": "MongoDB",
     "public": true
+  },
+  "mFlightReservation": {
+    "dataSource": "MongoDB",
+    "public": true
+  },
+  "FlightReservation": {
+    "dataSource": "postgres",
+    "public": true
+  },
+  "sFlight": {
+    "dataSource": "postgres",
+    "public": true
+  },
+  "sSeat": {
+    "dataSource": "postgres",
+    "public": true
+  },
+  "Friendship": {
+    "dataSource": "MongoDB",
+    "public": true
+  },
+  "Passenger": {
+    "dataSource": "MongoDB",
+    "public": true
   }
 }

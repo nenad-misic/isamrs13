@@ -1,0 +1,31 @@
+{
+  "name": "Friendship",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "id": {
+      "type": "any"
+    },
+    "accepted": {
+      "type": "boolean"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "startUser": {
+      "type": "belongsTo",
+      "model": "LoggedUser",
+      "foreignKey": ""
+    },
+    "endUser": {
+      "type": "belongsTo",
+      "model": "LoggedUser",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}
