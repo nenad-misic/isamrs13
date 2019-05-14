@@ -29,8 +29,11 @@ export class UserProfileComponent implements OnInit {
     //  this.profile = user;
     //  this.profile_new = this.profile;
     // });
-    this.profile = this.loggedUserService.getCachedCurrent();
-    this.profile_new = JSON.parse(JSON.stringify(this.profile));
+    this.loggedUserService.getCurrent().subscribe((prf) => {
+      this.profile = prf;
+
+      this.profile_new = JSON.parse(JSON.stringify(this.profile));
+    });
   }
 
   goBack(): void {

@@ -148,6 +148,13 @@ function doCarReservation(Mcarreservation, ctx, model, next, errorCallback) {
                 if (flagCar) {
                   sCar.findOne({where: {mongoId: ctx.req.body.carId}})
                     .then((car)=>{
+                      Mcarreservation.app.models.LoggedUser.findById(ctx.req.params.id).then((obj) =>
+                                {
+                                  console.log(obj);
+                                  obj.points = obj.points + 1;
+                                  console.log(obj);
+                                  Mcarreservation.app.models.LoggedUser.replaceById(obj.id, obj).then((o) => console.log(o));
+                                })
                       // create reservation
                       sqlCarReservation.create(
                         {
@@ -203,17 +210,10 @@ function doCarReservation(Mcarreservation, ctx, model, next, errorCallback) {
                         data.forEach((element) => {
                             if (flagRoom) {
                                 // check if room is available during time period
-                                console.log(element);
                                 var start1 = element.startDate.getTime();
                                 var end1 = element.endDate.getTime();
                                 var start2 = new Date(ctx.req.body.startDate).getTime();
                                 var end2 = new Date(ctx.req.body.endDate).getTime();
-                                console.log({
-                                    start1: start1,
-                                    end1: end1,
-                                    start2: start2,
-                                    end2: end2
-                                });
                                 if ((start1 >= start2 && start1 <= end2) ||
                                     (start2 >= start1 && start2 <= end1)) {
                                     foundOne = true;
@@ -240,6 +240,11 @@ function doCarReservation(Mcarreservation, ctx, model, next, errorCallback) {
                         if (flagRoom) {
                             sRoom.findOne({where: {mongoId: ctx.req.body.roomId}}).then((room)=>{
                                 // create reservation
+                                Mroomreservation.app.models.LoggedUser.findById(ctx.req.params.id).then((obj) =>
+                                {
+                                  obj.points = obj.points + 1;
+                                  Mroomreservation.app.models.LoggedUser.replaceById(obj.id, obj).then((o) => console.log(o));
+                                })
                                 sqlRoomReservation.create(
                                   {
                                     timeStamp: ctx.req.body.timeStamp,
