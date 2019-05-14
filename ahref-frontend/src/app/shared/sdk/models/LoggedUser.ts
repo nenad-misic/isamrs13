@@ -3,7 +3,9 @@ import {
   Airline,
   Hotel,
   RACService,
-  MCarReservation
+  MCarReservation,
+  MRoomReservation,
+  MFlightReservation
 } from '../index';
 
 declare var Object: any;
@@ -25,6 +27,8 @@ export interface LoggedUserInterface {
   hotel?: Hotel;
   racservice?: RACService;
   mCarReservations?: MCarReservation[];
+  mRoomReservations?: MRoomReservation[];
+  mFlightReservations?: MFlightReservation[];
 }
 
 export class LoggedUser implements LoggedUserInterface {
@@ -45,6 +49,8 @@ export class LoggedUser implements LoggedUserInterface {
   hotel: Hotel;
   racservice: RACService;
   mCarReservations: MCarReservation[];
+  mRoomReservations: MRoomReservation[];
+  mFlightReservations: MFlightReservation[];
   constructor(data?: LoggedUserInterface) {
     Object.assign(this, data);
   }
@@ -166,6 +172,22 @@ export class LoggedUser implements LoggedUserInterface {
           name: 'mCarReservations',
           type: 'MCarReservation[]',
           model: 'MCarReservation',
+          relationType: 'hasMany',
+                  keyFrom: 'id',
+          keyTo: 'loggedUserId'
+        },
+        mRoomReservations: {
+          name: 'mRoomReservations',
+          type: 'MRoomReservation[]',
+          model: 'MRoomReservation',
+          relationType: 'hasMany',
+                  keyFrom: 'id',
+          keyTo: 'loggedUserId'
+        },
+        mFlightReservations: {
+          name: 'mFlightReservations',
+          type: 'MFlightReservation[]',
+          model: 'MFlightReservation',
           relationType: 'hasMany',
                   keyFrom: 'id',
           keyTo: 'loggedUserId'

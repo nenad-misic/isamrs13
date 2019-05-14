@@ -11,10 +11,12 @@ export interface MFlightReservationInterface {
   "timeStamp"?: Date;
   "flightRate": number;
   "airlineRate": number;
+  "sid": number;
   "id"?: any;
   "flightId"?: any;
   "seatId"?: any;
   "userId"?: any;
+  "loggedUserId"?: any;
   "passengerId"?: any;
   flight?: Flight;
   seat?: Seat;
@@ -26,10 +28,12 @@ export class MFlightReservation implements MFlightReservationInterface {
   "timeStamp": Date;
   "flightRate": number;
   "airlineRate": number;
+  "sid": number;
   "id": any;
   "flightId": any;
   "seatId": any;
   "userId": any;
+  "loggedUserId": any;
   "passengerId": any;
   flight: Flight;
   seat: Seat;
@@ -82,6 +86,11 @@ export class MFlightReservation implements MFlightReservationInterface {
           type: 'number',
           default: -1
         },
+        "sid": {
+          name: 'sid',
+          type: 'number',
+          default: -1
+        },
         "id": {
           name: 'id',
           type: 'any'
@@ -96,6 +105,10 @@ export class MFlightReservation implements MFlightReservationInterface {
         },
         "userId": {
           name: 'userId',
+          type: 'any'
+        },
+        "loggedUserId": {
+          name: 'loggedUserId',
           type: 'any'
         },
         "passengerId": {

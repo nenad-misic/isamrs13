@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {RoomReservationDataService} from "../services/room-reservation-data.service";
-import {MRoomReservationApi, RoomApi} from "../shared/sdk/services/custom";
+import {LoggedUserApi, MRoomReservationApi, RoomApi} from '../shared/sdk/services/custom';
 import {ActivatedRoute} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
 import {Room} from "../shared/sdk/models";
@@ -18,6 +18,7 @@ export class MakeRoomReservationComponent implements OnInit {
 
   constructor(private roomReservationData: RoomReservationDataService,
               private reservationApi: MRoomReservationApi,
+              private loggedUserApi: LoggedUserApi,
               private route: ActivatedRoute,
               private roomApi: RoomApi,
               private toastr: ToastrService) { }
@@ -34,17 +35,17 @@ export class MakeRoomReservationComponent implements OnInit {
   }
 
   onConfirm() {
-    this.reservationApi.create({
-      roomId: this.room.id,
-      timeStamp: new Date(),
-      startDate: this.info.startDate,
-      endDate: this.info.endDate,
-      hPriceListItems: this.info.additionalServices
-    }).subscribe(() => {
-      this.toastr.success('Room reserved', 'Success');
-    }, (err) => {
-      this.toastr.error(err.message, 'ERROR');
-    })
+    this.loggedUserApi.createMRoomReservations(this.loggedUserApi.getCachedCurrent().id,
+      {
+        carId: this.room.id,
+        timeStamp: new Date(),
+        startDate:  new Date(this.info.startDate).getTime(),
+        endDate: new Date(this.info.endDate).getTime(),
+        carRate: -1,
+        racRate: -1
+      }
+    ).subscribe((created) => this.toastr.success('Reservation successful'), (err) => this.toastr.error(err.message, 'ERROR'));
+    return;
   }
 
   onDecline() {

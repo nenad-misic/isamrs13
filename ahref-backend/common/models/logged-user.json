@@ -57,12 +57,12 @@
     },
     "mRoomReservations": {
       "type": "hasMany",
-      "model": "mRoomReservations",
+      "model": "mRoomReservation",
       "foreignKey": ""
     },
     "mFlightReservations": {
       "type": "hasMany",
-      "model": "mFlightReservations",
+      "model": "mFlightReservation",
       "foreignKey": ""
     }
   },

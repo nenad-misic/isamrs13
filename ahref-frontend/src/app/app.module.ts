@@ -196,6 +196,7 @@ import { SeatReservationActionsComponent } from './seat-reservation-actions/seat
   entryComponents: [
     RentacarDetailProfileComponent,
     CarReservationActionsComponent,
+    RoomReservationActionsComponent,
     MyReservationsComponent
   ],
   providers: [

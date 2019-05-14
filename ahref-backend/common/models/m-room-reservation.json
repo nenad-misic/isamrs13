@@ -24,6 +24,11 @@
       "type": "number",
       "required": true,
       "default": -1
+    },
+    "sid": {
+      "type": "number",
+      "required": true,
+      "default": -1
     }
   },
   "validations": [],
@@ -36,6 +41,11 @@
     "hPriceListItems": {
       "type": "hasMany",
       "model": "HPriceListItem",
+      "foreignKey": ""
+    },
+    "loggedUser": {
+      "type": "belongsTo",
+      "model": "LoggedUser",
       "foreignKey": ""
     }
   },

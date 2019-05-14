@@ -39,17 +39,22 @@ export class MyReservationsComponent implements OnInit {
     this.userApi.getCurrent({include: 'mCarReservations'}).subscribe((lu: LoggedUser) => {
       this.myCarReservations = lu.mCarReservations;
     });
+
+    this.userApi.getCurrent({include: 'mRoomReservations'}).subscribe((lu: LoggedUser) => {
+      console.log(lu.mRoomReservations);
+      this.myRoomReservations = lu.mRoomReservations;
+    });
   }
 
 
   onClickedCar(row) {
-    const dialogRef = this.dialog.open(CarReservationActionsComponent, {
+    const dialogRefC = this.dialog.open(CarReservationActionsComponent, {
       width: '650px',
       data: row
     });
 
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRefC.afterClosed().subscribe(result => {
       if (result) {
         this.myCarReservations = this.myCarReservations.filter(function(value, index, arr) {
           return value.id.toString() !== result;
@@ -58,17 +63,33 @@ export class MyReservationsComponent implements OnInit {
     });
   }
   onClickedRoom(row) {
-    const dialogRef = this.dialog.open(RoomReservationActionsComponent, {
+    const dialogRefR = this.dialog.open(RoomReservationActionsComponent, {
       width: '650px',
       data: row
     });
 
+    dialogRefR.afterClosed().subscribe(result => {
+      if (result) {
+        this.myRoomReservations = this.myRoomReservations.filter(function(value, index, arr) {
+          return value.id.toString() !== result;
+        });
+      }
+    });
+
   }
   onClickedSeat(row) {
-    const dialogRef = this.dialog.open(SeatReservationActionsComponent, {
+    const dialogRefS = this.dialog.open(SeatReservationActionsComponent, {
       width: '650px',
       data: row
     });
+    dialogRefS.afterClosed().subscribe(result => {
+      if (result) {
+        this.myFlightReservations = this.myFlightReservations.filter(function(value, index, arr) {
+          return value.id.toString() !== result;
+        });
+      }
+    });
+
   }
 
 }

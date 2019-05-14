@@ -3,6 +3,9 @@ var config = require('../../server/config.json');
 var path = require('path');
 
 var flagCar = true;
+var flagCarDelete = true;
+var flagRoomDelete = true;
+var flagFlightDelete = true;
 var flagRoom = true;
 
 module.exports = function(Loggeduser) {
@@ -21,8 +24,73 @@ module.exports = function(Loggeduser) {
     });
   });
 
+  Loggeduser.beforeRemote('*.__destroyById__mCarReservations', function(ctx,model,next) {
+    flagCarDelete = true;
+    var Mcarreservation = Loggeduser.app.models.MCarReservation;
+    undoCarReservation(Mcarreservation, ctx, model, next, function(e) {
+      flagCarDelete = false;
+      next(e);
+    })
+    
+  });
+
+
+  function undoCarReservation(Mcarreservation, ctx, model, next, errorCallback) {
+    var sqlCarReservation = Mcarreservation.app.models.CarReservation;
+    Mcarreservation.findById(ctx.req.params.fk).then((obj) => {
+      console.log(obj);
+      if(obj){
+        sqlCarReservation.deleteById(obj.sid);
+        next();
+      }
+    })
+  }
+
+  Loggeduser.beforeRemote('*.__destroyById__mRoomReservations', function(ctx,model,next) {
+    flagRoomDelete = true;
+    var Mroomreservation = Loggeduser.app.models.MRoomReservation;
+    undoRoomReservation(Mroomreservation, ctx, model, next, function(e) {
+      flagRoomDelete = false;
+      next(e);
+    })
+    
+  });
+
+
+  function undoRoomReservation(Mroomreservation, ctx, model, next, errorCallback) {
+    var sqlRoomReservation = Mroomreservation.app.models.RoomReservation;
+    Mroomreservation.findById(ctx.req.params.fk).then((obj) => {
+      if(obj){
+        sqlRoomReservation.deleteById(obj.sid);
+        next();
+      }
+    })
+  }
+
+
+  Loggeduser.beforeRemote('*.__destroyById__mFlightReservations', function(ctx,model,next) {
+    flagFlightDelete = true;
+    var Mflightreservation = Loggeduser.app.models.MFlightReservation;
+    undoFlightReservation(Mflightreservation, ctx, model, next, function(e) {
+      flagFlightDelete = false;
+      next(e);
+    })
+    
+  });
+
+
+  function undoFlightReservation(Mflightreservation, ctx, model, next, errorCallback) {
+    var sqlFlightReservation = Mflightreservation.app.models.FlightReservation;
+    Mflightreservation.findById(ctx.req.params.fk).then((obj) => {
+      if(obj){
+        sqlFlightReservation.deleteById(obj.sid);
+        next();
+      }
+    })
+  }
+
   Loggeduser.beforeRemote('*.__create__mRoomReservations', function(ctx,model,next) {
-    console.log('here');
+    console.log('here in mroom');
     flagRoom = true;
     var Mroomreservation = Loggeduser.app.models.MRoomReservation;
     doRoomReservation(Mroomreservation, ctx, model, next, function(e) {
@@ -30,8 +98,6 @@ module.exports = function(Loggeduser) {
       next(e);
     });
   });
-
-  
 function doCarReservation(Mcarreservation, ctx, model, next, errorCallback) {
     // models
     var sqlCarReservation = Mcarreservation.app.models.CarReservation;
@@ -92,6 +158,7 @@ function doCarReservation(Mcarreservation, ctx, model, next, errorCallback) {
                         },
                         {transaction: tx},
                         function(err, cr) {
+                          ctx.req.body.sid = cr.id;
                           if (err && flagCar) {
                             tx.rollback(function(err) {
                               if (err && flagCar)  errorCallback(err);
@@ -182,6 +249,8 @@ function doCarReservation(Mcarreservation, ctx, model, next, errorCallback) {
                                   },
                                   {transaction: tx},
                                   function(err, rr) {
+                                    
+                                    ctx.req.body.sid = rr.id;
                                     if (err && flagRoom) {
                                       tx.rollback(function(err) {
                                         if (err && flagRoom)  errorCallback(err);
@@ -342,8 +411,6 @@ function doCarReservation(Mcarreservation, ctx, model, next, errorCallback) {
             })
 
         }
-
-
         next();
     });
 }

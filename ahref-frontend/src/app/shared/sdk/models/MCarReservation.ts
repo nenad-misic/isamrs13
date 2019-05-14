@@ -11,6 +11,7 @@ export interface MCarReservationInterface {
   "endDate"?: Date;
   "carRate": number;
   "racRate": number;
+  "sid": number;
   "id"?: any;
   "carId"?: any;
   "loggedUserId"?: any;
@@ -24,6 +25,7 @@ export class MCarReservation implements MCarReservationInterface {
   "endDate": Date;
   "carRate": number;
   "racRate": number;
+  "sid": number;
   "id": any;
   "carId": any;
   "loggedUserId": any;
@@ -81,6 +83,11 @@ export class MCarReservation implements MCarReservationInterface {
         },
         "racRate": {
           name: 'racRate',
+          type: 'number',
+          default: -1
+        },
+        "sid": {
+          name: 'sid',
           type: 'number',
           default: -1
         },
