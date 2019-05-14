@@ -9,8 +9,8 @@ import {
 declare var Object: any;
 export interface MFlightReservationInterface {
   "timeStamp"?: Date;
-  "flightRate"?: number;
-  "airlineRate"?: number;
+  "flightRate": number;
+  "airlineRate": number;
   "id"?: any;
   "flightId"?: any;
   "seatId"?: any;
@@ -74,11 +74,13 @@ export class MFlightReservation implements MFlightReservationInterface {
         },
         "flightRate": {
           name: 'flightRate',
-          type: 'number'
+          type: 'number',
+          default: -1
         },
         "airlineRate": {
           name: 'airlineRate',
-          type: 'number'
+          type: 'number',
+          default: -1
         },
         "id": {
           name: 'id',

@@ -9,8 +9,8 @@ export interface MCarReservationInterface {
   "timeStamp"?: Date;
   "startDate"?: Date;
   "endDate"?: Date;
-  "carRate"?: number;
-  "racRate"?: number;
+  "carRate": number;
+  "racRate": number;
   "id"?: any;
   "carId"?: any;
   "loggedUserId"?: any;
@@ -76,11 +76,13 @@ export class MCarReservation implements MCarReservationInterface {
         },
         "carRate": {
           name: 'carRate',
-          type: 'number'
+          type: 'number',
+          default: -1
         },
         "racRate": {
           name: 'racRate',
-          type: 'number'
+          type: 'number',
+          default: -1
         },
         "id": {
           name: 'id',
