@@ -16,10 +16,14 @@
       "type": "date"
     },
     "roomRate": {
-      "type": "number"
+      "type": "number",
+      "required": true,
+      "default": -1
     },
     "hotelRate": {
-      "type": "number"
+      "type": "number",
+      "required": true,
+      "default": -1
     }
   },
   "validations": [],

@@ -10,10 +10,14 @@
       "type": "date"
     },
     "flightRate": {
-      "type": "number"
+      "type": "number",
+      "required": true,
+      "default": -1
     },
     "airlineRate": {
-      "type": "number"
+      "type": "number",
+      "required": true,
+      "default": -1
     }
   },
   "validations": [],

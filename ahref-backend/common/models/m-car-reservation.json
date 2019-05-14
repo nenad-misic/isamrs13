@@ -16,10 +16,14 @@
       "type": "date"
     },
     "carRate": {
-      "type": "number"
+      "type": "number",
+      "required": true,
+      "default": -1
     },
     "racRate": {
-      "type": "number"
+      "type": "number",
+      "required": true,
+      "default": -1
     }
   },
   "validations": [],
