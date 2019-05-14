@@ -18,6 +18,20 @@ module.exports = function(Mcarreservation) {
         next(e);
       });
     });
+
+    Mcarreservation.afterRemote('create',
+    function(ctx, model, next) {
+      var loggedUser = Mcarreservation.app.models.LoggedUser;
+      var current = null;
+      if (!ctx.accessToken) return next();
+        ctx.accessToken.user(function(err, user) {
+          if (err) return next(err);
+          current = user;
+          console.log(ctx);
+          current.mCarReservations.push(model);
+          next();
+      });
+    });
 };
 
 function doReservation(Mcarreservation, ctx, model, next, errorCallback) {

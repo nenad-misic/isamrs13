@@ -8,6 +8,16 @@
   "properties": {
     "timeStamp": {
       "type": "date"
+    },
+    "flightRate": {
+      "type": "number",
+      "required": true,
+      "default": -1
+    },
+    "airlineRate": {
+      "type": "number",
+      "required": true,
+      "default": -1
     }
   },
   "validations": [],

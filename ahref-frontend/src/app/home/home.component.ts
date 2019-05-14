@@ -19,7 +19,10 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.user = this.userApi.getCachedCurrent();
+    this.userApi.getCurrent({include: 'mCarReservations'}).subscribe((lu: LoggedUser) => {
+      this.user = lu;
+      console.log(lu);
+    });
   }
 
 }

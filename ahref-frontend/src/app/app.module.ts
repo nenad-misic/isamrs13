@@ -20,7 +20,7 @@ import {
   MatGridListModule,
   MatInputModule, MatListModule,
   MatOptionModule, MatProgressSpinnerModule,
-  MatSelectModule
+  MatSelectModule, MatSortHeader, MatSortModule, MatTableModule, MatTooltipModule
 } from '@angular/material';
 
 import { RentacarSectionComponent } from './rentacar-section/rentacar-section.component';
@@ -86,7 +86,12 @@ import { CarOfRacComponent } from './car-of-rac/car-of-rac.component';
 import { RoomSearchComponent } from './room-search/room-search.component';
 import {BarRatingModule} from 'ngx-bar-rating';
 
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AgmCoreModule } from '@agm/core';
+import { MyReservationsComponent } from './my-reservations/my-reservations.component';
+import { CarReservationActionsComponent } from './car-reservation-actions/car-reservation-actions.component';
+import { RoomReservationActionsComponent } from './room-reservation-actions/room-reservation-actions.component';
+import { SeatReservationActionsComponent } from './seat-reservation-actions/seat-reservation-actions.component';
 
 @NgModule({
   declarations: [
@@ -147,7 +152,11 @@ import { AgmCoreModule } from '@agm/core';
     FlightInviteComponent,
     FlightInviteProfileComponent,
     CarOfRacComponent,
-    RoomSearchComponent
+    RoomSearchComponent,
+    MyReservationsComponent,
+    CarReservationActionsComponent,
+    RoomReservationActionsComponent,
+    SeatReservationActionsComponent
   ],
   imports: [
     BrowserModule,
@@ -165,8 +174,13 @@ import { AgmCoreModule } from '@agm/core';
     AppRoutingModule,
     MatFormFieldModule,
     MatInputModule,
+    MatTableModule,
+    MatSortModule,
     MatCheckboxModule,
+    NgbModule,
+    MatDialogModule,
     FormsModule,
+    MatTooltipModule,
     HttpClientModule,
     ToastrModule.forRoot(),
     MatProgressSpinnerModule,
@@ -177,7 +191,9 @@ import { AgmCoreModule } from '@agm/core';
     SDKBrowserModule.forRoot()
   ],
   entryComponents: [
-    RentacarDetailProfileComponent
+    RentacarDetailProfileComponent,
+    CarReservationActionsComponent,
+    MyReservationsComponent
   ],
   providers: [
     {provide: 'baseURL', useValue: baseURL}
