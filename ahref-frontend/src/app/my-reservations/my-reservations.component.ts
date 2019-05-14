@@ -47,12 +47,22 @@ export class MyReservationsComponent implements OnInit {
       width: '650px',
       data: row
     });
+
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.myCarReservations = this.myCarReservations.filter(function(value, index, arr) {
+          return value.id.toString() !== result;
+        });
+      }
+    });
   }
   onClickedRoom(row) {
     const dialogRef = this.dialog.open(RoomReservationActionsComponent, {
       width: '650px',
       data: row
     });
+
   }
   onClickedSeat(row) {
     const dialogRef = this.dialog.open(SeatReservationActionsComponent, {

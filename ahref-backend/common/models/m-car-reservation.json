@@ -14,6 +14,12 @@
     },
     "endDate": {
       "type": "date"
+    },
+    "carRate": {
+      "type": "number"
+    },
+    "racRate": {
+      "type": "number"
     }
   },
   "validations": [],
@@ -22,15 +28,14 @@
       "type": "belongsTo",
       "model": "Car",
       "foreignKey": ""
+    },
+    "loggedUser": {
+      "type": "belongsTo",
+      "model": "LoggedUser",
+      "foreignKey": ""
     }
   },
   "acls": [
-    {
-      "accessType": "*",
-      "principalType": "ROLE",
-      "principalId": "$everyone",
-      "permission": "DENY"
-    },
     {
       "accessType": "READ",
       "principalType": "ROLE",

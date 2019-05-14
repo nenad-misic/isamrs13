@@ -9,6 +9,8 @@ export interface MRoomReservationInterface {
   "timeStamp"?: Date;
   "startDate"?: Date;
   "endDate"?: Date;
+  "roomRate"?: number;
+  "hotelRate"?: number;
   "id"?: any;
   "roomId"?: any;
   room?: Room;
@@ -19,6 +21,8 @@ export class MRoomReservation implements MRoomReservationInterface {
   "timeStamp": Date;
   "startDate": Date;
   "endDate": Date;
+  "roomRate": number;
+  "hotelRate": number;
   "id": any;
   "roomId": any;
   room: Room;
@@ -67,6 +71,14 @@ export class MRoomReservation implements MRoomReservationInterface {
         "endDate": {
           name: 'endDate',
           type: 'Date'
+        },
+        "roomRate": {
+          name: 'roomRate',
+          type: 'number'
+        },
+        "hotelRate": {
+          name: 'hotelRate',
+          type: 'number'
         },
         "id": {
           name: 'id',
