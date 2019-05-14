@@ -88,11 +88,12 @@ import {BarRatingModule} from 'ngx-bar-rating';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AgmCoreModule } from '@agm/core';
+import { MakeRoomReservationComponent } from './make-room-reservation/make-room-reservation.component';
+import { QuickHotelSectionComponent } from './quick-hotel-section/quick-hotel-section.component';
 import { MyReservationsComponent } from './my-reservations/my-reservations.component';
 import { CarReservationActionsComponent } from './car-reservation-actions/car-reservation-actions.component';
 import { RoomReservationActionsComponent } from './room-reservation-actions/room-reservation-actions.component';
 import { SeatReservationActionsComponent } from './seat-reservation-actions/seat-reservation-actions.component';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -153,6 +154,8 @@ import { SeatReservationActionsComponent } from './seat-reservation-actions/seat
     FlightInviteProfileComponent,
     CarOfRacComponent,
     RoomSearchComponent,
+    MakeRoomReservationComponent,
+    QuickHotelSectionComponent,
     MyReservationsComponent,
     CarReservationActionsComponent,
     RoomReservationActionsComponent,

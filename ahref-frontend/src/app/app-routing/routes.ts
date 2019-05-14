@@ -33,6 +33,8 @@ import {FlightInviteComponent} from '../flight-invite/flight-invite.component';
 import {FlightInviteProfileComponent} from '../flight-invite-profile/flight-invite-profile.component';
 import {RoomReservationSectionComponent} from '../room-reservation-section/room-reservation-section.component';
 import {CarOfRacComponent} from '../car-of-rac/car-of-rac.component';
+import {MakeRoomReservationComponent} from "../make-room-reservation/make-room-reservation.component";
+import {QuickHotelSectionComponent} from "../quick-hotel-section/quick-hotel-section.component";
 import {MyReservationsComponent} from '../my-reservations/my-reservations.component';
 
 export const routes: Routes = [
@@ -63,6 +65,8 @@ export const routes: Routes = [
   { path: 'carreserve/:id', component: MakeCarReservationComponent },
   { path: 'aservice/:aserviceId', component: AdditionalServiceDetailsComponent},
   { path: 'roomreservations/:hotelId', component: RoomReservationSectionComponent},
+  { path: 'roomreserve/:id', component: MakeRoomReservationComponent},
+  { path: 'quickreservations/:hotelId', component: QuickHotelSectionComponent},
   { path: 'passengerinfo/:id', component: PassengerInfoComponent },
   { path: 'passengerdetail/:flight', component: PassengerInfoProfileComponent },
   { path: 'profiles/:id', component: UsersDetailProfileComponent },

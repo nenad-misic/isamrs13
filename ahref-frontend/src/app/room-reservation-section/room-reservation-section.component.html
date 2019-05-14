@@ -7,13 +7,10 @@
       </mat-list-item>
     </mat-list>
   </mat-card-content>
-  <mat-card-actions>
-    <button mat-button (click)="makeReservationClicked()">Make reservation</button>
-  </mat-card-actions>
   <mat-card-content>
     <mat-grid-list cols="2">
       <mat-grid-tile *ngFor="let room of rooms" [routerLink]="">
-        <app-room-profile [room]="room"></app-room-profile>
+        <app-room-profile (click)="onRoomClicked()" [room]="room" [routerLink]="['/roomreserve/' + room.id]"></app-room-profile>
       </mat-grid-tile>
     </mat-grid-list>
   </mat-card-content>
