@@ -33,6 +33,7 @@ import {FlightInviteComponent} from '../flight-invite/flight-invite.component';
 import {FlightInviteProfileComponent} from '../flight-invite-profile/flight-invite-profile.component';
 import {RoomReservationSectionComponent} from '../room-reservation-section/room-reservation-section.component';
 import {CarOfRacComponent} from '../car-of-rac/car-of-rac.component';
+import {QuickFlightSectionComponent} from '../quick-flight-section/quick-flight-section.component';
 import {MakeRoomReservationComponent} from "../make-room-reservation/make-room-reservation.component";
 import {QuickHotelSectionComponent} from "../quick-hotel-section/quick-hotel-section.component";
 import {MyReservationsComponent} from '../my-reservations/my-reservations.component';
@@ -75,7 +76,9 @@ export const routes: Routes = [
   { path: 'myreservations', component: MyReservationsComponent },
   { path: 'requests', component: FriendsListRequestsComponent },
   { path: 'flightinvite/:id', component: FlightInviteComponent },
+  { path: 'quickflightinvite/:quickId', component: FlightInviteComponent},
   { path: 'flightinvite/:flight/:id', component: FlightInviteProfileComponent },
   { path: 'quickroomdetails/:id', component: QuickRoomDetailsComponent },
+  { path: 'quickflight', component: QuickFlightSectionComponent},
   { path: '', redirectTo: '/home', pathMatch: 'full' }
 ];

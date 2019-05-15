@@ -29,6 +29,7 @@ export class FlightSearchFormComponent implements OnInit {
   }
 
   doSearch(): void {
+    //if (!this.startDate || !this.endDate) { return; }
     const filter = {};
     const filter2 = {};
     if (this.startDest) {
@@ -43,12 +44,13 @@ export class FlightSearchFormComponent implements OnInit {
     this.destinationApi.find({where: filter}).subscribe((searchResult: Destination[]) => {
       this.destinationApi.find({where: filter2}).subscribe((searchResult2: Destination[]) => {
         this.searchResult = [];
-        searchResult.forEach((startE) => {
-          searchResult2.forEach((endE) => {
             this.flightApi.find({include: ['startDestination', 'endDestination']}).subscribe((flightSearchResult: Flight[]) => {
 
               flightSearchResult.forEach((element1) => {
                 this.flightApi.findById(element1.id, { include: ['startDestination', 'endDestination']}).subscribe((flightE: Flight) => {
+
+                  searchResult.forEach((startE) => {
+                    searchResult2.forEach((endE) => {
                   console.log(flightE);
                   let dejt = true;
                   if(this.startDate){

@@ -65,7 +65,7 @@ export class FlightAddFormComponent implements OnInit {
     this.destinationApi.findOne({where: {name: this.cityStart}}).subscribe((destination: Destination) => {
       this.new_flight.startDestinationId = destination.id;
       this.destinationApi.findOne({where: {name: this.cityEnd}}).subscribe((destination2: Destination) => {
-        this.new_flight.endDestination = destination2.id;
+        this.new_flight.endDestinationId = destination2.id;
          this.airlineApi.createFlights(this.airline.id, this.new_flight).subscribe((flight: Flight) => {
            console.log('Success');
            flight.seats = [];

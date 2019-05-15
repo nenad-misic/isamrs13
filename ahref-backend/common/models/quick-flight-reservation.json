@@ -1,0 +1,19 @@
+{
+  "name": "QuickFlightReservation",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {},
+  "validations": [],
+  "relations": {
+    "mFlightReservations": {
+      "type": "hasMany",
+      "model": "mFlightReservation",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}
