@@ -1512,6 +1512,41 @@ export class LoggedUserApi extends BaseLoopBackApi {
   }
 
   /**
+   * <em>
+         * (The remote method definition does not provide any description.)
+         * </em>
+   *
+   * @param {object} data Request data.
+   *
+   *  - `luid` – `{string}` - 
+   *
+   *  - `qrid` – `{string}` - 
+   *
+   *  - `mcrid` – `{string}` - 
+   *
+   * @returns {object} An empty reference that will be
+   *   populated with the actual data once the response is returned
+   *   from the server.
+   *
+   * Data properties:
+   *
+   *  - `retval` – `{object}` - 
+   */
+  public bindQuick(luid: any, qrid: any, mcrid: any, customHeaders?: Function): Observable<any> {
+    let _method: string = "POST";
+    let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
+    "/LoggedUsers/bindQuick";
+    let _routeParams: any = {};
+    let _postBody: any = {};
+    let _urlParams: any = {};
+    if (typeof luid !== 'undefined' && luid !== null) _urlParams.luid = luid;
+    if (typeof qrid !== 'undefined' && qrid !== null) _urlParams.qrid = qrid;
+    if (typeof mcrid !== 'undefined' && mcrid !== null) _urlParams.mcrid = mcrid;
+    let result = this.request(_method, _url, _routeParams, _urlParams, _postBody, null, customHeaders);
+    return result;
+  }
+
+  /**
    * Creates a new instance in airline of this model.
    *
    * @param {any} id LoggedUser id

@@ -51,6 +51,8 @@
   <mat-card-actions>
     <button mat-button (click)="goBack()">Back</button>
     <button mat-button *ngIf="!readOnly" (click)="onSaveClick()">Save</button>
+    <button mat-button *ngIf="!readOnly" [routerLink]="['/quickCar', profile_new.id]">Quick reservations panel</button>
+    <button mat-button *ngIf="readOnly" [routerLink]="['/quickCarView', profile_new.id]">Quick reservations panel</button>
     <button mat-button [routerLink]="['/cars', profile_new.id]">Search cars</button>
     <button mat-button [routerLink]="['/allcars', profile_new.id]">List all cars</button>
   </mat-card-actions>

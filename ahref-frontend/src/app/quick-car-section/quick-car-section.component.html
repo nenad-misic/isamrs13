@@ -1,0 +1,39 @@
+<mat-card>
+  <mat-card-content>
+    <div *ngIf="selected">
+      <form novalidate (ngSubmit)="addQuick()">
+
+        <mat-form-field>
+          <input matInput required [(ngModel)]="startDate" type="date" placeholder="Start date" name="startDate">
+        </mat-form-field>
+
+        <mat-form-field>
+          <input list="destinations" matInput required [(ngModel)]="startDestination" placeholder="Start destination" name="startDestination">
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput required [(ngModel)]="endDate" type="date" placeholder="End date" name="endDate">
+        </mat-form-field>
+
+
+        <mat-form-field>
+          <input list="destinations" matInput required [(ngModel)]="endDestination" placeholder="End destination" name="endDestination">
+        </mat-form-field>
+
+        <button mat-button>ADD QUICK RESERVATION</button>
+
+
+        <datalist id="destinations">
+          <option value="Under construction!">
+        </datalist>
+      </form>
+    </div>
+
+    <button mat-button *ngIf="selected" (click)="addQuick()"></button>
+    <mat-grid-list cols="2" rowHeight="3:4">
+      <mat-grid-tile *ngFor="let car of cars">
+        <app-car-profile [ngClass]="car == selected ? 'bordered': 'greyedOut'" [profile]="car" (click)="clicked(car)"></app-car-profile>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </mat-card-content>
+</mat-card>

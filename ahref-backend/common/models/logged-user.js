@@ -8,7 +8,35 @@ var flagRoomDelete = true;
 var flagFlightDelete = true;
 var flagRoom = true;
 
+
 module.exports = function(Loggeduser) {
+
+  Loggeduser.bindQuick = function(luid, qrid, mcrid, cb) {
+    Loggeduser.findById(luid).then((user) => {
+      Loggeduser.app.models.quickCarReservation.findById(qrid).then((qr) => {
+        Loggeduser.app.models.MCarReservation.findById(mcrid).then((mr) => {
+          var mrc = mr;
+          Loggeduser.app.models.quickCarReservation.deleteById(qrid).then((del) => {
+            Loggeduser.app.models.MCarReservation.updateAll({id: mcrid}, {loggedUserId: luid}).then(() => {
+              cb(null, true);
+            });
+          })
+        })
+      })
+    });
+  };
+  
+  Loggeduser.remoteMethod('bindQuick', {
+    accepts: [
+      {arg: 'luid', type: 'string', required: true},
+      {arg: 'qrid', type: 'string', required: true},
+      {arg: 'mcrid', type: 'string', required: true},
+    ],
+    http: {path: '/bindQuick', verb: 'post'},
+    returns: {type: 'object', arg: 'retval'},
+  });
+
+
   Loggeduser.afterRemote('**', function(ctx, modelInstance, next)  {
     console.log('Loggeduser remote method: ' + ctx.method.name);
     next();

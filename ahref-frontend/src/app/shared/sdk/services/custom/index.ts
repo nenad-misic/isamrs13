@@ -30,5 +30,6 @@ export * from './SFlight';
 export * from './SSeat';
 export * from './Friendship';
 export * from './Passenger';
+export * from './QuickCarReservation';
 export * from './SDKModels';
 export * from './logger.service';

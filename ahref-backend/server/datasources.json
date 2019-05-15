@@ -25,7 +25,8 @@
         "auth": {
           "user": "ahref.noreply@gmail.com",
           "pass": "ahref123Project"
-        }
+        },
+        "logger": true
       }
     ]
   },

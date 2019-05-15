@@ -1,0 +1,24 @@
+{
+  "name": "quickCarReservation",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {},
+  "validations": [],
+  "relations": {
+    "mCarReservation": {
+      "type": "belongsTo",
+      "model": "mCarReservation",
+      "foreignKey": ""
+    },
+    "car": {
+      "type": "belongsTo",
+      "model": "Car",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

@@ -46,7 +46,13 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "quickCarReservations": {
+      "type": "hasMany",
+      "model": "quickCarReservation",
+      "foreignKey": ""
+    }
+  },
   "acls": [
     {
       "accessType": "*",

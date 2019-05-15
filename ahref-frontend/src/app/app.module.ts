@@ -94,6 +94,9 @@ import { MyReservationsComponent } from './my-reservations/my-reservations.compo
 import { CarReservationActionsComponent } from './car-reservation-actions/car-reservation-actions.component';
 import { RoomReservationActionsComponent } from './room-reservation-actions/room-reservation-actions.component';
 import { SeatReservationActionsComponent } from './seat-reservation-actions/seat-reservation-actions.component';
+import { QuickCarSectionComponent } from './quick-car-section/quick-car-section.component';
+import { QuickCarSectionViewComponent } from './quick-car-section-view/quick-car-section-view.component';
+import { QuickCarProfileComponent } from './quick-car-profile/quick-car-profile.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -159,7 +162,10 @@ import { SeatReservationActionsComponent } from './seat-reservation-actions/seat
     MyReservationsComponent,
     CarReservationActionsComponent,
     RoomReservationActionsComponent,
-    SeatReservationActionsComponent
+    SeatReservationActionsComponent,
+    QuickCarSectionComponent,
+    QuickCarSectionViewComponent,
+    QuickCarProfileComponent
   ],
   imports: [
     BrowserModule,
