@@ -88,6 +88,10 @@ import {BarRatingModule} from 'ngx-bar-rating';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AgmCoreModule } from '@agm/core';
+import { QuickFlightSectionComponent } from './quick-flight-section/quick-flight-section.component';
+import { QuickFlightProfileComponent} from './quick-flight-profile/quick-flight-profile.component';
+import { QuickFlightDetailProfileComponent } from './quick-flight-detail-profile/quick-flight-detail-profile.component';
+
 import { MakeRoomReservationComponent } from './make-room-reservation/make-room-reservation.component';
 import { QuickHotelSectionComponent } from './quick-hotel-section/quick-hotel-section.component';
 import { MyReservationsComponent } from './my-reservations/my-reservations.component';
@@ -155,6 +159,9 @@ import { QuickRoomAddFormComponent } from './quick-room-add-form/quick-room-add-
     FlightInviteProfileComponent,
     CarOfRacComponent,
     RoomSearchComponent,
+    QuickFlightSectionComponent,
+    QuickFlightProfileComponent,
+    QuickFlightDetailProfileComponent,
     MakeRoomReservationComponent,
     QuickHotelSectionComponent,
     MyReservationsComponent,
@@ -170,10 +177,8 @@ import { QuickRoomAddFormComponent } from './quick-room-add-form/quick-room-add-
     MatCardModule,
     MatGridListModule,
     MatButtonModule,
-    MatFormFieldModule,
     MatOptionModule,
     MatSelectModule,
-    MatInputModule,
     MatDialogModule,
     MatListModule,
     AppRoutingModule,

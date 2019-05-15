@@ -1,0 +1,26 @@
+<mat-card *ngIf="flight">
+  <mat-card-title>{{flight.id}}</mat-card-title>
+  <hr>
+  <mat-card-content>
+    <h3>ID: </h3>
+    <p>{{flight.id}}</p>
+    <h3>Length: </h3>
+    <p>{{flight.length}}</p>
+    <h3>Seats: </h3>
+    <p>{{noSeats}}</p>
+    <h3>Rating: </h3>
+    <p>{{flight.rating}}</p>
+    <h3>Destinations: </h3>
+    <p>{{flight.startDestination.name}} - {{flight.endDestination.name}}</p>
+    <h3>Date: </h3>
+    <p>{{flight.startTime}} - {{flight.endTime}}</p>
+  </mat-card-content>
+  <mat-card-actions>
+    <button *ngIf="removeBul" mat-button (click)="remove()">REMOVE</button>
+    <button *ngIf="!removeBul" mat-button (click)="book()" [routerLink]="['/flightinvite', flight.id]">BOOK FLIGHT</button>
+  </mat-card-actions>
+</mat-card>
+
+<div [hidden]="flight" class="mat-spinner-container">
+  <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
+</div>
