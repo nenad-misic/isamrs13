@@ -72,4 +72,8 @@ export class HotelDetailProfileComponent implements OnInit {
   makeReservationClicked() {
     this.router.navigateByUrl('roomreservations/' + this.profile_new.id);
   }
+
+  quickReservationsClicked() {
+    this.router.navigateByUrl('quickreservations/:'+this.profile_new.id);
+  }
 }

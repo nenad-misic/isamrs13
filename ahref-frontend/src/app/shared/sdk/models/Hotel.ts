@@ -3,7 +3,8 @@ import {
   Destination,
   Room,
   HPriceList,
-  LoggedUser
+  LoggedUser,
+  QuickRoomReservation
 } from '../index';
 
 declare var Object: any;
@@ -22,6 +23,7 @@ export interface HotelInterface {
   rooms?: Room[];
   priceList?: HPriceList;
   loggedUser?: LoggedUser;
+  quickRoomReservations?: QuickRoomReservation[];
 }
 
 export class Hotel implements HotelInterface {
@@ -39,6 +41,7 @@ export class Hotel implements HotelInterface {
   rooms: Room[];
   priceList: HPriceList;
   loggedUser: LoggedUser;
+  quickRoomReservations: QuickRoomReservation[];
   constructor(data?: HotelInterface) {
     Object.assign(this, data);
   }
@@ -147,6 +150,14 @@ export class Hotel implements HotelInterface {
           relationType: 'belongsTo',
                   keyFrom: 'loggedUserId',
           keyTo: 'id'
+        },
+        quickRoomReservations: {
+          name: 'quickRoomReservations',
+          type: 'QuickRoomReservation[]',
+          model: 'QuickRoomReservation',
+          relationType: 'hasMany',
+                  keyFrom: 'id',
+          keyTo: 'hotelId'
         },
       }
     }
