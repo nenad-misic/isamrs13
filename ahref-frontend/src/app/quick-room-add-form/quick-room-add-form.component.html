@@ -1,0 +1,24 @@
+<div class="form-container">
+  <form novalidate (ngSubmit)="addReservationClicked()">
+    <mat-form-field>
+      <input matInput required [(ngModel)]="reservation.startDate" type="date" placeholder="Start date" name="startDate">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput required [(ngModel)]="reservation.endDate" type="date" placeholder="End date" name="endDate">
+    </mat-form-field>
+
+    <button mat-button *ngIf="selectedRoom">Add Quick Reservation</button>
+  </form>
+  <mat-card>
+    <mat-card-title>Rooms</mat-card-title>
+    <mat-card-content>
+      <mat-grid-list cols="2">
+        <mat-grid-tile *ngFor="let room of hotel.rooms">
+          <app-room-profile *ngIf="selectedRoom==room" class="selected" [room]="room" (click)="roomClicked(room)"></app-room-profile>
+          <app-room-profile *ngIf="selectedRoom!=room" class="notSelected" [room]="room" (click)="roomClicked(room)"></app-room-profile>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </mat-card-content>
+  </mat-card>
+</div>

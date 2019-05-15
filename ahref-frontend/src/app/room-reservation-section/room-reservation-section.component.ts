@@ -4,6 +4,8 @@ import {Location} from "@angular/common";
 import {Hotel, HotelApi, HPriceList, HPriceListApi, HPriceListItem, LoopBackConfig, Room} from "../shared/sdk";
 import {API_VERSION} from "../shared/baseurl";
 import {RoomDataServiceService} from "../services/room-data-service.service";
+import {RoomReservationDataService} from "../services/room-reservation-data.service";
+import {RoomReservationInfo} from "../shared/room-reservation-info";
 
 @Component({
   selector: 'app-room-reservation-section',
@@ -14,6 +16,7 @@ export class RoomReservationSectionComponent implements OnInit {
 
   hotelId: string;
   rooms: Room[] = [];
+  info: RoomReservationInfo;
 
   aservices: HPriceListItem[] = [];
   chosenAservices: HPriceListItem[] = [];
@@ -23,6 +26,7 @@ export class RoomReservationSectionComponent implements OnInit {
               private route: ActivatedRoute,
               private location: Location,
               private data: RoomDataServiceService,
+              private roomReservationData: RoomReservationDataService,
               @Inject('baseURL') private baseURL,) {
     LoopBackConfig.setBaseURL(baseURL);
     LoopBackConfig.setApiVersion(API_VERSION);
@@ -35,6 +39,9 @@ export class RoomReservationSectionComponent implements OnInit {
       this.aservicesApi.findById(hotel.priceList.id, {include: 'priceListItems'}).subscribe((items: HPriceList) => {
         this.aservices = items.priceListItems;
       })
+    });
+    this.roomReservationData.currentSearchParams.subscribe((info: RoomReservationInfo)=>{
+      this.info = info;
     })
   }
 
@@ -47,7 +54,8 @@ export class RoomReservationSectionComponent implements OnInit {
     }
   }
 
-  makeReservationClicked() {
-    
+  onRoomClicked() {
+    this.info.additionalServices = JSON.parse(JSON.stringify(this.aservices));
+    this.roomReservationData.changeSearchParams(this.info);
   }
 }

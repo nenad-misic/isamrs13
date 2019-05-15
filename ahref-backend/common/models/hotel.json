@@ -58,6 +58,11 @@
       "type": "belongsTo",
       "model": "LoggedUser",
       "foreignKey": ""
+    },
+    "quickRoomReservations": {
+      "type": "hasMany",
+      "model": "QuickRoomReservation",
+      "foreignKey": ""
     }
   },
   "acls": [
@@ -65,7 +70,7 @@
       "accessType": "*",
       "principalType": "ROLE",
       "principalId": "$everyone",
-      "permission": "DENY"
+      "permission": "ALLOW"
     },
     {
       "accessType": "READ",
@@ -100,6 +105,13 @@
       "principalId": "$owner",
       "permission": "ALLOW",
       "property": "__updateById__rooms"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__create__quickroomreservations"
     }
   ],
   "methods": {}

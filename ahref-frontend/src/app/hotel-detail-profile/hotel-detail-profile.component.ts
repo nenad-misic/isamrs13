@@ -35,7 +35,7 @@ export class HotelDetailProfileComponent implements OnInit {
     this.hotelService.findOne({where: {id: id}, include: 'rooms'}).subscribe((profile: Hotel) => {
       this.profile = profile;
       this.profile_new = JSON.parse(JSON.stringify(this.profile)); // YAAS deep copy
-      if (this.profile.id === this.userApi.getCachedCurrent().hotelId) {
+      if (this.profile.loggedUserId === this.userApi.getCachedCurrent().id) {
         this.readOnly = false;
       } else {
         this.readOnly = true;
@@ -71,5 +71,9 @@ export class HotelDetailProfileComponent implements OnInit {
 
   makeReservationClicked() {
     this.router.navigateByUrl('roomreservations/' + this.profile_new.id);
+  }
+
+  quickReservationsClicked() {
+    this.router.navigateByUrl('quickreservations/:'+this.profile_new.id);
   }
 }

@@ -49,15 +49,24 @@
       "type": "hasOne",
       "model": "RACService",
       "foreignKey": ""
+    },
+    "mCarReservations": {
+      "type": "hasMany",
+      "model": "mCarReservation",
+      "foreignKey": ""
+    },
+    "mRoomReservations": {
+      "type": "hasMany",
+      "model": "mRoomReservations",
+      "foreignKey": ""
+    },
+    "mFlightReservations": {
+      "type": "hasMany",
+      "model": "mFlightReservations",
+      "foreignKey": ""
     }
   },
   "acls": [
-    {
-      "accessType": "*",
-      "principalType": "ROLE",
-      "principalId": "$everyone",
-      "permission": "DENY"
-    },
     {
       "accessType": "READ",
       "principalType": "ROLE",
@@ -77,6 +86,48 @@
       "principalId": "$everyone",
       "permission": "ALLOW",
       "property": "replaceById"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "__create__mCarReservations"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "__destroyById__mCarReservations"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "__create__mRoomReservations"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "__destroyById__mRoomReservations"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "__create__mFlightReservations"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "__destroyById__mFlightReservations"
     }
   ],
   "methods": {}

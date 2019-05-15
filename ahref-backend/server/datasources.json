@@ -20,8 +20,11 @@
       {
         "type": "smtp",
         "host": "smtp.gmail.com",
-        "secure": true,
+        "secure": false,
         "port": 465,
+        "tls": {
+          "rejectUnauthorized": false
+        },
         "auth": {
           "user": "ahref.noreply@gmail.com",
           "pass": "ahref123Project"
@@ -34,7 +37,7 @@
     "port": 5432,
     "url": "",
     "database": "AHREF",
-    "password": "Dz0n1Pr0",
+    "password": "admin",
     "name": "postgres",
     "user": "postgres",
     "connector": "postgresql"

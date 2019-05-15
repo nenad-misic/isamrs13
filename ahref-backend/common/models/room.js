@@ -7,15 +7,24 @@ module.exports = function(Room) {
     console.log('Room remote method: ' + ctx.method.name);
     next();
   });
+  
+  Room.afterRemote('create', (ctx, model, next) => {
+    var sqlRoom = Room.app.models.sRoom;
+    var postgres = sRoom.app.dataSources.postgres;
+    console.log(ctx.result);
+    next();
+  }) 
 
-    Room.beforeRemote('deleteById',
-      function(ctx, model, next) {
-        flag = true;
-        doDelete(Room, ctx, model, next, function(e) {
-          flag = false;
-          next(e);
-        });
+  
+  
+  Room.beforeRemote('deleteById',
+    function(ctx, model, next) {
+      flag = true;
+      doDelete(Room, ctx, model, next, function(e) {
+        flag = false;
+        next(e);
       });
+    });
 
   Room.beforeRemote('replaceById',
     function(ctx, model, next) {

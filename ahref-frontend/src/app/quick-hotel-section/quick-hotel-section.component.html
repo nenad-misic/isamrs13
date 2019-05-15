@@ -1,0 +1,39 @@
+<!--
+<mat-card>
+<mat-card-content>
+
+  <div>
+    <table mat-table [dataSource]="reservations">
+      <ng-container matColumnDef="timeStamp">
+        <th mat-header-cell *matHeaderCellDef> Date created: </th>
+        <td mat-cell *matCellDef="let element"> {{element.mRoomReservation.timeStamp | date}} </td>
+      </ng-container>
+      <ng-container matColumnDef="startDate">
+        <th mat-header-cell *matHeaderCellDef> Start date </th>
+        <td mat-cell *matCellDef="let element"> {{element.mRoomReservation.startDate | date}} </td>
+      </ng-container>
+      <ng-container matColumnDef="endDate">
+        <th mat-header-cell *matHeaderCellDef> End date </th>
+        <td mat-cell *matCellDef="let element"> {{element.mRoomReservation.endDate | date}} </td>
+      </ng-container>
+      <ng-container matColumnDef="room">
+        <th mat-header-cell *matHeaderCellDef> Room </th>
+        <td mat-cell *matCellDef="let element"> {{element.mRoomReservation.roomId}} </td>
+      </ng-container>
+      <ng-container matColumnDef="delete">
+        <th mat-header-cell *matHeaderCellDef> Delete </th>
+        <td mat-cell *matCellDef="let element"> <button mat-button (click)="deleteReservationClicked(element)">Delete</button> </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumnsR"></tr>
+    </table>
+  </div>
+  </mat-card-content>
+</mat-card> -->
+<h1>Quick Room Reservations</h1>
+<mat-list *ngFor="let reserve of reservations">
+  <mat-list-item>{{reserve.mRoomReservation.startDate}}; {{reserve.mRoomReservation.endDate}}
+    {{reserve.mRoomReservation.roomId}};
+    <button mat-button (click)="deleteReservationClicked(reserve)">Delete</button>
+  </mat-list-item>
+</mat-list>
+<app-quick-room-add-form [hotel] = hotel></app-quick-room-add-form>

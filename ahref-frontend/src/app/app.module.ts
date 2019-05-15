@@ -20,7 +20,7 @@ import {
   MatGridListModule,
   MatInputModule, MatListModule,
   MatOptionModule, MatProgressSpinnerModule,
-  MatSelectModule
+  MatSelectModule, MatSortHeader, MatSortModule, MatTableModule, MatTooltipModule
 } from '@angular/material';
 
 import { RentacarSectionComponent } from './rentacar-section/rentacar-section.component';
@@ -86,11 +86,19 @@ import { CarOfRacComponent } from './car-of-rac/car-of-rac.component';
 import { RoomSearchComponent } from './room-search/room-search.component';
 import {BarRatingModule} from 'ngx-bar-rating';
 
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AgmCoreModule } from '@agm/core';
 import { QuickFlightSectionComponent } from './quick-flight-section/quick-flight-section.component';
 import { QuickFlightProfileComponent} from './quick-flight-profile/quick-flight-profile.component';
 import { QuickFlightDetailProfileComponent } from './quick-flight-detail-profile/quick-flight-detail-profile.component';
 
+import { MakeRoomReservationComponent } from './make-room-reservation/make-room-reservation.component';
+import { QuickHotelSectionComponent } from './quick-hotel-section/quick-hotel-section.component';
+import { MyReservationsComponent } from './my-reservations/my-reservations.component';
+import { CarReservationActionsComponent } from './car-reservation-actions/car-reservation-actions.component';
+import { RoomReservationActionsComponent } from './room-reservation-actions/room-reservation-actions.component';
+import { SeatReservationActionsComponent } from './seat-reservation-actions/seat-reservation-actions.component';
+import { QuickRoomAddFormComponent } from './quick-room-add-form/quick-room-add-form.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -153,7 +161,14 @@ import { QuickFlightDetailProfileComponent } from './quick-flight-detail-profile
     RoomSearchComponent,
     QuickFlightSectionComponent,
     QuickFlightProfileComponent,
-    QuickFlightDetailProfileComponent
+    QuickFlightDetailProfileComponent,
+    MakeRoomReservationComponent,
+    QuickHotelSectionComponent,
+    MyReservationsComponent,
+    CarReservationActionsComponent,
+    RoomReservationActionsComponent,
+    SeatReservationActionsComponent,
+    QuickRoomAddFormComponent
   ],
   imports: [
     BrowserModule,
@@ -169,8 +184,13 @@ import { QuickFlightDetailProfileComponent } from './quick-flight-detail-profile
     AppRoutingModule,
     MatFormFieldModule,
     MatInputModule,
+    MatTableModule,
+    MatSortModule,
     MatCheckboxModule,
+    NgbModule,
+    MatDialogModule,
     FormsModule,
+    MatTooltipModule,
     HttpClientModule,
     ToastrModule.forRoot(),
     MatProgressSpinnerModule,
@@ -181,7 +201,9 @@ import { QuickFlightDetailProfileComponent } from './quick-flight-detail-profile
     SDKBrowserModule.forRoot()
   ],
   entryComponents: [
-    RentacarDetailProfileComponent
+    RentacarDetailProfileComponent,
+    CarReservationActionsComponent,
+    MyReservationsComponent
   ],
   providers: [
     {provide: 'baseURL', useValue: baseURL}
