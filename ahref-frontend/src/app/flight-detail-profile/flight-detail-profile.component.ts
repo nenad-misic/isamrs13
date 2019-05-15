@@ -36,9 +36,8 @@ export class FlightDetailProfileComponent implements OnInit {
 
   ngOnInit() {
     const id = this.route.snapshot.params['id'];
-    this.flightApi.findById(id, {include: 'startDestination'}).subscribe((flight: Flight) => {
+    this.flightApi.findById(id, {include: ['startDestination','endDestination']}).subscribe((flight: Flight) => {
       this.flight = flight;
-      console.log('NESTO ', flight);
       this.startDate = new Date(flight.startTime);
 
       console.log('Start ', this.startDate);
@@ -57,10 +56,10 @@ export class FlightDetailProfileComponent implements OnInit {
 
       });
 
-      this.reserveBul = this.loggedUserApi.getCachedCurrent() != null && this.loggedUserApi.getCachedCurrent().type == 'regUser';
+      this.reserveBul = this.loggedUserApi.getCachedCurrent() != null && (this.loggedUserApi.getCachedCurrent().type =='airlineAdmin' || this.loggedUserApi.getCachedCurrent().type =='regUser');
 
       this.airlineApi.findById(flight.airlineId).subscribe((airline: Airline) => {
-        if (airline.loggedUserId !== this.loggedUserApi.getCachedCurrent().id) {
+        if (this.loggedUserApi.getCachedCurrent() != null && airline.loggedUserId === this.loggedUserApi.getCachedCurrent().id) {
           this.readOnly = false;
         } else {
           this.readOnly = true;

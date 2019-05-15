@@ -30,5 +30,6 @@ export * from './SFlight';
 export * from './SSeat';
 export * from './Friendship';
 export * from './Passenger';
+export * from './QuickFlightReservation';
 export * from './BaseModels';
 export * from './FireLoopRef';

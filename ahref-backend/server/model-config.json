@@ -156,5 +156,9 @@
   "Passenger": {
     "dataSource": "MongoDB",
     "public": true
+  },
+  "QuickFlightReservation": {
+    "dataSource": "MongoDB",
+    "public": true
   }
 }

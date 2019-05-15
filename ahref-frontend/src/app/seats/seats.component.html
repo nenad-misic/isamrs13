@@ -12,7 +12,8 @@
     </table>
     <span></span>
     <p *ngIf="msg">{{msg}}</p>
-    <button mat-button (click)="reserveSeats()" [routerLink]="['/flightinvite', flight.id]" >Fill information about passengers</button>
+    <button *ngIf="readType && send.length>0" mat-button (click)="reserveSeats()" [routerLink]="['/flightinvite', flight.id]" >Fill information about passengers</button>
+    <button *ngIf="!readType && send.length>0" mat-button (click)="reserveSeatsAdmin()" [routerLink]="['/home']" >Create a reservation</button>
 
   </mat-card-content>
 </mat-card>

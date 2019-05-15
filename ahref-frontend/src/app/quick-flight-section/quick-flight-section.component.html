@@ -1,0 +1,13 @@
+<mat-card *ngIf="reservations">
+  <mat-card-content>
+    <mat-grid-list cols="2">
+      <mat-grid-tile *ngFor="let reservation of reservations">
+        <app-quick-flight-profile [reservation]="reservation"></app-quick-flight-profile>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </mat-card-content>
+</mat-card>
+
+<div [hidden]="reservations" class="mat-spinner-container">
+  <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
+</div>

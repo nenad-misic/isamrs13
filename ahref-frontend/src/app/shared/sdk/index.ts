@@ -79,6 +79,7 @@ import { SFlightApi } from './services/custom/SFlight';
 import { SSeatApi } from './services/custom/SSeat';
 import { FriendshipApi } from './services/custom/Friendship';
 import { PassengerApi } from './services/custom/Passenger';
+import { QuickFlightReservationApi } from './services/custom/QuickFlightReservation';
 /**
 * @module SDKBrowserModule
 * @description
@@ -140,6 +141,7 @@ export class SDKBrowserModule {
         SSeatApi,
         FriendshipApi,
         PassengerApi,
+        QuickFlightReservationApi,
         internalStorageProvider,
         { provide: SDKStorage, useClass: StorageBrowser },
         { provide: SocketDriver, useClass: SocketBrowser }

@@ -87,6 +87,9 @@ import { RoomSearchComponent } from './room-search/room-search.component';
 import {BarRatingModule} from 'ngx-bar-rating';
 
 import { AgmCoreModule } from '@agm/core';
+import { QuickFlightSectionComponent } from './quick-flight-section/quick-flight-section.component';
+import { QuickFlightProfileComponent} from './quick-flight-profile/quick-flight-profile.component';
+import { QuickFlightDetailProfileComponent } from './quick-flight-detail-profile/quick-flight-detail-profile.component';
 
 @NgModule({
   declarations: [
@@ -147,7 +150,10 @@ import { AgmCoreModule } from '@agm/core';
     FlightInviteComponent,
     FlightInviteProfileComponent,
     CarOfRacComponent,
-    RoomSearchComponent
+    RoomSearchComponent,
+    QuickFlightSectionComponent,
+    QuickFlightProfileComponent,
+    QuickFlightDetailProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -156,10 +162,8 @@ import { AgmCoreModule } from '@agm/core';
     MatCardModule,
     MatGridListModule,
     MatButtonModule,
-    MatFormFieldModule,
     MatOptionModule,
     MatSelectModule,
-    MatInputModule,
     MatDialogModule,
     MatListModule,
     AppRoutingModule,

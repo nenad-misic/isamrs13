@@ -9,16 +9,16 @@ import { LoopBackFilter,  } from '../../models/BaseModels';
 import { ErrorHandler } from '../core/error.service';
 import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Room } from '../../models/Room';
+import { QuickFlightReservation } from '../../models/QuickFlightReservation';
 import { SocketConnection } from '../../sockets/socket.connections';
-import { DatePrice } from '../../models/DatePrice';
+import { MFlightReservation } from '../../models/MFlightReservation';
 
 
 /**
- * Api services for the `Room` model.
+ * Api services for the `QuickFlightReservation` model.
  */
 @Injectable()
-export class RoomApi extends BaseLoopBackApi {
+export class QuickFlightReservationApi extends BaseLoopBackApi {
 
   constructor(
     @Inject(HttpClient) protected http: HttpClient,
@@ -31,11 +31,11 @@ export class RoomApi extends BaseLoopBackApi {
   }
 
   /**
-   * Find a related item by id for datePrices.
+   * Find a related item by id for mFlightReservations.
    *
-   * @param {any} id Room id
+   * @param {any} id QuickFlightReservation id
    *
-   * @param {any} fk Foreign key for datePrices
+   * @param {any} fk Foreign key for mFlightReservations
    *
    * @returns {object} An empty reference that will be
    *   populated with the actual data once the response is returned
@@ -43,13 +43,13 @@ export class RoomApi extends BaseLoopBackApi {
    *
    * <em>
    * (The remote method definition does not provide any description.
-   * This usually means the response is a `Room` object.)
+   * This usually means the response is a `QuickFlightReservation` object.)
    * </em>
    */
-  public findByIdDatePrices(id: any, fk: any, customHeaders?: Function): Observable<any> {
+  public findByIdMFlightReservations(id: any, fk: any, customHeaders?: Function): Observable<any> {
     let _method: string = "GET";
     let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
-    "/Rooms/:id/datePrices/:fk";
+    "/QuickFlightReservations/:id/mFlightReservations/:fk";
     let _routeParams: any = {
       id: id,
       fk: fk
@@ -61,11 +61,11 @@ export class RoomApi extends BaseLoopBackApi {
   }
 
   /**
-   * Delete a related item by id for datePrices.
+   * Delete a related item by id for mFlightReservations.
    *
-   * @param {any} id Room id
+   * @param {any} id QuickFlightReservation id
    *
-   * @param {any} fk Foreign key for datePrices
+   * @param {any} fk Foreign key for mFlightReservations
    *
    * @returns {object} An empty reference that will be
    *   populated with the actual data once the response is returned
@@ -73,10 +73,10 @@ export class RoomApi extends BaseLoopBackApi {
    *
    * This method returns no data.
    */
-  public destroyByIdDatePrices(id: any, fk: any, customHeaders?: Function): Observable<any> {
+  public destroyByIdMFlightReservations(id: any, fk: any, customHeaders?: Function): Observable<any> {
     let _method: string = "DELETE";
     let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
-    "/Rooms/:id/datePrices/:fk";
+    "/QuickFlightReservations/:id/mFlightReservations/:fk";
     let _routeParams: any = {
       id: id,
       fk: fk
@@ -88,11 +88,11 @@ export class RoomApi extends BaseLoopBackApi {
   }
 
   /**
-   * Update a related item by id for datePrices.
+   * Update a related item by id for mFlightReservations.
    *
-   * @param {any} id Room id
+   * @param {any} id QuickFlightReservation id
    *
-   * @param {any} fk Foreign key for datePrices
+   * @param {any} fk Foreign key for mFlightReservations
    *
    * @param {object} data Request data.
    *
@@ -104,13 +104,13 @@ export class RoomApi extends BaseLoopBackApi {
    *
    * <em>
    * (The remote method definition does not provide any description.
-   * This usually means the response is a `Room` object.)
+   * This usually means the response is a `QuickFlightReservation` object.)
    * </em>
    */
-  public updateByIdDatePrices(id: any, fk: any, data: any = {}, customHeaders?: Function): Observable<any> {
+  public updateByIdMFlightReservations(id: any, fk: any, data: any = {}, customHeaders?: Function): Observable<any> {
     let _method: string = "PUT";
     let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
-    "/Rooms/:id/datePrices/:fk";
+    "/QuickFlightReservations/:id/mFlightReservations/:fk";
     let _routeParams: any = {
       id: id,
       fk: fk
@@ -124,9 +124,9 @@ export class RoomApi extends BaseLoopBackApi {
   }
 
   /**
-   * Queries datePrices of Room.
+   * Queries mFlightReservations of QuickFlightReservation.
    *
-   * @param {any} id Room id
+   * @param {any} id QuickFlightReservation id
    *
    * @param {object} filter 
    *
@@ -136,13 +136,13 @@ export class RoomApi extends BaseLoopBackApi {
    *
    * <em>
    * (The remote method definition does not provide any description.
-   * This usually means the response is a `Room` object.)
+   * This usually means the response is a `QuickFlightReservation` object.)
    * </em>
    */
-  public getDatePrices(id: any, filter: LoopBackFilter = {}, customHeaders?: Function): Observable<any> {
+  public getMFlightReservations(id: any, filter: LoopBackFilter = {}, customHeaders?: Function): Observable<any> {
     let _method: string = "GET";
     let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
-    "/Rooms/:id/datePrices";
+    "/QuickFlightReservations/:id/mFlightReservations";
     let _routeParams: any = {
       id: id
     };
@@ -154,9 +154,9 @@ export class RoomApi extends BaseLoopBackApi {
   }
 
   /**
-   * Creates a new instance in datePrices of this model.
+   * Creates a new instance in mFlightReservations of this model.
    *
-   * @param {any} id Room id
+   * @param {any} id QuickFlightReservation id
    *
    * @param {object} data Request data.
    *
@@ -168,13 +168,13 @@ export class RoomApi extends BaseLoopBackApi {
    *
    * <em>
    * (The remote method definition does not provide any description.
-   * This usually means the response is a `Room` object.)
+   * This usually means the response is a `QuickFlightReservation` object.)
    * </em>
    */
-  public createDatePrices(id: any, data: any = {}, customHeaders?: Function): Observable<any> {
+  public createMFlightReservations(id: any, data: any = {}, customHeaders?: Function): Observable<any> {
     let _method: string = "POST";
     let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
-    "/Rooms/:id/datePrices";
+    "/QuickFlightReservations/:id/mFlightReservations";
     let _routeParams: any = {
       id: id
     };
@@ -187,9 +187,9 @@ export class RoomApi extends BaseLoopBackApi {
   }
 
   /**
-   * Deletes all datePrices of this model.
+   * Deletes all mFlightReservations of this model.
    *
-   * @param {any} id Room id
+   * @param {any} id QuickFlightReservation id
    *
    * @returns {object} An empty reference that will be
    *   populated with the actual data once the response is returned
@@ -197,10 +197,10 @@ export class RoomApi extends BaseLoopBackApi {
    *
    * This method returns no data.
    */
-  public deleteDatePrices(id: any, customHeaders?: Function): Observable<any> {
+  public deleteMFlightReservations(id: any, customHeaders?: Function): Observable<any> {
     let _method: string = "DELETE";
     let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
-    "/Rooms/:id/datePrices";
+    "/QuickFlightReservations/:id/mFlightReservations";
     let _routeParams: any = {
       id: id
     };
@@ -211,9 +211,9 @@ export class RoomApi extends BaseLoopBackApi {
   }
 
   /**
-   * Counts datePrices of Room.
+   * Counts mFlightReservations of QuickFlightReservation.
    *
-   * @param {any} id Room id
+   * @param {any} id QuickFlightReservation id
    *
    * @param {object} where Criteria to match model instances
    *
@@ -225,10 +225,10 @@ export class RoomApi extends BaseLoopBackApi {
    *
    *  - `count` – `{number}` - 
    */
-  public countDatePrices(id: any, where: any = {}, customHeaders?: Function): Observable<any> {
+  public countMFlightReservations(id: any, where: any = {}, customHeaders?: Function): Observable<any> {
     let _method: string = "GET";
     let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
-    "/Rooms/:id/datePrices/count";
+    "/QuickFlightReservations/:id/mFlightReservations/count";
     let _routeParams: any = {
       id: id
     };
@@ -252,13 +252,13 @@ export class RoomApi extends BaseLoopBackApi {
    *
    * <em>
    * (The remote method definition does not provide any description.
-   * This usually means the response is a `Room` object.)
+   * This usually means the response is a `QuickFlightReservation` object.)
    * </em>
    */
   public patchOrCreate(data: any = {}, customHeaders?: Function): Observable<any> {
     let _method: string = "PATCH";
     let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
-    "/Rooms";
+    "/QuickFlightReservations";
     let _routeParams: any = {};
     let _postBody: any = {
       data: data
@@ -271,7 +271,7 @@ export class RoomApi extends BaseLoopBackApi {
   /**
    * Patch attributes for a model instance and persist it into the data source.
    *
-   * @param {any} id Room id
+   * @param {any} id QuickFlightReservation id
    *
    * @param {object} data Request data.
    *
@@ -283,13 +283,13 @@ export class RoomApi extends BaseLoopBackApi {
    *
    * <em>
    * (The remote method definition does not provide any description.
-   * This usually means the response is a `Room` object.)
+   * This usually means the response is a `QuickFlightReservation` object.)
    * </em>
    */
   public patchAttributes(id: any, data: any = {}, customHeaders?: Function): Observable<any> {
     let _method: string = "PATCH";
     let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
-    "/Rooms/:id";
+    "/QuickFlightReservations/:id";
     let _routeParams: any = {
       id: id
     };
@@ -302,56 +302,9 @@ export class RoomApi extends BaseLoopBackApi {
   }
 
   /**
-   * <em>
-         * (The remote method definition does not provide any description.)
-         * </em>
+   * Creates a new instance in mFlightReservations of this model.
    *
-   * @param {object} data Request data.
-   *
-   *  - `roomid` – `{string}` - 
-   *
-   *  - `startDate` – `{string}` - 
-   *
-   *  - `endDate` – `{string}` - 
-   *
-   *  - `numberOfGuests` – `{number}` - 
-   *
-   *  - `lowPrice` – `{string}` - 
-   *
-   *  - `hightPrice` – `{string}` - 
-   *
-   *  - `requiredRooms` – `{object}` - 
-   *
-   * @returns {object} An empty reference that will be
-   *   populated with the actual data once the response is returned
-   *   from the server.
-   *
-   * Data properties:
-   *
-   *  - `retval` – `{object}` - 
-   */
-  public getMatching(roomid: any, startDate: any, endDate: any, numberOfGuests: any, lowPrice: any = {}, hightPrice: any = {}, requiredRooms: any, customHeaders?: Function): Observable<any> {
-    let _method: string = "POST";
-    let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
-    "/Rooms/getMatching";
-    let _routeParams: any = {};
-    let _postBody: any = {};
-    let _urlParams: any = {};
-    if (typeof roomid !== 'undefined' && roomid !== null) _urlParams.roomid = roomid;
-    if (typeof startDate !== 'undefined' && startDate !== null) _urlParams.startDate = startDate;
-    if (typeof endDate !== 'undefined' && endDate !== null) _urlParams.endDate = endDate;
-    if (typeof numberOfGuests !== 'undefined' && numberOfGuests !== null) _urlParams.numberOfGuests = numberOfGuests;
-    if (typeof lowPrice !== 'undefined' && lowPrice !== null) _urlParams.lowPrice = lowPrice;
-    if (typeof hightPrice !== 'undefined' && hightPrice !== null) _urlParams.hightPrice = hightPrice;
-    if (typeof requiredRooms !== 'undefined' && requiredRooms !== null) _urlParams.requiredRooms = requiredRooms;
-    let result = this.request(_method, _url, _routeParams, _urlParams, _postBody, null, customHeaders);
-    return result;
-  }
-
-  /**
-   * Creates a new instance in datePrices of this model.
-   *
-   * @param {any} id Room id
+   * @param {any} id QuickFlightReservation id
    *
    * @param {object} data Request data.
    *
@@ -363,13 +316,13 @@ export class RoomApi extends BaseLoopBackApi {
    *
    * <em>
    * (The remote method definition does not provide any description.
-   * This usually means the response is a `Room` object.)
+   * This usually means the response is a `QuickFlightReservation` object.)
    * </em>
    */
-  public createManyDatePrices(id: any, data: any[] = [], customHeaders?: Function): Observable<any> {
+  public createManyMFlightReservations(id: any, data: any[] = [], customHeaders?: Function): Observable<any> {
     let _method: string = "POST";
     let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
-    "/Rooms/:id/datePrices";
+    "/QuickFlightReservations/:id/mFlightReservations";
     let _routeParams: any = {
       id: id
     };
@@ -383,9 +336,9 @@ export class RoomApi extends BaseLoopBackApi {
 
   /**
    * The name of the model represented by this $resource,
-   * i.e. `Room`.
+   * i.e. `QuickFlightReservation`.
    */
   public getModelName() {
-    return "Room";
+    return "QuickFlightReservation";
   }
 }

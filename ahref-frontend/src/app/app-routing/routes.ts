@@ -22,8 +22,6 @@ import {FlightDetailProfileComponent} from '../flight-detail-profile/flight-deta
 import {FlightSectionFilteredComponent} from '../flight-section-filtered/flight-section-filtered.component';
 import {SeatsComponent} from '../seats/seats.component';
 import {MakeCarReservationComponent} from '../make-car-reservation/make-car-reservation.component';
-import {AdditionalServiceDetailsComponent} from "../additional-service-details/additional-service-details.component";
-import {RoomReservationSectionComponent} from "../room-reservation-section/room-reservation-section.component";
 import {PassengerInfoProfileComponent} from '../passenger-info-profile/passenger-info-profile.component';
 import {PassengerInfoComponent} from '../passenger-info/passenger-info.component';
 import {UsersDetailComponent} from '../users-detail/users-detail.component';
@@ -35,6 +33,7 @@ import {FlightInviteProfileComponent} from '../flight-invite-profile/flight-invi
 import {AdditionalServiceDetailsComponent} from '../additional-service-details/additional-service-details.component';
 import {RoomReservationSectionComponent} from '../room-reservation-section/room-reservation-section.component';
 import {CarOfRacComponent} from '../car-of-rac/car-of-rac.component';
+import {QuickFlightSectionComponent} from '../quick-flight-section/quick-flight-section.component';
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent},
@@ -70,6 +69,8 @@ export const routes: Routes = [
   { path: 'friends', component: FriendsListComponent },
   { path: 'requests', component: FriendsListRequestsComponent },
   { path: 'flightinvite/:id', component: FlightInviteComponent },
+  { path: 'quickflightinvite/:quickId', component: FlightInviteComponent},
   { path: 'flightinvite/:flight/:id', component: FlightInviteProfileComponent },
+  { path: 'quickflight', component: QuickFlightSectionComponent},
   { path: '', redirectTo: '/home', pathMatch: 'full' }
 ];

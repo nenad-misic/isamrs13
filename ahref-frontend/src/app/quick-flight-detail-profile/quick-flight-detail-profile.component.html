@@ -1,0 +1,52 @@
+<mat-card *ngIf="flight">
+  <mat-card-title>{{flight.id}}</mat-card-title>
+  <hr>
+  <mat-card-content>
+    <h3>ID: </h3>
+    <p>{{flight.id}}</p>
+    <h3>Length: </h3>
+    <p>{{flight.length}}</p>
+    <h3>Seats: </h3>
+    <p>{{noSeats}}</p>
+    <h3>Rating: </h3>
+    <p>{{flight.rating}}</p>
+    <h3>Destinations: </h3>
+    <p>{{flight.startDestination.name}} - {{flight.endDestination.name}}</p>
+    <h3>Date: </h3>
+    <p>{{flight.startTime}} - {{flight.endTime}}</p>
+  </mat-card-content>
+</mat-card>
+
+<mat-card *ngIf="flight">
+  <mat-card-title>{{flight.id}}</mat-card-title>
+  <form novalidate>
+    <mat-card-content fxLayout="column">
+      <mat-form-field>
+        <input matInput type="number" required placeholder="Price" [(ngModel)]="flight.ticketPrice" name="price">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput  required placeholder="Start time" [(ngModel)]="startDate" name="starttime">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput required placeholder="End time" [(ngModel)]="endDate" name="endtime">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput type="number" required placeholder="Length" [(ngModel)]="flight.length" name="length">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput required placeholder="Start Destination" [(ngModel)]="flight.startDestination.name" name="startDest">
+      </mat-form-field>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button (click)="goBack()">Back</button>
+      <button mat-button *ngIf="!readOnly" (click)="onSaveClick()">Save</button>
+      <button mat-button *ngIf="!readOnly" (click)="onDeleteClick()">Delete</button>
+      <button *ngIf="reserveBul" mat-button [routerLink]="['/seats', flight.id]">Avaliable seats</button>
+    </mat-card-actions>
+  </form>
+</mat-card>
+
+
+<div [hidden]="flight" class="mat-spinner-container">
+  <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
+</div>

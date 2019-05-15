@@ -1,8 +1,15 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {Flight, MFlightReservation, Passenger, Seat} from '../shared/sdk/models';
+import {Flight, MFlightReservation, Passenger, QuickFlightReservation, Seat} from '../shared/sdk/models';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
-import {AirlineApi, FlightApi, LoggedUserApi, MFlightReservationApi, PassengerApi} from '../shared/sdk/services/custom';
+import {
+  AirlineApi,
+  FlightApi,
+  LoggedUserApi,
+  MFlightReservationApi,
+  PassengerApi,
+  QuickFlightReservationApi
+} from '../shared/sdk/services/custom';
 import {routes} from '../app-routing/routes';
 
 @Component({
@@ -21,6 +28,7 @@ export class SeatsComponent implements OnInit {
   rows: number[];
   cols: number[];
   msg: string;
+  readType: boolean;
 
   constructor(private route: ActivatedRoute,
               private location: Location,
@@ -29,9 +37,13 @@ export class SeatsComponent implements OnInit {
               private reserve: MFlightReservationApi,
               private userApi: LoggedUserApi,
               private passApi: PassengerApi,
+              private quickApi: QuickFlightReservationApi,
               @Inject('baseURL') private baseURL) { }
 
   ngOnInit() {
+
+    this.readType = this.userApi.getCachedCurrent().type == 'regUser';
+
 
     const id = this.route.snapshot.params['id'];
     this.flightApi.findById(id, {include : 'seats'}).subscribe((flight: Flight) => {
@@ -115,5 +127,39 @@ export class SeatsComponent implements OnInit {
 
     }
 
+  }
+
+  reserveSeatsAdmin(){
+    const reservations = [];
+    let quick = new QuickFlightReservation();
+    this.quickApi.create(quick).subscribe((qres : QuickFlightReservation)=>{
+
+      qres.mFlightReservations = [];
+      for(let i=0;i < this.send.length; i++){
+
+        const flightrez = new MFlightReservation();
+        flightrez.flightId = this.route.snapshot.params['id'];
+        flightrez.seatId = this.send[i].id;
+        flightrez.userId = this.userApi.getCachedCurrent().id;
+
+        const pasn = new Passenger();
+        pasn.name = 'a'+i;
+        pasn.city = 'a'+i;
+        pasn.telephone = '1111';
+        pasn.passport = '1111';
+        pasn.taken = false;
+
+        this.passApi.create(pasn).subscribe((p:Passenger)=> {
+
+          flightrez.passengerId = p.id;
+          this.quickApi.createMFlightReservations(qres.id,flightrez).subscribe((f:MFlightReservation)=>{
+            qres.mFlightReservations.push(f);
+          });
+        });
+      }
+      console.log(qres);
+      this.quickApi.updateAttributes(qres.id,qres).subscribe(()=> console.log('Updated'));
+
+    });
   }
 }
