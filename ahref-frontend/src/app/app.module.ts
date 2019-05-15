@@ -94,6 +94,7 @@ import { MyReservationsComponent } from './my-reservations/my-reservations.compo
 import { CarReservationActionsComponent } from './car-reservation-actions/car-reservation-actions.component';
 import { RoomReservationActionsComponent } from './room-reservation-actions/room-reservation-actions.component';
 import { SeatReservationActionsComponent } from './seat-reservation-actions/seat-reservation-actions.component';
+import { QuickRoomAddFormComponent } from './quick-room-add-form/quick-room-add-form.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -159,7 +160,8 @@ import { SeatReservationActionsComponent } from './seat-reservation-actions/seat
     MyReservationsComponent,
     CarReservationActionsComponent,
     RoomReservationActionsComponent,
-    SeatReservationActionsComponent
+    SeatReservationActionsComponent,
+    QuickRoomAddFormComponent
   ],
   imports: [
     BrowserModule,

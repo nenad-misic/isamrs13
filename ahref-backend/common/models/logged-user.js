@@ -31,6 +31,25 @@ module.exports = function(Loggeduser) {
     });
   });
 
+  Loggeduser.remoteMethod('createQuickRoomReservation', {
+    accepts: [
+      {arg: 'userId', type: 'string', required: true},
+      {arg: 'quickRoomReservationId', type:  'string', required: true}
+    ],
+    http: {path: '/getMatching', verb: 'post'},
+    returns: {type: 'object', arg: 'retval'},
+  })
+
+  Loggeduser.createQuickRoomreservation = function(userId, quickRoomReservationId) {
+    var models = Loggeduser.app.models;
+
+    Loggeduser.findOne({id: userId}).then((user) => {
+      models.QuickRoomReservation.findOne({id: quickRoomReservationId}).then((quickReservation) => {
+      })
+    })
+
+  }
+
   
 function doCarReservation(Mcarreservation, ctx, model, next, errorCallback) {
     // models
@@ -245,7 +264,9 @@ function doCarReservation(Mcarreservation, ctx, model, next, errorCallback) {
               };
 
               ctx.result.verify(options, function(err, response, next) {
-                if (err) return next(err);
+                if (err)  {
+                    return next(err);
+                }
 
                 console.log('> verification email sent:', response);
               });

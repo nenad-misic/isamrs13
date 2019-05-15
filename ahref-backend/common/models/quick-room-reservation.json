@@ -1,0 +1,25 @@
+{
+  "name": "QuickRoomReservation",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {},
+  "validations": [],
+  "relations": {
+    "mRoomReservation": {
+      "type": "belongsTo",
+      "model": "mRoomReservation",
+      "foreignKey": ""
+    }
+  },
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW"
+    }],
+  "methods": {}
+}
