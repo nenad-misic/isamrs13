@@ -1,3 +1,10 @@
+<h1>Quick Room Reservations</h1>
+<mat-list *ngFor="let reserve of quickReservations">
+  <mat-list-item (click)="makeReservationClicked(reserve)">{{reserve.mRoomReservation.startDate}}; {{reserve.mRoomReservation.endDate}}
+    {{reserve.mRoomReservation.roomId}}; <button mat-button (click)="makeReservationClicked(reserve)">Reserve</button>
+  </mat-list-item>
+</mat-list>
+<br>
 <app-room-reservation-search-form [hotelId]="hotelId" *ngIf="hotelId"></app-room-reservation-search-form>
 <mat-card *ngIf="aservices">
   <mat-card-content>

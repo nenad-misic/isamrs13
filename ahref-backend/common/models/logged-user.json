@@ -128,6 +128,13 @@
       "principalId": "$everyone",
       "permission": "ALLOW",
       "property": "__destroyById__mFlightReservations"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "createQuickRoomReservation"
     }
   ],
   "methods": {}

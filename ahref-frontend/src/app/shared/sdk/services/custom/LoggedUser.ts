@@ -1092,6 +1092,38 @@ export class LoggedUserApi extends BaseLoopBackApi {
   }
 
   /**
+   * <em>
+         * (The remote method definition does not provide any description.)
+         * </em>
+   *
+   * @param {object} data Request data.
+   *
+   *  - `userId` – `{string}` - 
+   *
+   *  - `quickRoomReservationId` – `{string}` - 
+   *
+   * @returns {object} An empty reference that will be
+   *   populated with the actual data once the response is returned
+   *   from the server.
+   *
+   * Data properties:
+   *
+   *  - `mRoomReservation` – `{object}` - 
+   */
+  public createQuickRoomReservation(userId: any, quickRoomReservationId: any, customHeaders?: Function): Observable<any> {
+    let _method: string = "POST";
+    let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
+    "/LoggedUsers/quickReservation";
+    let _routeParams: any = {};
+    let _postBody: any = {};
+    let _urlParams: any = {};
+    if (typeof userId !== 'undefined' && userId !== null) _urlParams.userId = userId;
+    if (typeof quickRoomReservationId !== 'undefined' && quickRoomReservationId !== null) _urlParams.quickRoomReservationId = quickRoomReservationId;
+    let result = this.request(_method, _url, _routeParams, _urlParams, _postBody, null, customHeaders);
+    return result;
+  }
+
+  /**
    * Creates a new instance in airline of this model.
    *
    * @param {any} id LoggedUser id

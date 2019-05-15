@@ -1,7 +1,16 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Location} from "@angular/common";
-import {Hotel, HotelApi, HPriceList, HPriceListApi, HPriceListItem, LoopBackConfig, Room} from "../shared/sdk";
+import {
+  Hotel,
+  HotelApi,
+  HPriceList,
+  HPriceListApi,
+  HPriceListItem,
+  LoopBackConfig,
+  QuickRoomReservation,
+  Room
+} from "../shared/sdk";
 import {API_VERSION} from "../shared/baseurl";
 import {RoomDataServiceService} from "../services/room-data-service.service";
 import {RoomReservationDataService} from "../services/room-reservation-data.service";
@@ -17,6 +26,7 @@ export class RoomReservationSectionComponent implements OnInit {
   hotelId: string;
   rooms: Room[] = [];
   info: RoomReservationInfo;
+  quickReservations: QuickRoomReservation[] = [];
 
   aservices: HPriceListItem[] = [];
   chosenAservices: HPriceListItem[] = [];
@@ -26,6 +36,7 @@ export class RoomReservationSectionComponent implements OnInit {
               private route: ActivatedRoute,
               private location: Location,
               private data: RoomDataServiceService,
+              private router: Router,
               private roomReservationData: RoomReservationDataService,
               @Inject('baseURL') private baseURL,) {
     LoopBackConfig.setBaseURL(baseURL);
@@ -35,7 +46,8 @@ export class RoomReservationSectionComponent implements OnInit {
   ngOnInit() {
     this.hotelId = this.route.snapshot.params['hotelId'];
     this.data.currentSearchParams.subscribe((r: Room[]) => this.rooms = r);
-    this.hotelApi.findById(this.hotelId, {include: 'priceList'}).subscribe((hotel: Hotel) => {
+    this.hotelApi.findById(this.hotelId, {include: [{quickRoomReservations: 'mRoomReservation'}, 'priceList']}).subscribe((hotel: Hotel) => {
+      this.quickReservations = hotel.quickRoomReservations;
       this.aservicesApi.findById(hotel.priceList.id, {include: 'priceListItems'}).subscribe((items: HPriceList) => {
         this.aservices = items.priceListItems;
       })
@@ -57,5 +69,9 @@ export class RoomReservationSectionComponent implements OnInit {
   onRoomClicked() {
     this.info.additionalServices = JSON.parse(JSON.stringify(this.aservices));
     this.roomReservationData.changeSearchParams(this.info);
+  }
+
+  makeReservationClicked(quickReservation) {
+    this.router.navigateByUrl('quickroomdetails/'+quickReservation.id);
   }
 }
