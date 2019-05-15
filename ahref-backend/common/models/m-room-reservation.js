@@ -8,6 +8,21 @@ module.exports = function(Mroomreservation) {
       next();
     });
 
+    Mroomreservation.afterRemote('create', function(ctx, modelInstance, next) {
+        var models = Mroomreservation.app.models;
+        models.Room.findOne({where: {id: modelInstance.roomId}}).then((room)=>{
+            models.Hotel.findOne({where: {id: room.hotelId}}).then((hotel) => {
+                /*models.Hotel.__create__quickRoomReservations(hotel.id, {mRoomReservationId: modelInstance.id}).then(()=>{
+                    next();
+                })*/
+                
+                models.QuickRoomReservation.create({mRoomReservationId: modelInstance.id, hotelId: hotel.id}).then((quickReservation) => {
+                    next();
+                })
+            })
+        })
+    })
+
     Mroomreservation.beforeRemote('create',
         function(ctx, model, next) {
             flag = true;

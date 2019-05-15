@@ -32,6 +32,8 @@ import { SSeat } from '../../models/SSeat';
 import { Friendship } from '../../models/Friendship';
 import { Passenger } from '../../models/Passenger';
 import { QuickCarReservation } from '../../models/QuickCarReservation';
+import { QuickFlightReservation } from '../../models/QuickFlightReservation';
+import { QuickRoomReservation } from '../../models/QuickRoomReservation';
 
 export interface Models { [name: string]: any }
 
@@ -71,6 +73,8 @@ export class SDKModels {
     Friendship: Friendship,
     Passenger: Passenger,
     QuickCarReservation: QuickCarReservation,
+    QuickFlightReservation: QuickFlightReservation,
+    QuickRoomReservation: QuickRoomReservation,
     
   };
 

@@ -1523,6 +1523,9 @@ export class LoggedUserApi extends BaseLoopBackApi {
    *  - `qrid` – `{string}` - 
    *
    *  - `mcrid` – `{string}` - 
+   *  - `userId` – `{string}` - 
+   *
+   *  - `quickRoomReservationId` – `{string}` - 
    *
    * @returns {object} An empty reference that will be
    *   populated with the actual data once the response is returned
@@ -1542,6 +1545,19 @@ export class LoggedUserApi extends BaseLoopBackApi {
     if (typeof luid !== 'undefined' && luid !== null) _urlParams.luid = luid;
     if (typeof qrid !== 'undefined' && qrid !== null) _urlParams.qrid = qrid;
     if (typeof mcrid !== 'undefined' && mcrid !== null) _urlParams.mcrid = mcrid;
+    let result = this.request(_method, _url, _routeParams, _urlParams, _postBody, null, customHeaders);
+    return result;
+  }
+
+  public createQuickRoomReservation(userId: any, quickRoomReservationId: any, customHeaders?: Function): Observable<any> {
+    let _method: string = "POST";
+    let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
+    "/LoggedUsers/quickReservation";
+    let _routeParams: any = {};
+    let _postBody: any = {};
+    let _urlParams: any = {};
+    if (typeof userId !== 'undefined' && userId !== null) _urlParams.userId = userId;
+    if (typeof quickRoomReservationId !== 'undefined' && quickRoomReservationId !== null) _urlParams.quickRoomReservationId = quickRoomReservationId;
     let result = this.request(_method, _url, _routeParams, _urlParams, _postBody, null, customHeaders);
     return result;
   }

@@ -43,11 +43,7 @@ export class AirlineDetailProfileComponent implements OnInit {
       this.profile_new.rating = this.profile.rating;
       this.profile_new.numOfRates = this.profile.numOfRates;
 
-        if (this.profile.loggedUserId === this.userApi.getCachedCurrent().id) {
-          this.readOnly = false;
-        } else {
-          this.readOnly = true;
-        }
+        this.readOnly = !(this.userApi.getCachedCurrent() != null && this.profile.loggedUserId === this.userApi.getCachedCurrent().id);
       }
     );
 

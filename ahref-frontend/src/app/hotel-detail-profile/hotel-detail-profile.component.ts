@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Location} from '@angular/common';
 
 import { API_VERSION } from '../shared/baseurl';
-import {HotelApi, LoggedUserApi, LoopBackConfig, Room, RoomApi} from '../shared/sdk';
+import {HotelApi, LoggedUserApi, LoopBackConfig, QuickRoomReservation, Room, RoomApi} from '../shared/sdk';
 import { Hotel } from '../shared/sdk/models';
 import {ToastrService} from "ngx-toastr";
 @Component({
@@ -72,4 +72,5 @@ export class HotelDetailProfileComponent implements OnInit {
   makeReservationClicked() {
     this.router.navigateByUrl('roomreservations/' + this.profile_new.id);
   }
+
 }

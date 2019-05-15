@@ -18,6 +18,7 @@ export interface MFlightReservationInterface {
   "userId"?: any;
   "loggedUserId"?: any;
   "passengerId"?: any;
+  "quickFlightReservationId"?: any;
   flight?: Flight;
   seat?: Seat;
   user?: LoggedUser;
@@ -35,6 +36,7 @@ export class MFlightReservation implements MFlightReservationInterface {
   "userId": any;
   "loggedUserId": any;
   "passengerId": any;
+  "quickFlightReservationId": any;
   flight: Flight;
   seat: Seat;
   user: LoggedUser;
@@ -113,6 +115,10 @@ export class MFlightReservation implements MFlightReservationInterface {
         },
         "passengerId": {
           name: 'passengerId',
+          type: 'any'
+        },
+        "quickFlightReservationId": {
+          name: 'quickFlightReservationId',
           type: 'any'
         },
       },

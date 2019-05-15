@@ -1,5 +1,5 @@
 <div class="form-container">
-  <form novalidate (ngSubmit)="doSearch()">
+  <form (ngSubmit)="doSearch()">
 
     <mat-form-field>
       <input matInput [(ngModel)]="startDest" placeholder="Start Destination" name="city">
@@ -10,11 +10,11 @@
     </mat-form-field>
 
     <mat-form-field>
-      <input type="date" [(ngModel)]="startDate" placeholder="Start Date" name="country">
+      <input  matInput type="date" [(ngModel)]="startDate" placeholder="Start Date" name="country">
     </mat-form-field>
 
     <mat-form-field>
-      <input type="date" [(ngModel)]="endDate" placeholder="End Date" name="country">
+      <input  matInput type="date" [(ngModel)]="endDate" placeholder="End Date" name="country">
     </mat-form-field>
 
     <button mat-button>SEARCH FLIGHTS</button>

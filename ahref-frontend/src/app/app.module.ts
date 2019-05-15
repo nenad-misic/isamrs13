@@ -88,6 +88,10 @@ import {BarRatingModule} from 'ngx-bar-rating';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AgmCoreModule } from '@agm/core';
+import { QuickFlightSectionComponent } from './quick-flight-section/quick-flight-section.component';
+import { QuickFlightProfileComponent} from './quick-flight-profile/quick-flight-profile.component';
+import { QuickFlightDetailProfileComponent } from './quick-flight-detail-profile/quick-flight-detail-profile.component';
+
 import { MakeRoomReservationComponent } from './make-room-reservation/make-room-reservation.component';
 import { QuickHotelSectionComponent } from './quick-hotel-section/quick-hotel-section.component';
 import { MyReservationsComponent } from './my-reservations/my-reservations.component';
@@ -97,6 +101,8 @@ import { SeatReservationActionsComponent } from './seat-reservation-actions/seat
 import { QuickCarSectionComponent } from './quick-car-section/quick-car-section.component';
 import { QuickCarSectionViewComponent } from './quick-car-section-view/quick-car-section-view.component';
 import { QuickCarProfileComponent } from './quick-car-profile/quick-car-profile.component';
+import { QuickRoomAddFormComponent } from './quick-room-add-form/quick-room-add-form.component';
+import { QuickRoomDetailsComponent } from './quick-room-details/quick-room-details.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -157,6 +163,9 @@ import { QuickCarProfileComponent } from './quick-car-profile/quick-car-profile.
     FlightInviteProfileComponent,
     CarOfRacComponent,
     RoomSearchComponent,
+    QuickFlightSectionComponent,
+    QuickFlightProfileComponent,
+    QuickFlightDetailProfileComponent,
     MakeRoomReservationComponent,
     QuickHotelSectionComponent,
     MyReservationsComponent,
@@ -165,7 +174,9 @@ import { QuickCarProfileComponent } from './quick-car-profile/quick-car-profile.
     SeatReservationActionsComponent,
     QuickCarSectionComponent,
     QuickCarSectionViewComponent,
-    QuickCarProfileComponent
+    QuickCarProfileComponent,
+    QuickRoomAddFormComponent,
+    QuickRoomDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -174,10 +185,8 @@ import { QuickCarProfileComponent } from './quick-car-profile/quick-car-profile.
     MatCardModule,
     MatGridListModule,
     MatButtonModule,
-    MatFormFieldModule,
     MatOptionModule,
     MatSelectModule,
-    MatInputModule,
     MatDialogModule,
     MatListModule,
     AppRoutingModule,

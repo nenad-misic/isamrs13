@@ -126,6 +126,33 @@ module.exports = function(Loggeduser) {
       next(e);
     });
   });
+
+  Loggeduser.remoteMethod('createQuickRoomReservation', {
+    accepts: [
+      {arg: 'userId', type: 'string', required: true},
+      {arg: 'quickRoomReservationId', type:  'string', required: true}
+    ],
+    http: {path: '/quickReservation', verb: 'post'},
+    returns: {type: 'object', arg: 'mRoomReservation'},
+  })
+
+  Loggeduser.createQuickRoomReservation = function(userId, quickRoomReservationId, cb) {
+    var models = Loggeduser.app.models;
+
+    Loggeduser.findOne({id: userId}).then((user) => {
+      models.QuickRoomReservation.findOne({id: quickRoomReservationId}).then((quickReservation) => {
+        models.MRoomReservation.findOne({id: quickReservation.mRoomReservationId}).then((reservation) => {
+          var r = reservation;models.MRoomReservation.updateAll({id: r.id}, {loggedUserId: userId}).then(() => {
+            models.QuickRoomReservation.deleteById(quickReservation.id).then(() => {
+              cb();
+            })
+          })
+        })
+      })
+    })
+  }
+
+  
 function doCarReservation(Mcarreservation, ctx, model, next, errorCallback) {
     // models
     var sqlCarReservation = Mcarreservation.app.models.CarReservation;
@@ -347,7 +374,9 @@ function doCarReservation(Mcarreservation, ctx, model, next, errorCallback) {
               };
 
               ctx.result.verify(options, function(err, response, next) {
-                if (err) return next(err);
+                if (err)  {
+                    return next(err);
+                }
 
                 console.log('> verification email sent:', response);
               });

@@ -134,8 +134,16 @@
       "principalType": "ROLE",
       "principalId": "$everyone",
       "permission": "ALLOW",
-      "property": "bindQuick"
+      "property": "bindQuick",
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "createQuickRoomReservation"
     }
+      
   ],
   "methods": {}
 }

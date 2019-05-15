@@ -2,7 +2,7 @@
 
 var flag = true;
 module.exports = function(Mflightreservation) {
-	
+	/*
 Mflightreservation.beforeRemote('create',
     function(ctx, model, next) {
       flag = true;
@@ -65,7 +65,7 @@ Mflightreservation.afterRemote('replaceById',
 	  });
 		next();
 	});
-	
+	*/
 };
 
 

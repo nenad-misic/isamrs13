@@ -160,5 +160,13 @@
   "quickCarReservation": {
     "dataSource": "MongoDB",
     "public": true
+  },
+  "QuickFlightReservation": {
+    "dataSource": "MongoDB",
+    "public": true
+  },
+  "QuickRoomReservation": {
+    "dataSource": "MongoDB",
+    "public": true
   }
 }

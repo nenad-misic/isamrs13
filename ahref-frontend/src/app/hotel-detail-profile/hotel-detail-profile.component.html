@@ -44,7 +44,8 @@
     <mat-card-actions>
       <button mat-button (click)="goBack()">Back</button>
       <button mat-button (click)="addServClicked()" >Additinal services</button>
-      <button mat-button (click)="makeReservationClicked()">Make reservation</button>
+      <button mat-button *ngIf="readOnly" (click)="makeReservationClicked()">Make reservation</button>
+      <button mat-button *ngIf="!readOnly" [routerLink]="['/quickreservations/:'+profile_new.id]">Quick reservations</button>
       <button mat-button (click)="onSaveClick()">Save changes</button>
       <button mat-button (click)="onDeleteClick()">Delete hotel</button>
     </mat-card-actions>
@@ -60,7 +61,6 @@
       </mat-grid-list>
     </mat-card-content>
   </mat-card>
-
 </mat-card>
 
 <div [hidden]="profile_new" class="mat-spinner-container">

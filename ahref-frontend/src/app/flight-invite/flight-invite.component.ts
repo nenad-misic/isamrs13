@@ -1,6 +1,13 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {Flight, Friendship, LoggedUser} from '../shared/sdk/models';
-import {FlightApi, FriendshipApi, LoggedUserApi} from '../shared/sdk/services/custom';
+import {Flight, Friendship, LoggedUser, Passenger, QuickFlightReservation} from '../shared/sdk/models';
+import {
+  FlightApi,
+  FriendshipApi,
+  LoggedUserApi,
+  MFlightReservationApi,
+  PassengerApi,
+  QuickFlightReservationApi
+} from '../shared/sdk/services/custom';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 import {LoopBackConfig} from '../shared/sdk';
@@ -19,6 +26,9 @@ export class FlightInviteComponent implements OnInit {
               private location: Location,
               private friendship: FriendshipApi,
               private flightApi: FlightApi,
+              private quickRes: QuickFlightReservationApi,
+              private resApi: MFlightReservationApi,
+              private passApi: PassengerApi,
               @Inject('baseURL') private baseURL) {
     LoopBackConfig.setBaseURL(baseURL);
     LoopBackConfig.setApiVersion(API_VERSION);
@@ -27,9 +37,12 @@ export class FlightInviteComponent implements OnInit {
   ngOnInit() {
 
     const id = this.route.snapshot.params['id'];
+
     this.flightApi.findOne({where: {id:id}}).subscribe((flight: Flight)=>{
       this.flight = JSON.parse(JSON.stringify(flight));
     });
+
+
 
     this.users = [];
     this.friendship.find({include: ['startUser','endUser']}).subscribe((searchParam: Friendship[])=>{
