@@ -36,18 +36,24 @@ module.exports = function(Loggeduser) {
       {arg: 'userId', type: 'string', required: true},
       {arg: 'quickRoomReservationId', type:  'string', required: true}
     ],
-    http: {path: '/getMatching', verb: 'post'},
-    returns: {type: 'object', arg: 'retval'},
+    http: {path: '/quickReservation', verb: 'post'},
+    returns: {type: 'object', arg: 'mRoomReservation'},
   })
 
-  Loggeduser.createQuickRoomreservation = function(userId, quickRoomReservationId) {
+  Loggeduser.createQuickRoomReservation = function(userId, quickRoomReservationId, cb) {
     var models = Loggeduser.app.models;
 
     Loggeduser.findOne({id: userId}).then((user) => {
       models.QuickRoomReservation.findOne({id: quickRoomReservationId}).then((quickReservation) => {
+        models.MRoomReservation.findOne({id: quickReservation.mRoomReservationId}).then((reservation) => {
+          var r = reservation;models.MRoomReservation.updateAll({id: r.id}, {loggedUserId: userId}).then(() => {
+            models.QuickRoomReservation.deleteById(quickReservation.id).then(() => {
+              cb();
+            })
+          })
+        })
       })
     })
-
   }
 
   
