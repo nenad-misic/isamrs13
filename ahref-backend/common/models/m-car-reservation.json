@@ -24,6 +24,11 @@
       "type": "number",
       "required": true,
       "default": -1
+    },
+    "sid": {
+      "type": "number",
+      "required": true,
+      "default": -1
     }
   },
   "validations": [],

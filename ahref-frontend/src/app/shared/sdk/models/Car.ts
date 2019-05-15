@@ -1,4 +1,7 @@
 /* tslint:disable */
+import {
+  QuickCarReservation
+} from '../index';
 
 declare var Object: any;
 export interface CarInterface {
@@ -13,6 +16,7 @@ export interface CarInterface {
   "carType": string;
   "id"?: any;
   "rACServiceId"?: any;
+  quickCarReservations?: QuickCarReservation[];
 }
 
 export class Car implements CarInterface {
@@ -27,6 +31,7 @@ export class Car implements CarInterface {
   "carType": string;
   "id": any;
   "rACServiceId": any;
+  quickCarReservations: QuickCarReservation[];
   constructor(data?: CarInterface) {
     Object.assign(this, data);
   }
@@ -108,6 +113,14 @@ export class Car implements CarInterface {
         },
       },
       relations: {
+        quickCarReservations: {
+          name: 'quickCarReservations',
+          type: 'QuickCarReservation[]',
+          model: 'QuickCarReservation',
+          relationType: 'hasMany',
+                  keyFrom: 'id',
+          keyTo: 'carId'
+        },
       }
     }
   }

@@ -1,6 +1,8 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
-import {MCarReservation} from '../shared/sdk/models';
+import {MCarReservation, MRoomReservation} from '../shared/sdk/models';
+import {LoggedUserApi} from '../shared/sdk/services/custom';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-room-reservation-actions',
@@ -12,7 +14,9 @@ export class RoomReservationActionsComponent implements OnInit {
   cancelable: boolean;
   constructor(
     public dialogRef: MatDialogRef<RoomReservationActionsComponent>,
-    @Inject(MAT_DIALOG_DATA) public res: MCarReservation) {}
+    @Inject(MAT_DIALOG_DATA) public res: MRoomReservation,
+    private loggedUserApi: LoggedUserApi,
+    private toastr: ToastrService) {}
 
 
   ngOnInit() {
@@ -23,8 +27,16 @@ export class RoomReservationActionsComponent implements OnInit {
     }
   }
 
+
   onCancelClick() {
-    alert('Canceling room reservation');
+    if (this.cancelable) {
+      this.loggedUserApi.destroyByIdMRoomReservations(this.loggedUserApi.getCachedCurrent().id, this.res.id).subscribe((success) => {
+        this.toastr.success('Room reservation cancelled successfully', 'Reservation cancelled');
+        this.dialogRef.close(this.res.id);
+      }, (err) => {
+        this.toastr.error('Reservation couldn\'t be cancelled');
+      });
+    }
   }
 
 

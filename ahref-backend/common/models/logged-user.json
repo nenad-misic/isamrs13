@@ -57,12 +57,12 @@
     },
     "mRoomReservations": {
       "type": "hasMany",
-      "model": "mRoomReservations",
+      "model": "mRoomReservation",
       "foreignKey": ""
     },
     "mFlightReservations": {
       "type": "hasMany",
-      "model": "mFlightReservations",
+      "model": "mFlightReservation",
       "foreignKey": ""
     }
   },
@@ -134,8 +134,16 @@
       "principalType": "ROLE",
       "principalId": "$everyone",
       "permission": "ALLOW",
+      "property": "bindQuick",
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
       "property": "createQuickRoomReservation"
     }
+      
   ],
   "methods": {}
 }

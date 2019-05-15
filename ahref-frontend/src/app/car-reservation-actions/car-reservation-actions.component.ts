@@ -30,7 +30,7 @@ export class CarReservationActionsComponent implements OnInit {
   onCancelClick() {
     if (this.cancelable) {
       this.loggedUserApi.destroyByIdMCarReservations(this.loggedUserApi.getCachedCurrent().id, this.res.id).subscribe((success) => {
-        this.toastr.success('Refresh the page, please.', 'Reservation cancelled');
+        this.toastr.success('Car reservation cancelled successfully', 'Reservation cancelled');
         this.dialogRef.close(this.res.id);
       }, (err) => {
         this.toastr.error('Reservation couldn\'t be cancelled');

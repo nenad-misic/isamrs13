@@ -5,8 +5,8 @@
   <mat-card-content>
     <mat-grid-list cols="2">
       <mat-grid-tile *ngFor="let user of users" [routerLink]="['/profiles',user.id]">
-        <app-users-profile [profile]="user"></app-users-profile>
-        <button mat-button (click)="deleteUser(user.id)">REMOVE A FRIEND</button>
+          <app-users-profile [profile]="user"></app-users-profile>
+          <button mat-button (click)="deleteUser(user.id)">REMOVE A FRIEND</button>
       </mat-grid-tile>
     </mat-grid-list>
   </mat-card-content>

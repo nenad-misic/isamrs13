@@ -31,6 +31,7 @@ import { SFlight } from '../../models/SFlight';
 import { SSeat } from '../../models/SSeat';
 import { Friendship } from '../../models/Friendship';
 import { Passenger } from '../../models/Passenger';
+import { QuickCarReservation } from '../../models/QuickCarReservation';
 import { QuickFlightReservation } from '../../models/QuickFlightReservation';
 import { QuickRoomReservation } from '../../models/QuickRoomReservation';
 
@@ -71,6 +72,7 @@ export class SDKModels {
     SSeat: SSeat,
     Friendship: Friendship,
     Passenger: Passenger,
+    QuickCarReservation: QuickCarReservation,
     QuickFlightReservation: QuickFlightReservation,
     QuickRoomReservation: QuickRoomReservation,
     

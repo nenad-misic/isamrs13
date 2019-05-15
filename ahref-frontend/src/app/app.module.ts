@@ -98,6 +98,9 @@ import { MyReservationsComponent } from './my-reservations/my-reservations.compo
 import { CarReservationActionsComponent } from './car-reservation-actions/car-reservation-actions.component';
 import { RoomReservationActionsComponent } from './room-reservation-actions/room-reservation-actions.component';
 import { SeatReservationActionsComponent } from './seat-reservation-actions/seat-reservation-actions.component';
+import { QuickCarSectionComponent } from './quick-car-section/quick-car-section.component';
+import { QuickCarSectionViewComponent } from './quick-car-section-view/quick-car-section-view.component';
+import { QuickCarProfileComponent } from './quick-car-profile/quick-car-profile.component';
 import { QuickRoomAddFormComponent } from './quick-room-add-form/quick-room-add-form.component';
 import { QuickRoomDetailsComponent } from './quick-room-details/quick-room-details.component';
 @NgModule({
@@ -169,6 +172,9 @@ import { QuickRoomDetailsComponent } from './quick-room-details/quick-room-detai
     CarReservationActionsComponent,
     RoomReservationActionsComponent,
     SeatReservationActionsComponent,
+    QuickCarSectionComponent,
+    QuickCarSectionViewComponent,
+    QuickCarProfileComponent,
     QuickRoomAddFormComponent,
     QuickRoomDetailsComponent
   ],
@@ -205,6 +211,7 @@ import { QuickRoomDetailsComponent } from './quick-room-details/quick-room-detai
   entryComponents: [
     RentacarDetailProfileComponent,
     CarReservationActionsComponent,
+    RoomReservationActionsComponent,
     MyReservationsComponent
   ],
   providers: [

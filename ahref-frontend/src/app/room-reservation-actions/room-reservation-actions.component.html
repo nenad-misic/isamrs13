@@ -14,7 +14,7 @@
       <button mat-button (click)="onCancelClick()" disabled *ngIf="!cancelable">Cancel reservation</button>
       <button mat-button (click)="onCancelClick()" *ngIf="cancelable">Cancel reservation</button>
       <hr>
-      <p>room rating</p>
+      <p>Room rating</p>
       <bar-rating [(rate)]="res.roomRate" [max]="4" [theme]="'horizontal'" [showText]="true" [readOnly]="res.roomRate != -1"
                   [titles]="['Bad', 'Mediocre' , 'Good', 'Awesome']"></bar-rating>
       <hr>

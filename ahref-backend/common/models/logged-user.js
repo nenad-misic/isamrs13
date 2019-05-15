@@ -3,9 +3,40 @@ var config = require('../../server/config.json');
 var path = require('path');
 
 var flagCar = true;
+var flagCarDelete = true;
+var flagRoomDelete = true;
+var flagFlightDelete = true;
 var flagRoom = true;
 
+
 module.exports = function(Loggeduser) {
+
+  Loggeduser.bindQuick = function(luid, qrid, mcrid, cb) {
+    Loggeduser.findById(luid).then((user) => {
+      Loggeduser.app.models.quickCarReservation.findById(qrid).then((qr) => {
+        Loggeduser.app.models.MCarReservation.findById(mcrid).then((mr) => {
+          var mrc = mr;
+          Loggeduser.app.models.quickCarReservation.deleteById(qrid).then((del) => {
+            Loggeduser.app.models.MCarReservation.updateAll({id: mcrid}, {loggedUserId: luid}).then(() => {
+              cb(null, true);
+            });
+          })
+        })
+      })
+    });
+  };
+  
+  Loggeduser.remoteMethod('bindQuick', {
+    accepts: [
+      {arg: 'luid', type: 'string', required: true},
+      {arg: 'qrid', type: 'string', required: true},
+      {arg: 'mcrid', type: 'string', required: true},
+    ],
+    http: {path: '/bindQuick', verb: 'post'},
+    returns: {type: 'object', arg: 'retval'},
+  });
+
+
   Loggeduser.afterRemote('**', function(ctx, modelInstance, next)  {
     console.log('Loggeduser remote method: ' + ctx.method.name);
     next();
@@ -21,8 +52,73 @@ module.exports = function(Loggeduser) {
     });
   });
 
+  Loggeduser.beforeRemote('*.__destroyById__mCarReservations', function(ctx,model,next) {
+    flagCarDelete = true;
+    var Mcarreservation = Loggeduser.app.models.MCarReservation;
+    undoCarReservation(Mcarreservation, ctx, model, next, function(e) {
+      flagCarDelete = false;
+      next(e);
+    })
+    
+  });
+
+
+  function undoCarReservation(Mcarreservation, ctx, model, next, errorCallback) {
+    var sqlCarReservation = Mcarreservation.app.models.CarReservation;
+    Mcarreservation.findById(ctx.req.params.fk).then((obj) => {
+      console.log(obj);
+      if(obj){
+        sqlCarReservation.deleteById(obj.sid);
+        next();
+      }
+    })
+  }
+
+  Loggeduser.beforeRemote('*.__destroyById__mRoomReservations', function(ctx,model,next) {
+    flagRoomDelete = true;
+    var Mroomreservation = Loggeduser.app.models.MRoomReservation;
+    undoRoomReservation(Mroomreservation, ctx, model, next, function(e) {
+      flagRoomDelete = false;
+      next(e);
+    })
+    
+  });
+
+
+  function undoRoomReservation(Mroomreservation, ctx, model, next, errorCallback) {
+    var sqlRoomReservation = Mroomreservation.app.models.RoomReservation;
+    Mroomreservation.findById(ctx.req.params.fk).then((obj) => {
+      if(obj){
+        sqlRoomReservation.deleteById(obj.sid);
+        next();
+      }
+    })
+  }
+
+
+  Loggeduser.beforeRemote('*.__destroyById__mFlightReservations', function(ctx,model,next) {
+    flagFlightDelete = true;
+    var Mflightreservation = Loggeduser.app.models.MFlightReservation;
+    undoFlightReservation(Mflightreservation, ctx, model, next, function(e) {
+      flagFlightDelete = false;
+      next(e);
+    })
+    
+  });
+
+
+  function undoFlightReservation(Mflightreservation, ctx, model, next, errorCallback) {
+    var sqlFlightReservation = Mflightreservation.app.models.FlightReservation;
+    Mflightreservation.findById(ctx.req.params.fk).then((obj) => {
+      if(obj){
+        sqlFlightReservation.deleteById(obj.sid);
+        next();
+      }
+    })
+  }
+
   Loggeduser.beforeRemote('*.__create__mRoomReservations', function(ctx,model,next) {
-    console.log('here');
+    console.log('here in mroom');
     flagRoom = true;
     var Mroomreservation = Loggeduser.app.models.MRoomReservation;
     doRoomReservation(Mroomreservation, ctx, model, next, function(e) {
@@ -107,6 +203,13 @@ function doCarReservation(Mcarreservation, ctx, model, next, errorCallback) {
                 if (flagCar) {
                   sCar.findOne({where: {mongoId: ctx.req.body.carId}})
                     .then((car)=>{
+                      Mcarreservation.app.models.LoggedUser.findById(ctx.req.params.id).then((obj) =>
+                                {
+                                  console.log(obj);
+                                  obj.points = obj.points + 1;
+                                  console.log(obj);
+                                  Mcarreservation.app.models.LoggedUser.replaceById(obj.id, obj).then((o) => console.log(o));
+                                })
                       // create reservation
                       sqlCarReservation.create(
                         {
@@ -117,6 +220,7 @@ function doCarReservation(Mcarreservation, ctx, model, next, errorCallback) {
                         },
                         {transaction: tx},
                         function(err, cr) {
+                          ctx.req.body.sid = cr.id;
                           if (err && flagCar) {
                             tx.rollback(function(err) {
                               if (err && flagCar)  errorCallback(err);
@@ -161,17 +265,10 @@ function doCarReservation(Mcarreservation, ctx, model, next, errorCallback) {
                         data.forEach((element) => {
                             if (flagRoom) {
                                 // check if room is available during time period
-                                console.log(element);
                                 var start1 = element.startDate.getTime();
                                 var end1 = element.endDate.getTime();
                                 var start2 = new Date(ctx.req.body.startDate).getTime();
                                 var end2 = new Date(ctx.req.body.endDate).getTime();
-                                console.log({
-                                    start1: start1,
-                                    end1: end1,
-                                    start2: start2,
-                                    end2: end2
-                                });
                                 if ((start1 >= start2 && start1 <= end2) ||
                                     (start2 >= start1 && start2 <= end1)) {
                                     foundOne = true;
@@ -198,6 +295,11 @@ function doCarReservation(Mcarreservation, ctx, model, next, errorCallback) {
                         if (flagRoom) {
                             sRoom.findOne({where: {mongoId: ctx.req.body.roomId}}).then((room)=>{
                                 // create reservation
+                                Mroomreservation.app.models.LoggedUser.findById(ctx.req.params.id).then((obj) =>
+                                {
+                                  obj.points = obj.points + 1;
+                                  Mroomreservation.app.models.LoggedUser.replaceById(obj.id, obj).then((o) => console.log(o));
+                                })
                                 sqlRoomReservation.create(
                                   {
                                     timeStamp: ctx.req.body.timeStamp,
@@ -207,6 +309,8 @@ function doCarReservation(Mcarreservation, ctx, model, next, errorCallback) {
                                   },
                                   {transaction: tx},
                                   function(err, rr) {
+                                    
+                                    ctx.req.body.sid = rr.id;
                                     if (err && flagRoom) {
                                       tx.rollback(function(err) {
                                         if (err && flagRoom)  errorCallback(err);
@@ -369,8 +473,6 @@ function doCarReservation(Mcarreservation, ctx, model, next, errorCallback) {
             })
 
         }
-
-
         next();
     });
 }

@@ -1,7 +1,8 @@
 /* tslint:disable */
 import {
   Room,
-  HPriceListItem
+  HPriceListItem,
+  LoggedUser
 } from '../index';
 
 declare var Object: any;
@@ -11,10 +12,13 @@ export interface MRoomReservationInterface {
   "endDate"?: Date;
   "roomRate": number;
   "hotelRate": number;
+  "sid": number;
   "id"?: any;
   "roomId"?: any;
+  "loggedUserId"?: any;
   room?: Room;
   hPriceListItems?: HPriceListItem[];
+  loggedUser?: LoggedUser;
 }
 
 export class MRoomReservation implements MRoomReservationInterface {
@@ -23,10 +27,13 @@ export class MRoomReservation implements MRoomReservationInterface {
   "endDate": Date;
   "roomRate": number;
   "hotelRate": number;
+  "sid": number;
   "id": any;
   "roomId": any;
+  "loggedUserId": any;
   room: Room;
   hPriceListItems: HPriceListItem[];
+  loggedUser: LoggedUser;
   constructor(data?: MRoomReservationInterface) {
     Object.assign(this, data);
   }
@@ -82,12 +89,21 @@ export class MRoomReservation implements MRoomReservationInterface {
           type: 'number',
           default: -1
         },
+        "sid": {
+          name: 'sid',
+          type: 'number',
+          default: -1
+        },
         "id": {
           name: 'id',
           type: 'any'
         },
         "roomId": {
           name: 'roomId',
+          type: 'any'
+        },
+        "loggedUserId": {
+          name: 'loggedUserId',
           type: 'any'
         },
       },
@@ -107,6 +123,14 @@ export class MRoomReservation implements MRoomReservationInterface {
           relationType: 'hasMany',
                   keyFrom: 'id',
           keyTo: 'mRoomReservationId'
+        },
+        loggedUser: {
+          name: 'loggedUser',
+          type: 'LoggedUser',
+          model: 'LoggedUser',
+          relationType: 'belongsTo',
+                  keyFrom: 'loggedUserId',
+          keyTo: 'id'
         },
       }
     }

@@ -11,7 +11,7 @@ module.exports = function(Mcarreservation) {
 
   Mcarreservation.beforeRemote('create',
     function(ctx, model, next) {
-      console.log('here');
+      console.log('14');
       flag = true;
       doReservation(Mcarreservation, ctx, model, next, function(e) {
         flag = false;
@@ -20,17 +20,11 @@ module.exports = function(Mcarreservation) {
     });
 
     Mcarreservation.afterRemote('create',
+    
     function(ctx, model, next) {
-      var loggedUser = Mcarreservation.app.models.LoggedUser;
-      var current = null;
-      if (!ctx.accessToken) return next();
-        ctx.accessToken.user(function(err, user) {
-          if (err) return next(err);
-          current = user;
-          console.log(ctx);
-          current.mCarReservations.push(model);
-          next();
-      });
+      console.log('25');
+      Mcarreservation.app.models.quickCarReservation.create({mCarReservationId: model.id, carId: model.carId}).then((c) => (console.log('AAAAAAA' + c)));
+      next();
     });
 };
 
@@ -103,6 +97,8 @@ function doReservation(Mcarreservation, ctx, model, next, errorCallback) {
                         // commit and end before-hook
                         if (flag) {
                           tx.commit(function(err) {
+                            
+                            console.log('100');
                             if (err && flag)  errorCallback(err);
                             next();
                           });
