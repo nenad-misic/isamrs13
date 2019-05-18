@@ -106,7 +106,7 @@
     "dataSource": "MongoDB",
     "public": true,
     "options": {
-      "emailVerificationRequired": true
+      "emailVerificationRequired": false
     }
   },
   "CarReservation": {

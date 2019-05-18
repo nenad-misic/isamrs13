@@ -695,6 +695,47 @@ export class RACServiceApi extends BaseLoopBackApi {
   }
 
   /**
+   * <em>
+         * (The remote method definition does not provide any description.)
+         * </em>
+   *
+   * @param {object} data Request data.
+   *
+   *  - `startDate` – `{string}` - 
+   *
+   *  - `endDate` – `{string}` - 
+   *
+   *  - `name` – `{string}` - 
+   *
+   *  - `country` – `{string}` - 
+   *
+   *  - `skip` – `{number}` - 
+   *
+   * @returns {object} An empty reference that will be
+   *   populated with the actual data once the response is returned
+   *   from the server.
+   *
+   * Data properties:
+   *
+   *  - `retval` – `{object}` - 
+   */
+  public getMatching(startDate: any, endDate: any, name: any = {}, country: any = {}, skip: any, customHeaders?: Function): Observable<any> {
+    let _method: string = "POST";
+    let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
+    "/RACServices/getMatching";
+    let _routeParams: any = {};
+    let _postBody: any = {};
+    let _urlParams: any = {};
+    if (typeof startDate !== 'undefined' && startDate !== null) _urlParams.startDate = startDate;
+    if (typeof endDate !== 'undefined' && endDate !== null) _urlParams.endDate = endDate;
+    if (typeof name !== 'undefined' && name !== null) _urlParams.name = name;
+    if (typeof country !== 'undefined' && country !== null) _urlParams.country = country;
+    if (typeof skip !== 'undefined' && skip !== null) _urlParams.skip = skip;
+    let result = this.request(_method, _url, _routeParams, _urlParams, _postBody, null, customHeaders);
+    return result;
+  }
+
+  /**
    * Creates a new instance in priceList of this model.
    *
    * @param {any} id RACService id

@@ -39,6 +39,72 @@ module.exports = function(Racservice) {
       });
     });
 
+    
+    Racservice.getMatching = function(startDate, endDate, name, country, skip, cb) {
+      var results = [];
+      var filter = {}
+      var i = 0;
+      var j = 0;
+      var callbacked = false;
+      if(name) {
+        filter.name = name;
+      }
+      if(country){
+        filter.country = counrty;
+      }
+      Racservice.app.models.Destination.find({where: filter, include: 'rACServices', limit: 7, skip: j}).then((destinations) => {
+        j+= 2;
+        destinations.forEach((destination) => {
+          if(callbacked) return;
+          destination.rACServices.find({include: 'cars'}).then((racservices) => {
+            console.log('findrac')
+            racservices.forEach((racservice) => {
+              if(callbacked) return;
+              racservice.cars.find().then( (cars) => {
+                  
+                console.log('findCars')
+                cars.forEach((car) => {
+                    
+                  if(callbacked) return;
+                  Racservice.app.models.mCarReservation.count({carId: car.id}).then((cnt1) => {
+                    if(cnt1 == 0){
+                      Racservice.app.models.mCarReservation.count({carId: car.id}).then((cnt2) => {
+                        if(cnt2 == 0){
+                          if (i == skip * 10 && !callbacked){
+                            cb(null, results.slice((skip - 1)*10, skip*10 + 1));
+                            callbacked = true;
+                            return;
+                          } else {
+                            if(results.indexOf(racservice) == -1){
+                              results.push(racservice);
+                              i++;
+                            }
+                          }
+                        }
+                      });
+                    }
+                  })
+                })
+              })
+            })
+          })
+        })
+      })
+    }
+
+    Racservice.remoteMethod('getMatching', {
+      accepts: [
+        {arg: 'startDate', type: 'string', required: true},
+        {arg: 'endDate', type: 'string', required: true},
+        {arg: 'name', type: 'string', required: false},
+        {arg: 'country', type: 'string', required: false},
+        {arg: 'skip', type: 'number', required: true}
+      ],
+      http: {path: '/getMatching', verb: 'post'},
+      returns: {type: 'object', arg: 'retval'},
+    });
+
+
 };
 
 function doDelete(Racservice, ctx, model, next, errorCallback) {
@@ -94,6 +160,8 @@ function doDelete(Racservice, ctx, model, next, errorCallback) {
         });
       });
   });
+
+  
 }
 function doUpdate(Racservice, ctx, model, next, errorCallbackUpdate) {
   // models

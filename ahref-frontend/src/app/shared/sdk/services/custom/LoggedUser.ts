@@ -1523,9 +1523,6 @@ export class LoggedUserApi extends BaseLoopBackApi {
    *  - `qrid` – `{string}` - 
    *
    *  - `mcrid` – `{string}` - 
-   *  - `userId` – `{string}` - 
-   *
-   *  - `quickRoomReservationId` – `{string}` - 
    *
    * @returns {object} An empty reference that will be
    *   populated with the actual data once the response is returned
@@ -1549,6 +1546,25 @@ export class LoggedUserApi extends BaseLoopBackApi {
     return result;
   }
 
+  /**
+   * <em>
+         * (The remote method definition does not provide any description.)
+         * </em>
+   *
+   * @param {object} data Request data.
+   *
+   *  - `userId` – `{string}` - 
+   *
+   *  - `quickRoomReservationId` – `{string}` - 
+   *
+   * @returns {object} An empty reference that will be
+   *   populated with the actual data once the response is returned
+   *   from the server.
+   *
+   * Data properties:
+   *
+   *  - `mRoomReservation` – `{object}` - 
+   */
   public createQuickRoomReservation(userId: any, quickRoomReservationId: any, customHeaders?: Function): Observable<any> {
     let _method: string = "POST";
     let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +

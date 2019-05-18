@@ -13,7 +13,8 @@ export class CarSectionComponent implements OnInit {
 
 
   cars: Car[];
-
+  currentSkip = 10;
+  cnt = 0;
   constructor(private carService: CarApi,
               private data: DataService,
               @Inject('baseURL') private baseURL) {
@@ -22,7 +23,25 @@ export class CarSectionComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.data.currentSearchParams.subscribe(searchList => this.cars = searchList );
+    this.data.currentSearchParams.subscribe(searchList => {
+      this.cars = searchList;
+
+      if (this.data.getSearch() !== null) {
+        this.carService.count(this.data.getSearch()).subscribe((cnt) => {
+          this.cnt = cnt.count;
+        });
+      }
+    } );
+  }
+
+  loadMore() {
+    this.carService.find({where: this.data.getSearch(), limit: 10, skip: this.currentSkip}).subscribe((searchResult: Car[]) => {
+      searchResult.forEach((car: Car) => {
+        this.cars.push(car);
+      });
+    });
+
+    this.currentSkip += 10;
   }
 
 }
