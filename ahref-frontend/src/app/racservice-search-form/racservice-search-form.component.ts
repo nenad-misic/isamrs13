@@ -18,6 +18,7 @@ export class RacserviceSearchFormComponent implements OnInit {
   startDate: Date;
   endDate: Date;
 
+
   searchResult: RACService[] = [];
   constructor(private racServiceApi: RACServiceApi,
               private destinationApi: DestinationApi,
@@ -32,7 +33,7 @@ export class RacserviceSearchFormComponent implements OnInit {
   }
 
   showAll(): void {
-    this.racServiceApi.find().subscribe((result: RACService[]) => {
+    this.racServiceApi.find({limit: 10, skip: 0}).subscribe((result: RACService[]) => {
       this.searchResult = result;
       this.data.changeSearchParams(this.searchResult);
     });
@@ -42,11 +43,11 @@ export class RacserviceSearchFormComponent implements OnInit {
     const filter = {};
     if (this.name) {
       // @ts-ignore
-      filter.city = this.name;
+      filter.name = this.name;
     }
     if (this.country) {
       // @ts-ignore
-      filter.state = this.country;
+      filter.country = this.country;
     }
     this.destinationApi.find({where: filter}).subscribe((searchResult: Destination[]) => {
       this.searchResult = [];

@@ -377,20 +377,21 @@ function doCarReservation(Mcarreservation, ctx, model, next, errorCallback) {
             })
             var options = {
                 type: 'email',
-                to: ctx.result.email,
-                from: 'noreply@ahref.com',
+                to: modelInstance.email,
+                from: 'ahref.noreply@gmail.com',
                 subject: 'Thanks for registering on ahref.',
                 template: path.resolve(__dirname, '../../server/views/verify.ejs'),
                 redirect: 'http://localhost:4200',
-                user: ctx.result
+                user: modelInstance
               };
 
-              ctx.result.verify(options, function(err, response, next) {
+              modelInstance.verify(options, function(err, response) {
                 if (err)  {
                     return next(err);
                 }
 
                 console.log('> verification email sent:', response);
+                next()
               });
 
         } else if (ctx.result.type === "hotelAdmin") {
@@ -404,6 +405,7 @@ function doCarReservation(Mcarreservation, ctx, model, next, errorCallback) {
                             principalId: ctx.result.id
                         }, (err, principal) => {
                             if (err) throw(err);
+                            next()
                         });
                     })
                 } else {
@@ -412,6 +414,7 @@ function doCarReservation(Mcarreservation, ctx, model, next, errorCallback) {
                         principalId: ctx.result.id
                     }, (err, principal) => {
                         if (err) throw(err);
+                        next()
                     });
                 }
             })
@@ -426,6 +429,7 @@ function doCarReservation(Mcarreservation, ctx, model, next, errorCallback) {
                             principalId: ctx.result.id
                         }, (err, principal) => {
                             if (err) throw(err);
+                            next()
                         });
                     })
                 } else {
@@ -434,6 +438,7 @@ function doCarReservation(Mcarreservation, ctx, model, next, errorCallback) {
                         principalId: ctx.result.id
                     }, (err, principal) => {
                         if (err) throw(err);
+                        next()
                     });
                 }
             })
@@ -449,6 +454,7 @@ function doCarReservation(Mcarreservation, ctx, model, next, errorCallback) {
                             principalId: ctx.result.id
                         }, (err, principal) => {
                             if (err) throw(err);
+                            next()
                         });
                     })
                 } else {
@@ -457,6 +463,7 @@ function doCarReservation(Mcarreservation, ctx, model, next, errorCallback) {
                         principalId: ctx.result.id
                     }, (err, principal) => {
                         if (err) throw(err);
+                        next()
                     });
                 }
             })
@@ -472,6 +479,7 @@ function doCarReservation(Mcarreservation, ctx, model, next, errorCallback) {
                             principalId: ctx.result.id
                         }, (err, principal) => {
                             if (err) throw(err);
+                            next()
                         });
                     })
                 } else {
@@ -480,12 +488,12 @@ function doCarReservation(Mcarreservation, ctx, model, next, errorCallback) {
                         principalId: ctx.result.id
                     }, (err, principal) => {
                         if (err) throw(err);
+                        next()
                     });
                 }
             })
 
         }
-        next();
     });
 }
 

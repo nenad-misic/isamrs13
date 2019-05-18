@@ -23,7 +23,6 @@ export class CarProfileComponent implements OnInit {
   }
 
   changePicPath(): void {
-    console.log('Here we go!');
     this.picturePath = this.baseURL + '/carImages/' + 'missing.png';
   }
 

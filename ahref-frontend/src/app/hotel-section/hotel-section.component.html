@@ -3,11 +3,12 @@
 <app-hotel-search-form></app-hotel-search-form>
 <mat-card *ngIf="hotels">
   <mat-card-content>
-    <mat-grid-list cols="2">
+    <mat-grid-list cols="2" rowHeight="3:4">
       <mat-grid-tile *ngFor="let hotel of hotels" [routerLink]="['/hoteldetail', hotel.id]">
         <app-hotel-profile [profile]="hotel"></app-hotel-profile>
       </mat-grid-tile>
     </mat-grid-list>
+    <button mat-button *ngIf="shownAll && currSkip < cnt" (click)="loadMore()" class="centered">Load more</button>
   </mat-card-content>
 </mat-card>
 

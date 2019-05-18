@@ -18,9 +18,9 @@
     "connector": "mail",
     "transports": [
       {
-        "type": "smtp",
+        "type": "SMTP",
         "host": "smtp.gmail.com",
-        "secure": false,
+        "secure": true,
         "port": 465,
         "tls": {
           "rejectUnauthorized": false

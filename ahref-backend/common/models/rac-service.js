@@ -39,12 +39,44 @@ module.exports = function(Racservice) {
       });
     });
 
+
+    function daLiSeUklapaRac(models, rac, startDate, endDate, cb){
+      var cntUkupno;
+      rac.cars.count({}).then((count) => {
+        cntUkupno = count.count;
+        return  rac.cars.find();
+      })
+      .then((cars) => {
+        var okej = false;
+        cars.forEach((car) => {
+          models.mCarReservation.count({carId: car.id, startDate: {lte: endDate}, endDate: {gte: startDate}}).then((cnt) => {
+              if(cnt == 0) {
+                okej = true;
+              }
+          });
+        })
+      });
+    }
+    function obradiSledecuDestinaciju(destanation, startDate, endDate, name, country, obradjeno, result){
+      var trazeniBroj = 10;
+      destination.rACServices.find({include: 'cars'}).then((racservices) => {
+        racservices.cars.find((cars) => {
+          cars.forEach((car) => {
+            // proveriti da li se uklapa
+            // if uklapa
+            result.push()
+          });
+        })
+      })
+    }
     
     Racservice.getMatching = function(startDate, endDate, name, country, skip, cb) {
       var results = [];
       var filter = {}
       var i = 0;
-      var j = 0;
+
+      brojac = 0
+     
       var callbacked = false;
       if(name) {
         filter.name = name;
@@ -52,12 +84,10 @@ module.exports = function(Racservice) {
       if(country){
         filter.country = counrty;
       }
-      Racservice.app.models.Destination.find({where: filter, include: 'rACServices', limit: 7, skip: j}).then((destinations) => {
-        j+= 2;
+      Racservice.app.models.Destination.find({where: filter, include: 'rACServices'}).then((destinations) => {
         destinations.forEach((destination) => {
           if(callbacked) return;
           destination.rACServices.find({include: 'cars'}).then((racservices) => {
-            console.log('findrac')
             racservices.forEach((racservice) => {
               if(callbacked) return;
               racservice.cars.find().then( (cars) => {
