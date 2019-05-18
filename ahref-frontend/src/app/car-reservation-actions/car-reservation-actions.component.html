@@ -23,4 +23,7 @@
                   [titles]="['Bad', 'Mediocre' , 'Good', 'Awesome']"></bar-rating>
     </div>
   </mat-card-content>
+  <mat-card-actions>
+    <button mat-button class="centered" (click)="onSave()" *ngIf="res.racRate == -1 && res.carRate == -1">Save</button>
+  </mat-card-actions>
 </mat-card>

@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
-import {MCarReservation, MRoomReservation} from '../shared/sdk/models';
-import {LoggedUserApi} from '../shared/sdk/services/custom';
+import {Car, Hotel, MCarReservation, MRoomReservation, RACService, Room} from '../shared/sdk/models';
+import {HotelApi, LoggedUserApi, MRoomReservationApi, RoomApi} from '../shared/sdk/services/custom';
 import {ToastrService} from 'ngx-toastr';
 
 @Component({
@@ -16,6 +16,9 @@ export class RoomReservationActionsComponent implements OnInit {
     public dialogRef: MatDialogRef<RoomReservationActionsComponent>,
     @Inject(MAT_DIALOG_DATA) public res: MRoomReservation,
     private loggedUserApi: LoggedUserApi,
+    private roomApi: RoomApi,
+    private hotelApi: HotelApi,
+    private mRoomReservationApi: MRoomReservationApi,
     private toastr: ToastrService) {}
 
 
@@ -39,5 +42,30 @@ export class RoomReservationActionsComponent implements OnInit {
     }
   }
 
+  onSave() {
+    if (this.res.roomRate === -1 || this.res.hotelRate === -1) {
+      this.toastr.error('Please input rating before saving!');
+    } else if (this.res.endDate.getTime() < new Date().getTime()) {
+      this.toastr.error('It is to early for rating!');
+    } else {
+      this.mRoomReservationApi.updateAttributes(this.res.id, this.res).subscribe((response) => {
+          this.toastr.success('Reservation successfully saved', 'Success');
+          this.roomApi.findById(this.res.roomId).subscribe((room: Room) => {
+            const uk = room.numOfRates * room.rating;
+            room.numOfRates += 1;
+            room.rating = (uk + this.res.roomRate) / room.numOfRates;
+            this.roomApi.updateAttributes(room.id, room).subscribe((response1) => console.log('Room rate success'));
+
+            this.hotelApi.findById(room.hotelId).subscribe((hotel: Hotel) => {
+              const ukr = hotel.numOfRates * hotel.rating;
+              hotel.numOfRates += 1;
+              hotel.rating = (ukr + this.res.hotelRate) / hotel.numOfRates;
+              this.hotelApi.updateAttributes(hotel.id, hotel).subscribe((response2) => console.log('Hotel rate success'));
+            });
+          });
+        }
+      );
+    }
+  }
 
 }
