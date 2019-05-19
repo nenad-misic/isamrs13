@@ -38,11 +38,11 @@ export class HotelSearchFormComponent implements OnInit {
     const filter = {};
     if (this.name) {
       // @ts-ignore
-      filter.city = this.name;
+      filter.name = this.name;
     }
     if (this.country) {
       // @ts-ignore
-      filter.state = this.country;
+      filter.country = this.country;
     }
     this.destinationApi.find({where: filter}).subscribe((searchResult: Destination[]) => {
       this.searchResult = [];
@@ -96,7 +96,7 @@ export class HotelSearchFormComponent implements OnInit {
   }
 
   showAll(): void {
-    this.hotelService.find().subscribe((result: Hotel[]) => {
+    this.hotelService.find({limit: 10, skip: 0}).subscribe((result: Hotel[]) => {
       this.searchResult = result;
       this.data.changeSearchParams(this.searchResult);
     });

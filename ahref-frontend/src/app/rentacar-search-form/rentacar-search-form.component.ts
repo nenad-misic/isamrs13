@@ -24,8 +24,9 @@ export class RentacarSearchFormComponent implements OnInit {
 
   doSearch(): void {
     this.searchResult = [];
-    this.carService.find({where: this.search}).subscribe((searchResult: Car[]) => {
+    this.carService.find({where: this.search, limit: 10, skip: 0}).subscribe((searchResult: Car[]) => {
       this.searchResult = searchResult;
+      this.data.saveSearch(this.search);
       this.data.changeSearchParams(this.searchResult);
       this.search = new Car();
     });

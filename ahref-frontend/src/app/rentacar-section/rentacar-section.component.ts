@@ -13,7 +13,9 @@ import {RacserviceDataService} from '../services/racservice-data.service';
 export class RentacarSectionComponent implements OnInit {
 
   racservices: RACService[];
-
+  cnt = 0;
+  currSkip = 10;
+  shownAll = true;
   constructor(private rentacarService: RACServiceApi,
               @Inject('baseURL') private baseURL,
               private data: RacserviceDataService) {
@@ -23,6 +25,19 @@ export class RentacarSectionComponent implements OnInit {
 
   ngOnInit() {
     this.data.currentSearchParams.subscribe(searchList => this.racservices = searchList );
+
+    this.rentacarService.count({}).subscribe((cnt) => {
+      this.cnt = cnt.count;
+    });
+  }
+
+  loadMore() {
+    this.rentacarService.find({limit: 10, skip: this.currSkip}).subscribe((result: RACService[]) => {
+      result.forEach((res) => {
+        this.racservices.push(res);
+      });
+    this.currSkip += 10;
+  });
   }
 
 }

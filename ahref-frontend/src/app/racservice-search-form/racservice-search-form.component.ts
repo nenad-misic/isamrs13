@@ -18,6 +18,7 @@ export class RacserviceSearchFormComponent implements OnInit {
   startDate: Date;
   endDate: Date;
 
+
   searchResult: RACService[] = [];
   constructor(private racServiceApi: RACServiceApi,
               private destinationApi: DestinationApi,
@@ -32,7 +33,7 @@ export class RacserviceSearchFormComponent implements OnInit {
   }
 
   showAll(): void {
-    this.racServiceApi.find().subscribe((result: RACService[]) => {
+    this.racServiceApi.find({limit: 10, skip: 0}).subscribe((result: RACService[]) => {
       this.searchResult = result;
       this.data.changeSearchParams(this.searchResult);
     });
@@ -42,38 +43,19 @@ export class RacserviceSearchFormComponent implements OnInit {
     const filter = {};
     if (this.name) {
       // @ts-ignore
-      filter.city = this.name;
+      filter.name = this.name;
     }
     if (this.country) {
       // @ts-ignore
-      filter.state = this.country;
+      filter.country = this.country;
     }
     this.destinationApi.find({where: filter}).subscribe((searchResult: Destination[]) => {
       this.searchResult = [];
       searchResult.forEach((element) => {
-        this.racServiceApi.find({include: 'cars'}).subscribe((racSearchResult: RACService[]) => {
+        this.racServiceApi.find({include: 'cars', where: {destinationId: element.id}}).subscribe((racSearchResult: RACService[]) => {
           racSearchResult.forEach((element1) => {
-            if (element1.destinationId === element.id) {
-              if (this.racname) {
-                if (this.racname === element1.name) {
-                  element1.cars.forEach((car: Car) => {
-                    this.mCarReservationApi.find({where : {carId: car.id}}).subscribe((data: MCarReservation[]) => {
-                    if (!data) { this.searchResult.push(element1); } else {
-                      let pushable = true;
-                      data.forEach((res) => {
-                        if ((res.startDate >= this.startDate && res.startDate <= this.endDate) ||
-                          (this.startDate >= res.startDate && this.startDate <= res.endDate)) {
-                          pushable = false;
-                        }
-                      });
-
-                      if (pushable && this.searchResult.indexOf(element1) === -1) { this.searchResult.push(element1); }
-                    }
-                  });
-
-                  });
-                }
-              } else {
+            if (this.racname) {
+              if (this.racname === element1.name) {
                 element1.cars.forEach((car: Car) => {
                   this.mCarReservationApi.find({where : {carId: car.id}}).subscribe((data: MCarReservation[]) => {
                     if (!data) { this.searchResult.push(element1); } else {
@@ -91,6 +73,23 @@ export class RacserviceSearchFormComponent implements OnInit {
 
                 });
               }
+            } else {
+              element1.cars.forEach((car: Car) => {
+                this.mCarReservationApi.find({where : {carId: car.id}}).subscribe((data: MCarReservation[]) => {
+                  if (!data) { this.searchResult.push(element1); } else {
+                    let pushable = true;
+                    data.forEach((res) => {
+                      if ((res.startDate >= this.startDate && res.startDate <= this.endDate) ||
+                        (this.startDate >= res.startDate && this.startDate <= res.endDate)) {
+                        pushable = false;
+                      }
+                    });
+
+                    if (pushable && this.searchResult.indexOf(element1) === -1) { this.searchResult.push(element1); }
+                  }
+                });
+
+              });
             }
           });
         });

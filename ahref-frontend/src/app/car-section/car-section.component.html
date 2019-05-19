@@ -1,11 +1,13 @@
+<p>{{cnt}}</p>
 <mat-card *ngIf="cars">
   <mat-card-content>
     <app-rentacar-search-form></app-rentacar-search-form>
-    <mat-grid-list cols="2" rowHeight="3:4">
+    <mat-grid-list cols="3" rowHeight="3:5">
       <mat-grid-tile *ngFor="let car of cars" [routerLink]="['/cardetail', car.id]">
         <app-car-profile [profile]="car"></app-car-profile>
       </mat-grid-tile>
     </mat-grid-list>
+    <button mat-button class="centered" *ngIf="cnt > currentSkip" (click)="loadMore()">Load more</button>
   </mat-card-content>
 </mat-card>
 

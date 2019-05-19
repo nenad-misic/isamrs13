@@ -14,7 +14,7 @@ export class RentacarProfileComponent implements OnInit {
   @Input()
   profile: RACService;
 
-  destination = {city: '', state: ''};
+  destination = {name: '', country: ''};
 
   rate = Math.floor(Math.random() * 4) + 1;
 

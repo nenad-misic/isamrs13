@@ -9,10 +9,12 @@ export class RacserviceDataService {
 
   private searchParamsSource = new BehaviorSubject<RACService[]>([]);
   currentSearchParams = this.searchParamsSource.asObservable();
-
+  private cnt;
+  private skip;
   constructor() { }
 
   changeSearchParams(searchList: RACService[]) {
     this.searchParamsSource.next(searchList);
   }
+
 }

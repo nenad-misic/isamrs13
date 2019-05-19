@@ -125,6 +125,13 @@
       "principalId": "$owner",
       "permission": "ALLOW",
       "property": "__updateById__cars"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "method": "getMatching"
     }
   ],
   "methods": {}

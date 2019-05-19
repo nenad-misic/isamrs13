@@ -1,7 +1,8 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import { API_VERSION } from '../shared/baseurl';
-import {Hotel, HotelApi, LoopBackConfig} from '../shared/sdk';
+import {Hotel, HotelApi, LoopBackConfig, RACService, RACServiceApi} from '../shared/sdk';
 import {HotelDataService} from '../services/hotel-data.service';
+import {RacserviceDataService} from '../services/racservice-data.service';
 @Component({
   selector: 'app-hotel-section',
   templateUrl: './hotel-section.component.html',
@@ -11,7 +12,10 @@ export class HotelSectionComponent implements OnInit {
 
   hotels: Hotel[];
 
-  constructor(private hotelService: HotelApi,
+  cnt = 0;
+  currSkip = 10;
+  shownAll = true;
+  constructor(private hotelApi: HotelApi,
               @Inject('baseURL') private baseURL,
               private data: HotelDataService) {
     LoopBackConfig.setBaseURL(baseURL);
@@ -19,7 +23,19 @@ export class HotelSectionComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.data.currentSearchParams.subscribe(serachList => this.hotels = serachList);
+    this.data.currentSearchParams.subscribe(searchList => this.hotels = searchList );
+
+    this.hotelApi.count({}).subscribe((cnt) => {
+      this.cnt = cnt.count;
+    });
   }
 
+  loadMore() {
+    this.hotelApi.find({limit: 10, skip: this.currSkip}).subscribe((result: Hotel[]) => {
+      result.forEach((res) => {
+        this.hotels.push(res);
+      });
+      this.currSkip += 10;
+    });
+  }
 }

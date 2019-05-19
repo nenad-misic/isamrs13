@@ -9,6 +9,7 @@
         <app-car-profile [profile]="car"></app-car-profile>
       </mat-grid-tile>
     </mat-grid-list>
+    <button mat-button (click)="loadMore()" *ngIf="currentSkip < cnt">Load more</button>
   </mat-card-content>
 </mat-card>
 <div [hidden]="cars" class="mat-spinner-container">

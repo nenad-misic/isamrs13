@@ -1,4 +1,4 @@
-import {Component, Inject, Input, OnInit} from '@angular/core';
+import {Component, Inject, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {Car} from '../shared/sdk/models';
 import {LoopBackConfig} from '../shared/sdk';
 import {API_VERSION} from '../shared/baseurl';
@@ -8,7 +8,7 @@ import {API_VERSION} from '../shared/baseurl';
   templateUrl: './car-profile.component.html',
   styleUrls: ['./car-profile.component.scss']
 })
-export class CarProfileComponent implements OnInit {
+export class CarProfileComponent implements OnInit, OnChanges {
 
   @Input()
   profile: Car;
@@ -19,12 +19,14 @@ export class CarProfileComponent implements OnInit {
     LoopBackConfig.setApiVersion(API_VERSION); }
 
   ngOnInit() {
-    this.picturePath = this.baseURL + '/carImages/' + this.profile.id + '.jpg';
   }
 
   changePicPath(): void {
-    console.log('Here we go!');
     this.picturePath = this.baseURL + '/carImages/' + 'missing.png';
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.picturePath = this.baseURL + '/carImages/' + this.profile.id + '.jpg';
   }
 
 }

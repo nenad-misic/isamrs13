@@ -8,6 +8,7 @@
         <app-rentacar-profile [profile]="rac"></app-rentacar-profile>
       </mat-grid-tile>
     </mat-grid-list>
+    <button mat-button *ngIf="shownAll && currSkip < cnt" (click)="loadMore()" class="centered">Load more</button>
   </mat-card-content>
 </mat-card>
 

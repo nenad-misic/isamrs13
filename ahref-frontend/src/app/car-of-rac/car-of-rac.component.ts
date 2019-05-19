@@ -17,6 +17,8 @@ export class CarOfRacComponent implements OnInit {
   cars: Car[];
   errmsg: string;
 
+  currentSkip = 10;
+  cnt = 0;
   id: string;
   constructor(private route: ActivatedRoute,
               private location: Location,
@@ -30,7 +32,17 @@ export class CarOfRacComponent implements OnInit {
 
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];
-    this.carApi.find({where: {rACServiceId: this.id}}).subscribe((data: Car[]) => this.cars = data);
+    console.log(this.id);
+    this.carApi.find({where: {rACServiceId: this.id}, limit: 10, skip: 0}).subscribe((data: Car[]) => this.cars = data);
+    this.carApi.count({rACServiceId: this.id}).subscribe((cnt) => this.cnt = cnt.count);
+  }
 
+  loadMore() {
+    this.carApi.find({where: {rACServiceId: this.id}, limit: 10, skip: this.currentSkip}).subscribe((data: Car[]) => {
+      data.forEach((car) => {
+        this.cars.push(car);
+      });
+    });
+    this.currentSkip += 10;
   }
 }
