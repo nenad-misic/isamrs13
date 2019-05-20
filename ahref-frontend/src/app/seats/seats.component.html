@@ -6,7 +6,8 @@
       <tr *ngFor="let row of rows">
         <td *ngFor="let col of cols">
           <div *ngIf="seatExists(row, col) && seatTaken(row, col)" ngClass="taken"></div>
-          <div *ngIf="seatExists(row, col) && !seatTaken(row, col)" ngClass="nonTaken" (click)="seatClicked(row, col)"></div>
+          <div *ngIf="seatExists(row, col) && !seatTaken(row, col) && !seatPrva(row,col)" ngClass="nonTaken" (click)="seatClicked(row, col)"></div>
+          <div *ngIf="seatExists(row, col) && !seatTaken(row, col) && seatPrva(row,col)" ngClass="nonTakenPrva" (click)="seatClicked(row, col)"></div>
         </td>
       </tr>
     </table>

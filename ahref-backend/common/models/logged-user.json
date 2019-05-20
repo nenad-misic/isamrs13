@@ -134,7 +134,7 @@
       "principalType": "ROLE",
       "principalId": "$everyone",
       "permission": "ALLOW",
-      "property": "bindQuick",
+      "property": "bindQuick"
     },
     {
       "accessType": "EXECUTE",

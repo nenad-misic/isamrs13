@@ -13,6 +13,10 @@
     "column": {
       "type": "number",
       "required": true
+    },
+    "prva": {
+      "type": "boolean",
+	  "required": true
     }
   },
   "validations": [],

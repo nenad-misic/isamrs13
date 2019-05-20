@@ -2,7 +2,7 @@
 
 var flag = true;
 module.exports = function(Mflightreservation) {
-	/*
+	
 Mflightreservation.beforeRemote('create',
     function(ctx, model, next) {
       flag = true;
@@ -26,10 +26,9 @@ Mflightreservation.beforeRemote('create',
 			  from: 'noreply@gmail.com',
 			  subject: 'Rezervacija',
 			  text: 'Test',
-			  html: '<h1>Uspesna rezervacija karte '+ flight.id +' sa brojem sedista ' + seat.row+'/' + seat.column + '</h1>'
+			  html: '<h1>Uspesna rezervacija karte leta '+ flight.id +' sa brojem sedista ' + seat.row+'/' + seat.column + '</h1>'
 		  },function(err,res){
 			  console.log('email sent!');
-			  cb(err);
 		  });
 		  
 		 }); 
@@ -54,10 +53,9 @@ Mflightreservation.afterRemote('replaceById',
 			  from: 'noreply@gmail.com',
 			  subject: 'Rezervacija',
 			  text: 'Test',
-			  html: '<h1>Uspesna rezervacija karte '+ flight.id +' sa brojem sedista ' + seat.row+'/' + seat.column + '</h1>'
+			  html: '<h1>Uspesna rezervacija karte leta '+ flight.id +' sa brojem sedista ' + seat.row+'/' + seat.column + '</h1>'
 		  },function(err,res){
 			  console.log('updated email sent!');
-			  cb(err);
 		  });
 		  
 		 }); 
@@ -65,7 +63,29 @@ Mflightreservation.afterRemote('replaceById',
 	  });
 		next();
 	});
-	*/
+	
+Mflightreservation.beforeRemote('deleteById',
+      function(ctx, model, next) {
+		  
+        var FlightRes = Mflightreservation.app.models.FlightReservation;
+		var Seat = Mflightreservation.app.models.sSeat;
+		var mFlightRes = Mflightreservation.app.models.mFlightReservation;
+		
+		mFlightRes.findOne({where: {id: ctx.req.body.id}}).then((mflajt)=>{
+			
+				Seat.findOne({where: {mongoId: mflajt.seatId}}).then((seat)=>{
+					console.log('Sediste ',seat);
+					FlightRes.findOne({where: {sSeatId:seat.id}}).then((flajt)=>{
+						
+						FlightRes.deleteById(flajt.id);
+						
+					});
+					
+				});
+		});
+        next();
+      });
+	
 };
 
 
@@ -102,7 +122,7 @@ function doReservation(Mflightreservation, ctx, model, next, errorCallback) {
                     // create reservation
                     sqlFlightReservation.create(
                       {
-                        timeStamp: ctx.req.body.timeStamp,
+                        timeStamp: new Date(),
                         sSeat: seat,
 						sFlight: flight,
                       },
