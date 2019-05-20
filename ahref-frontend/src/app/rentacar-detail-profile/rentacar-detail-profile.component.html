@@ -57,6 +57,10 @@
     <button mat-button [routerLink]="['/allcars', profile_new.id]">List all cars</button>
   </mat-card-actions>
   </form>
+
+  <app-rac-price-section *ngIf="!readOnly" [racService]="profile_new"></app-rac-price-section>
+
+  <app-rac-report-section [profile]="profile_new"></app-rac-report-section>
 </mat-card>
 <div [hidden]="profile_new" class="mat-spinner-container">
   <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>

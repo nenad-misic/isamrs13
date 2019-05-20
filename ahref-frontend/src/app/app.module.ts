@@ -86,6 +86,9 @@ import { CarOfRacComponent } from './car-of-rac/car-of-rac.component';
 import { RoomSearchComponent } from './room-search/room-search.component';
 import {BarRatingModule} from 'ngx-bar-rating';
 
+
+import { ChartsModule } from 'ng2-charts';
+
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AgmCoreModule } from '@agm/core';
 import { QuickFlightSectionComponent } from './quick-flight-section/quick-flight-section.component';
@@ -103,6 +106,8 @@ import { QuickCarSectionViewComponent } from './quick-car-section-view/quick-car
 import { QuickCarProfileComponent } from './quick-car-profile/quick-car-profile.component';
 import { QuickRoomAddFormComponent } from './quick-room-add-form/quick-room-add-form.component';
 import { QuickRoomDetailsComponent } from './quick-room-details/quick-room-details.component';
+import { RacPriceSectionComponent } from './rac-price-section/rac-price-section.component';
+import { RacReportSectionComponent } from './rac-report-section/rac-report-section.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -176,7 +181,9 @@ import { QuickRoomDetailsComponent } from './quick-room-details/quick-room-detai
     QuickCarSectionViewComponent,
     QuickCarProfileComponent,
     QuickRoomAddFormComponent,
-    QuickRoomDetailsComponent
+    QuickRoomDetailsComponent,
+    RacPriceSectionComponent,
+    RacReportSectionComponent
   ],
   imports: [
     BrowserModule,
@@ -203,6 +210,7 @@ import { QuickRoomDetailsComponent } from './quick-room-details/quick-room-detai
     ToastrModule.forRoot(),
     MatProgressSpinnerModule,
     BarRatingModule,
+    ChartsModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBf77UiLC2QLbjq5UK6rVHIQHk2uJcwdU4'
     }),

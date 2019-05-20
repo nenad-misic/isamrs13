@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router, RouterEvent} from '@angular/router';
 import {LoggedUserApi} from './shared/sdk/services/custom';
-import {User} from './shared/sdk/models';
+import {LoggedUser } from './shared/sdk/models';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +11,9 @@ import {User} from './shared/sdk/models';
 export class AppComponent implements OnInit  {
   title = 'ahref-frontend';
 
+
   type: string;
+  profile;
 
   constructor(private userTypeService: LoggedUserApi,
               private router: Router) {
@@ -25,9 +27,11 @@ export class AppComponent implements OnInit  {
   }
 
   ngOnInit() {
-    if( this.userTypeService.getCachedCurrent() ){
+    if ( this.userTypeService.getCachedCurrent() ) {
+      console.log(this.userTypeService.getCachedCurrent());
       this.type = this.userTypeService.getCachedCurrent().type;
-    }else{
+      this.profile = this.userTypeService.getCachedCurrent();
+    } else {
       this.type = '';
     }
   }

@@ -15,7 +15,13 @@ module.exports = function(Mcarreservation) {
       flag = true;
       doReservation(Mcarreservation, ctx, model, next, function(e) {
         flag = false;
-        next(e);
+        calculatePrice(Mcarreservation, ctx).then((price) => {
+          if (price == 0) {
+            //call error?
+          }
+          ctx.body.price = price;
+          next(e);
+        });
       });
     });
 
@@ -110,4 +116,25 @@ function doReservation(Mcarreservation, ctx, model, next, errorCallback) {
         });
       });
   });
+}
+
+function calculatePrice(Mcarreservation, ctx) {
+  var models = Mcarreservation.app.models;
+  var start = ctx.req.body.startDate;
+  var end = ctx.req.body.endDate;
+  var days = (end - start)/(24*60*60*1000)
+
+  models.Car.findOne({where: {id: ctx.req.body.carId}}).then((car) => {
+    models.RACService.fondOne({where: {id: car.rACServiceId}}).then((racService) => {
+      models.RPriceListItem.find({where: {rPriceListId: racService.priceListId}}).then((items) => {
+        items.forEach((item) => {
+          if (item.price != 0) {
+            if (item.carType === car.carType) {
+              return item.price * days;
+            }
+          }
+        })
+      })
+    })
+  })
 }

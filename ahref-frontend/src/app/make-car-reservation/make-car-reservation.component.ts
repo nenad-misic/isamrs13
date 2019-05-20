@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {CarReservationDataService} from '../services/car-reservation-data.service';
-import {CarApi, LoggedUserApi, MCarReservationApi} from '../shared/sdk/services/custom';
+import {CarApi, LoggedUserApi, MCarReservationApi, RACServiceApi, RPriceListApi, RPriceListItemApi} from '../shared/sdk/services/custom';
 import {CarReservationInfo} from '../shared/carReservationInfo';
-import {Car} from '../shared/sdk/models';
+import {Car, RACService, RPriceList, RPriceListItem} from '../shared/sdk/models';
 import {ActivatedRoute} from '@angular/router';
 import {ToastrService} from "ngx-toastr";
 
@@ -14,7 +14,7 @@ import {ToastrService} from "ngx-toastr";
 export class MakeCarReservationComponent implements OnInit {
 
   errmsg: string;
-
+  totalCost = 0;
   info: CarReservationInfo;
   car: Car;
   constructor(private carReservationData: CarReservationDataService,
@@ -22,11 +22,26 @@ export class MakeCarReservationComponent implements OnInit {
               private loggedUserApi: LoggedUserApi,
               private route: ActivatedRoute,
               private toastr: ToastrService,
-              private carApi: CarApi) { }
+              private rplia: RPriceListItemApi,
+              private rpla: RPriceListApi,
+              private carApi: CarApi,
+              private racApi: RACServiceApi) { }
 
   ngOnInit() {
-    this.carApi.findOne({where: {id: this.route.snapshot.params['id']}}).subscribe((car: Car) => this.car = car);
+    this.carApi.findOne({where: {id: this.route.snapshot.params['id']}}).subscribe((car: Car) => {
+      this.car = car;
+      this.racApi.findById(this.car.rACServiceId).subscribe((rac: RACService) => {
+        this.rpla.find({where: {rACServiceId: rac.id}, include: 'priceListItems'}).subscribe((priceList: RPriceList[]) => {
+          priceList[0].priceListItems.forEach((item: RPriceListItem) => {
+            if (item.carType === car.carType) {
+              this.totalCost = ((new Date(this.info.endDate).getTime() - new Date(this.info.startDate).getTime()) / ( 24 * 60 * 60 * 1000 )) * item.price;
+            }
+          });
+        });
+      });
+    });
     this.carReservationData.currentSearchParams.subscribe(info => this.info = info );
+
   }
 
 

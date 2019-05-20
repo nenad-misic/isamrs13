@@ -241,7 +241,8 @@ function doCarReservation(Mcarreservation, ctx, model, next, errorCallback) {
                               setTimeout(()=>{
                                 tx.commit(function(err) {
                                 if (err && flagCar)  errorCallback(err);
-                                next();
+                                
+                                calculateCarPrice(Loggeduser, ctx, next)
                               });
                               }, num)
                               
@@ -497,7 +498,38 @@ function doCarReservation(Mcarreservation, ctx, model, next, errorCallback) {
     });
 }
 
+function calculateCarPrice(Loggeduser, ctx, callback) {
+  var models = Loggeduser.app.models;
+  var start = ctx.req.body.startDate;
+  var end = ctx.req.body.endDate;
+  var days = (end - start)/(24*60*60*1000)
 
+  models.Car.findOne({where: {id: ctx.req.body.carId}}).then((car) => {
+    //console.log(car);
+    models.RACService.findOne({where: {id: car.rACServiceId}}).then((racService) => {
+      //console.log(racService);
+      models.RPriceList.findOne({where: {rACServiceId: racService.id}}).then((priceList) => {
+        models.RPriceListItem.find({where: {rPriceListId: priceList.id}}).then((items) => {
+          if (items == []) {
+            var error = new Error('Car has no price defined');
+            error.statusCode = error.status = 404;
+            callback(error);
+          }
+          items.forEach((item) => {
+            console.log(item);
+            console.log(car);
+            if (item.price != 0) {
+              if (item.carType === car.carType) {
+                ctx.req.body.price = item.price * days;
+                callback();
+              }
+            }
+          })
+        })
+      })
+    })
+  })
+}
 
 
 

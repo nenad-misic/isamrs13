@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {RACService, LoggedUser, Destination} from '../shared/sdk/models';
-import {RACServiceApi, LoggedUserApi, DestinationApi} from '../shared/sdk/services/custom';
+import {RACServiceApi, LoggedUserApi, DestinationApi, RPriceListApi} from '../shared/sdk/services/custom';
 import {Location} from '@angular/common';
 import {LoopBackConfig} from '../shared/sdk';
 import {API_VERSION} from '../shared/baseurl';
@@ -22,6 +22,7 @@ export class RentacarAddFormComponent implements OnInit {
               @Inject('baseURL') private baseURL,
               private userTypeService: LoggedUserApi,
               private toastr: ToastrService,
+              private rPriceApi: RPriceListApi,
               private destinationApi: DestinationApi) {
     LoopBackConfig.setBaseURL(baseURL);
     LoopBackConfig.setApiVersion(API_VERSION);
@@ -72,8 +73,9 @@ export class RentacarAddFormComponent implements OnInit {
             console.log('debuger');
             this.new_racservice.destinationId = destination.id;
             this.service.create(this.new_racservice).subscribe((racservice: RACService) => {
+              this.service.createPriceList(this.new_racservice.id).subscribe(() => {}, (err) => this.toastr.error(err.message, 'ERROR'));
               this.userTypeService.updateRacservice(user.id, racservice).subscribe((returnedUser) => {
-                this.toastr.success(this.new_racservice.name, 'RAC service added')
+                this.toastr.success(this.new_racservice.name, 'RAC service added');
                 this.new_racservice = new RACService();
               }, (err) => {
                 // fix error!
@@ -84,7 +86,6 @@ export class RentacarAddFormComponent implements OnInit {
               this.toastr.error(err.message, 'ERROR');
               this.new_racservice = new RACService();
             });
-
 
           });
         }
