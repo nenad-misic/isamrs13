@@ -1,7 +1,7 @@
 <mat-card *ngIf="profile_new">
   <mat-card-title>{{profile_new.name}}</mat-card-title>
   <form novalidate>
-    <mat-card-content fxLayout="column" *ngIf="readOnly">
+    <mat-card-content fxLayout="column" *ngIf="adminRead">
       <app-flight-add-form [airline]="profile_new"></app-flight-add-form>
       <mat-form-field>
         <input required matInput placeholder="Name" [(ngModel)]="profile_new.name" name="name">
@@ -21,7 +21,7 @@
         <input required matInput placeholder="Description" [(ngModel)]="profile_new.description" name="description">
       </mat-form-field>
     </mat-card-content>
-    <mat-card-content fxLayout="column" *ngIf="!readOnly">
+    <mat-card-content fxLayout="column" *ngIf="!adminRead">
       <mat-form-field>
         <input required matInput placeholder="Name" [(ngModel)]="profile_new.name" name="name">
       </mat-form-field>
@@ -42,7 +42,7 @@
     </mat-card-content>
     <mat-card-actions>
       <button mat-button (click)="goBack()">Back</button>
-      <button mat-button (click)="onSaveClick()">Save</button>
+      <button mat-button *ngIf="adminRead" (click)="onSaveClick()">Save</button>
       <button mat-button [routerLink]="['/flights', profile_new.id]">List flights</button>
     </mat-card-actions>
   </form>

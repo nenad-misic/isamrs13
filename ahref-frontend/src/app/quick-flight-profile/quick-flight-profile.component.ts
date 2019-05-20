@@ -62,11 +62,14 @@ export class QuickFlightProfileComponent implements OnInit {
   remove() {
 
     this.reservationApi.findById(this.reservation.id,{include: 'mFlightReservations'}).subscribe((res: QuickFlightReservation) =>{
+      console.log('STANJE ',res.mFlightReservations);
       for(let i=0; i<res.mFlightReservations.length;i++){
+        console.log('Stanje sta ');
         this.passengerApi.deleteById(res.mFlightReservations[i].passengerId).subscribe(()=>console.log('Deleted passenger'));
         this.flightres.deleteById(res.mFlightReservations[i].id).subscribe(()=> console.log('Deleted res'));
+        if(i==res.mFlightReservations.length-1)
+          this.reservationApi.deleteById(this.reservation.id).subscribe(()=>console.log('Deleted'));
       }
-      this.reservationApi.deleteById(this.reservation.id).subscribe(()=>console.log('Deleted'));
     });
 
 

@@ -6,7 +6,7 @@
       </mat-grid-tile>
     </mat-grid-list>
     <mat-card-actions fxLayout="column">
-      <button mat-button [routerLink]="['/home']">FINISH</button>
+      <button *ngIf="this.finish" mat-button [routerLink]="['/home']">FINISH</button>
     </mat-card-actions>
   </mat-card-content>
 </mat-card>

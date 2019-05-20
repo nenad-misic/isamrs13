@@ -54,9 +54,9 @@ export class PassengerInfoProfileComponent implements OnInit {
 
               this.passengerApi.updateAttributes(pas.id,pas).subscribe(() => {console.log('Update pass')});
               this.reservation.updateAttributes(element.id,element).subscribe(()=> {console.log('Updated jo')});
-              this.invite = false;
 
             });
+            this.invite = false;
           }
         }
       });
