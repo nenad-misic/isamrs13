@@ -28,6 +28,7 @@ export class FlightAddFormComponent implements OnInit {
   errmsg: string;
   row: number;
   col: number;
+  prva: number;
   constructor(private flightApi: FlightApi,
               private loggedUserApi: LoggedUserApi,
               private airlineApi: AirlineApi,
@@ -60,6 +61,8 @@ export class FlightAddFormComponent implements OnInit {
       this.errmsg = 'End date needs to be higher than Start Date';
       return;
     }
+
+    if(this.prva>this.row*this.col || this.prva<0 || this.row*this.col<=0) return;
     console.log(this.new_flight);
 
     this.destinationApi.findOne({where: {name: this.cityStart}}).subscribe((destination: Destination) => {
@@ -75,6 +78,13 @@ export class FlightAddFormComponent implements OnInit {
                this.seatZ.row = i;
                this.seatZ.column = j;
                this.seatZ.flightId = flight.id;
+               if(this.prva>0){
+                 this.seatZ.prva = true;
+                 this.prva--;
+               }else{
+                 this.seatZ.prva = false;
+               }
+
                this.flightApi.createSeats(flight.id, this.seatZ).subscribe((seatCreated: Seat) => {
                  flight.seats.push(seatCreated.id);
                });

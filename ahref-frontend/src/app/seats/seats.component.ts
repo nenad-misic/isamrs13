@@ -93,6 +93,16 @@ export class SeatsComponent implements OnInit {
     return false;
   }
 
+
+  seatPrva(row: number, col: number) {
+    for (let i = 0; i < this.seatlist.length; i++) {
+      if (this.seatlist[i].row === row && this.seatlist[i].column === col && this.seatlist[i].prva) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   seatClicked(row: number, col: number): void {
     for (let i = 0; i < this.seatlist.length; i++) {
       if (this.seatlist[i].row === row && this.seatlist[i].column === col ) {
@@ -162,4 +172,5 @@ export class SeatsComponent implements OnInit {
 
     });
   }
+
 }

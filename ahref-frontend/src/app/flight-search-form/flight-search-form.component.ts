@@ -15,7 +15,6 @@ export class FlightSearchFormComponent implements OnInit {
   startDest = '';
   endDest = '';
   startDate: Date;
-  endDate: Date;
   searchResult: Flight[] = [];
   constructor(private flightApi: FlightApi,
               private destinationApi: DestinationApi,
@@ -53,14 +52,10 @@ export class FlightSearchFormComponent implements OnInit {
                     searchResult2.forEach((endE) => {
                   console.log(flightE);
                   let dejt = true;
-                  if(this.startDate){
-                    if(flightE.startTime < new Date(this.startDate).getTime()){
-                      dejt = false;
-                    }
-                  }
 
+                  console.log(new Date(flightE.startTime).getDay() + ' DAY ' + new Date(flightE.startTime).getDate() + ' DATE ' + new Date(flightE.startTime).getMonth() + ' MONTH ');
                   if(this.startDate){
-                    if(flightE.endTime > new Date(this.endDate).getTime()){
+                    if(new Date(flightE.startTime).getDate() !=  new Date(this.startDate).getDate() || new Date(flightE.startTime).getMonth() !=  new Date(this.startDate).getMonth()){
                       dejt = false;
                     }
                   }

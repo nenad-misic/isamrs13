@@ -92,8 +92,6 @@ ds.automigrate('sFlight', function(err){
 		
 		
 		ds.automigrate('sSeat', function(err){
-	
-	
 		app.models.Seat.find(function(err,model2){
 			
 			model2.forEach(function(seat){

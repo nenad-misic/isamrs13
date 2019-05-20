@@ -7,6 +7,7 @@ declare var Object: any;
 export interface SeatInterface {
   "row": number;
   "column": number;
+  "prva": boolean;
   "id"?: any;
   "flightId"?: any;
   flight?: Flight;
@@ -15,6 +16,7 @@ export interface SeatInterface {
 export class Seat implements SeatInterface {
   "row": number;
   "column": number;
+  "prva": boolean;
   "id": any;
   "flightId": any;
   flight: Flight;
@@ -58,6 +60,10 @@ export class Seat implements SeatInterface {
         "column": {
           name: 'column',
           type: 'number'
+        },
+        "prva": {
+          name: 'prva',
+          type: 'boolean'
         },
         "id": {
           name: 'id',

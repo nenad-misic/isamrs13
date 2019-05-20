@@ -15,7 +15,7 @@ export class AirlineDetailProfileComponent implements OnInit {
 
   profile: Airline;
   profile_new: Airline;
-  readOnly = true;
+  adminRead = false;
 
   constructor(private airlineService: AirlineApi,
               private route: ActivatedRoute,
@@ -43,7 +43,7 @@ export class AirlineDetailProfileComponent implements OnInit {
       this.profile_new.rating = this.profile.rating;
       this.profile_new.numOfRates = this.profile.numOfRates;
 
-        this.readOnly = !(this.userApi.getCachedCurrent() != null && this.profile.loggedUserId === this.userApi.getCachedCurrent().id);
+        this.adminRead = this.userApi.getCachedCurrent() != null && this.profile.loggedUserId === this.userApi.getCachedCurrent().id;
       }
     );
 

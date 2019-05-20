@@ -18,7 +18,7 @@ export class FlightDetailProfileComponent implements OnInit {
   flight: Flight;
   startDate: Date;
   endDate: Date;
-  readOnly: boolean;
+  adminRead: boolean;
   reserveBul: boolean;
   errmsg: string;
 
@@ -56,14 +56,12 @@ export class FlightDetailProfileComponent implements OnInit {
 
       });
 
-      this.reserveBul = this.loggedUserApi.getCachedCurrent() != null && (this.loggedUserApi.getCachedCurrent().type =='airlineAdmin' || this.loggedUserApi.getCachedCurrent().type =='regUser');
 
       this.airlineApi.findById(flight.airlineId).subscribe((airline: Airline) => {
-        if (this.loggedUserApi.getCachedCurrent() != null && airline.loggedUserId === this.loggedUserApi.getCachedCurrent().id) {
-          this.readOnly = false;
-        } else {
-          this.readOnly = true;
-        }
+        this.adminRead = this.loggedUserApi.getCachedCurrent() != null && airline.loggedUserId === this.loggedUserApi.getCachedCurrent().id;
+        console.log(this.loggedUserApi.getCachedCurrent().id == flight.airlineId);
+        this.reserveBul = this.loggedUserApi.getCachedCurrent() != null && (this.loggedUserApi.getCachedCurrent().id == airline.loggedUserId || this.loggedUserApi.getCachedCurrent().type =='regUser');
+
       });
     });
   }

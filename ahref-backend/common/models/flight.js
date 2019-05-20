@@ -3,6 +3,28 @@ var flag = true;
 var flagUpdate = true;
 
 module.exports = function(Flight) {
+	
+	Flight.afterRemote('*.__create__seats', function(ctx, modelInstance, next) {
+		
+    var sqlSeat = Flight.app.models.sSeat;
+	var sqlFlight = Flight.app.models.sFlight;
+	
+	sqlFlight.find(function(err, model){
+    if(err) throw err;
+    model.forEach(function(flight){
+		if(flight.mongoId == modelInstance.flightId){
+		 sqlSeat.create({mongoId: modelInstance.id,sFlightId: flight.id}).then((succ) => {
+			 console.log('Sit kreiran je');
+		next();
+		});
+		}
+		
+    });
+});
+   
+  });
+  
+  
  Flight.beforeRemote('deleteById',
       function(ctx, model, next) {
         flag = true;
@@ -20,10 +42,12 @@ module.exports = function(Flight) {
         next(e);
       });
     });
+	
   Flight.afterRemote('**', function(ctx, modelInstance, next)  {
     console.log('Flight remote method: ' + ctx.method.name);
     next();
   });
+  
 };
 
 function doDelete(Flight, ctx, model, next, errorCallback) {
@@ -39,14 +63,14 @@ function doDelete(Flight, ctx, model, next, errorCallback) {
     isolationLevel: sqlFlightReservation.Transaction.READ_COMMITTED,
   }, function(err, tx) {
     if (err) errorCallback(err);
-    // lock car for update
+    // lock flight for update
     postgres.connector.execute(
       'SELECT * FROM sFlight WHERE mongoId = $1 FOR UPDATE;'
       , [ctx.req.params.id], function(err, data) {
         sFlight.findOne({where: {mongoId: ctx.req.params.id}}).then((flight)=>{
 			
 		  sSeat.find({where: {sFlightId: flight.id},}).then((seats)=> {
-			
+			var del = seats.length;
 			seats.forEach((seat)=>{
 			
           sqlFlightReservation.find({
@@ -54,6 +78,7 @@ function doDelete(Flight, ctx, model, next, errorCallback) {
           }).then((data)=> {
 			  
             var cnt = data.length;
+			console.log('CNT je ',cnt, ' a flag ', flag)
             if ((cnt > 0 || err) && flag) {
                 flag = false;
                   tx.rollback(function(err) {
@@ -64,9 +89,10 @@ function doDelete(Flight, ctx, model, next, errorCallback) {
                     error.statusCode = error.status = 404;
                     errorCallback(error);
                   });
-              }
-			  
-            if (cnt === 0 && flag) {
+		    }
+			del--;
+			   if (del == 0 && flag) {
+				console.log('CNT je 0');
               sFlight.deleteById(flight.id)
                 .then((res) => {
                   tx.commit(function(err) {
@@ -76,15 +102,18 @@ function doDelete(Flight, ctx, model, next, errorCallback) {
                   });
                 });
             }
+            
           });
 		  });
+		  
+		 
         });
 		});
       });
   });
 }
 
-function doUpdate(Car, ctx, model, next, errorCallbackUpdate) {
+function doUpdate(Flight, ctx, model, next, errorCallbackUpdate) {
  var sqlFlightReservation = Flight.app.models.FlightReservation;
   
   var sFlight = Flight.app.models.sFlight;
@@ -96,7 +125,7 @@ function doUpdate(Car, ctx, model, next, errorCallbackUpdate) {
     isolationLevel: sqlFlightReservation.Transaction.READ_COMMITTED,
   }, function(err, tx) {
     if (err) errorCallback(err);
-    // lock car for update
+    // lock flight for update
     postgres.connector.execute(
       'SELECT * FROM sFlight WHERE mongoId = $1 FOR UPDATE;'
       , [ctx.req.params.id], function(err, data) {
