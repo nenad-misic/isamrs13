@@ -41,24 +41,24 @@ export class HotelAddFormComponent implements OnInit {
   addHotel() {
     this.userTypeService.findOne({where: {email: this.email}}).subscribe((user: LoggedUser) => {
       if (user) {
-        if (user.type === "hotelAdmin" && !user.hotel) {
+        if (user.type === 'hotelAdmin' && !user.hotel) {
           this.new_hotel.loggedUserId = user.id;
-          this.service.create(this.new_hotel).subscribe((hotel: Hotel) => {
-            if (!hotel) { console.log(status);
-            
-            this.userTypeService.updateHotel(user.id, this.new_hotel).subscribe(() => {
-              this.toastr.success(this.new_hotel.name, 'Hotel added');
-              this.new_hotel = new Hotel();
-              const priceList: HPriceList = new HPriceList();
-              priceList.hotelId = this.new_hotel.id;
-              this.service.createPriceList(this.new_hotel.id, priceList);
-            }, (err) => {
-              this.toastr.error(err.message, 'ERROR');
-              this.new_hotel = new Hotel();
+          this.userTypeService.createHotel(this.userTypeService.getCachedCurrent().id, this.new_hotel).subscribe((hotel: Hotel) => {
+            if (!hotel) console.log(status);
+
+            this.toastr.success(this.new_hotel.name, 'Hotel added');
+            this.new_hotel = hotel;
+            const priceList: HPriceList = new HPriceList();
+            priceList.hotelId = this.new_hotel.id;
+            this.service.createPriceList(this.new_hotel.id, priceList).subscribe((a) => {
+                console.log(a);
+                this.new_hotel = new Hotel();
+              }, (err) => {
+                this.toastr.error(err.message, 'ERROR - 57');
             });
-    
-          }}, (err) => {
-            this.toastr.error(err.message, 'ERROR');
+
+          }, (err) => {
+            this.toastr.error(err.message, 'ERROR - 65');
             this.new_hotel = new Hotel();
           });
         }

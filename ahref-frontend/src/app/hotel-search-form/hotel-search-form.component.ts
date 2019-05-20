@@ -47,9 +47,8 @@ export class HotelSearchFormComponent implements OnInit {
     this.destinationApi.find({where: filter}).subscribe((searchResult: Destination[]) => {
       this.searchResult = [];
       searchResult.forEach((element) => {
-        this.hotelService.find({include: 'rooms'}).subscribe((hotelSearchResult: Hotel[]) => {
+        this.hotelService.find({where: {destinationId: element.id}, include: 'rooms'}).subscribe((hotelSearchResult: Hotel[]) => {
           hotelSearchResult.forEach((element1) => {
-            if (element1.destinationId === element.id) {
               if (this.hotelname) {
                 if (this.hotelname === element1.name) {
                   element1.rooms.forEach((room: Room) => {
@@ -87,7 +86,6 @@ export class HotelSearchFormComponent implements OnInit {
 
                 });
               }
-            }
           });
         });
       });

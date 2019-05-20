@@ -1,0 +1,24 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Price management</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form (ngSubmit)="addPriceClicked()">
+      <mat-form-field>
+        <input matInput [(ngModel)]="carType" placeholder="Car type" name="carType">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput [(ngModel)]="price" placeholder="Price" name="price" type="number">
+      </mat-form-field>
+
+      <button mat-button>Add price item</button>
+    </form>
+    <mat-card *ngFor="let p of prices" matTooltip="Delete price item." (click)="deletePriceClicked(p)">
+      <mat-card-subtitle>{{p.carType}}</mat-card-subtitle>
+      <mat-card-content>
+        Price: {{p.price}}$
+      </mat-card-content>
+    </mat-card>
+  </mat-card-content>
+</mat-card>

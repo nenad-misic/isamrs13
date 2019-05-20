@@ -30,7 +30,7 @@ export class RentacarDetailProfileComponent implements OnInit {
 
   ngOnInit() {
     const id = this.route.snapshot.params['id'];
-    this.rentacarService.findOne({where: {id: id}}).subscribe((service: RACService) => {
+    this.rentacarService.findOne({where: {id: id}, include: 'priceList'}).subscribe((service: RACService) => {
         this.profile = service;
         this.profile_new = new RACService();
         this.profile_new.id = this.profile.id;
