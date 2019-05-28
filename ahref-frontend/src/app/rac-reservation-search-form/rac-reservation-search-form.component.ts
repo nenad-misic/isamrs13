@@ -23,6 +23,8 @@ export class RacReservationSearchFormComponent implements OnInit {
 
   searchResult: Car[] = [];
 
+
+  types = [];
   @Input()
   racId: string;
 
@@ -37,8 +39,14 @@ export class RacReservationSearchFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.destinationApi.find().subscribe((searchResult) => {
-      this.destinations = searchResult;
+    this.racServiceApi.findById(this.racId, {include: ['branchOffices', 'cars']}).subscribe((searchResult: RACService) => {
+      console.log('init');
+      this.destinations = searchResult.branchOffices;
+      searchResult.cars.forEach((car: Car) => {
+        if ( this.types.indexOf(car.carType) === -1 ) {
+          this.types.push(car.carType);
+        }
+      });
     });
   }
 

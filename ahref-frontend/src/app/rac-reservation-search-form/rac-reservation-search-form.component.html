@@ -6,7 +6,11 @@
     </mat-form-field>
 
     <mat-form-field>
-      <input list="destinations" matInput required [(ngModel)]="startDestination" placeholder="Start destination" name="startDestination">
+      <mat-label>Start destination</mat-label>
+      <mat-select [(value)]="startDestination">
+        <mat-option>None</mat-option>
+        <mat-option *ngFor="let d of destinations" value="{{d.address}}">{{d.address}}</mat-option>
+      </mat-select>
     </mat-form-field>
 
     <mat-form-field>
@@ -14,12 +18,22 @@
     </mat-form-field>
 
     <mat-form-field>
-      <input list="destinations" matInput required [(ngModel)]="endDestination" placeholder="End destination" name="endDestination">
+      <mat-label>End destination</mat-label>
+      <mat-select [(value)]="endDestination">
+        <mat-option>None</mat-option>
+        <mat-option *ngFor="let d of destinations" value="{{d.address}}">{{d.address}}</mat-option>
+      </mat-select>
     </mat-form-field>
 
     <mat-form-field>
-      <input matInput required [(ngModel)]="carType" placeholder="Car type" name="carType">
+      <mat-label>Car type</mat-label>
+      <mat-select [(value)]="carType">
+        <mat-option>None</mat-option>
+        <mat-option *ngFor="let t of types" value="{{t}}">{{t}}</mat-option>
+      </mat-select>
     </mat-form-field>
+
+
 
     <mat-form-field>
       <input matInput required [(ngModel)]="numOfSeats" type="number" placeholder="Number of seats" name="numOfSeats">
@@ -29,7 +43,11 @@
 
 
     <datalist id="destinations">
-      <option *ngFor="let d of destinations" value="{{d.city}}, {{d.state}}">
+      <option *ngFor="let d of destinations" value="{{d.address}}">
+    </datalist>
+
+    <datalist id="carType">
+      <option *ngFor="let t of types" value="{{t}}">
     </datalist>
   </form>
 </div>
