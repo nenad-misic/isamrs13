@@ -13,6 +13,7 @@ export interface MRoomReservationInterface {
   "roomRate": number;
   "hotelRate": number;
   "sid": number;
+  "price"?: number;
   "id"?: any;
   "roomId"?: any;
   "loggedUserId"?: any;
@@ -28,6 +29,7 @@ export class MRoomReservation implements MRoomReservationInterface {
   "roomRate": number;
   "hotelRate": number;
   "sid": number;
+  "price": number;
   "id": any;
   "roomId": any;
   "loggedUserId": any;
@@ -93,6 +95,10 @@ export class MRoomReservation implements MRoomReservationInterface {
           name: 'sid',
           type: 'number',
           default: -1
+        },
+        "price": {
+          name: 'price',
+          type: 'number'
         },
         "id": {
           name: 'id',

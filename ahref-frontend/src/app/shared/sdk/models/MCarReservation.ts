@@ -12,7 +12,7 @@ export interface MCarReservationInterface {
   "carRate": number;
   "racRate": number;
   "sid": number;
-  "price": number;
+  "price"?: number;
   "id"?: any;
   "carId"?: any;
   "loggedUserId"?: any;
@@ -95,8 +95,7 @@ export class MCarReservation implements MCarReservationInterface {
         },
         "price": {
           name: 'price',
-          type: 'number',
-          default: -1
+          type: 'number'
         },
         "id": {
           name: 'id',
