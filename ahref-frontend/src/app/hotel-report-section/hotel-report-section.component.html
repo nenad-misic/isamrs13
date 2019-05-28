@@ -1,0 +1,114 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Hotel report</mat-card-title>
+    <mat-card-subtitle>{{hotel.name}}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+
+      <span>
+        <button mat-button class="selected" *ngIf="tab == 0"  (click)="tab = 0">Hotel income</button>
+        <button mat-button class="noselected" *ngIf="tab != 0"  (click)="tab = 0">Hotel income</button>
+        <button mat-button class="selected" *ngIf="tab == 1"   (click)="tab = 1">Room rating</button>
+        <button mat-button class="noselected" *ngIf="tab != 1"   (click)="tab = 1">Room rating</button>
+        <button mat-button class="selected" *ngIf="tab == 2" (click)="tab = 2">Charts</button>
+        <button mat-button class="noselected" *ngIf="tab != 2"  (click)="tab = 2">Charts</button>
+        <button mat-button (click)="onBack()">Back</button>
+      </span>
+
+
+    <div class="content" *ngIf="tab==1">
+
+      <table>
+        <tr><th>Room</th><th>Rating</th></tr>
+        <tr *ngFor="let room of roomRatings" matTooltip="See details of the room" [routerLink]="['/roomdetail', room.id]"><td>Floor: {{room.floor}} Beds: {{room.numOfBeds}}}}</td><td>
+          <bar-rating [(rate)]="room.rating" [max]="4" [theme]="'horizontal'" [showText]="true" [readOnly]="true"
+                      [titles]="['Bad', 'Mediocre' , 'Good', 'Awesome']"></bar-rating>
+        </td></tr>
+      </table></div>
+
+    <mat-grid-list cols="2" *ngIf="tab==0">
+      <mat-grid-tile>
+        <div class="content">
+          <h3>Hotel rating:</h3>
+          <bar-rating [(rate)]="hotel.rating" [max]="4" [theme]="'horizontal'" [showText]="true" [readOnly]="true"
+                      [titles]="['Bad', 'Mediocre' , 'Good', 'Awesome']"></bar-rating>
+        </div>
+      </mat-grid-tile>
+
+
+      <mat-grid-tile>
+        <div class="content">
+          <h3>Hotel income in requested period of time:</h3>
+          <form>
+            <mat-form-field>
+              <input matInput type="date" [(ngModel)]="startDate" required placeholder="Start date" name="startDate">
+            </mat-form-field>
+
+            <mat-form-field>
+              <input matInput type="date" [(ngModel)]="endDate" required placeholder="End date" name="endDate">
+            </mat-form-field>
+
+
+            <button mat-button (click)="getIncome()">Show results</button>
+
+            <h3 *ngIf="income >= 0">Income: {{income | number : '1.2-2'}}$</h3>
+            <h4 *ngIf="income >= 0">Period: {{startDateValid}} - {{endDateValid}}</h4>
+          </form>
+        </div>
+      </mat-grid-tile>
+    </mat-grid-list>
+
+    <mat-grid-list cols="2" *ngIf="tab==2">
+      <mat-grid-tile colspan="2">
+        <div class="graphic">
+          <div class="flex-item">
+            <div style="display: block;">
+              <canvas baseChart
+                      [datasets]="lineChartDataDays"
+                      [labels]="lineChartLabelsDays"
+                      [options]="lineChartOptions"
+                      [colors]="lineChartColors"
+                      [legend]="lineChartLegend"
+                      [chartType]="lineChartType"></canvas>
+            </div>
+          </div>
+        </div>
+      </mat-grid-tile>
+
+
+      <mat-grid-tile colspan="2">
+        <div class="graphic">
+          <div class="flex-item">
+            <div style="display: block;">
+              <canvas baseChart
+                      [datasets]="lineChartDataWeeks"
+                      [labels]="lineChartLabelsWeeks"
+                      [options]="lineChartOptions"
+                      [colors]="lineChartColors"
+                      [legend]="lineChartLegend"
+                      [chartType]="lineChartType"></canvas>
+            </div>
+          </div>
+        </div>
+      </mat-grid-tile>
+
+
+      <mat-grid-tile colspan="2">
+        <div class="graphic">
+          <div class="flex-item">
+            <div style="display: block;">
+              <canvas baseChart
+                      [datasets]="lineChartDataMonths"
+                      [labels]="lineChartLabelsMonths"
+                      [options]="lineChartOptions"
+                      [colors]="lineChartColors"
+                      [legend]="lineChartLegend"
+                      [chartType]="lineChartType"></canvas>
+            </div>
+          </div>
+        </div>
+      </mat-grid-tile>
+
+    </mat-grid-list>
+  </mat-card-content>
+</mat-card>

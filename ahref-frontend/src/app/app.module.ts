@@ -109,6 +109,7 @@ import { QuickRoomDetailsComponent } from './quick-room-details/quick-room-detai
 import { RacPriceSectionComponent } from './rac-price-section/rac-price-section.component';
 import { RacReportSectionComponent } from './rac-report-section/rac-report-section.component';
 import { RacBranchOfficeSectionComponent } from './rac-branch-office-section/rac-branch-office-section.component';
+import { HotelReportSectionComponent } from './hotel-report-section/hotel-report-section.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -185,7 +186,8 @@ import { RacBranchOfficeSectionComponent } from './rac-branch-office-section/rac
     QuickRoomDetailsComponent,
     RacPriceSectionComponent,
     RacReportSectionComponent,
-    RacBranchOfficeSectionComponent
+    RacBranchOfficeSectionComponent,
+    HotelReportSectionComponent
   ],
   imports: [
     BrowserModule,
