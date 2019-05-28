@@ -15,11 +15,11 @@
       <button mat-button (click)="onCancelClick()" *ngIf="cancelable">Cancel reservation</button>
       <hr>
       <p>Car rating</p>
-      <bar-rating [(rate)]="res.carRate" [max]="4" [theme]="'horizontal'" [showText]="true" [readOnly]="res.carRate != -1"
+      <bar-rating [(rate)]="resc.carRate" [max]="4" [theme]="'horizontal'" [showText]="true" [readOnly]="res.carRate != -1"
                   [titles]="['Bad', 'Mediocre' , 'Good', 'Awesome']"></bar-rating>
       <hr>
       <p>Rent a car service rating</p>
-      <bar-rating [(rate)]="res.racRate" [max]="4" [theme]="'horizontal'" [showText]="true" [readOnly]="res.racRate != -1"
+      <bar-rating [(rate)]="resc.racRate" [max]="4" [theme]="'horizontal'" [showText]="true" [readOnly]="res.racRate != -1"
                   [titles]="['Bad', 'Mediocre' , 'Good', 'Awesome']"></bar-rating>
     </div>
   </mat-card-content>

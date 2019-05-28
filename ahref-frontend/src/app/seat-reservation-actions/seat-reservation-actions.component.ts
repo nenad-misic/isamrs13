@@ -23,7 +23,7 @@ export class SeatReservationActionsComponent implements OnInit {
 
   startTime;
   endTime;
-
+  resc;
   constructor(
     public dialogRef: MatDialogRef<SeatReservationActionsComponent>,
     @Inject(MAT_DIALOG_DATA) public res: MFlightReservation,
@@ -35,7 +35,8 @@ export class SeatReservationActionsComponent implements OnInit {
 
 
   ngOnInit() {
-    this.flightApi.findById(this.res.id).subscribe((flight: Flight) => {
+    this.resc = JSON.parse(JSON.stringify(this.res));
+    this.flightApi.findById(this.res.flightId).subscribe((flight: Flight) => {
       this.startTime = flight.startTime;
       this.endTime = flight.endTime;
       if (new Date(flight.startTime).getTime() > ((new Date()).getTime() + 10800000)) {
@@ -52,13 +53,14 @@ export class SeatReservationActionsComponent implements OnInit {
   }
 
   onSave() {
-    if (this.res.flightRate === -1 || this.res.airlineRate === -1) {
+    if (this.resc.flightRate === -1 || this.resc.airlineRate === -1) {
       this.toastr.error('Please input rating before saving!');
-    } else if (this.endTime < new Date().getTime()) {
+    } else if (this.endTime > new Date().getTime()) {
       this.toastr.error('It is to early for rating!');
     } else {
-      this.mFlightReservationApi.updateAttributes(this.res.id, this.res).subscribe((response) => {
+      this.mFlightReservationApi.updateAttributes(this.resc.id, this.resc).subscribe((response) => {
           this.toastr.success('Reservation successfully saved', 'Success');
+          this.res = this.resc;
           this.flightApi.findById(this.res.flightId).subscribe((flight: Flight) => {
             const uk = flight.numOfRates * flight.rating;
             flight.numOfRates += 1;

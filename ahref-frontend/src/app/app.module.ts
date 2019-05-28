@@ -222,6 +222,7 @@ import { RacBranchOfficeSectionComponent } from './rac-branch-office-section/rac
     RentacarDetailProfileComponent,
     CarReservationActionsComponent,
     RoomReservationActionsComponent,
+    SeatReservationActionsComponent,
     MyReservationsComponent
   ],
   providers: [
