@@ -1,0 +1,17 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Branch office management</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form (ngSubmit)="addBranchOfficeClicked()">
+      <mat-form-field>
+        <input matInput [(ngModel)]="branchAddress" placeholder="Branch office address" name="branchAddress">
+      </mat-form-field>
+
+      <button mat-button>Add branch office</button>
+    </form>
+    <mat-card *ngFor="let b of branches" matTooltip="Delete branch office." (click)="deleteBranchClicked(b)">
+      <mat-card-subtitle>{{b.address}}</mat-card-subtitle>
+    </mat-card>
+  </mat-card-content>
+</mat-card>

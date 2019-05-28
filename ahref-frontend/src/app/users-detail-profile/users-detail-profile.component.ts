@@ -34,7 +34,7 @@ export class UsersDetailProfileComponent implements OnInit {
 
     this.friendship.find().subscribe((friendships: Friendship[])=>{
       friendships.forEach((frnz)=>{
-        if(frnz.endUserId === id || frnz.startUserId === id){
+        if((frnz.endUserId === id && frnz.startUserId===this.userApi.getCachedCurrent().id) || (frnz.startUserId === id && frnz.endUserId===this.userApi.getCachedCurrent().id)){
           this.add = false;
         }
       });

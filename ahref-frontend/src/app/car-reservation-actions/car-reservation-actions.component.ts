@@ -12,6 +12,7 @@ import {ToastrService} from 'ngx-toastr';
 export class CarReservationActionsComponent implements OnInit {
 
   cancelable: boolean;
+  resc;
   constructor(private mcarReservationApi: MCarReservationApi,
               private loggedUserApi: LoggedUserApi,
               private carapi: CarApi,
@@ -22,6 +23,7 @@ export class CarReservationActionsComponent implements OnInit {
 
 
   ngOnInit() {
+    this.resc = JSON.parse(JSON.stringify(this.res));
     if (new Date(this.res.startDate).getTime() > ((new Date()).getTime() + 172800000)) {
       this.cancelable = true;
     } else {
@@ -41,13 +43,14 @@ export class CarReservationActionsComponent implements OnInit {
   }
 
   onSave() {
-    if (this.res.racRate === -1 || this.res.carRate === -1) {
+    if (this.resc.racRate === -1 || this.resc.carRate === -1) {
       this.toastr.error('Please input rating before saving!');
-    } else if (this.res.endDate.getTime() < new Date().getTime()) {
+    } else if (new Date(this.res.endDate).getTime() > new Date().getTime()) {
       this.toastr.error('It is to early for rating!');
     } else {
-      this.mcarReservationApi.updateAttributes(this.res.id, this.res).subscribe((response) => {
+      this.mcarReservationApi.updateAttributes(this.res.id, this.resc).subscribe((response) => {
           this.toastr.success('Reservation successfully saved', 'Success');
+          this.res = this.resc;
           this.carapi.findById(this.res.carId).subscribe((car: Car) => {
             const uk = car.numOfRates * car.rating;
             car.numOfRates += 1;

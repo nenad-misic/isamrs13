@@ -27,6 +27,12 @@ export class FlightSearchFormComponent implements OnInit {
   ngOnInit() {
   }
 
+  doSearchTemp(): void {
+    this.flightApi.find().subscribe((result: Flight[]) =>
+    {
+      this.data.changeSearchParams(result);
+    });
+  }
   doSearch(): void {
     //if (!this.startDate || !this.endDate) { return; }
     const filter = {};

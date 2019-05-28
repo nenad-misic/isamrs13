@@ -3,12 +3,12 @@ var flag = true;
 var flagUpdate = true;
 
 module.exports = function(Flight) {
-	
+
 	Flight.afterRemote('*.__create__seats', function(ctx, modelInstance, next) {
-		
+
     var sqlSeat = Flight.app.models.sSeat;
 	var sqlFlight = Flight.app.models.sFlight;
-	
+
 	sqlFlight.find(function(err, model){
     if(err) throw err;
     model.forEach(function(flight){
@@ -18,13 +18,13 @@ module.exports = function(Flight) {
 		next();
 		});
 		}
-		
+
     });
 });
-   
+
   });
-  
-  
+
+
  Flight.beforeRemote('deleteById',
       function(ctx, model, next) {
         flag = true;
@@ -42,18 +42,18 @@ module.exports = function(Flight) {
         next(e);
       });
     });
-	
+
   Flight.afterRemote('**', function(ctx, modelInstance, next)  {
     console.log('Flight remote method: ' + ctx.method.name);
     next();
   });
-  
+
 };
 
 function doDelete(Flight, ctx, model, next, errorCallback) {
   // models
   var sqlFlightReservation = Flight.app.models.FlightReservation;
-  
+
   var sFlight = Flight.app.models.sFlight;
   var sSeat = Flight.app.models.sSeat;
   // data source
@@ -68,15 +68,15 @@ function doDelete(Flight, ctx, model, next, errorCallback) {
       'SELECT * FROM sFlight WHERE mongoId = $1 FOR UPDATE;'
       , [ctx.req.params.id], function(err, data) {
         sFlight.findOne({where: {mongoId: ctx.req.params.id}}).then((flight)=>{
-			
+
 		  sSeat.find({where: {sFlightId: flight.id},}).then((seats)=> {
 			var del = seats.length;
 			seats.forEach((seat)=>{
-			
+
           sqlFlightReservation.find({
             where: {sSeatId: seat.id},
           }).then((data)=> {
-			  
+
             var cnt = data.length;
 			console.log('CNT je ',cnt, ' a flag ', flag)
             if ((cnt > 0 || err) && flag) {
@@ -102,20 +102,20 @@ function doDelete(Flight, ctx, model, next, errorCallback) {
                   });
                 });
             }
-            
+
           });
 		  });
-		  
-		 
+
+
         });
 		});
       });
   });
 }
 
-function doUpdate(Flight, ctx, model, next, errorCallbackUpdate) {
+function doUpdate(Flight, ctx, model, next, errorCallback) {
  var sqlFlightReservation = Flight.app.models.FlightReservation;
-  
+
   var sFlight = Flight.app.models.sFlight;
   var sSeat = Flight.app.models.sSeat;
   // data source
@@ -130,15 +130,15 @@ function doUpdate(Flight, ctx, model, next, errorCallbackUpdate) {
       'SELECT * FROM sFlight WHERE mongoId = $1 FOR UPDATE;'
       , [ctx.req.params.id], function(err, data) {
         sFlight.findOne({where: {mongoId: ctx.req.params.id}}).then((flight)=>{
-			
+
 		  sSeat.find({where: {sFlightId: flight.id},}).then((seats)=> {
-			
+
 			seats.forEach((seat)=>{
-			
+
           sqlFlightReservation.find({
             where: {sSeatId: seat.id},
           }).then((data)=> {
-			  
+
             var cnt = data.length;
             if ((cnt > 0 || err) && flag) {
                 flag = false;
@@ -151,12 +151,12 @@ function doUpdate(Flight, ctx, model, next, errorCallbackUpdate) {
                     errorCallback(error);
                   });
               }
-			  
+
             if (cnt === 0 && flagUpdate) {
               flagUpdate = false;
               next();
             }
-			
+
           });
 		  });
         });

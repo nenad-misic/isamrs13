@@ -1,9 +1,9 @@
 <mat-card>
   <mat-card-title>Info</mat-card-title>
   <mat-card-content>
-    <div><h4>Date created: </h4> <p>{{res.timeStamp | date}}</p></div>
-    <div><h4>Start date: </h4> <p>{{res.startDate | date}}</p></div>
-    <div><h4>End date: </h4> <p>{{res.endDate | date}}</p></div>
+    <div><h4>Flight id: </h4> <p>{{res.flightId}}</p></div>
+    <div><h4>Sear id: </h4> <p>{{res.seatId}}</p></div>
+    <div><h4>Reservation id: </h4> <p>{{res.id}}</p></div>
   </mat-card-content>
 </mat-card>
 
@@ -15,11 +15,11 @@
       <button mat-button (click)="onCancelClick()" *ngIf="cancelable">Cancel reservation</button>
       <hr>
       <p>Flight rating</p>
-      <bar-rating [(rate)]="res.flightRate" [max]="4" [theme]="'horizontal'" [showText]="true" [readOnly]="res.flightRate != -1"
+      <bar-rating [(rate)]="resc.flightRate" [max]="4" [theme]="'horizontal'" [showText]="true" [readOnly]="res.flightRate != -1"
                   [titles]="['Bad', 'Mediocre' , 'Good', 'Awesome']"></bar-rating>
       <hr>
       <p>Airline rating</p>
-      <bar-rating [(rate)]="res.airlineRate" [max]="4" [theme]="'horizontal'" [showText]="true" [readOnly]="res.airlineRate != -1"
+      <bar-rating [(rate)]="resc.airlineRate" [max]="4" [theme]="'horizontal'" [showText]="true" [readOnly]="res.airlineRate != -1"
                   [titles]="['Bad', 'Mediocre' , 'Good', 'Awesome']"></bar-rating>
     </div>
   </mat-card-content>

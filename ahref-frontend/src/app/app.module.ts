@@ -108,6 +108,7 @@ import { QuickRoomAddFormComponent } from './quick-room-add-form/quick-room-add-
 import { QuickRoomDetailsComponent } from './quick-room-details/quick-room-details.component';
 import { RacPriceSectionComponent } from './rac-price-section/rac-price-section.component';
 import { RacReportSectionComponent } from './rac-report-section/rac-report-section.component';
+import { RacBranchOfficeSectionComponent } from './rac-branch-office-section/rac-branch-office-section.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -183,7 +184,8 @@ import { RacReportSectionComponent } from './rac-report-section/rac-report-secti
     QuickRoomAddFormComponent,
     QuickRoomDetailsComponent,
     RacPriceSectionComponent,
-    RacReportSectionComponent
+    RacReportSectionComponent,
+    RacBranchOfficeSectionComponent
   ],
   imports: [
     BrowserModule,
@@ -220,6 +222,7 @@ import { RacReportSectionComponent } from './rac-report-section/rac-report-secti
     RentacarDetailProfileComponent,
     CarReservationActionsComponent,
     RoomReservationActionsComponent,
+    SeatReservationActionsComponent,
     MyReservationsComponent
   ],
   providers: [

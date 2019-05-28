@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {LoggedUser, MCarReservation, MFlightReservation, MRoomReservation} from '../shared/sdk/models';
-import {LoggedUserApi} from '../shared/sdk/services/custom';
+import {LoggedUserApi, MFlightReservationApi} from '../shared/sdk/services/custom';
 import {LoopBackConfig} from '../shared/sdk';
 import {API_VERSION} from '../shared/baseurl';
 import {MatDialog} from '@angular/material';
@@ -17,7 +17,7 @@ export class MyReservationsComponent implements OnInit {
 
   myCarReservations: MCarReservation[];
   myRoomReservations: MRoomReservation[];
-  myFlightReservations: MFlightReservation[];
+  myFlightReservations: MFlightReservation[] = [];
 
 
   public isCollapsedFlight = true;
@@ -26,9 +26,10 @@ export class MyReservationsComponent implements OnInit {
 
   displayedColumnsC: string[] = ['timeStamp', 'startDate', 'endDate', 'car'];
   displayedColumnsR: string[] = ['timeStamp', 'startDate', 'endDate', 'room'];
-  displayedColumnsF: string[] = ['timeStamp', 'startDate', 'endDate', 'seat'];
+  displayedColumnsF: string[] = ['flightId', 'seatId', 'id'];
 
   constructor(private userApi: LoggedUserApi,
+              private mFlightReservationApi: MFlightReservationApi,
               @Inject('baseURL') private baseURL,
               public dialog: MatDialog) {
     LoopBackConfig.setBaseURL(baseURL);
@@ -41,10 +42,23 @@ export class MyReservationsComponent implements OnInit {
     });
 
     this.userApi.getCurrent({include: 'mRoomReservations'}).subscribe((lu: LoggedUser) => {
-      console.log(lu.mRoomReservations);
       this.myRoomReservations = lu.mRoomReservations;
     });
+
+    this.mFlightReservationApi.find({where: {userId: this.userApi.getCachedCurrent().id}}).subscribe((results: MFlightReservation[]) => {
+      results.forEach((res) => {
+        this.myFlightReservations.push(res);
+        console.log(res);
+      });
+    });
+    this.mFlightReservationApi.find({where: {passengerId: this.userApi.getCachedCurrent().id}}).subscribe((results: MFlightReservation[]) => {
+      results.forEach((res) => {
+        this.myFlightReservations.push(res);
+      });
+    });
   }
+
+
 
 
   onClickedCar(row) {
@@ -73,6 +87,20 @@ export class MyReservationsComponent implements OnInit {
         this.myRoomReservations = this.myRoomReservations.filter(function(value, index, arr) {
           return value.id.toString() !== result;
         });
+      } else {
+        let indeksObrisanog = -1;
+        this.myRoomReservations = this.myRoomReservations.filter(function(value, index, arr) {
+          if ( value.id.toString === result ) {
+            indeksObrisanog = index;
+          }
+          return value.id.toString() !== result;
+        });
+        if (indeksObrisanog !== -1) {
+          this.mRoomReservationApi.find({where: {id: result}}).subscribe(res => {
+            this.myRoomReservations.splice(indeksObrisanog, 0, res);
+          });
+        }
+
       }
     });
 

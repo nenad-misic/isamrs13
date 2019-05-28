@@ -12,6 +12,7 @@ import {ToastrService} from 'ngx-toastr';
 export class RoomReservationActionsComponent implements OnInit {
 
   cancelable: boolean;
+  resc;
   constructor(
     public dialogRef: MatDialogRef<RoomReservationActionsComponent>,
     @Inject(MAT_DIALOG_DATA) public res: MRoomReservation,
@@ -23,6 +24,7 @@ export class RoomReservationActionsComponent implements OnInit {
 
 
   ngOnInit() {
+    this.resc = JSON.parse(JSON.stringify(this.res));
     if (new Date(this.res.startDate).getTime() > ((new Date()).getTime() + 172800000)) {
       this.cancelable = true;
     } else {
@@ -43,13 +45,14 @@ export class RoomReservationActionsComponent implements OnInit {
   }
 
   onSave() {
-    if (this.res.roomRate === -1 || this.res.hotelRate === -1) {
+    if (this.resc.roomRate === -1 || this.resc.hotelRate === -1) {
       this.toastr.error('Please input rating before saving!');
-    } else if (this.res.endDate.getTime() < new Date().getTime()) {
+    } else if (new Date(this.res.endDate).getTime() > new Date().getTime()) {
       this.toastr.error('It is to early for rating!');
     } else {
-      this.mRoomReservationApi.updateAttributes(this.res.id, this.res).subscribe((response) => {
+      this.mRoomReservationApi.updateAttributes(this.res.id, this.resc).subscribe((response) => {
           this.toastr.success('Reservation successfully saved', 'Success');
+          this.res = this.resc;
           this.roomApi.findById(this.res.roomId).subscribe((room: Room) => {
             const uk = room.numOfRates * room.rating;
             room.numOfRates += 1;
