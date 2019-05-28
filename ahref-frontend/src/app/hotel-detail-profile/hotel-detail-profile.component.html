@@ -48,6 +48,7 @@
       <button mat-button *ngIf="!readOnly" [routerLink]="['/quickreservations/:'+profile_new.id]">Quick reservations</button>
       <button mat-button (click)="onSaveClick()">Save changes</button>
       <button mat-button (click)="onDeleteClick()">Delete hotel</button>
+      <button mat-button [routerLink]="['/hotelreports/'+profile_new.id]">Reports</button>
     </mat-card-actions>
   </form>
   <app-room-add-form [hotel]="profile_new" *ngIf="!readOnly"></app-room-add-form>
