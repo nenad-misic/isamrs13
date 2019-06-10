@@ -107,6 +107,7 @@ function doReservation(Mflightreservation, ctx, model, next, errorCallback) {
       , [ctx.req.body.flightId], function(err, data) {
 		sFlight.findOne({where: {mongoId: ctx.req.body.flightId}}).then((flight)=>{
 		sSeat.findOne({where: {mongoId: ctx.req.body.seatId}}).then((seat)=>{
+          console.log(seat);
           sqlFlightReservation.find({where: {sSeatId: seat.id}}).then((data)=> {
 				
                 if ((data.length > 0 || err) && flag) {
