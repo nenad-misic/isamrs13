@@ -1,0 +1,24 @@
+<mat-card>
+  <mat-card-title>Discounts</mat-card-title>
+  <mat-card-content>
+    <form *ngIf="!readOnly">
+      <mat-form-field>
+        <input matInput required type="number" [(ngModel)]="new_discount.points" placeholder="Points" name="points">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput required type="number" [(ngModel)]="new_discount.percentage" placeholder="Percent discount" name="percentage">
+      </mat-form-field>
+    </form>
+    <span>
+      <button mat-button (click)="onBack()">Back</button>
+      <button mat-button *ngIf="!readOnly" (click)="onAddDiscount()">Add Discount</button>
+    </span>
+  </mat-card-content>
+
+  <mat-list>
+    <mat-list-item *ngFor="let discount of discounts">
+      <p>Points: {{discount.points}}, Discount: {{discount.percentage}}%</p>
+      <button mat-button *ngIf="!readOnly" (click)="onDeleteDiscount(discount)">Delete</button>
+    </mat-list-item>
+  </mat-list>
+</mat-card>

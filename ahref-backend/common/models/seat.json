@@ -16,7 +16,7 @@
     },
     "prva": {
       "type": "boolean",
-	  "required": true
+      "required": true
     }
   },
   "validations": [],

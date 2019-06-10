@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {LoggedUser, MCarReservation, MFlightReservation, MRoomReservation} from '../shared/sdk/models';
-import {LoggedUserApi, MFlightReservationApi} from '../shared/sdk/services/custom';
+import {LoggedUserApi, MFlightReservationApi, MRoomReservationApi} from '../shared/sdk/services/custom';
 import {LoopBackConfig} from '../shared/sdk';
 import {API_VERSION} from '../shared/baseurl';
 import {MatDialog} from '@angular/material';
@@ -30,6 +30,7 @@ export class MyReservationsComponent implements OnInit {
 
   constructor(private userApi: LoggedUserApi,
               private mFlightReservationApi: MFlightReservationApi,
+              private mRoomReservationApi: MRoomReservationApi,
               @Inject('baseURL') private baseURL,
               public dialog: MatDialog) {
     LoopBackConfig.setBaseURL(baseURL);

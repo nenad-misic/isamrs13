@@ -41,6 +41,7 @@ import {QuickCarSectionComponent} from '../quick-car-section/quick-car-section.c
 import {QuickCarSectionViewComponent} from '../quick-car-section-view/quick-car-section-view.component';
 import {QuickRoomDetailsComponent} from "../quick-room-details/quick-room-details.component";
 import {HotelReportSectionComponent} from "../hotel-report-section/hotel-report-section.component";
+import {DiscountSectionComponent} from "../discount-section/discount-section.component";
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent},
@@ -86,5 +87,6 @@ export const routes: Routes = [
   { path: 'quickroomdetails/:id', component: QuickRoomDetailsComponent },
   { path: 'quickflight', component: QuickFlightSectionComponent},
   { path: 'hotelreports/:id', component: HotelReportSectionComponent},
+  { path: 'discounts', component: DiscountSectionComponent},
   { path: '', redirectTo: '/home', pathMatch: 'full' }
 ];

@@ -168,5 +168,9 @@
   "QuickRoomReservation": {
     "dataSource": "MongoDB",
     "public": true
+  },
+  "Discount": {
+    "dataSource": "MongoDB",
+    "public": true
   }
 }
