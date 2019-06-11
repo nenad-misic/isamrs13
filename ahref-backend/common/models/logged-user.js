@@ -3,9 +3,40 @@ var config = require('../../server/config.json');
 var path = require('path');
 
 var flagCar = true;
+var flagCarDelete = true;
+var flagRoomDelete = true;
+var flagFlightDelete = true;
 var flagRoom = true;
 
 module.exports = function(Loggeduser) {
+
+  Loggeduser.bindQuick = function(luid, qrid, mcrid, cb) {
+    Loggeduser.findById(luid).then((user) => {
+      Loggeduser.app.models.quickCarReservation.findById(qrid).then((qr) => {
+        Loggeduser.app.models.MCarReservation.findById(mcrid).then((mr) => {
+          var mrc = mr;
+          Loggeduser.app.models.quickCarReservation.deleteById(qrid).then((del) => {
+            Loggeduser.app.models.MCarReservation.updateAll({id: mcrid}, {loggedUserId: luid}).then(() => {
+              cb(null, true);
+            });
+          })
+        })
+      })
+    });
+  };
+  
+  Loggeduser.remoteMethod('bindQuick', {
+    accepts: [
+      {arg: 'luid', type: 'string', required: true},
+      {arg: 'qrid', type: 'string', required: true},
+      {arg: 'mcrid', type: 'string', required: true},
+    ],
+    http: {path: '/bindQuick', verb: 'post'},
+    returns: {type: 'object', arg: 'retval'},
+  });
+
+
+
   Loggeduser.afterRemote('**', function(ctx, modelInstance, next)  {
     console.log('Loggeduser remote method: ' + ctx.method.name);
     next();
@@ -20,6 +51,71 @@ module.exports = function(Loggeduser) {
       next(e);
     });
   });
+
+  Loggeduser.beforeRemote('*.__destroyById__mCarReservations', function(ctx,model,next) {
+    flagCarDelete = true;
+    var Mcarreservation = Loggeduser.app.models.MCarReservation;
+    undoCarReservation(Mcarreservation, ctx, model, next, function(e) {
+      flagCarDelete = false;
+      next(e);
+    })
+    
+  });
+
+
+  function undoCarReservation(Mcarreservation, ctx, model, next, errorCallback) {
+    var sqlCarReservation = Mcarreservation.app.models.CarReservation;
+    Mcarreservation.findById(ctx.req.params.fk).then((obj) => {
+      console.log(obj);
+      if(obj){
+        sqlCarReservation.deleteById(obj.sid);
+        next();
+      }
+    })
+  }
+
+  Loggeduser.beforeRemote('*.__destroyById__mRoomReservations', function(ctx,model,next) {
+    flagRoomDelete = true;
+    var Mroomreservation = Loggeduser.app.models.MRoomReservation;
+    undoRoomReservation(Mroomreservation, ctx, model, next, function(e) {
+      flagRoomDelete = false;
+      next(e);
+    })
+    
+  });
+
+
+  function undoRoomReservation(Mroomreservation, ctx, model, next, errorCallback) {
+    var sqlRoomReservation = Mroomreservation.app.models.RoomReservation;
+    Mroomreservation.findById(ctx.req.params.fk).then((obj) => {
+      if(obj){
+        sqlRoomReservation.deleteById(obj.sid);
+        next();
+      }
+    })
+  }
+
+
+  Loggeduser.beforeRemote('*.__destroyById__mFlightReservations', function(ctx,model,next) {
+    flagFlightDelete = true;
+    var Mflightreservation = Loggeduser.app.models.MFlightReservation;
+    undoFlightReservation(Mflightreservation, ctx, model, next, function(e) {
+      flagFlightDelete = false;
+      next(e);
+    })
+    
+  });
+
+
+  function undoFlightReservation(Mflightreservation, ctx, model, next, errorCallback) {
+    var sqlFlightReservation = Mflightreservation.app.models.FlightReservation;
+    Mflightreservation.findById(ctx.req.params.fk).then((obj) => {
+      if(obj){
+        sqlFlightReservation.deleteById(obj.sid);
+        next();
+      }
+    })
+  }
 
   Loggeduser.beforeRemote('*.__create__mRoomReservations', function(ctx,model,next) {
     console.log('here');
@@ -427,6 +523,39 @@ function doCarReservation(Mcarreservation, ctx, model, next, errorCallback) {
 
         next();
     });
+}
+
+function calculateCarPrice(Loggeduser, ctx, callback) {
+  var models = Loggeduser.app.models;
+  var start = ctx.req.body.startDate;
+  var end = ctx.req.body.endDate;
+  var days = (end - start)/(24*60*60*1000)
+
+  models.Car.findOne({where: {id: ctx.req.body.carId}}).then((car) => {
+    //console.log(car);
+    models.RACService.findOne({where: {id: car.rACServiceId}}).then((racService) => {
+      //console.log(racService);
+      models.RPriceList.findOne({where: {rACServiceId: racService.id}}).then((priceList) => {
+        models.RPriceListItem.find({where: {rPriceListId: priceList.id}}).then((items) => {
+          if (items == []) {
+            var error = new Error('Car has no price defined');
+            error.statusCode = error.status = 404;
+            callback(error);
+          }
+          items.forEach((item) => {
+            console.log(item);
+            console.log(car);
+            if (item.price != 0) {
+              if (item.carType === car.carType) {
+                ctx.req.body.price = item.price * days;
+                callback();
+              }
+            }
+          })
+        })
+      })
+    })
+  })
 }
 
 
