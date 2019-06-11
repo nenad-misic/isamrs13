@@ -73,8 +73,8 @@ function calculateRoomPrice(Mroomreservation, ctx, modelInstance, next, doNext ,
     var days = (ctx.req.body.endDate - ctx.req.body.startDate)/(24*60*60*1000);
     
     var aServices = ctx.req.body.aservices;
-    const additionalPrice = 0;
-    const totalDiscount = 0;
+    var additionalPrice = 0;
+    var totalDiscount = 0;
 
     for (let as of aServices) {
       additionalPrice += as.price;
