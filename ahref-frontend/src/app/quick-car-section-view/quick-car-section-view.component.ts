@@ -38,9 +38,10 @@ export class QuickCarSectionViewComponent implements OnInit {
   }
 
   reserve(qcr) {
+    /*
     this.luapi.bindQuick(this.luapi.getCachedCurrent().id, qcr.id, qcr.mCarReservationId).subscribe((res) => {
       alert('QUICK CAR RESURVATION RESURVATED PADRE!' + res.retval);
-    });
+    });*/
   }
 
 }

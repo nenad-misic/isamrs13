@@ -26,6 +26,10 @@ export class AdditionalServiceAddFormComponent implements OnInit {
   }
 
   addSerivceClicked() {
+    if (this.new_aservice.discount > 100) {
+      this.toastr.error("Discount cant be greater than 100");
+      return;
+    }
     this.new_aservice.hPriceListId = this.aservices.id;
     this.aserviceApi.createPriceListItems(this.aservices.id, this.new_aservice).subscribe(() => {
       this.new_aservice = new HPriceListItem();

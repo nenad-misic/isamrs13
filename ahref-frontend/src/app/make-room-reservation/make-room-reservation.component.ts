@@ -61,7 +61,8 @@ export class MakeRoomReservationComponent implements OnInit {
         endDate: new Date(this.info.endDate).getTime(),
         roomRate: -1,
         hotelRate: -1,
-        price: this.price
+        price: this.price,
+        aservices: this.info.additionalServices
       }
     ).subscribe((created) => this.toastr.success('Reservation successful'), (err) => this.toastr.error(err.message, 'ERROR'));
     return;
