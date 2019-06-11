@@ -52,7 +52,7 @@ module.exports = function(Room) {
       .then((hotel) => {
         
         var rooms = hotel.rooms;
-        rooms.find().then((roomz) => {
+        rooms.find({where: {hotelId: hotel.id}}).then((roomz) => {
           var len = roomz.length;
           roomz.forEach((room) => {
             Room.app.models.DatePrice.find({where: {roomId: room.id}}).then((datePrices) => {var append = true;

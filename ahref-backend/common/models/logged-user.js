@@ -57,7 +57,7 @@ module.exports = function(Loggeduser) {
     })
   }
 
-function calculateRoomPrice(Mroomreservation, ctx, model, next, doNext , errorCallback) {
+function calculateRoomPrice(Mroomreservation, ctx, modelInstance, next, doNext , errorCallback) {
   var models = Mroomreservation.app.models;
 
   models.DatePrice.find({roodId: ctx.req.body.roomId}).then((prices) => {
@@ -71,8 +71,50 @@ function calculateRoomPrice(Mroomreservation, ctx, model, next, doNext , errorCa
       if (price.startDate > startPrice.startDate) startPrice = price;
     }
     var days = (ctx.req.body.endDate - ctx.req.body.startDate)/(24*60*60*1000);
-    ctx.req.body.price = days * startPrice.price;
-    doNext(Mroomreservation, ctx, model, next, errorCallback);
+    
+    var aServices = ctx.req.body.aservices;
+    var additionalPrice = 0;
+    var totalDiscount = 0;
+
+    for (let as of aServices) {
+      additionalPrice += as.price;
+      totalDiscount += as.discount;
+    }
+
+    startPrice.price += additionalPrice;
+    startPrice.price *= (100 - totalDiscount)/100;
+
+    models.Discount.find().then((discounts) => {
+      console.log(discounts);
+      if (discounts != null) {
+        discounts = discounts instanceof Array ? discounts : [discounts];
+      
+
+        var currentDiscount = {
+          points: 0,
+          percentage: 0
+        };
+        
+        console.log(modelInstance);
+        console.log(discounts);
+
+        for (let discount of discounts) {
+          if (discount.points > modelInstance.points) continue;
+          if (discount.points > currentDiscount.points) {
+            currentDiscount = discount;
+          }
+        }
+      
+        startPrice.price *= (100 - currentDiscount.percentage)/100;
+
+        console.log('Discount' + currentDiscount.percentage)
+      }
+
+
+
+      ctx.req.body.price = days * startPrice.price;
+      doNext(Mroomreservation, ctx, modelInstance, next, errorCallback);
+    })
   })
 }
   
@@ -180,17 +222,10 @@ function doCarReservation(Mcarreservation, ctx, model, next, errorCallback) {
                         data.forEach((element) => {
                             if (flagRoom) {
                                 // check if room is available during time period
-                                console.log(element);
                                 var start1 = element.startDate.getTime();
                                 var end1 = element.endDate.getTime();
                                 var start2 = new Date(ctx.req.body.startDate).getTime();
                                 var end2 = new Date(ctx.req.body.endDate).getTime();
-                                console.log({
-                                    start1: start1,
-                                    end1: end1,
-                                    start2: start2,
-                                    end2: end2
-                                });
                                 if ((start1 >= start2 && start1 <= end2) ||
                                     (start2 >= start1 && start2 <= end1)) {
                                     foundOne = true;
