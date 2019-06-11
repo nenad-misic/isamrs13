@@ -20,7 +20,8 @@
 
       <table>
         <tr><th>Room</th><th>Rating</th></tr>
-        <tr *ngFor="let room of roomRatings" matTooltip="See details of the room" [routerLink]="['/roomdetail', room.id]"><td>Floor: {{room.floor}} Beds: {{room.numOfBeds}}}}</td><td>
+        <tr *ngFor="let room of roomRatings" matTooltip="See details of the room"
+            [routerLink]="['/roomdetail', room.id]"><td>Floor: {{room.floor}} Beds: {{room.numOfBeds}}}}</td><td>
           <bar-rating [(rate)]="room.rating" [max]="4" [theme]="'horizontal'" [showText]="true" [readOnly]="true"
                       [titles]="['Bad', 'Mediocre' , 'Good', 'Awesome']"></bar-rating>
         </td></tr>
