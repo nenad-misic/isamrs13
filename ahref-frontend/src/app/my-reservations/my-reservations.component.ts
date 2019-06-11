@@ -97,9 +97,9 @@ export class MyReservationsComponent implements OnInit {
           return value.id.toString() !== result;
         });
         if (indeksObrisanog !== -1) {
-          //this.mRoomReservationApi.find({where: {id: result}}).subscribe(res => {
-           // this.myRoomReservations.splice(indeksObrisanog, 0, res);
-          //});
+          this.mRoomReservationApi.find({where: {id: result}}).subscribe(res => {
+            this.myRoomReservations.splice(indeksObrisanog, 0, res);
+          });
         }
 
       }

@@ -3,40 +3,9 @@ var config = require('../../server/config.json');
 var path = require('path');
 
 var flagCar = true;
-var flagCarDelete = true;
-var flagRoomDelete = true;
-var flagFlightDelete = true;
 var flagRoom = true;
 
-
 module.exports = function(Loggeduser) {
-
-  Loggeduser.bindQuick = function(luid, qrid, mcrid, cb) {
-    Loggeduser.findById(luid).then((user) => {
-      Loggeduser.app.models.quickCarReservation.findById(qrid).then((qr) => {
-        Loggeduser.app.models.MCarReservation.findById(mcrid).then((mr) => {
-          var mrc = mr;
-          Loggeduser.app.models.quickCarReservation.deleteById(qrid).then((del) => {
-            Loggeduser.app.models.MCarReservation.updateAll({id: mcrid}, {loggedUserId: luid}).then(() => {
-              cb(null, true);
-            });
-          })
-        })
-      })
-    });
-  };
-  
-  Loggeduser.remoteMethod('bindQuick', {
-    accepts: [
-      {arg: 'luid', type: 'string', required: true},
-      {arg: 'qrid', type: 'string', required: true},
-      {arg: 'mcrid', type: 'string', required: true},
-    ],
-    http: {path: '/bindQuick', verb: 'post'},
-    returns: {type: 'object', arg: 'retval'},
-  });
-
-
   Loggeduser.afterRemote('**', function(ctx, modelInstance, next)  {
     console.log('Loggeduser remote method: ' + ctx.method.name);
     next();
@@ -52,79 +21,14 @@ module.exports = function(Loggeduser) {
     });
   });
 
-  Loggeduser.beforeRemote('*.__destroyById__mCarReservations', function(ctx,model,next) {
-    flagCarDelete = true;
-    var Mcarreservation = Loggeduser.app.models.MCarReservation;
-    undoCarReservation(Mcarreservation, ctx, model, next, function(e) {
-      flagCarDelete = false;
-      next(e);
-    })
-    
-  });
-
-
-  function undoCarReservation(Mcarreservation, ctx, model, next, errorCallback) {
-    var sqlCarReservation = Mcarreservation.app.models.CarReservation;
-    Mcarreservation.findById(ctx.req.params.fk).then((obj) => {
-      console.log(obj);
-      if(obj){
-        sqlCarReservation.deleteById(obj.sid);
-        next();
-      }
-    })
-  }
-
-  Loggeduser.beforeRemote('*.__destroyById__mRoomReservations', function(ctx,model,next) {
-    flagRoomDelete = true;
-    var Mroomreservation = Loggeduser.app.models.MRoomReservation;
-    undoRoomReservation(Mroomreservation, ctx, model, next, function(e) {
-      flagRoomDelete = false;
-      next(e);
-    })
-    
-  });
-
-
-  function undoRoomReservation(Mroomreservation, ctx, model, next, errorCallback) {
-    var sqlRoomReservation = Mroomreservation.app.models.RoomReservation;
-    Mroomreservation.findById(ctx.req.params.fk).then((obj) => {
-      if(obj){
-        sqlRoomReservation.deleteById(obj.sid);
-        next();
-      }
-    })
-  }
-
-
-  Loggeduser.beforeRemote('*.__destroyById__mFlightReservations', function(ctx,model,next) {
-    flagFlightDelete = true;
-    var Mflightreservation = Loggeduser.app.models.MFlightReservation;
-    undoFlightReservation(Mflightreservation, ctx, model, next, function(e) {
-      flagFlightDelete = false;
-      next(e);
-    })
-    
-  });
-
-
-  function undoFlightReservation(Mflightreservation, ctx, model, next, errorCallback) {
-    var sqlFlightReservation = Mflightreservation.app.models.FlightReservation;
-    Mflightreservation.findById(ctx.req.params.fk).then((obj) => {
-      if(obj){
-        sqlFlightReservation.deleteById(obj.sid);
-        next();
-      }
-    })
-  }
-
   Loggeduser.beforeRemote('*.__create__mRoomReservations', function(ctx,model,next) {
-    console.log('here in mroom');
+    console.log('here');
     flagRoom = true;
     var Mroomreservation = Loggeduser.app.models.MRoomReservation;
-    doRoomReservation(Mroomreservation, ctx, model, next, function(e) {
+    calculateRoomPrice(Mroomreservation, ctx, model, next, doRoomReservation, function(e) {
       flagRoom = false;
       next(e);
-    });
+    })
   });
 
   Loggeduser.remoteMethod('createQuickRoomReservation', {
@@ -142,7 +46,8 @@ module.exports = function(Loggeduser) {
     Loggeduser.findOne({id: userId}).then((user) => {
       models.QuickRoomReservation.findOne({id: quickRoomReservationId}).then((quickReservation) => {
         models.MRoomReservation.findOne({id: quickReservation.mRoomReservationId}).then((reservation) => {
-          var r = reservation;models.MRoomReservation.updateAll({id: r.id}, {loggedUserId: userId}).then(() => {
+          var r = reservation;
+          models.MRoomReservation.updateAll({id: r.id}, {loggedUserId: userId}).then(() => {
             models.QuickRoomReservation.deleteById(quickReservation.id).then(() => {
               cb();
             })
@@ -152,16 +57,69 @@ module.exports = function(Loggeduser) {
     })
   }
 
+function calculateRoomPrice(Mroomreservation, ctx, modelInstance, next, doNext , errorCallback) {
+  var models = Mroomreservation.app.models;
+
+  models.DatePrice.find({roodId: ctx.req.body.roomId}).then((prices) => {
+    if (prices == null) {
+      errorCallback(new Error("room has no defined price"));
+    }
+    prices = prices instanceof Array ? prices : [prices];
+    var startPrice = prices[0];
+    for (let price of prices) {
+      if (price.startDate > ctx.req.body.startDate) continue;
+      if (price.startDate > startPrice.startDate) startPrice = price;
+    }
+    var days = (ctx.req.body.endDate - ctx.req.body.startDate)/(24*60*60*1000);
+    
+    var aServices = ctx.req.body.aservices;
+    var additionalPrice = 0;
+    var totalDiscount = 0;
+
+    for (let as of aServices) {
+      additionalPrice += as.price;
+      totalDiscount += as.discount;
+    }
+
+    startPrice.price += additionalPrice;
+    startPrice.price *= (100 - totalDiscount)/100;
+
+    models.Discount.find().then((discounts) => {
+      console.log(discounts);
+      if (discounts != null) {
+        discounts = discounts instanceof Array ? discounts : [discounts];
+      
+
+        var currentDiscount = {
+          points: 0,
+          percentage: 0
+        };
+        
+        console.log(modelInstance);
+        console.log(discounts);
+
+        for (let discount of discounts) {
+          if (discount.points > modelInstance.points) continue;
+          if (discount.points > currentDiscount.points) {
+            currentDiscount = discount;
+          }
+        }
+      
+        startPrice.price *= (100 - currentDiscount.percentage)/100;
+
+        console.log('Discount' + currentDiscount.percentage)
+      }
+
+
+
+      ctx.req.body.price = days * startPrice.price;
+      doNext(Mroomreservation, ctx, modelInstance, next, errorCallback);
+    })
+  })
+}
   
 function doCarReservation(Mcarreservation, ctx, model, next, errorCallback) {
     // models
-    var num = 24000;
-    
-    if(ctx.req.body.startDate != 1559865600000){
-      num = 10;
-      console.log('brao');
-    }
-
     var sqlCarReservation = Mcarreservation.app.models.CarReservation;
     var sCar = Mcarreservation.app.models.sCar;
     // data source
@@ -173,88 +131,74 @@ function doCarReservation(Mcarreservation, ctx, model, next, errorCallback) {
       if (err) errorCallback(err);
       // lock car for update
       postgres.connector.execute(
-        'SELECT * FROM sCar WHERE mongoid = $1 FOR UPDATE;',
-          [ctx.req.body.carId], {transaction: tx},
-          function(err, data) {
-            console.log("data");
-            console.log(data);
-            sCar.findOne({where: {mongoId: ctx.req.body.carId}}).then(
-              (car)=>{
-              sqlCarReservation.find(
-                {
-                  where: {sCarId: car.id},
-                }).then((data)=> {
-                  data.forEach((element) => {
-                    if (flagCar) {
-                      var start1 = element.startDate.getTime();
-                      var end1 = element.endDate.getTime();
-                      var start2 = ctx.req.body.startDate;
-                      var end2 = ctx.req.body.endDate;
-                      if ((start1 >= start2 && start1 <= end2) ||
-                        (start2 >= start1 && start2 <= end1)) {
-                        tx.rollback(function(err) {
-                          if (err && flagCar) errorCallback(err);
-    
-                          var error = new Error('Car is already reserved');
-                          error.statusCode = error.status = 404;
-                          if (flagCar)
-                            errorCallback(error);
-                        });
-                      }
-                    }
-                  });
-    
-                  if (err && flagCar) {
-                    tx.rollback(function(err) {
-                      if (err && flagCar) errorCallback(err);
-                    });
-                    errorCallback(err);
-                  }
-                  // fetch car from sql
+        'SELECT * FROM sCar WHERE mongoId = $1 FOR UPDATE;'
+        , [ctx.req.body.carId], function(err, data) {
+          sCar.findOne({where: {mongoId: ctx.req.body.carId}}).then((car)=>{
+            sqlCarReservation.find(
+              {
+                where: {sCarId: car.id},
+              }).then((data)=> {
+                data.forEach((element) => {
                   if (flagCar) {
-                    sCar.findOne({where: {mongoId: ctx.req.body.carId}})
-                      .then((car)=>{
-                        Mcarreservation.app.models.LoggedUser.findById(ctx.req.params.id).then((obj) =>
-                                  {
-                                    obj.points = obj.points + 1;
-                                    Mcarreservation.app.models.LoggedUser.replaceById(obj.id, obj).then((o) => console.log('o'));
-                                  })
-                        // create reservation
-                        sqlCarReservation.create(
-                          {
-                            timeStamp: ctx.req.body.timeStamp,
-                            sCar: car,
-                            startDate: ctx.req.body.startDate,
-                            endDate: ctx.req.body.endDate,
-                          },
-                          {transaction: tx},
-                          function(err, cr) {
-                            ctx.req.body.sid = cr.id;
-                            if (err && flagCar) {
-                              tx.rollback(function(err) {
-                                if (err && flagCar)  errorCallback(err);
-                              });
-                              errorCallback(err);
-                            }
-                            // commit and end before-hook
-                            if (flagCar) {
-                              setTimeout(()=>{
-                                tx.commit(function(err) {
-                                if (err && flagCar)  errorCallback(err);
-                                
-                                calculateCarPrice(Loggeduser, ctx, next)
-                              });
-                              }, num)
-                              
-                            }
-                          });
+                    var start1 = element.startDate.getTime();
+                    var end1 = element.endDate.getTime();
+                    var start2 = ctx.req.body.startDate;
+                    var end2 = ctx.req.body.endDate;
+                    if ((start1 >= start2 && start1 <= end2) ||
+                      (start2 >= start1 && start2 <= end1)) {
+                      tx.rollback(function(err) {
+                        if (err && flagCar) errorCallback(err);
+  
+                        var error = new Error('Car is already reserved');
+                        error.statusCode = error.status = 404;
+                        if (flagCar)
+                          errorCallback(error);
                       });
+                    }
                   }
                 });
-            });
+  
+                if (err && flagCar) {
+                  tx.rollback(function(err) {
+                    if (err && flagCar) errorCallback(err);
+                  });
+                  errorCallback(err);
+                }
+                // fetch car from sql
+                if (flagCar) {
+                  sCar.findOne({where: {mongoId: ctx.req.body.carId}})
+                    .then((car)=>{
+                      // create reservation
+                      sqlCarReservation.create(
+                        {
+                          timeStamp: ctx.req.body.timeStamp,
+                          sCar: car,
+                          startDate: ctx.req.body.startDate,
+                          endDate: ctx.req.body.endDate,
+                        },
+                        {transaction: tx},
+                        function(err, cr) {
+                          if (err && flagCar) {
+                            tx.rollback(function(err) {
+                              if (err && flagCar)  errorCallback(err);
+                            });
+                            errorCallback(err);
+                          }
+                          // commit and end before-hook
+                          if (flagCar) {
+                            tx.commit(function(err) {
+                              if (err && flagCar)  errorCallback(err);
+                              next();
+                            });
+                          }
+                        });
+                    });
+                }
+              });
           });
         });
-    }
+    });
+  }
 
 
   function doRoomReservation(Mroomreservation, ctx, model, next, errorCallback) {
@@ -308,11 +252,6 @@ function doCarReservation(Mcarreservation, ctx, model, next, errorCallback) {
                         if (flagRoom) {
                             sRoom.findOne({where: {mongoId: ctx.req.body.roomId}}).then((room)=>{
                                 // create reservation
-                                Mroomreservation.app.models.LoggedUser.findById(ctx.req.params.id).then((obj) =>
-                                {
-                                  obj.points = obj.points + 1;
-                                  Mroomreservation.app.models.LoggedUser.replaceById(obj.id, obj).then((o) => console.log(o));
-                                })
                                 sqlRoomReservation.create(
                                   {
                                     timeStamp: ctx.req.body.timeStamp,
@@ -322,8 +261,6 @@ function doCarReservation(Mcarreservation, ctx, model, next, errorCallback) {
                                   },
                                   {transaction: tx},
                                   function(err, rr) {
-                                    
-                                    ctx.req.body.sid = rr.id;
                                     if (err && flagRoom) {
                                       tx.rollback(function(err) {
                                         if (err && flagRoom)  errorCallback(err);
@@ -378,21 +315,20 @@ function doCarReservation(Mcarreservation, ctx, model, next, errorCallback) {
             })
             var options = {
                 type: 'email',
-                to: modelInstance.email,
-                from: 'ahref.noreply@gmail.com',
+                to: ctx.result.email,
+                from: 'noreply@ahref.com',
                 subject: 'Thanks for registering on ahref.',
                 template: path.resolve(__dirname, '../../server/views/verify.ejs'),
                 redirect: 'http://localhost:4200',
-                user: modelInstance
+                user: ctx.result
               };
 
-              modelInstance.verify(options, function(err, response) {
+              ctx.result.verify(options, function(err, response, next) {
                 if (err)  {
                     return next(err);
                 }
 
                 console.log('> verification email sent:', response);
-                next()
               });
 
         } else if (ctx.result.type === "hotelAdmin") {
@@ -406,7 +342,6 @@ function doCarReservation(Mcarreservation, ctx, model, next, errorCallback) {
                             principalId: ctx.result.id
                         }, (err, principal) => {
                             if (err) throw(err);
-                            next()
                         });
                     })
                 } else {
@@ -415,7 +350,6 @@ function doCarReservation(Mcarreservation, ctx, model, next, errorCallback) {
                         principalId: ctx.result.id
                     }, (err, principal) => {
                         if (err) throw(err);
-                        next()
                     });
                 }
             })
@@ -430,7 +364,6 @@ function doCarReservation(Mcarreservation, ctx, model, next, errorCallback) {
                             principalId: ctx.result.id
                         }, (err, principal) => {
                             if (err) throw(err);
-                            next()
                         });
                     })
                 } else {
@@ -439,7 +372,6 @@ function doCarReservation(Mcarreservation, ctx, model, next, errorCallback) {
                         principalId: ctx.result.id
                     }, (err, principal) => {
                         if (err) throw(err);
-                        next()
                     });
                 }
             })
@@ -455,7 +387,6 @@ function doCarReservation(Mcarreservation, ctx, model, next, errorCallback) {
                             principalId: ctx.result.id
                         }, (err, principal) => {
                             if (err) throw(err);
-                            next()
                         });
                     })
                 } else {
@@ -464,7 +395,6 @@ function doCarReservation(Mcarreservation, ctx, model, next, errorCallback) {
                         principalId: ctx.result.id
                     }, (err, principal) => {
                         if (err) throw(err);
-                        next()
                     });
                 }
             })
@@ -480,7 +410,6 @@ function doCarReservation(Mcarreservation, ctx, model, next, errorCallback) {
                             principalId: ctx.result.id
                         }, (err, principal) => {
                             if (err) throw(err);
-                            next()
                         });
                     })
                 } else {
@@ -489,47 +418,18 @@ function doCarReservation(Mcarreservation, ctx, model, next, errorCallback) {
                         principalId: ctx.result.id
                     }, (err, principal) => {
                         if (err) throw(err);
-                        next()
                     });
                 }
             })
 
         }
+
+
+        next();
     });
 }
 
-function calculateCarPrice(Loggeduser, ctx, callback) {
-  var models = Loggeduser.app.models;
-  var start = ctx.req.body.startDate;
-  var end = ctx.req.body.endDate;
-  var days = (end - start)/(24*60*60*1000)
 
-  models.Car.findOne({where: {id: ctx.req.body.carId}}).then((car) => {
-    //console.log(car);
-    models.RACService.findOne({where: {id: car.rACServiceId}}).then((racService) => {
-      //console.log(racService);
-      models.RPriceList.findOne({where: {rACServiceId: racService.id}}).then((priceList) => {
-        models.RPriceListItem.find({where: {rPriceListId: priceList.id}}).then((items) => {
-          if (items == []) {
-            var error = new Error('Car has no price defined');
-            error.statusCode = error.status = 404;
-            callback(error);
-          }
-          items.forEach((item) => {
-            console.log(item);
-            console.log(car);
-            if (item.price != 0) {
-              if (item.carType === car.carType) {
-                ctx.req.body.price = item.price * days;
-                callback();
-              }
-            }
-          })
-        })
-      })
-    })
-  })
-}
 
 
 

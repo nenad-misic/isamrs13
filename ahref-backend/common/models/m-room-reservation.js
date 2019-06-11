@@ -26,12 +26,31 @@ module.exports = function(Mroomreservation) {
     Mroomreservation.beforeRemote('create',
         function(ctx, model, next) {
             flag = true;
-            doReservation(Mroomreservation, ctx, model, next, function(e){
+            calculateRoomPrice(Mroomreservation, ctx, model, next, doReservation, function(e) {
                 flag = false;
                 next(e);
-            })
+              })
         })
 };
+
+function calculateRoomPrice(Mroomreservation, ctx, model, next, doNext , errorCallback) {
+    var models = Mroomreservation.app.models;
+  
+    models.DatePrice.find({roodId: ctx.req.body.roomId}).then((prices) => {
+      if (prices == null) {
+        errorCallback(new Error("room has no defined price"));
+      }
+      prices = prices instanceof Array ? prices : [prices];
+      var startPrice = prices[0];
+      for (let price of prices) {
+        if (price.startDate > ctx.req.body.startDate) continue;
+        if (price.startDate > startPrice.startDate) startPrice = price;
+      }
+      var days = (ctx.req.body.endDate - ctx.req.body.startDate)/(24*60*60*1000);
+      ctx.req.body.price = days * startPrice.price;
+      doNext(Mroomreservation, ctx, model, next, errorCallback);
+    })
+  }
 
 function doReservation(Mroomreservation, ctx, model, next, errorCallback) {
     // models

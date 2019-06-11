@@ -33,5 +33,7 @@ export * from './Passenger';
 export * from './QuickCarReservation';
 export * from './QuickFlightReservation';
 export * from './QuickRoomReservation';
+export * from './Discount';
+export * from './HotelDiscount';
 export * from './BaseModels';
 export * from './FireLoopRef';
