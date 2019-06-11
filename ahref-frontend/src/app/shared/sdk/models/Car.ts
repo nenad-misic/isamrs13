@@ -1,5 +1,6 @@
 /* tslint:disable */
 import {
+  RACService,
   QuickCarReservation
 } from '../index';
 
@@ -16,6 +17,7 @@ export interface CarInterface {
   "carType": string;
   "id"?: any;
   "rACServiceId"?: any;
+  rACService?: RACService;
   quickCarReservations?: QuickCarReservation[];
 }
 
@@ -31,6 +33,7 @@ export class Car implements CarInterface {
   "carType": string;
   "id": any;
   "rACServiceId": any;
+  rACService: RACService;
   quickCarReservations: QuickCarReservation[];
   constructor(data?: CarInterface) {
     Object.assign(this, data);
@@ -113,6 +116,14 @@ export class Car implements CarInterface {
         },
       },
       relations: {
+        rACService: {
+          name: 'rACService',
+          type: 'RACService',
+          model: 'RACService',
+          relationType: 'belongsTo',
+                  keyFrom: 'rACServiceId',
+          keyTo: 'id'
+        },
         quickCarReservations: {
           name: 'quickCarReservations',
           type: 'QuickCarReservation[]',

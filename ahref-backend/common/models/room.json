@@ -30,6 +30,11 @@
       "type": "hasMany",
       "model": "DatePrice",
       "foreignKey": ""
+    },
+    "hotel": {
+      "type": "belongsTo",
+      "model": "Hotel",
+      "foreignKey": ""
     }
   },
   "acls": [

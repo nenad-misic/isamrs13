@@ -1,5 +1,6 @@
 /* tslint:disable */
 import {
+  Hotel,
   DatePrice
 } from '../index';
 
@@ -11,6 +12,7 @@ export interface RoomInterface {
   "numOfRates": number;
   "id"?: any;
   "hotelId"?: any;
+  hotel?: Hotel;
   datePrices?: DatePrice[];
 }
 
@@ -21,6 +23,7 @@ export class Room implements RoomInterface {
   "numOfRates": number;
   "id": any;
   "hotelId": any;
+  hotel: Hotel;
   datePrices: DatePrice[];
   constructor(data?: RoomInterface) {
     Object.assign(this, data);
@@ -82,6 +85,14 @@ export class Room implements RoomInterface {
         },
       },
       relations: {
+        hotel: {
+          name: 'hotel',
+          type: 'Hotel',
+          model: 'Hotel',
+          relationType: 'belongsTo',
+                  keyFrom: 'hotelId',
+          keyTo: 'id'
+        },
         datePrices: {
           name: 'datePrices',
           type: 'DatePrice[]',

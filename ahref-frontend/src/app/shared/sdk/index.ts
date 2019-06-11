@@ -84,6 +84,7 @@ import { QuickFlightReservationApi } from './services/custom/QuickFlightReservat
 import { QuickRoomReservationApi } from './services/custom/QuickRoomReservation';
 import { DiscountApi } from './services/custom/Discount';
 import { HotelDiscountApi } from './services/custom/HotelDiscount';
+import { CombinedReservationApi } from './services/custom/CombinedReservation';
 /**
 * @module SDKBrowserModule
 * @description
@@ -150,6 +151,7 @@ export class SDKBrowserModule {
         QuickRoomReservationApi,
         DiscountApi,
         HotelDiscountApi,
+        CombinedReservationApi,
         internalStorageProvider,
         { provide: SDKStorage, useClass: StorageBrowser },
         { provide: SocketDriver, useClass: SocketBrowser }

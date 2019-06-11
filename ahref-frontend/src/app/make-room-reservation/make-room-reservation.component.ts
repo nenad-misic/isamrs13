@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {RoomReservationDataService} from "../services/room-reservation-data.service";
 import {DatePriceApi, LoggedUserApi, MRoomReservationApi, RoomApi} from '../shared/sdk/services/custom';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from '@angular/router';
 import {ToastrService} from "ngx-toastr";
-import {Room} from "../shared/sdk/models";
+import {CombinedReservation, Room} from '../shared/sdk/models';
 import {RoomReservationInfo} from "../shared/room-reservation-info";
 import {Location} from "@angular/common";
+import {CombinedService} from '../services/combined.service';
 
 @Component({
   selector: 'app-make-room-reservation',
@@ -17,6 +18,7 @@ export class MakeRoomReservationComponent implements OnInit {
   room: Room;
   info: RoomReservationInfo;
   price: number;
+  combinedReservation: CombinedReservation;
 
   constructor(private roomReservationData: RoomReservationDataService,
               private reservationApi: MRoomReservationApi,
@@ -24,9 +26,14 @@ export class MakeRoomReservationComponent implements OnInit {
               private route: ActivatedRoute,
               private roomApi: RoomApi,
               private location: Location,
+              private router: Router,
+              private combinedService: CombinedService,
               private toastr: ToastrService) { }
 
   ngOnInit() {
+    this.combinedService.combinedReservation.subscribe((cr) => {
+      this.combinedReservation = cr;
+    });
     this.roomApi.findOne({where: {id: this.route.snapshot.params['id']}, include: 'datePrices'}).subscribe((room: Room) => {
       this.room = room;
       this.roomReservationData.currentSearchParams.subscribe((info: RoomReservationInfo) => {
@@ -62,9 +69,15 @@ export class MakeRoomReservationComponent implements OnInit {
         roomRate: -1,
         hotelRate: -1,
         price: this.price,
-        aservices: this.info.additionalServices
+        aservices: this.info.additionalServices,
+        combinedReservationId: this.combinedReservation.id
       }
-    ).subscribe((created) => this.toastr.success('Reservation successful'), (err) => this.toastr.error(err.message, 'ERROR'));
+    ).subscribe((created) => {
+      this.toastr.success('Reservation successful');
+      this.combinedService.refreshCombinedReservation();
+      this.router.navigate(['/flow']);
+    }, (err) => this.toastr.error(err.message, 'ERROR'));
+
     return;
   }
 

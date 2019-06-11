@@ -39,6 +39,12 @@ export class RoomReservationSearchFormComponent implements OnInit {
 
   doSearch() {
     this.requiredRooms = [];
+    if (this.highPrice === 0) {
+      this.highPrice = 1000000;
+    }
+    if (this.lowPrice === 0) {
+      this.lowPrice = -1;
+    }
     this.requiredRooms.push(this.numberOfGuests);
     this.roomApi.getMatching(this.hotelId,
       this.startDate,

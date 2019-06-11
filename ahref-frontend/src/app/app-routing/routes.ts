@@ -43,6 +43,7 @@ import {QuickRoomDetailsComponent} from "../quick-room-details/quick-room-detail
 import {HotelReportSectionComponent} from "../hotel-report-section/hotel-report-section.component";
 import {DiscountSectionComponent} from "../discount-section/discount-section.component";
 import {HotelDiscountsComponent} from "../hotel-discounts/hotel-discounts.component";
+import {ReservationFlowComponent} from '../reservation-flow/reservation-flow.component';
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent},
@@ -90,5 +91,6 @@ export const routes: Routes = [
   { path: 'hotelreports/:id', component: HotelReportSectionComponent},
   { path: 'discounts', component: DiscountSectionComponent},
   { path: 'hoteldiscounts/:id', component: HotelDiscountsComponent},
+  { path: 'flow', component: ReservationFlowComponent},
   { path: '', redirectTo: '/home', pathMatch: 'full' }
 ];

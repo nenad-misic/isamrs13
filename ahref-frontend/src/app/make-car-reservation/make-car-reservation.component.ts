@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import {CarReservationDataService} from '../services/car-reservation-data.service';
 import {CarApi, LoggedUserApi, MCarReservationApi, RACServiceApi, RPriceListApi, RPriceListItemApi} from '../shared/sdk/services/custom';
 import {CarReservationInfo} from '../shared/carReservationInfo';
-import {Car, RACService, RPriceList, RPriceListItem} from '../shared/sdk/models';
-import {ActivatedRoute} from '@angular/router';
+import {Car, CombinedReservation, RACService, RPriceList, RPriceListItem} from '../shared/sdk/models';
+import {ActivatedRoute, Router} from '@angular/router';
 import {ToastrService} from "ngx-toastr";
+import {CombinedService} from '../services/combined.service';
 
 @Component({
   selector: 'app-make-car-reservation',
@@ -17,10 +18,14 @@ export class MakeCarReservationComponent implements OnInit {
   totalCost = 0;
   info: CarReservationInfo;
   car: Car;
+  combinedReservation: CombinedReservation;
+
   constructor(private carReservationData: CarReservationDataService,
               private mCarReservationApi: MCarReservationApi,
               private loggedUserApi: LoggedUserApi,
               private route: ActivatedRoute,
+              private router: Router,
+              private combinedService: CombinedService,
               private toastr: ToastrService,
               private rplia: RPriceListItemApi,
               private rpla: RPriceListApi,
@@ -28,6 +33,9 @@ export class MakeCarReservationComponent implements OnInit {
               private racApi: RACServiceApi) { }
 
   ngOnInit() {
+    this.combinedService.combinedReservation.subscribe((cr) => {
+      this.combinedReservation = cr;
+    });
     this.carApi.findOne({where: {id: this.route.snapshot.params['id']}}).subscribe((car: Car) => {
       this.car = car;
       this.racApi.findById(this.car.rACServiceId).subscribe((rac: RACService) => {
@@ -57,9 +65,14 @@ export class MakeCarReservationComponent implements OnInit {
         startDate:  new Date(this.info.startDate).getTime(),
         endDate: new Date(this.info.endDate).getTime(),
         carRate: -1,
-        racRate: -1
+        racRate: -1,
+        combinedReservationId: this.combinedReservation.id
       }
-      ).subscribe((created) => this.toastr.success('Reservation successful'), (err) => this.toastr.error(err.message, 'ERROR'));
+      ).subscribe((created) => {
+      this.toastr.success('Reservation successful');
+      this.combinedService.refreshCombinedReservation();
+      this.router.navigate(['/flow']);
+    }, (err) => this.toastr.error(err.message, 'ERROR'));
     return;
   }
 

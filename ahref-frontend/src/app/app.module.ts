@@ -112,6 +112,7 @@ import { RacBranchOfficeSectionComponent } from './rac-branch-office-section/rac
 import { HotelReportSectionComponent } from './hotel-report-section/hotel-report-section.component';
 import { DiscountSectionComponent } from './discount-section/discount-section.component';
 import { HotelDiscountsComponent } from './hotel-discounts/hotel-discounts.component';
+import { ReservationFlowComponent } from './reservation-flow/reservation-flow.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -191,7 +192,8 @@ import { HotelDiscountsComponent } from './hotel-discounts/hotel-discounts.compo
     RacBranchOfficeSectionComponent,
     HotelReportSectionComponent,
     DiscountSectionComponent,
-    HotelDiscountsComponent
+    HotelDiscountsComponent,
+    ReservationFlowComponent
   ],
   imports: [
     BrowserModule,

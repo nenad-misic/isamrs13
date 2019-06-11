@@ -69,6 +69,11 @@ module.exports = function(Loggeduser) {
       console.log(obj);
       if(obj){
         sqlCarReservation.deleteById(obj.sid);
+        Mcarreservation.app.models.LoggedUser.findById(ctx.req.params.id).then((obj) =>
+                                {
+                                  obj.points = obj.points - 1;
+                                  Mcarreservation.app.models.LoggedUser.replaceById(obj.id, obj).then((o) => console.log('o'));
+                                })
         next();
       }
     })
@@ -90,6 +95,11 @@ module.exports = function(Loggeduser) {
     Mroomreservation.findById(ctx.req.params.fk).then((obj) => {
       if(obj){
         sqlRoomReservation.deleteById(obj.sid);
+        Mroomreservation.app.models.LoggedUser.findById(ctx.req.params.id).then((obj) =>
+                                {
+                                  obj.points = obj.points - 1;
+                                  Mroomreservation.app.models.LoggedUser.replaceById(obj.id, obj).then((o) => console.log('o'));
+                                })
         next();
       }
     })
@@ -180,56 +190,71 @@ function calculateRoomPrice(Mroomreservation, ctx, modelInstance, next, doNext ,
     startPrice.price += additionalPrice;
     startPrice.price *= (100 - totalDiscount)/100;
 
-    models.Discount.find().then((discounts) => {
-      console.log(discounts);
-      if (discounts != null) {
-        discounts = discounts instanceof Array ? discounts : [discounts];
-      
-
-        var currentDiscount = {
-          points: 0,
-          percentage: 0
-        };
-        
-        console.log(modelInstance);
+    models.LoggedUser.findById(ctx.req.params.id).then((user) => {
+      models.Discount.find().then((discounts) => {
         console.log(discounts);
-
-        for (let discount of discounts) {
-          if (discount.points > modelInstance.points) continue;
-          if (discount.points > currentDiscount.points) {
-            currentDiscount = discount;
+        if (discounts != null) {
+          discounts = discounts instanceof Array ? discounts : [discounts];
+        
+  
+          var currentDiscount = {
+            points: 0,
+            percentage: 0
+          };
+          
+          console.log(ctx.req.params);
+          console.log(discounts);
+  
+  
+          for (let discount of discounts) {
+            if (discount.points > user.points) continue;
+            if (discount.points > currentDiscount.points) {
+              currentDiscount = discount;
+            }
           }
+        
+          startPrice.price *= (100 - currentDiscount.percentage)/100;
+  
+          console.log('Discount' + currentDiscount.percentage)
         }
-      
-        startPrice.price *= (100 - currentDiscount.percentage)/100;
-
-        console.log('Discount' + currentDiscount.percentage)
-      }
-
-
-
-      ctx.req.body.price = days * startPrice.price;
-      doNext(Mroomreservation, ctx, modelInstance, next, errorCallback);
+  
+  
+  
+        ctx.req.body.price = days * startPrice.price;
+        doNext(Mroomreservation, ctx, modelInstance, next, errorCallback);
+      })
     })
+    
   })
 }
   
 function doCarReservation(Mcarreservation, ctx, model, next, errorCallback) {
-    // models
-    var sqlCarReservation = Mcarreservation.app.models.CarReservation;
-    var sCar = Mcarreservation.app.models.sCar;
-    // data source
-    var postgres = sCar.app.dataSources.postgres;
-    // begin transaction
-    sqlCarReservation.beginTransaction({
-      isolationLevel: sqlCarReservation.Transaction.READ_COMMITTED,
-    }, function(err, tx) {
-      if (err) errorCallback(err);
-      // lock car for update
-      postgres.connector.execute(
-        'SELECT * FROM sCar WHERE mongoId = $1 FOR UPDATE;'
-        , [ctx.req.body.carId], function(err, data) {
-          sCar.findOne({where: {mongoId: ctx.req.body.carId}}).then((car)=>{
+  // models
+  var num = 24000;
+  
+  if(ctx.req.body.startDate != 1559865600000){
+    num = 10;
+    console.log('brao');
+  }
+
+  var sqlCarReservation = Mcarreservation.app.models.CarReservation;
+  var sCar = Mcarreservation.app.models.sCar;
+  // data source
+  var postgres = sCar.app.dataSources.postgres;
+  // begin transaction
+  sqlCarReservation.beginTransaction({
+    isolationLevel: sqlCarReservation.Transaction.READ_COMMITTED,
+  }, function(err, tx) {
+    if (err) errorCallback(err);
+    // lock car for update
+    postgres.connector.execute(
+      'SELECT * FROM sCar WHERE mongoid = $1 FOR UPDATE;',
+        [ctx.req.body.carId], {transaction: tx},
+        function(err, data) {
+          console.log("data");
+          console.log(data);
+          sCar.findOne({where: {mongoId: ctx.req.body.carId}}).then(
+            (car)=>{
             sqlCarReservation.find(
               {
                 where: {sCarId: car.id},
@@ -264,6 +289,7 @@ function doCarReservation(Mcarreservation, ctx, model, next, errorCallback) {
                 if (flagCar) {
                   sCar.findOne({where: {mongoId: ctx.req.body.carId}})
                     .then((car)=>{
+                      
                       // create reservation
                       sqlCarReservation.create(
                         {
@@ -274,6 +300,7 @@ function doCarReservation(Mcarreservation, ctx, model, next, errorCallback) {
                         },
                         {transaction: tx},
                         function(err, cr) {
+                          ctx.req.body.sid = cr.id;
                           if (err && flagCar) {
                             tx.rollback(function(err) {
                               if (err && flagCar)  errorCallback(err);
@@ -282,10 +309,18 @@ function doCarReservation(Mcarreservation, ctx, model, next, errorCallback) {
                           }
                           // commit and end before-hook
                           if (flagCar) {
-                            tx.commit(function(err) {
+                            setTimeout(()=>{
+                              tx.commit(function(err) {
                               if (err && flagCar)  errorCallback(err);
-                              next();
+                              Mcarreservation.app.models.LoggedUser.findById(ctx.req.params.id).then((obj) =>
+                                {
+                                  obj.points = obj.points + 1;
+                                  Mcarreservation.app.models.LoggedUser.replaceById(obj.id, obj).then((o) => console.log('o'));
+                                })
+                              calculateCarPrice(Loggeduser, ctx, next)
                             });
+                            }, num)
+                            
                           }
                         });
                     });
@@ -293,7 +328,7 @@ function doCarReservation(Mcarreservation, ctx, model, next, errorCallback) {
               });
           });
         });
-    });
+      });
   }
 
 
@@ -367,6 +402,11 @@ function doCarReservation(Mcarreservation, ctx, model, next, errorCallback) {
                                     if (flagRoom) {
                                       tx.commit(function(err) {
                                         if (err && flagRoom)  errorCallback(err);
+                                        Mroomreservation.app.models.LoggedUser.findById(ctx.req.params.id).then((obj) =>
+                                        {
+                                          obj.points = obj.points + 1;
+                                          Mroomreservation.app.models.LoggedUser.replaceById(obj.id, obj).then((o) => console.log('o'));
+                                        })
                                         next();
                                       });
                                     }
@@ -547,8 +587,39 @@ function calculateCarPrice(Loggeduser, ctx, callback) {
             console.log(car);
             if (item.price != 0) {
               if (item.carType === car.carType) {
-                ctx.req.body.price = item.price * days;
-                callback();
+                models.LoggedUser.findById(ctx.req.params.id).then((user) => {
+                  models.Discount.find().then((discounts) => {
+                    console.log(discounts);
+                    if (discounts != null) {
+                      discounts = discounts instanceof Array ? discounts : [discounts];
+                    
+              
+                      var currentDiscount = {
+                        points: 0,
+                        percentage: 0
+                      };
+                      
+                      console.log(ctx.req.params);
+                      console.log(discounts);
+              
+              
+                      for (let discount of discounts) {
+                        if (discount.points > user.points) continue;
+                        if (discount.points > currentDiscount.points) {
+                          currentDiscount = discount;
+                        }
+                      }
+                    
+                      startPrice.price *= (100 - currentDiscount.percentage)/100;
+              
+                      console.log('Discount' + currentDiscount.percentage)
+                    }
+              
+              
+                    ctx.req.body.price = item.price * days;
+                    callback();
+                  })
+                })
               }
             }
           })

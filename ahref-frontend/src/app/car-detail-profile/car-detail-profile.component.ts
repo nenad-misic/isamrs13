@@ -7,6 +7,7 @@ import {LoopBackConfig} from '../shared/sdk';
 import {API_VERSION} from '../shared/baseurl';
 import {CarReservationDataService} from '../services/car-reservation-data.service';
 import {ToastrService} from "ngx-toastr";
+import {CombinedService} from '../services/combined.service';
 
 @Component({
   selector: 'app-car-detail-profile',
@@ -27,6 +28,7 @@ export class CarDetailProfileComponent implements OnInit {
               private loggedUserApi: LoggedUserApi,
               private infoData: CarReservationDataService,
               private toastr: ToastrService,
+              private combinedService: CombinedService,
               @Inject('baseURL') private baseURL) {
     LoopBackConfig.setBaseURL(baseURL);
     LoopBackConfig.setApiVersion(API_VERSION); }
@@ -38,6 +40,10 @@ export class CarDetailProfileComponent implements OnInit {
         if (val.startDate && val.endDate) {
           this.reservable = true;
         } else {
+          this.reservable = false;
+        }
+
+        if (!this.combinedService.active) {
           this.reservable = false;
         }
       });
