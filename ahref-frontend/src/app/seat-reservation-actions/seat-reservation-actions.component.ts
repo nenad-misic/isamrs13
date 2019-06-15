@@ -60,40 +60,65 @@ export class SeatReservationActionsComponent implements OnInit {
   }
 
   onCancelClick() {
-    if (this.cancelable) {
-      this.mFlightReservationApi.findById(this.res.id).subscribe((mf: MFlightReservation) => {
-        this.cra.findById(mf.combinedReservationId, {include: ['mCarReservations', 'mFlightReservations', 'mRoomReservations']})
-          .subscribe((cr: CombinedReservation) => {
-            if (cr.mCarReservations !== undefined) {
-              cr.mCarReservations.forEach((mc) => {
-                this.loggedUserApi.destroyByIdMCarReservations(this.loggedUserApi.getCachedCurrent().id, mc.id).subscribe((success) => {
-                  console.log('ok');
-                }, (err) => {
-                  console.log('nope');
+    this.loggedUserApi.getCurrent().subscribe((user) => {
+      if (this.cancelable) {
+        this.mFlightReservationApi.findById(this.res.id).subscribe((mf: MFlightReservation) => {
+          this.cra.findById(mf.combinedReservationId, {include: ['mCarReservations', 'mFlightReservations', 'mRoomReservations']})
+            .subscribe((cr: CombinedReservation) => {
+              let ukupno = 0;
+              if (cr.mCarReservations) {
+                ukupno = cr.mCarReservations.length;
+              }
+              if (cr.mFlightReservations) {
+                ukupno += cr.mFlightReservations.length;
+              }
+              if (cr.mRoomReservations) {
+                ukupno += cr.mRoomReservations.length;
+              }
+              if (cr.mCarReservations) {
+                cr.mCarReservations.forEach((mc) => {
+                  this.loggedUserApi.destroyByIdMCarReservations(user.id, mc.id).subscribe((success) => {
+                    console.log('ok');
+                    ukupno--;
+                    if(ukupno === 0){
+                      this.dialogRef.close(null);
+                    }
+                  }, (err) => {
+                    console.log('nope');
+                  });
                 });
-              });
-            }
-            if (cr.mFlightReservations !== undefined) {
-              cr.mFlightReservations.forEach((mc2) => {
-                this.fa.deleteById(mc2.id).subscribe((success) => {
-                  console.log('ok');
-                }, (err) => {
-                  console.log('nope');
+              }
+              if (cr.mFlightReservations) {
+                cr.mFlightReservations.forEach((mc2) => {
+                  this.fa.deleteById(mc2.id).subscribe((success) => {
+                    console.log('ok');
+                    ukupno--;
+                    if(ukupno === 0){
+                      this.dialogRef.close(null);
+                    }
+                  }, (err) => {
+                    console.log('nope');
+                  });
                 });
-              });
-            }
-            if (cr.mRoomReservations !== undefined) {
-              cr.mRoomReservations.forEach((mc3) => {
-                this.loggedUserApi.destroyByIdMRoomReservations(this.loggedUserApi.getCachedCurrent().id, mc3.id).subscribe((success) => {
-                  console.log('ok');
-                }, (err) => {
-                  console.log('nope');
+              }
+              if (cr.mRoomReservations) {
+                cr.mRoomReservations.forEach((mc3) => {
+                  this.loggedUserApi.destroyByIdMRoomReservations(user.id, mc3.id).subscribe((success) => {
+                    console.log('ok');
+                    ukupno--;
+                    if(ukupno === 0){
+                      this.dialogRef.close(null);
+                    }
+                  }, (err) => {
+                    console.log('nope');
+                  });
                 });
-              });
-            }
-          });
-      });
-    }
+              }
+            });
+        });
+      }
+    });
+
   }
 
   onSave() {

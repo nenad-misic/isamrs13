@@ -49,7 +49,7 @@
     <mat-card id="hotelAdmin" *ngIf="type === 'hotelAdmin'">
       <mat-card-content fxLayout="column">
         <img mat-card-image src="../assets/images/logo.png">
-        <button mat-button [routerLink]="['/hoteldetail', profile.hotelId]" routerLinkActive="active">MY HOTEL</button>
+        <button mat-button  [routerLink]="['/hoteldetail', profile.hotelId]" routerLinkActive="active">MY HOTEL</button>
         <button mat-button routerLink="/airline" routerLinkActive="active">AIRLINES</button>
         <button mat-button routerLink="/hotels" routerLinkActive="active">HOTELS</button>
         <button mat-button routerLink="/rentacar" routerLinkActive="active">RENT A CAR SERVICES</button>

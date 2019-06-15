@@ -22,22 +22,28 @@ export class ReservationFlowComponent implements OnInit {
   ngOnInit() {
     this.combinedService.combinedReservation.subscribe((cr: CombinedReservation) => {
       this.combinedReservation = cr;
+      var totalPrice = 0;
       if (cr.mFlightReservations != undefined) {
         cr.mFlightReservations.forEach((mfr: MFlightReservation) => {
-          this.totalPrice += mfr.flight.ticketPrice;
+          totalPrice += mfr.flight.ticketPrice;
+          console.log('totalprice+= ' + mfr.flight.ticketPrice + ' = ' + totalPrice);
         });
       }
       if (cr.mRoomReservations != undefined) {
         cr.mRoomReservations.forEach((mrr: MRoomReservation) => {
-          this.totalPrice += mrr.price;
+          totalPrice += mrr.price;
+          console.log('totalprice+= ' + mrr.price + ' = ' + totalPrice);
         });
       }
       if (cr.mCarReservations != undefined) {
         cr.mCarReservations.forEach((mcr) => {
-          this.totalPrice += mcr.price;
+          totalPrice += mcr.price;
+          console.log('totalprice+= ' + mcr.price + ' = ' + totalPrice);
         });
       }
       console.log(cr);
+      this.totalPrice = totalPrice;
+      console.log('totalprice = ' + totalPrice);
     });
     this.combinedService.refreshCombinedReservation();
 
