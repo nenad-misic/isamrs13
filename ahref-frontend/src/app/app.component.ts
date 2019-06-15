@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router, RouterEvent} from '@angular/router';
 import {LoggedUserApi} from './shared/sdk/services/custom';
-import {LoggedUser } from './shared/sdk/models';
 
 @Component({
   selector: 'app-root',
@@ -18,21 +17,42 @@ export class AppComponent implements OnInit  {
   constructor(private userTypeService: LoggedUserApi,
               private router: Router) {
     this.router.events.subscribe((event: RouterEvent) => {
-      if( this.userTypeService.getCachedCurrent() ){
-        this.type = this.userTypeService.getCachedCurrent().type;
-      }else{
+      this.userTypeService.getCurrent().subscribe((us) => {
+        if (us) {
+          this.type = us.type;
+          this.profile = us;
+        } else {
+          this.type = '';
+        }
+      }, (err) => {
         this.type = '';
-      }
+      });
     });
   }
 
   ngOnInit() {
-    if ( this.userTypeService.getCachedCurrent() ) {
-      console.log(this.userTypeService.getCachedCurrent());
-      this.type = this.userTypeService.getCachedCurrent().type;
-      this.profile = this.userTypeService.getCachedCurrent();
-    } else {
+    this.userTypeService.getCurrent().subscribe((us) => {
+      if (us) {
+        this.type = us.type;
+        this.profile = us;
+      } else {
+        this.type = '';
+      }
+    }, (err) => {
       this.type = '';
-    }
+    });
+  }
+
+  refreshMe() {
+    this.userTypeService.getCurrent().subscribe((us) => {
+      if (us) {
+        this.type = us.type;
+        this.profile = us;
+      } else {
+        this.type = '';
+      }
+    }, (err) => {
+      this.type = '';
+    });
   }
 }

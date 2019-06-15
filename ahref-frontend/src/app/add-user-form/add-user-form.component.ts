@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {LoggedUser} from '../shared/sdk/models';
 import {LoggedUserApi} from '../shared/sdk/services/custom';
-import {ToastrService} from "ngx-toastr";
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-add-user-form',
@@ -32,7 +32,7 @@ export class AddUserFormComponent implements OnInit {
     this.new_user.image = '../assets/images/user.png';
     this.userService.create(this.new_user).subscribe((succ) => {
       this.new_user = new LoggedUser();
-      this.toastr.success(this.new_user.username, "User added.")
+      this.toastr.success(this.new_user.username, 'User added.');
     }, (err) => {
       this.toastr.error(err.message, 'ERROR');
     });
