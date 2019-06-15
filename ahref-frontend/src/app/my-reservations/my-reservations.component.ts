@@ -116,6 +116,8 @@ export class MyReservationsComponent implements OnInit {
         this.myFlightReservations = this.myFlightReservations.filter(function(value, index, arr) {
           return value.id.toString() !== result;
         });
+      } else {
+        this.ngOnInit();
       }
     });
 

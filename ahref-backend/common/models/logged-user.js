@@ -610,7 +610,7 @@ function calculateCarPrice(Loggeduser, ctx, callback) {
                         }
                       }
                     
-                      startPrice.price *= (100 - currentDiscount.percentage)/100;
+                      item.price *= (100 - currentDiscount.percentage)/100;
               
                       console.log('Discount' + currentDiscount.percentage)
                     }

@@ -19,6 +19,41 @@ module.exports = function(Racservice) {
     next();
   });
 
+    
+  Racservice.beforeRemote('create', (ctx, model, next) => {
+    var luid = ctx.req.body.loggedUserId;
+    Racservice.app.models.LoggedUser.findById(luid).then((user) => {
+      if(user.type != 'racAdmin') {
+        let e = new Error();
+        e.status = "User is not rent a car service admin";
+        e.statusCode = "305";
+        next(e);
+      } else if (user.rACServiceId) {
+        let e = new Error();
+        e.status = "User already has a rent a car service";
+        e.statusCode = "305";
+        next(e);
+      } else {
+        Racservice.app.models.RPriceList.create({}).then((rpr) => {
+          ctx.req.body.rPriceListId = rpr.id;
+          next();
+        })
+      }
+    })
+  });
+
+  
+  Racservice.afterRemote('create', (ctx, model, next) => {
+    var luid = ctx.req.body.loggedUserId;
+    var rid = model.id;
+    Racservice.app.models.LoggedUser.findById(luid).then((obj) => {
+      obj.rACServiceId = rid;
+      Racservice.app.models.LoggedUser.upsert(obj).then((succ)=>{
+        next()
+      })
+    })
+  });
+ 
 
   Racservice.beforeRemote('*.__destroyById__cars',
     function(ctx, model, next) {
@@ -39,37 +74,6 @@ module.exports = function(Racservice) {
       });
     });
 
-
-    function daLiSeUklapaRac(models, rac, startDate, endDate, cb){
-      var cntUkupno;
-      rac.cars.count({}).then((count) => {
-        cntUkupno = count.count;
-        return  rac.cars.find();
-      })
-      .then((cars) => {
-        var okej = false;
-        cars.forEach((car) => {
-          models.mCarReservation.count({carId: car.id, startDate: {lte: endDate}, endDate: {gte: startDate}}).then((cnt) => {
-              if(cnt == 0) {
-                okej = true;
-              }
-          });
-        })
-      });
-    }
-    function obradiSledecuDestinaciju(destanation, startDate, endDate, name, country, obradjeno, result){
-      var trazeniBroj = 10;
-      destination.rACServices.find({include: 'cars'}).then((racservices) => {
-        racservices.cars.find((cars) => {
-          cars.forEach((car) => {
-            // proveriti da li se uklapa
-            // if uklapa
-            result.push()
-          });
-        })
-      })
-    }
-    
     Racservice.getMatching = function(startDate, endDate, name, country, skip, cb) {
       var results = [];
       var filter = {}

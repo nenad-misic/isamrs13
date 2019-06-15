@@ -3,7 +3,6 @@ import {
   Destination,
   Room,
   HPriceList,
-  LoggedUser,
   QuickRoomReservation,
   HotelDiscount
 } from '../index';
@@ -14,7 +13,7 @@ export interface HotelInterface {
   "address": string;
   "latitude": number;
   "longitude": number;
-  "description": number;
+  "description": string;
   "rating": number;
   "numOfRates": number;
   "id"?: any;
@@ -22,8 +21,7 @@ export interface HotelInterface {
   "loggedUserId"?: any;
   destination?: Destination;
   rooms?: Room[];
-  priceList?: HPriceList;
-  loggedUser?: LoggedUser;
+  hPriceList?: HPriceList;
   quickRoomReservations?: QuickRoomReservation[];
   hotelDiscounts?: HotelDiscount[];
 }
@@ -33,7 +31,7 @@ export class Hotel implements HotelInterface {
   "address": string;
   "latitude": number;
   "longitude": number;
-  "description": number;
+  "description": string;
   "rating": number;
   "numOfRates": number;
   "id": any;
@@ -41,8 +39,7 @@ export class Hotel implements HotelInterface {
   "loggedUserId": any;
   destination: Destination;
   rooms: Room[];
-  priceList: HPriceList;
-  loggedUser: LoggedUser;
+  hPriceList: HPriceList;
   quickRoomReservations: QuickRoomReservation[];
   hotelDiscounts: HotelDiscount[];
   constructor(data?: HotelInterface) {
@@ -96,7 +93,7 @@ export class Hotel implements HotelInterface {
         },
         "description": {
           name: 'description',
-          type: 'number'
+          type: 'string'
         },
         "rating": {
           name: 'rating',
@@ -138,21 +135,13 @@ export class Hotel implements HotelInterface {
                   keyFrom: 'id',
           keyTo: 'hotelId'
         },
-        priceList: {
-          name: 'priceList',
+        hPriceList: {
+          name: 'hPriceList',
           type: 'HPriceList',
           model: 'HPriceList',
           relationType: 'hasOne',
                   keyFrom: 'id',
           keyTo: 'hotelId'
-        },
-        loggedUser: {
-          name: 'loggedUser',
-          type: 'LoggedUser',
-          model: 'LoggedUser',
-          relationType: 'belongsTo',
-                  keyFrom: 'loggedUserId',
-          keyTo: 'id'
         },
         quickRoomReservations: {
           name: 'quickRoomReservations',

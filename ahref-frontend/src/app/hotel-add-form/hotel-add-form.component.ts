@@ -2,7 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {Location} from '@angular/common';
 
 import { API_VERSION } from '../shared/baseurl';
-import {Hotel, HotelApi, LoopBackConfig, LoggedUserApi, HPriceList, LoggedUser} from '../shared/sdk';
+import {Hotel, HotelApi, LoopBackConfig, LoggedUserApi, HPriceList, LoggedUser, Destination, RACService} from '../shared/sdk';
 
 import { ToastrService } from 'ngx-toastr';
 
@@ -21,15 +21,16 @@ export class HotelAddFormComponent implements OnInit {
               private location: Location,
               private userTypeService: LoggedUserApi,
               private toastr: ToastrService,
+              private hotelService: HotelApi,
               @Inject('baseURL') private baseURL) {
     LoopBackConfig.setBaseURL(baseURL);
     LoopBackConfig.setApiVersion(API_VERSION);
   }
 
   ngOnInit() {
-    if( this.userTypeService.getCachedCurrent() ){
+    if (this.userTypeService.getCachedCurrent()) {
       this.type = this.userTypeService.getCachedCurrent().type;
-    }else{
+    } else {
       this.type = '';
     }
     this.new_hotel = new Hotel();
@@ -43,23 +44,11 @@ export class HotelAddFormComponent implements OnInit {
       if (user) {
         if (user.type === 'hotelAdmin' && !user.hotel) {
           this.new_hotel.loggedUserId = user.id;
-          this.userTypeService.createHotel(this.userTypeService.getCachedCurrent().id, this.new_hotel).subscribe((hotel: Hotel) => {
-            if (!hotel) console.log(status);
-
-            this.toastr.success(this.new_hotel.name, 'Hotel added');
-            this.new_hotel = hotel;
-            const priceList: HPriceList = new HPriceList();
-            priceList.hotelId = this.new_hotel.id;
-            this.service.createPriceList(this.new_hotel.id, priceList).subscribe((a) => {
-                console.log(a);
-                this.new_hotel = new Hotel();
-              }, (err) => {
-                this.toastr.error(err.message, 'ERROR - 57');
-            });
-
-          }, (err) => {
-            this.toastr.error(err.message, 'ERROR - 65');
+          this.hotelService.create(this.new_hotel).subscribe((hotel: Hotel) => {
+            this.toastr.success(hotel.name, 'Hotel added');
             this.new_hotel = new Hotel();
+          }, (err) => {
+            this.toastr.error(err.message, 'ERROR');
           });
         }
       }

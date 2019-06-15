@@ -35,21 +35,6 @@
   },
   "validations": [],
   "relations": {
-    "airline": {
-      "type": "hasOne",
-      "model": "Airline",
-      "foreignKey": ""
-    },
-    "hotel": {
-      "type": "hasOne",
-      "model": "Hotel",
-      "foreignKey": ""
-    },
-    "racservice": {
-      "type": "hasOne",
-      "model": "RACService",
-      "foreignKey": ""
-    },
     "mCarReservations": {
       "type": "hasMany",
       "model": "mCarReservation",
@@ -63,6 +48,16 @@
     "mFlightReservations": {
       "type": "hasMany",
       "model": "mFlightReservation",
+      "foreignKey": ""
+    },
+    "hotel": {
+      "type": "belongsTo",
+      "model": "Hotel",
+      "foreignKey": ""
+    },
+    "rACService": {
+      "type": "belongsTo",
+      "model": "RACService",
       "foreignKey": ""
     }
   },
@@ -93,6 +88,13 @@
       "principalId": "$everyone",
       "permission": "ALLOW",
       "property": "__create__mCarReservations"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "findOne"
     },
     {
       "accessType": "EXECUTE",

@@ -1,8 +1,17 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
-import {Airline, Flight, Hotel, MCarReservation, MFlightReservation, MRoomReservation, Room} from '../shared/sdk/models';
 import {
-  AirlineApi,
+  Airline,
+  CombinedReservation,
+  Flight,
+  Hotel,
+  MCarReservation,
+  MFlightReservation,
+  MRoomReservation,
+  Room
+} from '../shared/sdk/models';
+import {
+  AirlineApi, CombinedReservationApi,
   FlightApi,
   HotelApi,
   LoggedUserApi,
@@ -26,10 +35,12 @@ export class SeatReservationActionsComponent implements OnInit {
   resc;
   constructor(
     public dialogRef: MatDialogRef<SeatReservationActionsComponent>,
+    private fa: MFlightReservationApi,
     @Inject(MAT_DIALOG_DATA) public res: MFlightReservation,
     private loggedUserApi: LoggedUserApi,
     private flightApi: FlightApi,
     private airlineApi: AirlineApi,
+    private cra: CombinedReservationApi,
     private mFlightReservationApi: MFlightReservationApi,
     private toastr: ToastrService) {}
 
@@ -49,7 +60,40 @@ export class SeatReservationActionsComponent implements OnInit {
   }
 
   onCancelClick() {
-    alert('Canceling flight +- room +- car reservation');
+    if (this.cancelable) {
+      this.mFlightReservationApi.findById(this.res.id).subscribe((mf: MFlightReservation) => {
+        this.cra.findById(mf.combinedReservationId, {include: ['mCarReservations', 'mFlightReservations', 'mRoomReservations']})
+          .subscribe((cr: CombinedReservation) => {
+            if (cr.mCarReservations !== undefined) {
+              cr.mCarReservations.forEach((mc) => {
+                this.loggedUserApi.destroyByIdMCarReservations(this.loggedUserApi.getCachedCurrent().id, mc.id).subscribe((success) => {
+                  console.log('ok');
+                }, (err) => {
+                  console.log('nope');
+                });
+              });
+            }
+            if (cr.mFlightReservations !== undefined) {
+              cr.mFlightReservations.forEach((mc2) => {
+                this.fa.deleteById(mc2.id).subscribe((success) => {
+                  console.log('ok');
+                }, (err) => {
+                  console.log('nope');
+                });
+              });
+            }
+            if (cr.mRoomReservations !== undefined) {
+              cr.mRoomReservations.forEach((mc3) => {
+                this.loggedUserApi.destroyByIdMRoomReservations(this.loggedUserApi.getCachedCurrent().id, mc3.id).subscribe((success) => {
+                  console.log('ok');
+                }, (err) => {
+                  console.log('nope');
+                });
+              });
+            }
+          });
+      });
+    }
   }
 
   onSave() {

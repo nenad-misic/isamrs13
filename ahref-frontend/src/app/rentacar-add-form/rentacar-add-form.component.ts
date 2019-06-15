@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {RACService, LoggedUser, Destination} from '../shared/sdk/models';
+import {RACService, LoggedUser, Destination, Hotel} from '../shared/sdk/models';
 import {RACServiceApi, LoggedUserApi, DestinationApi, RPriceListApi} from '../shared/sdk/services/custom';
 import {Location} from '@angular/common';
 import {LoopBackConfig} from '../shared/sdk';
@@ -22,6 +22,7 @@ export class RentacarAddFormComponent implements OnInit {
               @Inject('baseURL') private baseURL,
               private userTypeService: LoggedUserApi,
               private toastr: ToastrService,
+              private racServiceApiMotherF: RACServiceApi,
               private rPriceApi: RPriceListApi,
               private destinationApi: DestinationApi) {
     LoopBackConfig.setBaseURL(baseURL);
@@ -41,56 +42,31 @@ export class RentacarAddFormComponent implements OnInit {
 
 
   addRACService() {
-   /*this.userTypeService.findOne({where: {email: this.email}}).subscribe((user: LoggedUser) => {
-      if (user) {
-        if (user.type === 'racAdmin' && !user.racservice) {
-          this.new_racservice.loggedUserId = user.id;
-          this.service.create(this.new_racservice).subscribe((racservice: RACService) => {
-            this.destinationApi.findOne({where: {name: this.city}}).subscribe((destination: Destination) => {
-              racservice.destinationId = destination.id;
-              this.userTypeService.updateRacservice(user.id, racservice).subscribe((returnedUser) => {
-                console.log('ok');
-              }, (err) => {
-                // fix error!
-                console.log(err);
-              });
-              this.new_racservice = new RACService();
-            }, (err) => {
-              console.log('No such destination!');
-            });
-
-
-          });
-        }
-      }
-    });*/
-
     this.userTypeService.findOne({where: {email: this.email}}).subscribe((user: LoggedUser) => {
       if (user) {
-        if (user.type === 'racAdmin' && !user.racservice) {
-          this.new_racservice.loggedUserId = user.id;
+        if (user.type === 'racAdmin' && !user.hotel) {
           this.destinationApi.findOne({where: {name: this.city}}).subscribe((destination: Destination) => {
-            console.log('debuger');
-            this.new_racservice.destinationId = destination.id;
-            this.service.create(this.new_racservice).subscribe((racservice: RACService) => {
-              this.service.createPriceList(this.new_racservice.id).subscribe(() => {}, (err) => this.toastr.error(err.message, 'ERROR'));
-              this.userTypeService.updateRacservice(user.id, racservice).subscribe((returnedUser) => {
-                this.toastr.success(this.new_racservice.name, 'RAC service added');
-                this.new_racservice = new RACService();
-              }, (err) => {
-                // fix error!
-                this.toastr.error(err.message, 'ERROR');
-                this.new_racservice = new RACService();
-              });
+            if (destination) {
+              this.new_racservice.destinationId = destination.id;
+            } else {
+              this.toastr.error('No destination named like that thot!');
+            }
+            this.new_racservice.loggedUserId = user.id;
+            this.racServiceApiMotherF.create(this.new_racservice).subscribe((rac: RACService) => {
+              this.toastr.success(rac.name, 'Rent a car service added');
+              this.new_racservice = new RACService();
             }, (err) => {
               this.toastr.error(err.message, 'ERROR');
-              this.new_racservice = new RACService();
             });
-
+          }, (err) => {
+            this.toastr.error('No destination named like that thot!');
           });
         }
       }
+    }, (err) => {
+      this.toastr.error(err.message, 'ERROR');
+      this.new_racservice = new RACService();
     });
-  }
 
+  }
 }

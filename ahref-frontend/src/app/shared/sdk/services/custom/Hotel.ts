@@ -14,7 +14,6 @@ import { SocketConnection } from '../../sockets/socket.connections';
 import { Destination } from '../../models/Destination';
 import { Room } from '../../models/Room';
 import { HPriceList } from '../../models/HPriceList';
-import { LoggedUser } from '../../models/LoggedUser';
 import { QuickRoomReservation } from '../../models/QuickRoomReservation';
 import { HotelDiscount } from '../../models/HotelDiscount';
 
@@ -159,7 +158,7 @@ export class HotelApi extends BaseLoopBackApi {
   }
 
   /**
-   * Fetches hasOne relation priceList.
+   * Fetches hasOne relation hPriceList.
    *
    * @param {any} id Hotel id
    *
@@ -174,10 +173,10 @@ export class HotelApi extends BaseLoopBackApi {
    * This usually means the response is a `Hotel` object.)
    * </em>
    */
-  public getPriceList(id: any, refresh: any = {}, customHeaders?: Function): Observable<any> {
+  public getHPriceList(id: any, refresh: any = {}, customHeaders?: Function): Observable<any> {
     let _method: string = "GET";
     let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
-    "/Hotels/:id/priceList";
+    "/Hotels/:id/hPriceList";
     let _routeParams: any = {
       id: id
     };
@@ -189,7 +188,7 @@ export class HotelApi extends BaseLoopBackApi {
   }
 
   /**
-   * Creates a new instance in priceList of this model.
+   * Creates a new instance in hPriceList of this model.
    *
    * @param {any} id Hotel id
    *
@@ -206,10 +205,10 @@ export class HotelApi extends BaseLoopBackApi {
    * This usually means the response is a `Hotel` object.)
    * </em>
    */
-  public createPriceList(id: any, data: any = {}, customHeaders?: Function): Observable<any> {
+  public createHPriceList(id: any, data: any = {}, customHeaders?: Function): Observable<any> {
     let _method: string = "POST";
     let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
-    "/Hotels/:id/priceList";
+    "/Hotels/:id/hPriceList";
     let _routeParams: any = {
       id: id
     };
@@ -222,7 +221,7 @@ export class HotelApi extends BaseLoopBackApi {
   }
 
   /**
-   * Update priceList of this model.
+   * Update hPriceList of this model.
    *
    * @param {any} id Hotel id
    *
@@ -239,10 +238,10 @@ export class HotelApi extends BaseLoopBackApi {
    * This usually means the response is a `Hotel` object.)
    * </em>
    */
-  public updatePriceList(id: any, data: any = {}, customHeaders?: Function): Observable<any> {
+  public updateHPriceList(id: any, data: any = {}, customHeaders?: Function): Observable<any> {
     let _method: string = "PUT";
     let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
-    "/Hotels/:id/priceList";
+    "/Hotels/:id/hPriceList";
     let _routeParams: any = {
       id: id
     };
@@ -255,7 +254,7 @@ export class HotelApi extends BaseLoopBackApi {
   }
 
   /**
-   * Deletes priceList of this model.
+   * Deletes hPriceList of this model.
    *
    * @param {any} id Hotel id
    *
@@ -265,45 +264,15 @@ export class HotelApi extends BaseLoopBackApi {
    *
    * This method returns no data.
    */
-  public destroyPriceList(id: any, customHeaders?: Function): Observable<any> {
+  public destroyHPriceList(id: any, customHeaders?: Function): Observable<any> {
     let _method: string = "DELETE";
     let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
-    "/Hotels/:id/priceList";
+    "/Hotels/:id/hPriceList";
     let _routeParams: any = {
       id: id
     };
     let _postBody: any = {};
     let _urlParams: any = {};
-    let result = this.request(_method, _url, _routeParams, _urlParams, _postBody, null, customHeaders);
-    return result;
-  }
-
-  /**
-   * Fetches belongsTo relation loggedUser.
-   *
-   * @param {any} id Hotel id
-   *
-   * @param {boolean} refresh 
-   *
-   * @returns {object} An empty reference that will be
-   *   populated with the actual data once the response is returned
-   *   from the server.
-   *
-   * <em>
-   * (The remote method definition does not provide any description.
-   * This usually means the response is a `Hotel` object.)
-   * </em>
-   */
-  public getLoggedUser(id: any, refresh: any = {}, customHeaders?: Function): Observable<any> {
-    let _method: string = "GET";
-    let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
-    "/Hotels/:id/loggedUser";
-    let _routeParams: any = {
-      id: id
-    };
-    let _postBody: any = {};
-    let _urlParams: any = {};
-    if (typeof refresh !== 'undefined' && refresh !== null) _urlParams.refresh = refresh;
     let result = this.request(_method, _url, _routeParams, _urlParams, _postBody, null, customHeaders);
     return result;
   }
@@ -905,7 +874,7 @@ export class HotelApi extends BaseLoopBackApi {
   }
 
   /**
-   * Creates a new instance in priceList of this model.
+   * Creates a new instance in hPriceList of this model.
    *
    * @param {any} id Hotel id
    *
@@ -922,10 +891,10 @@ export class HotelApi extends BaseLoopBackApi {
    * This usually means the response is a `Hotel` object.)
    * </em>
    */
-  public createManyPriceList(id: any, data: any[] = [], customHeaders?: Function): Observable<any> {
+  public createManyHPriceList(id: any, data: any[] = [], customHeaders?: Function): Observable<any> {
     let _method: string = "POST";
     let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
-    "/Hotels/:id/priceList";
+    "/Hotels/:id/hPriceList";
     let _routeParams: any = {
       id: id
     };
