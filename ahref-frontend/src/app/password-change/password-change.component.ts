@@ -36,6 +36,7 @@ export class PasswordChangeComponent implements OnInit {
       this.errmsg = null;
       const user = this.userService.getCachedCurrent();
       user.password = this.password_original;
+      user.firstLogin = false;
       this.userService.updateAttributes(user.id, user).subscribe(success => {
         if (success) {
           console.log(success);

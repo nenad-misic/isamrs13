@@ -35,11 +35,7 @@ export class AdditionalServicesSectionComponent implements OnInit {
         this.hPriceList = priceList;
         this.waiting = false;
       });
-      if (profile.id === this.userApi.getCachedCurrent().hotelId) {
-        this.readOnly = false;
-      } else {
-        this.readOnly = true;
-      }
+      this.readOnly = profile.id !== this.userApi.getCachedCurrent().hotelId;
     });
   }
 
