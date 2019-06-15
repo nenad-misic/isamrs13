@@ -112,13 +112,26 @@ export class MyReservationsComponent implements OnInit {
       data: row
     });
     dialogRefS.afterClosed().subscribe(result => {
-      if (result) {
-        this.myFlightReservations = this.myFlightReservations.filter(function(value, index, arr) {
-          return value.id.toString() !== result;
+      console.log('DE BU GE R!')
+        this.userApi.getCurrent({include: 'mCarReservations'}).subscribe((lu: LoggedUser) => {
+          this.myCarReservations = lu.mCarReservations;
         });
-      } else {
-        this.ngOnInit();
-      }
+
+        this.userApi.getCurrent({include: 'mRoomReservations'}).subscribe((lu: LoggedUser) => {
+          this.myRoomReservations = lu.mRoomReservations;
+        });
+
+        this.mFlightReservationApi.find({where: {userId: this.userApi.getCachedCurrent().id}}).subscribe((results: MFlightReservation[]) => {
+          results.forEach((res) => {
+            this.myFlightReservations.push(res);
+            console.log(res);
+          });
+        });
+        this.mFlightReservationApi.find({where: {passengerId: this.userApi.getCachedCurrent().id}}).subscribe((results: MFlightReservation[]) => {
+          results.forEach((res) => {
+            this.myFlightReservations.push(res);
+          });
+        });
     });
 
   }

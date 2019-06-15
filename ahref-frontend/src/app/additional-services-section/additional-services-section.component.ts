@@ -30,7 +30,7 @@ export class AdditionalServicesSectionComponent implements OnInit {
     this.waiting = true;
     const id = this.route.snapshot.params['id'];
     this.hotelId = id;
-    this.hotelService.findOne({where: {id: id}, include: 'priceList'}).subscribe((profile: Hotel) => {
+    this.hotelService.findOne({where: {id: id}, include: 'hPriceList'}).subscribe((profile: Hotel) => {
       this.aserviceApi.findOne({where: {id: profile.hPriceList.id}, include: 'priceListItems'}).subscribe((priceList: HPriceList) => {
         this.hPriceList = priceList;
         this.waiting = false;
