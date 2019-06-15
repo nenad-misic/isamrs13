@@ -64,6 +64,11 @@
       "type": "belongsTo",
       "model": "RACService",
       "foreignKey": ""
+    },
+    "airline": {
+      "type": "hasOne",
+      "model": "Airline",
+      "foreignKey": ""
     }
   },
   "acls": [

@@ -38,7 +38,7 @@ export class RoomDetailProfileComponent implements OnInit {
     this.roomApi.findById(id, {include: 'datePrices'}).subscribe((room: Room) => {
       this.room = room;
       this.hotelApi.findById(room.hotelId).subscribe((hotel: Hotel) => {
-        if (hotel.loggedUserId === this.loggedUserApi.getCachedCurrent().id) {
+        if (hotel.id === this.loggedUserApi.getCachedCurrent().hotelId) {
           this.readOnly = false;
         } else {
           this.readOnly = true;

@@ -53,7 +53,7 @@ export class CarDetailProfileComponent implements OnInit {
     this.carApi.findById(id).subscribe((car: Car) => {
       this.car = car;
       this.racServiceApi.findById(car.rACServiceId).subscribe((racService: RACService) => {
-        if (racService.loggedUserId === this.loggedUserApi.getCachedCurrent().id) {
+        if (racService.id === this.loggedUserApi.getCachedCurrent().rACServiceId) {
           this.readOnly = false;
         } else {
           this.readOnly = true;

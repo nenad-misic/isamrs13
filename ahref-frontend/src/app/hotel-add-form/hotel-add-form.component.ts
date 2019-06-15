@@ -43,7 +43,6 @@ export class HotelAddFormComponent implements OnInit {
     this.userTypeService.findOne({where: {email: this.email}}).subscribe((user: LoggedUser) => {
       if (user) {
         if (user.type === 'hotelAdmin' && !user.hotel) {
-          this.new_hotel.loggedUserId = user.id;
           this.hotelService.create(this.new_hotel).subscribe((hotel: Hotel) => {
             this.toastr.success(hotel.name, 'Hotel added');
             this.new_hotel = new Hotel();

@@ -17,7 +17,6 @@ export interface RACServiceInterface {
   "numOfRates": number;
   "id"?: any;
   "destinationId"?: any;
-  "loggedUserId"?: any;
   destination?: Destination;
   branchOffices?: BranchOffice[];
   cars?: Car[];
@@ -34,7 +33,6 @@ export class RACService implements RACServiceInterface {
   "numOfRates": number;
   "id": any;
   "destinationId": any;
-  "loggedUserId": any;
   destination: Destination;
   branchOffices: BranchOffice[];
   cars: Car[];
@@ -108,10 +106,6 @@ export class RACService implements RACServiceInterface {
         },
         "destinationId": {
           name: 'destinationId',
-          type: 'any'
-        },
-        "loggedUserId": {
-          name: 'loggedUserId',
           type: 'any'
         },
       },

@@ -17,6 +17,7 @@ export class RentacarDetailProfileComponent implements OnInit {
   profile: RACService;
   profile_new: RACService;
   readOnly = true;
+  sysAdmin = false;
 
   constructor(private rentacarService: RACServiceApi,
               private route: ActivatedRoute,
@@ -41,13 +42,13 @@ export class RentacarDetailProfileComponent implements OnInit {
         this.profile_new.longitude = this.profile.longitude;
         this.profile_new.rating = this.profile.rating;
         this.profile_new.numOfRates = this.profile.numOfRates;
-        this.profile_new.loggedUserId = this.profile.loggedUserId;
 
-        if (this.profile.loggedUserId === this.userApi.getCachedCurrent().id){
+        if (this.profile.id === this.userApi.getCachedCurrent().rACServiceId){
           this.readOnly = false;
         } else{
           this.readOnly = true;
         }
+        this.sysAdmin = this.userApi.getCachedCurrent().type === 'sysAdmin';
       }
     );
 

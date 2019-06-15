@@ -36,6 +36,59 @@ module.exports = function(Loggeduser) {
     returns: {type: 'object', arg: 'retval'},
   });
 
+  Loggeduser.assignHotelAdmin = function(loggedUserId, hotelId, cb) {
+    Loggeduser.findOne({where: {id: loggedUserId}}).then((user) => {
+      if (user.type != 'hotelAdmin') {
+        let e = new Error();
+        e.statusCode = 403;
+        e.status = 'User is not a hotel admin';
+        cb(e, {});
+      } else {
+        user.hotelId = hotelId;
+        Loggeduser.upsert(user).then((updatedUser) => {
+          cb(null, updatedUser);
+        })
+      }
+
+    })
+  }
+
+
+  Loggeduser.remoteMethod('assignHotelAdmin', {
+    accepts: [
+      {arg: 'loggedUserId', type: 'string', required: true},
+      {arg: 'hotelId', type: 'string', required: true}
+    ],
+    http: {path: '/assignHotelAdmin', verb: 'post'},
+    returns: {type: 'object', arg: 'retval'}
+  });
+
+  Loggeduser.assignRacAdmin = function(loggedUserId, racId, cb) {
+    Loggeduser.findOne({where: {id: loggedUserId}}).then((user) => {
+      if (user.type != 'racAdmin') {
+        let e = new Error();
+        e.statusCode = 403;
+        e.status = 'User is not a hotel admin';
+        cb(e, {});
+      } else {
+        user.racId = racId;
+        Loggeduser.upsert(user).then((updatedUser) => {
+          cb(null, updatedUser);
+        })
+      }
+
+    })
+  }
+
+  Loggeduser.remoteMethod('assignRacAdmin', {
+    accepts: [
+      {arg: 'loggedUserId', type: 'string', required: true},
+      {arg: 'racId', type: 'string', required: true}
+    ],
+    http: {path: '/assignRacAdmin', verb: 'post'},
+    returns: {type: 'object', arg: 'retval'}
+  });
+
 
   Loggeduser.beforeRemote('create', function(ctx, model, next) {
     Loggeduser.findOne({where: {username: ctx.req.body.username}}).then((retval) => {

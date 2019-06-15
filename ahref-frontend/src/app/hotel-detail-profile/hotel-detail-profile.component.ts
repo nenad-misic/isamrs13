@@ -19,6 +19,7 @@ export class HotelDetailProfileComponent implements OnInit {
   rooms: Room[];
   readOnly: boolean;
   combinedActive = false;
+  sysAdmin = false;
 
   constructor(private hotelService: HotelApi,
               private route: ActivatedRoute,
@@ -39,7 +40,8 @@ export class HotelDetailProfileComponent implements OnInit {
     this.hotelService.findOne({where: {id: id}, include: 'rooms'}).subscribe((profile: Hotel) => {
       this.profile = profile;
       this.profile_new = JSON.parse(JSON.stringify(this.profile)); // YAAS deep copy
-      this.readOnly = this.profile.loggedUserId !== this.userApi.getCachedCurrent().id;
+      this.readOnly = this.profile.id !== this.userApi.getCachedCurrent().hotelId;
+      this.sysAdmin = this.userApi.getCachedCurrent().type === 'sysAdmin';
     });
   }
 

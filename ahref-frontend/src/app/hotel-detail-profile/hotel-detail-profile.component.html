@@ -49,10 +49,11 @@
       <button mat-button (click)="goBack()">Back</button>
       <button mat-button (click)="addServClicked()" >Additinal services</button>
       <button mat-button *ngIf="readOnly && combinedActive" (click)="makeReservationClicked()">Make reservation</button>
-      <button mat-button *ngIf="!readOnly && combinedActive" [routerLink]="['/quickreservations/:'+profile_new.id]">Quick reservations</button>
+      <button mat-button *ngIf="!readOnly && combinedActive" [routerLink]="['/quickreservations', profile_new.id]">Quick reservations</button>
       <button mat-button *ngIf="!readOnly" (click)="onSaveClick()">Save changes</button>
       <button mat-button *ngIf="!readOnly" (click)="onDeleteClick()">Delete hotel</button>
-      <button mat-button [routerLink]="['/hotelreports/'+profile_new.id]">Reports</button>
+      <button mat-button [routerLink]="['/hotelreports', profile_new.id]">Reports</button>
+      <button mat-button *ngIf="sysAdmin" [routerLink]="['/assignHotelAdmin', profile_new.id]">Assign Admin</button>
     </mat-card-actions>
   </form>
   <app-room-add-form [hotel]="profile_new" *ngIf="!readOnly"></app-room-add-form>
@@ -61,7 +62,7 @@
     <mat-card-content>
       <mat-grid-list cols="2">
         <mat-grid-tile *ngFor="let room of profile_new.rooms">
-          <app-room-profile [room]="room"  [routerLink]="['/roomdetail/' + room.id]"></app-room-profile>
+          <app-room-profile [room]="room"  [routerLink]="['/roomdetail', room.id]"></app-room-profile>
         </mat-grid-tile>
       </mat-grid-list>
     </mat-card-content>

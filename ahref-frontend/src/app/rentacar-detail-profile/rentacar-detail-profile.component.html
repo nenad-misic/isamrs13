@@ -49,6 +49,7 @@
     <button mat-button *ngIf="readOnly" [routerLink]="['/quickCarView', profile_new.id]">Quick reservations panel</button>
     <button mat-button [routerLink]="['/cars', profile_new.id]">Search cars</button>
     <button mat-button [routerLink]="['/allcars', profile_new.id]">List all cars</button>
+    <button mat-button *ngIf="sysAdmin" [routerLink]="['/assignRacAdmin', profile_new.id]">Assign Admin</button>
   </mat-card-actions>
   </form>
 

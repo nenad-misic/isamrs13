@@ -1,8 +1,8 @@
 /* tslint:disable */
 import {
-  Airline,
   Hotel,
   RACService,
+  Airline,
   MCarReservation,
   MRoomReservation,
   MFlightReservation
@@ -16,16 +16,19 @@ export interface LoggedUserInterface {
   "city": string;
   "points": number;
   "type": string;
+  "firstLogin"?: boolean;
   "realm"?: string;
   "username"?: string;
   "email": string;
   "emailVerified"?: boolean;
   "id"?: any;
+  "hotelId"?: any;
+  "rACServiceId"?: any;
   "password"?: string;
   accessTokens?: any[];
-  airline?: Airline;
   hotel?: Hotel;
-  racservice?: RACService;
+  rACService?: RACService;
+  airline?: Airline;
   mCarReservations?: MCarReservation[];
   mRoomReservations?: MRoomReservation[];
   mFlightReservations?: MFlightReservation[];
@@ -38,16 +41,19 @@ export class LoggedUser implements LoggedUserInterface {
   "city": string;
   "points": number;
   "type": string;
+  "firstLogin": boolean;
   "realm": string;
   "username": string;
   "email": string;
   "emailVerified": boolean;
   "id": any;
+  "hotelId": any;
+  "rACServiceId": any;
   "password": string;
   accessTokens: any[];
-  airline: Airline;
   hotel: Hotel;
-  racservice: RACService;
+  rACService: RACService;
+  airline: Airline;
   mCarReservations: MCarReservation[];
   mRoomReservations: MRoomReservation[];
   mFlightReservations: MFlightReservation[];
@@ -110,6 +116,11 @@ export class LoggedUser implements LoggedUserInterface {
           type: 'string',
           default: 'regUser'
         },
+        "firstLogin": {
+          name: 'firstLogin',
+          type: 'boolean',
+          default: false
+        },
         "realm": {
           name: 'realm',
           type: 'string'
@@ -130,6 +141,14 @@ export class LoggedUser implements LoggedUserInterface {
           name: 'id',
           type: 'any'
         },
+        "hotelId": {
+          name: 'hotelId',
+          type: 'any'
+        },
+        "rACServiceId": {
+          name: 'rACServiceId',
+          type: 'any'
+        },
         "password": {
           name: 'password',
           type: 'string'
@@ -144,26 +163,26 @@ export class LoggedUser implements LoggedUserInterface {
                   keyFrom: 'id',
           keyTo: 'userId'
         },
-        airline: {
-          name: 'airline',
-          type: 'Airline',
-          model: 'Airline',
-          relationType: 'hasOne',
-                  keyFrom: 'id',
-          keyTo: 'loggedUserId'
-        },
         hotel: {
           name: 'hotel',
           type: 'Hotel',
           model: 'Hotel',
-          relationType: 'hasOne',
-                  keyFrom: 'id',
-          keyTo: 'loggedUserId'
+          relationType: 'belongsTo',
+                  keyFrom: 'hotelId',
+          keyTo: 'id'
         },
-        racservice: {
-          name: 'racservice',
+        rACService: {
+          name: 'rACService',
           type: 'RACService',
           model: 'RACService',
+          relationType: 'belongsTo',
+                  keyFrom: 'rACServiceId',
+          keyTo: 'id'
+        },
+        airline: {
+          name: 'airline',
+          type: 'Airline',
+          model: 'Airline',
           relationType: 'hasOne',
                   keyFrom: 'id',
           keyTo: 'loggedUserId'
