@@ -1,6 +1,5 @@
 /* tslint:disable */
 import {
-  Hotel,
   HPriceListItem
 } from '../index';
 
@@ -8,14 +7,12 @@ declare var Object: any;
 export interface HPriceListInterface {
   "id"?: any;
   "hotelId"?: any;
-  hotel?: Hotel;
   priceListItems?: HPriceListItem[];
 }
 
 export class HPriceList implements HPriceListInterface {
   "id": any;
   "hotelId": any;
-  hotel: Hotel;
   priceListItems: HPriceListItem[];
   constructor(data?: HPriceListInterface) {
     Object.assign(this, data);
@@ -60,14 +57,6 @@ export class HPriceList implements HPriceListInterface {
         },
       },
       relations: {
-        hotel: {
-          name: 'hotel',
-          type: 'Hotel',
-          model: 'Hotel',
-          relationType: 'belongsTo',
-                  keyFrom: 'hotelId',
-          keyTo: 'id'
-        },
         priceListItems: {
           name: 'priceListItems',
           type: 'HPriceListItem[]',

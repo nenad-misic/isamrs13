@@ -36,6 +36,7 @@ import { QuickFlightReservation } from '../../models/QuickFlightReservation';
 import { QuickRoomReservation } from '../../models/QuickRoomReservation';
 import { Discount } from '../../models/Discount';
 import { HotelDiscount } from '../../models/HotelDiscount';
+import { CombinedReservation } from '../../models/CombinedReservation';
 
 export interface Models { [name: string]: any }
 
@@ -79,6 +80,7 @@ export class SDKModels {
     QuickRoomReservation: QuickRoomReservation,
     Discount: Discount,
     HotelDiscount: HotelDiscount,
+    CombinedReservation: CombinedReservation,
     
   };
 

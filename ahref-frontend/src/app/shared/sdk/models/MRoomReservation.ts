@@ -17,6 +17,7 @@ export interface MRoomReservationInterface {
   "id"?: any;
   "roomId"?: any;
   "loggedUserId"?: any;
+  "combinedReservationId"?: any;
   room?: Room;
   hPriceListItems?: HPriceListItem[];
   loggedUser?: LoggedUser;
@@ -33,6 +34,7 @@ export class MRoomReservation implements MRoomReservationInterface {
   "id": any;
   "roomId": any;
   "loggedUserId": any;
+  "combinedReservationId": any;
   room: Room;
   hPriceListItems: HPriceListItem[];
   loggedUser: LoggedUser;
@@ -110,6 +112,10 @@ export class MRoomReservation implements MRoomReservationInterface {
         },
         "loggedUserId": {
           name: 'loggedUserId',
+          type: 'any'
+        },
+        "combinedReservationId": {
+          name: 'combinedReservationId',
           type: 'any'
         },
       },

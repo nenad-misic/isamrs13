@@ -1,0 +1,34 @@
+{
+  "name": "CombinedReservation",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {},
+  "validations": [],
+  "relations": {
+    "loggedUser": {
+      "type": "belongsTo",
+      "model": "LoggedUser",
+      "foreignKey": ""
+    },
+    "mFlightReservations": {
+      "type": "hasMany",
+      "model": "mFlightReservation",
+      "foreignKey": ""
+    },
+    "mRoomReservations": {
+      "type": "hasMany",
+      "model": "mRoomReservation",
+      "foreignKey": ""
+    },
+    "mCarReservations": {
+      "type": "hasMany",
+      "model": "mCarReservation",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

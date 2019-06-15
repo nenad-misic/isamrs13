@@ -97,7 +97,7 @@ export class MyReservationsComponent implements OnInit {
           return value.id.toString() !== result;
         });
         if (indeksObrisanog !== -1) {
-          this.mRoomReservationApi.find({where: {id: result}}).subscribe(res => {
+          this.mRoomReservationApi.findOne({where: {id: result}}).subscribe((res: MRoomReservation) => {
             this.myRoomReservations.splice(indeksObrisanog, 0, res);
           });
         }
@@ -116,6 +116,8 @@ export class MyReservationsComponent implements OnInit {
         this.myFlightReservations = this.myFlightReservations.filter(function(value, index, arr) {
           return value.id.toString() !== result;
         });
+      } else {
+        this.ngOnInit();
       }
     });
 

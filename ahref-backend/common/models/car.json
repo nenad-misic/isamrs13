@@ -51,6 +51,11 @@
       "type": "hasMany",
       "model": "quickCarReservation",
       "foreignKey": ""
+    },
+    "rACService": {
+      "type": "belongsTo",
+      "model": "RACService",
+      "foreignKey": ""
     }
   },
   "acls": [

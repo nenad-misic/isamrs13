@@ -12,11 +12,6 @@
       "type": "hasMany",
       "model": "HPriceListItem",
       "foreignKey": ""
-    },
-    "hotel": {
-      "type": "belongsTo",
-      "model": "Hotel",
-      "foreignKey": ""
     }
   },
   "acls": [

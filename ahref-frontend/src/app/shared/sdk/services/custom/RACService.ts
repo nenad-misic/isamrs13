@@ -15,7 +15,6 @@ import { Destination } from '../../models/Destination';
 import { BranchOffice } from '../../models/BranchOffice';
 import { Car } from '../../models/Car';
 import { RPriceList } from '../../models/RPriceList';
-import { LoggedUser } from '../../models/LoggedUser';
 
 
 /**
@@ -251,7 +250,7 @@ export class RACServiceApi extends BaseLoopBackApi {
   }
 
   /**
-   * Fetches hasOne relation priceList.
+   * Fetches hasOne relation rPriceList.
    *
    * @param {any} id RACService id
    *
@@ -266,10 +265,10 @@ export class RACServiceApi extends BaseLoopBackApi {
    * This usually means the response is a `RACService` object.)
    * </em>
    */
-  public getPriceList(id: any, refresh: any = {}, customHeaders?: Function): Observable<any> {
+  public getRPriceList(id: any, refresh: any = {}, customHeaders?: Function): Observable<any> {
     let _method: string = "GET";
     let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
-    "/RACServices/:id/priceList";
+    "/RACServices/:id/rPriceList";
     let _routeParams: any = {
       id: id
     };
@@ -281,7 +280,7 @@ export class RACServiceApi extends BaseLoopBackApi {
   }
 
   /**
-   * Creates a new instance in priceList of this model.
+   * Creates a new instance in rPriceList of this model.
    *
    * @param {any} id RACService id
    *
@@ -298,10 +297,10 @@ export class RACServiceApi extends BaseLoopBackApi {
    * This usually means the response is a `RACService` object.)
    * </em>
    */
-  public createPriceList(id: any, data: any = {}, customHeaders?: Function): Observable<any> {
+  public createRPriceList(id: any, data: any = {}, customHeaders?: Function): Observable<any> {
     let _method: string = "POST";
     let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
-    "/RACServices/:id/priceList";
+    "/RACServices/:id/rPriceList";
     let _routeParams: any = {
       id: id
     };
@@ -314,7 +313,7 @@ export class RACServiceApi extends BaseLoopBackApi {
   }
 
   /**
-   * Update priceList of this model.
+   * Update rPriceList of this model.
    *
    * @param {any} id RACService id
    *
@@ -331,10 +330,10 @@ export class RACServiceApi extends BaseLoopBackApi {
    * This usually means the response is a `RACService` object.)
    * </em>
    */
-  public updatePriceList(id: any, data: any = {}, customHeaders?: Function): Observable<any> {
+  public updateRPriceList(id: any, data: any = {}, customHeaders?: Function): Observable<any> {
     let _method: string = "PUT";
     let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
-    "/RACServices/:id/priceList";
+    "/RACServices/:id/rPriceList";
     let _routeParams: any = {
       id: id
     };
@@ -347,7 +346,7 @@ export class RACServiceApi extends BaseLoopBackApi {
   }
 
   /**
-   * Deletes priceList of this model.
+   * Deletes rPriceList of this model.
    *
    * @param {any} id RACService id
    *
@@ -357,45 +356,15 @@ export class RACServiceApi extends BaseLoopBackApi {
    *
    * This method returns no data.
    */
-  public destroyPriceList(id: any, customHeaders?: Function): Observable<any> {
+  public destroyRPriceList(id: any, customHeaders?: Function): Observable<any> {
     let _method: string = "DELETE";
     let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
-    "/RACServices/:id/priceList";
+    "/RACServices/:id/rPriceList";
     let _routeParams: any = {
       id: id
     };
     let _postBody: any = {};
     let _urlParams: any = {};
-    let result = this.request(_method, _url, _routeParams, _urlParams, _postBody, null, customHeaders);
-    return result;
-  }
-
-  /**
-   * Fetches belongsTo relation loggedUser.
-   *
-   * @param {any} id RACService id
-   *
-   * @param {boolean} refresh 
-   *
-   * @returns {object} An empty reference that will be
-   *   populated with the actual data once the response is returned
-   *   from the server.
-   *
-   * <em>
-   * (The remote method definition does not provide any description.
-   * This usually means the response is a `RACService` object.)
-   * </em>
-   */
-  public getLoggedUser(id: any, refresh: any = {}, customHeaders?: Function): Observable<any> {
-    let _method: string = "GET";
-    let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
-    "/RACServices/:id/loggedUser";
-    let _routeParams: any = {
-      id: id
-    };
-    let _postBody: any = {};
-    let _urlParams: any = {};
-    if (typeof refresh !== 'undefined' && refresh !== null) _urlParams.refresh = refresh;
     let result = this.request(_method, _url, _routeParams, _urlParams, _postBody, null, customHeaders);
     return result;
   }
@@ -736,7 +705,7 @@ export class RACServiceApi extends BaseLoopBackApi {
   }
 
   /**
-   * Creates a new instance in priceList of this model.
+   * Creates a new instance in rPriceList of this model.
    *
    * @param {any} id RACService id
    *
@@ -753,10 +722,10 @@ export class RACServiceApi extends BaseLoopBackApi {
    * This usually means the response is a `RACService` object.)
    * </em>
    */
-  public createManyPriceList(id: any, data: any[] = [], customHeaders?: Function): Observable<any> {
+  public createManyRPriceList(id: any, data: any[] = [], customHeaders?: Function): Observable<any> {
     let _method: string = "POST";
     let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
-    "/RACServices/:id/priceList";
+    "/RACServices/:id/rPriceList";
     let _routeParams: any = {
       id: id
     };

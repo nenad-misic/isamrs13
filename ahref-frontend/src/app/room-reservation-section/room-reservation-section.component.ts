@@ -48,11 +48,11 @@ export class RoomReservationSectionComponent implements OnInit {
     this.data.currentSearchParams.subscribe((r: Room[]) => this.rooms = r);
     this.hotelApi.findById(this.hotelId, {include: [{quickRoomReservations: 'mRoomReservation'}, 'priceList']}).subscribe((hotel: Hotel) => {
       this.quickReservations = hotel.quickRoomReservations;
-      this.aservicesApi.findById(hotel.priceList.id, {include: 'priceListItems'}).subscribe((items: HPriceList) => {
+      this.aservicesApi.findById(hotel.hPriceList.id, {include: 'priceListItems'}).subscribe((items: HPriceList) => {
         this.aservices = items.priceListItems;
       })
     });
-    this.roomReservationData.currentSearchParams.subscribe((info: RoomReservationInfo)=>{
+    this.roomReservationData.currentSearchParams.subscribe((info: RoomReservationInfo) => {
       this.info = info;
     })
   }
@@ -72,6 +72,6 @@ export class RoomReservationSectionComponent implements OnInit {
   }
 
   makeReservationClicked(quickReservation) {
-    this.router.navigateByUrl('quickroomdetails/'+quickReservation.id);
+    this.router.navigateByUrl('quickroomdetails/' + quickReservation.id);
   }
 }

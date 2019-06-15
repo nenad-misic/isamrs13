@@ -3,8 +3,7 @@ import {
   Destination,
   BranchOffice,
   Car,
-  RPriceList,
-  LoggedUser
+  RPriceList
 } from '../index';
 
 declare var Object: any;
@@ -22,8 +21,7 @@ export interface RACServiceInterface {
   destination?: Destination;
   branchOffices?: BranchOffice[];
   cars?: Car[];
-  priceList?: RPriceList;
-  loggedUser?: LoggedUser;
+  rPriceList?: RPriceList;
 }
 
 export class RACService implements RACServiceInterface {
@@ -40,8 +38,7 @@ export class RACService implements RACServiceInterface {
   destination: Destination;
   branchOffices: BranchOffice[];
   cars: Car[];
-  priceList: RPriceList;
-  loggedUser: LoggedUser;
+  rPriceList: RPriceList;
   constructor(data?: RACServiceInterface) {
     Object.assign(this, data);
   }
@@ -143,21 +140,13 @@ export class RACService implements RACServiceInterface {
                   keyFrom: 'id',
           keyTo: 'rACServiceId'
         },
-        priceList: {
-          name: 'priceList',
+        rPriceList: {
+          name: 'rPriceList',
           type: 'RPriceList',
           model: 'RPriceList',
           relationType: 'hasOne',
                   keyFrom: 'id',
           keyTo: 'rACServiceId'
-        },
-        loggedUser: {
-          name: 'loggedUser',
-          type: 'LoggedUser',
-          model: 'LoggedUser',
-          relationType: 'belongsTo',
-                  keyFrom: 'loggedUserId',
-          keyTo: 'id'
         },
       }
     }

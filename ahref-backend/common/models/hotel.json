@@ -23,7 +23,7 @@
       "required": true
     },
     "description": {
-      "type": "number",
+      "type": "string",
       "required": true
     },
     "rating": {
@@ -44,19 +44,9 @@
       "model": "Room",
       "foreignKey": ""
     },
-    "priceList": {
-      "type": "hasOne",
-      "model": "HPriceList",
-      "foreignKey": ""
-    },
     "destination": {
       "type": "belongsTo",
       "model": "Destination",
-      "foreignKey": ""
-    },
-    "loggedUser": {
-      "type": "belongsTo",
-      "model": "LoggedUser",
       "foreignKey": ""
     },
     "quickRoomReservations": {
@@ -67,6 +57,11 @@
     "hotelDiscounts": {
       "type": "hasMany",
       "model": "HotelDiscount",
+      "foreignKey": ""
+    },
+    "hPriceList": {
+      "type": "hasOne",
+      "model": "HPriceList",
       "foreignKey": ""
     }
   },

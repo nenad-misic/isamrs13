@@ -29,4 +29,8 @@ export class HomeComponent implements OnInit {
 
   }
 
+  logout() {
+    this.userApi.logout().subscribe((a) => console.log(a));
+  }
+
 }

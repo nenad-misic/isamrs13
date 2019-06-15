@@ -16,6 +16,7 @@ export interface MCarReservationInterface {
   "id"?: any;
   "carId"?: any;
   "loggedUserId"?: any;
+  "combinedReservationId"?: any;
   car?: Car;
   loggedUser?: LoggedUser;
 }
@@ -31,6 +32,7 @@ export class MCarReservation implements MCarReservationInterface {
   "id": any;
   "carId": any;
   "loggedUserId": any;
+  "combinedReservationId": any;
   car: Car;
   loggedUser: LoggedUser;
   constructor(data?: MCarReservationInterface) {
@@ -107,6 +109,10 @@ export class MCarReservation implements MCarReservationInterface {
         },
         "loggedUserId": {
           name: 'loggedUserId',
+          type: 'any'
+        },
+        "combinedReservationId": {
+          name: 'combinedReservationId',
           type: 'any'
         },
       },

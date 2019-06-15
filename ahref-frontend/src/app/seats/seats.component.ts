@@ -1,9 +1,9 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {Flight, MFlightReservation, Passenger, QuickFlightReservation, Seat} from '../shared/sdk/models';
+import {CombinedReservation, Flight, MFlightReservation, Passenger, QuickFlightReservation, Seat} from '../shared/sdk/models';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 import {
-  AirlineApi,
+  AirlineApi, CombinedReservationApi,
   FlightApi,
   LoggedUserApi,
   MFlightReservationApi,
@@ -11,6 +11,8 @@ import {
   QuickFlightReservationApi
 } from '../shared/sdk/services/custom';
 import {routes} from '../app-routing/routes';
+import {ToastrService} from 'ngx-toastr';
+import {CombinedService} from '../services/combined.service';
 
 @Component({
   selector: 'app-seats',
@@ -29,6 +31,7 @@ export class SeatsComponent implements OnInit {
   cols: number[];
   msg: string;
   readType: boolean;
+  combinedReservation: CombinedReservation;
 
   constructor(private route: ActivatedRoute,
               private location: Location,
@@ -36,7 +39,10 @@ export class SeatsComponent implements OnInit {
               private flightApi: FlightApi,
               private reserve: MFlightReservationApi,
               private userApi: LoggedUserApi,
+              private combinedApi: CombinedReservationApi,
               private passApi: PassengerApi,
+              private toastr: ToastrService,
+              private combinedService: CombinedService,
               private quickApi: QuickFlightReservationApi,
               @Inject('baseURL') private baseURL) { }
 
@@ -117,25 +123,40 @@ export class SeatsComponent implements OnInit {
 
 
   reserveSeats() {
+    const combinedReservation = new CombinedReservation();
+    combinedReservation.loggedUserId = this.userApi.getCachedCurrent().id;
+    this.combinedApi.create(combinedReservation).subscribe((cr: CombinedReservation) => {
+      this.combinedReservation = cr;
+      this.combinedService.changeCombinedReservation(cr);
+      for (let i = 0; i < this.send.length; i++){
 
-    for(let i=0;i < this.send.length; i++){
+        const flightrez = new MFlightReservation();
+        flightrez.flightId = this.route.snapshot.params['id'];
+        flightrez.seatId = this.send[i].id;
+        flightrez.userId = this.userApi.getCachedCurrent().id;
 
-      const flightrez = new MFlightReservation();
-      flightrez.flightId = this.route.snapshot.params['id'];
-      flightrez.seatId = this.send[i].id;
-      flightrez.userId = this.userApi.getCachedCurrent().id;
+        const pasn = new Passenger();
+        pasn.name = this.userApi.getCachedCurrent().name;
+        pasn.city = this.userApi.getCachedCurrent().city;
+        pasn.telephone = this.userApi.getCachedCurrent().telephone;
+        pasn.passport = '1111';
+        pasn.taken = i == 0;
 
-      const pasn = new Passenger();
-      pasn.name = this.userApi.getCachedCurrent().name;
-      pasn.city = this.userApi.getCachedCurrent().city;
-      pasn.telephone = this.userApi.getCachedCurrent().telephone;
-      pasn.passport = '1111';
-      pasn.taken = i == 0;
+      this.passApi.create(pasn).subscribe(
+        (p: Passenger) => {
+          flightrez.passengerId = p.id;
+          flightrez.combinedReservationId = this.combinedReservation.id;
+          this.reserve.create(flightrez).subscribe(() => {
+            console.log('Created');
 
-      this.passApi.create(pasn).subscribe((p:Passenger)=> {flightrez.passengerId = p.id; this.reserve.create(flightrez).subscribe(()=> console.log('Created'));});
+          });
+        });
+      }
+    }, (err) => {
+      this.toastr.error(err.message, 'ERROR');
+    });
 
 
-    }
 
   }
 
