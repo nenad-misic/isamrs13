@@ -35,10 +35,15 @@ export class LoginComponent implements OnInit {
   login() {
     this.waiting = true;
     this.userService.login({username: this.username, password: this.password}).subscribe((returned) => {
+      console.log(returned);
       if (returned) {
         this.toastr.success('Login successful', 'Welcome');
         this.waiting = false;
-        this.router.navigate(['/home']);
+        if (returned.user.firstLogin) {
+          this.router.navigate(['/changepassword'])
+        } else {
+          this.router.navigate(['/home']);
+        }
       } else {
         this.toastr.error('Try again', 'Invalid credentials');
         this.password = '';

@@ -24,6 +24,7 @@ module.exports = function(Loggeduser) {
       })
     });
   };
+
   
   Loggeduser.remoteMethod('bindQuick', {
     accepts: [
@@ -36,6 +37,21 @@ module.exports = function(Loggeduser) {
   });
 
 
+  Loggeduser.beforeRemote('create', function(ctx, model, next) {
+    Loggeduser.findOne({where: {username: ctx.req.body.username}}).then((retval) => {
+      if (retval) {
+        let e = new Error();
+        e.statusCode = 403;
+        e.status = "Username already exists";
+        next(e);
+      } else {
+        if (ctx.req.body.type != "regUser") {
+          ctx.req.body.firstLogin = true;
+        }
+        next();
+      }
+    })
+  });
 
   Loggeduser.afterRemote('**', function(ctx, modelInstance, next)  {
     console.log('Loggeduser remote method: ' + ctx.method.name);
