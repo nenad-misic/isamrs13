@@ -43,16 +43,4 @@ export class AppComponent implements OnInit  {
     });
   }
 
-  refreshMe() {
-    this.userTypeService.getCurrent().subscribe((us) => {
-      if (us) {
-        this.type = us.type;
-        this.profile = us;
-      } else {
-        this.type = '';
-      }
-    }, (err) => {
-      this.type = '';
-    });
-  }
 }

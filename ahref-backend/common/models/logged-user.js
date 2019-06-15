@@ -71,7 +71,7 @@ module.exports = function(Loggeduser) {
         e.status = 'User is not a hotel admin';
         cb(e, {});
       } else {
-        user.racId = racId;
+        user.rACServiceId = racId;
         Loggeduser.upsert(user).then((updatedUser) => {
           cb(null, updatedUser);
         })

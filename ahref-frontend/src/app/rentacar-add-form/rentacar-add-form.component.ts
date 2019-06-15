@@ -13,7 +13,7 @@ import {ToastrService} from "ngx-toastr";
 })
 export class RentacarAddFormComponent implements OnInit {
 
-  new_racservice: RACService;
+  new_racservice;
   type: string;
   email: string;
   city: string;
@@ -51,6 +51,7 @@ export class RentacarAddFormComponent implements OnInit {
             } else {
               this.toastr.error('No destination named like that thot!');
             }
+            this.new_racservice.loggedUserId = user.id;
             this.racServiceApiMotherF.create(this.new_racservice).subscribe((rac: RACService) => {
               this.toastr.success(rac.name, 'Rent a car service added');
               this.new_racservice = new RACService();

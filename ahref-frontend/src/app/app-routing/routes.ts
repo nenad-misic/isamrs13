@@ -95,6 +95,6 @@ export const routes: Routes = [
   { path: 'hoteldiscounts/:id', component: HotelDiscountsComponent},
   { path: 'flow', component: ReservationFlowComponent},
   { path: 'assignHotelAdmin/:hotelId', component: AssignHotelAdminComponent},
-  { path: 'assignRACAdmin/:racId', component: AssignRacAdminComponent},
+  { path: 'assignRacAdmin/:racId', component: AssignRacAdminComponent},
   { path: '', redirectTo: '/home', pathMatch: 'full' }
 ];
