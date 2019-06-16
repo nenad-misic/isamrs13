@@ -13,7 +13,7 @@ import {ToastrService} from "ngx-toastr";
 })
 export class RentacarAddFormComponent implements OnInit {
 
-  new_racservice: RACService;
+  new_racservice;
   type: string;
   email: string;
   city: string;

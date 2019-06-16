@@ -46,9 +46,9 @@ export class RoomReservationSectionComponent implements OnInit {
   ngOnInit() {
     this.hotelId = this.route.snapshot.params['hotelId'];
     this.data.currentSearchParams.subscribe((r: Room[]) => this.rooms = r);
-    this.hotelApi.findById(this.hotelId, {include: [{quickRoomReservations: 'mRoomReservation'}, 'priceList']}).subscribe((hotel: Hotel) => {
+    this.hotelApi.findById(this.hotelId, {include: [{quickRoomReservations: 'mRoomReservation'}, 'priceList']}).subscribe((hotel: any) => {
       this.quickReservations = hotel.quickRoomReservations;
-      this.aservicesApi.findById(hotel.hPriceList.id, {include: 'priceListItems'}).subscribe((items: HPriceList) => {
+      this.aservicesApi.findById(hotel.hPriceListId, {include: 'priceListItems'}).subscribe((items: HPriceList) => {
         this.aservices = items.priceListItems;
       })
     });

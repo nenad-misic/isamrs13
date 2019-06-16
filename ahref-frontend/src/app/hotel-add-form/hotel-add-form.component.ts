@@ -2,7 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {Location} from '@angular/common';
 
 import { API_VERSION } from '../shared/baseurl';
-import {Hotel, HotelApi, LoopBackConfig, LoggedUserApi, HPriceList, LoggedUser, Destination, RACService} from '../shared/sdk';
+import {Hotel, HotelApi, LoopBackConfig, LoggedUserApi, HPriceList, LoggedUser, Destination} from '../shared/sdk';
 
 import { ToastrService } from 'ngx-toastr';
 
@@ -13,7 +13,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class HotelAddFormComponent implements OnInit {
 
-  new_hotel: Hotel;
+  new_hotel;
   type: string;
   email: string;
 

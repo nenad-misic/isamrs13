@@ -113,6 +113,8 @@ import { HotelReportSectionComponent } from './hotel-report-section/hotel-report
 import { DiscountSectionComponent } from './discount-section/discount-section.component';
 import { HotelDiscountsComponent } from './hotel-discounts/hotel-discounts.component';
 import { ReservationFlowComponent } from './reservation-flow/reservation-flow.component';
+import { AssignHotelAdminComponent } from './assign-hotel-admin/assign-hotel-admin.component';
+import { AssignRacAdminComponent } from './assign-rac-admin/assign-rac-admin.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -193,7 +195,9 @@ import { ReservationFlowComponent } from './reservation-flow/reservation-flow.co
     HotelReportSectionComponent,
     DiscountSectionComponent,
     HotelDiscountsComponent,
-    ReservationFlowComponent
+    ReservationFlowComponent,
+    AssignHotelAdminComponent,
+    AssignRacAdminComponent
   ],
   imports: [
     BrowserModule,

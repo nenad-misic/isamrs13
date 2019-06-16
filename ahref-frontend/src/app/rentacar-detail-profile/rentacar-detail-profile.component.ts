@@ -5,7 +5,16 @@ import { Location } from '@angular/common';
 
 
 import { API_VERSION } from '../shared/baseurl';
-import {Airline, LoopBackConfig, RACService, RACServiceApi, LoggedUserApi, UserApi} from '../shared/sdk';
+import {
+  Airline,
+  LoopBackConfig,
+  RACService,
+  RACServiceApi,
+  LoggedUserApi,
+  UserApi,
+  RPriceListApi,
+  RPriceList
+} from '../shared/sdk';
 import {ToastrService} from "ngx-toastr";
 @Component({
   selector: 'app-rentacar-detail-profile',
@@ -17,8 +26,10 @@ export class RentacarDetailProfileComponent implements OnInit {
   profile: RACService;
   profile_new: RACService;
   readOnly = true;
+  sysAdmin = false;
 
   constructor(private rentacarService: RACServiceApi,
+              private rPriceListApi: RPriceListApi,
               private route: ActivatedRoute,
               private location: Location,
               private toastr: ToastrService,
@@ -30,7 +41,10 @@ export class RentacarDetailProfileComponent implements OnInit {
 
   ngOnInit() {
     const id = this.route.snapshot.params['id'];
-    this.rentacarService.findOne({where: {id: id}, include: 'rPriceList'}).subscribe((service: RACService) => {
+    this.rentacarService.findOne({where: {id: id}}).subscribe((service: any) => {
+      this.rPriceListApi.findById(service.rPriceListId).subscribe((rPriceList: RPriceList) => {
+
+
         this.profile = service;
         this.profile_new = new RACService();
         this.profile_new.id = this.profile.id;
@@ -41,15 +55,13 @@ export class RentacarDetailProfileComponent implements OnInit {
         this.profile_new.longitude = this.profile.longitude;
         this.profile_new.rating = this.profile.rating;
         this.profile_new.numOfRates = this.profile.numOfRates;
-        this.profile_new.loggedUserId = this.profile.loggedUserId;
+        this.profile_new.rPriceList = rPriceList;
+        this.profile.rPriceList = rPriceList;
 
-        if (this.profile.loggedUserId === this.userApi.getCachedCurrent().id){
-          this.readOnly = false;
-        } else{
-          this.readOnly = true;
-        }
-      }
-    );
+        this.readOnly = this.profile.id !== this.userApi.getCachedCurrent().rACServiceId;
+        this.sysAdmin = this.userApi.getCachedCurrent().type === 'sysAdmin';
+      });
+    });
 
   }
 

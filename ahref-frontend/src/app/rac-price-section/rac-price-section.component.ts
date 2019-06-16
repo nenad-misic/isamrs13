@@ -1,6 +1,6 @@
 import {Component, Inject, Input, OnInit} from '@angular/core';
 import {RACService, RPriceList, RPriceListItem} from '../shared/sdk/models';
-import {RPriceListApi, RPriceListItemApi} from '../shared/sdk/services/custom';
+import {RACServiceApi, RPriceListApi, RPriceListItemApi} from '../shared/sdk/services/custom';
 import {LoopBackConfig} from '../shared/sdk';
 import {API_VERSION} from '../shared/baseurl';
 import {ToastrService} from 'ngx-toastr';
@@ -13,7 +13,7 @@ import {ToastrService} from 'ngx-toastr';
 export class RacPriceSectionComponent implements OnInit {
 
   @Input()
-  racService: RACService;
+  racService: any;
 
   prices: RPriceListItem[];
   priceList: RPriceList;
@@ -21,7 +21,8 @@ export class RacPriceSectionComponent implements OnInit {
   carType: string;
   price: number;
 
-  constructor(private rPriceListApi: RPriceListApi,
+  constructor(private rentacarService: RACServiceApi,
+              private rPriceListApi: RPriceListApi,
               private rPriceListItemApi: RPriceListItemApi,
               private toastr: ToastrService,
               @Inject('baseURL') private baseURL) {
@@ -31,10 +32,15 @@ export class RacPriceSectionComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.racService);
-    this.rPriceListApi.findOne({where: {rACServiceId: this.racService.id}, include: 'priceListItems'}).subscribe((priceList: RPriceList) => {
-      console.log(priceList);
-      this.prices = priceList.priceListItems;
-      this.priceList = priceList;
+    this.rentacarService.findOne({where: {id: this.racService.id}}).subscribe((service: any) => {
+      this.racService = service;
+      this.rPriceListApi.findById(this.racService.rPriceListId, {include: 'priceListItems'}).subscribe((priceList: RPriceList) => {
+        console.log(priceList);
+        this.prices = priceList.priceListItems;
+        this.priceList = priceList;
+      }, (err) => {
+        this.toastr.error(err.message, 'ERROR');
+      });
     }, (err) => {
       this.toastr.error(err.message, 'ERROR');
     });

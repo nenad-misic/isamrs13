@@ -18,7 +18,6 @@ export interface HotelInterface {
   "numOfRates": number;
   "id"?: any;
   "destinationId"?: any;
-  "loggedUserId"?: any;
   destination?: Destination;
   rooms?: Room[];
   hPriceList?: HPriceList;
@@ -36,7 +35,6 @@ export class Hotel implements HotelInterface {
   "numOfRates": number;
   "id": any;
   "destinationId": any;
-  "loggedUserId": any;
   destination: Destination;
   rooms: Room[];
   hPriceList: HPriceList;
@@ -111,10 +109,6 @@ export class Hotel implements HotelInterface {
         },
         "destinationId": {
           name: 'destinationId',
-          type: 'any'
-        },
-        "loggedUserId": {
-          name: 'loggedUserId',
           type: 'any'
         },
       },

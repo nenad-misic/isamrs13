@@ -44,6 +44,8 @@ import {HotelReportSectionComponent} from "../hotel-report-section/hotel-report-
 import {DiscountSectionComponent} from "../discount-section/discount-section.component";
 import {HotelDiscountsComponent} from "../hotel-discounts/hotel-discounts.component";
 import {ReservationFlowComponent} from '../reservation-flow/reservation-flow.component';
+import {AssignHotelAdminComponent} from "../assign-hotel-admin/assign-hotel-admin.component";
+import {AssignRacAdminComponent} from "../assign-rac-admin/assign-rac-admin.component";
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent},
@@ -92,5 +94,7 @@ export const routes: Routes = [
   { path: 'discounts', component: DiscountSectionComponent},
   { path: 'hoteldiscounts/:id', component: HotelDiscountsComponent},
   { path: 'flow', component: ReservationFlowComponent},
+  { path: 'assignHotelAdmin/:hotelId', component: AssignHotelAdminComponent},
+  { path: 'assignRacAdmin/:racId', component: AssignRacAdminComponent},
   { path: '', redirectTo: '/home', pathMatch: 'full' }
 ];
