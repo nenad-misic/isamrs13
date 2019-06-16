@@ -12,13 +12,14 @@ export class CarProfileComponent implements OnInit, OnChanges {
 
   @Input()
   profile: Car;
-  rate = Math.floor(Math.random() * 4) + 1;
+  rate;
   picturePath: string;
   constructor(@Inject('baseURL') private baseURL) {
     LoopBackConfig.setBaseURL(baseURL);
     LoopBackConfig.setApiVersion(API_VERSION); }
 
   ngOnInit() {
+    this.rate = Math.ceil(this.profile.rating);
   }
 
   changePicPath(): void {

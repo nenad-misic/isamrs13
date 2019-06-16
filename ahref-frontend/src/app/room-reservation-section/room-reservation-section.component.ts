@@ -46,11 +46,11 @@ export class RoomReservationSectionComponent implements OnInit {
   ngOnInit() {
     this.hotelId = this.route.snapshot.params['hotelId'];
     this.data.currentSearchParams.subscribe((r: Room[]) => this.rooms = r);
-    this.hotelApi.findById(this.hotelId, {include: [{quickRoomReservations: 'mRoomReservation'}, 'priceList']}).subscribe((hotel: any) => {
+    this.hotelApi.findById(this.hotelId, {include: [{quickRoomReservations: 'mRoomReservation'}, 'hPriceList']}).subscribe((hotel: any) => {
       this.quickReservations = hotel.quickRoomReservations;
       this.aservicesApi.findById(hotel.hPriceListId, {include: 'priceListItems'}).subscribe((items: HPriceList) => {
         this.aservices = items.priceListItems;
-      })
+      });
     });
     this.roomReservationData.currentSearchParams.subscribe((info: RoomReservationInfo) => {
       this.info = info;
@@ -67,7 +67,7 @@ export class RoomReservationSectionComponent implements OnInit {
   }
 
   onRoomClicked() {
-    this.info.additionalServices = JSON.parse(JSON.stringify(this.aservices));
+    this.info.additionalServices = JSON.parse(JSON.stringify(this.chosenAservices));
     this.roomReservationData.changeSearchParams(this.info);
   }
 

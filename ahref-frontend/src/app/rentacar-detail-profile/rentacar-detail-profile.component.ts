@@ -26,6 +26,7 @@ export class RentacarDetailProfileComponent implements OnInit {
   profile: RACService;
   profile_new: RACService;
   readOnly = true;
+  rate;
   sysAdmin = false;
 
   constructor(private rentacarService: RACServiceApi,
@@ -44,7 +45,7 @@ export class RentacarDetailProfileComponent implements OnInit {
     this.rentacarService.findOne({where: {id: id}}).subscribe((service: any) => {
       this.rPriceListApi.findById(service.rPriceListId).subscribe((rPriceList: RPriceList) => {
 
-
+        this.rate = Math.ceil(service.rating);
         this.profile = service;
         this.profile_new = new RACService();
         this.profile_new.id = this.profile.id;

@@ -644,7 +644,7 @@ function calculateCarPrice(Loggeduser, ctx, callback) {
     //console.log(car);
     models.RACService.findOne({where: {id: car.rACServiceId}}).then((racService) => {
       //console.log(racService);
-      models.RPriceList.findOne({where: {rACServiceId: racService.id}}).then((priceList) => {
+      models.RPriceList.findOne({where: {id: racService.rPriceListId}}).then((priceList) => {
         models.RPriceListItem.find({where: {rPriceListId: priceList.id}}).then((items) => {
           if (items == []) {
             var error = new Error('Car has no price defined');

@@ -16,7 +16,7 @@ export class RentacarProfileComponent implements OnInit {
 
   destination = {name: '', country: ''};
 
-  rate = Math.floor(Math.random() * 4) + 1;
+  rate;
 
   constructor(@Inject('baseURL') private baseURL,
               private dapi: DestinationApi) {
@@ -27,6 +27,7 @@ export class RentacarProfileComponent implements OnInit {
   ngOnInit() {
     // @ts-ignore
     this.dapi.findOne({where: {id: this.profile.destinationId}}).subscribe((dest) => this.destination = dest );
+    this.rate = Math.ceil(this.profile.rating);
   }
 
 }
