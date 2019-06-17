@@ -180,5 +180,9 @@
   "CombinedReservation": {
     "dataSource": "MongoDB",
     "public": true
+  },
+  "sRac": {
+    "dataSource": "postgres",
+    "public": false
   }
 }

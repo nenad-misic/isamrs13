@@ -49,7 +49,9 @@ module.exports = function(Racservice) {
     Racservice.app.models.LoggedUser.findById(luid).then((obj) => {
       obj.rACServiceId = rid;
       Racservice.app.models.LoggedUser.upsert(obj).then((succ)=>{
-        next()
+        Racservice.app.models.sRac.create({mongoId: model.id}).then((succ)=>{
+          next()
+        })
       })
     })
   });
@@ -126,6 +128,64 @@ module.exports = function(Racservice) {
       })
     }
 
+
+    Racservice.updateConcurentSafe = function(new_rac, cb) {
+      //OPTIMISTIC VERSION
+      var timeout = 10;
+      var sqlRac = Racservice.app.models.sRac;
+      sqlRac.beginTransaction({
+        isolationLevel: sqlRac.Transaction.READ_COMMITTED,
+      }, function(err, tx) {
+        if (err) cb(null,{res:false});
+        setTimeout(()=>{
+          Racservice.findById(new_rac.id).then((rac_current_state)=>{
+            if(rac_current_state.version == new_rac.version){
+              new_rac.version++;
+              Racservice.upsert(new_rac).then((rac)=>{
+                tx.commit(function(err) {
+                  if (err && flagCar)  cb(false);
+                  else cb(null,{res:true});
+                });
+              }, (err)=>{
+                tx.rollback(function(err) {
+                  cb(null,{res:false});
+                });
+              });
+            }else{
+              cb(null,{res:false});
+            }
+          })
+      },timeout);
+      });      
+
+      //PESIMISTIC VERSION
+      /*
+      var sqlRac = Racservice.app.models.sRac;
+      var postgres = sqlRac.app.dataSources.postgres;
+      sqlRac.beginTransaction({
+        isolationLevel: sqlRac.Transaction.READ_COMMITTED,
+      }, function(err, tx) {
+        if (err) cb(null,{res:false});
+        // lock rac for update
+        postgres.connector.execute(
+          'SELECT * FROM sRac WHERE mongoid = $1 FOR UPDATE;',
+            [new_rac.id], {transaction: tx},
+            function(err, data) {
+              Racservice.upsert(new_rac).then((rac)=>{
+                tx.commit(function(err) {
+                  if (err && flagCar)  cb(false);
+                  else cb(null,{res:true});
+                });
+              }, (err)=>{
+                tx.rollback(function(err) {
+                  cb(null,{res:false});
+                });
+              });
+        });
+      });   
+      */   
+    }
+
     Racservice.remoteMethod('getMatching', {
       accepts: [
         {arg: 'startDate', type: 'string', required: true},
@@ -135,6 +195,14 @@ module.exports = function(Racservice) {
         {arg: 'skip', type: 'number', required: true}
       ],
       http: {path: '/getMatching', verb: 'post'},
+      returns: {type: 'object', arg: 'retval'},
+    });
+
+    Racservice.remoteMethod('updateConcurentSafe', {
+      accepts: [
+        {arg: 'new_rac', type: 'object', http: { source: 'body' }}
+      ],
+      http: {path: '/updateConcurentSafe', verb: 'post'},
       returns: {type: 'object', arg: 'retval'},
     });
 
