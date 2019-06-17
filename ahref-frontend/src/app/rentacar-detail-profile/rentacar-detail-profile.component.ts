@@ -23,8 +23,8 @@ import {ToastrService} from "ngx-toastr";
 })
 export class RentacarDetailProfileComponent implements OnInit {
 
-  profile: RACService;
-  profile_new: RACService;
+  profile: any;
+  profile_new: any;
   readOnly = true;
   sysAdmin = false;
 
@@ -46,15 +46,7 @@ export class RentacarDetailProfileComponent implements OnInit {
 
 
         this.profile = service;
-        this.profile_new = new RACService();
-        this.profile_new.id = this.profile.id;
-        this.profile_new.name = this.profile.name;
-        this.profile_new.address = this.profile.address;
-        this.profile_new.description = this.profile.description;
-        this.profile_new.latitude = this.profile.latitude;
-        this.profile_new.longitude = this.profile.longitude;
-        this.profile_new.rating = this.profile.rating;
-        this.profile_new.numOfRates = this.profile.numOfRates;
+        this.profile_new = JSON.parse(JSON.stringify(this.profile));
         this.profile_new.rPriceList = rPriceList;
         this.profile.rPriceList = rPriceList;
 
@@ -70,9 +62,14 @@ export class RentacarDetailProfileComponent implements OnInit {
   }
 
   onSaveClick(): void {
-    this.rentacarService.updateAttributes(this.profile.id, this.profile_new).subscribe((returned: RACService) => {
-      if (!returned) {console.log(status); }
-      this.toastr.success(this.profile.name, 'RAC service updated')
+    this.rentacarService.updateConcurentSafe(this.profile_new).subscribe((returned) => {
+      console.log('*******************RET*****************');
+      console.log(returned);
+      console.log('***************************************');
+      !returned.retval.res ?
+        this.toastr.error('Please, try again.', 'Update failed')
+        :
+        this.toastr.success(this.profile.name, 'Update successful');
     }, (err) => {
       this.toastr.error(err.message, 'ERROR');
     });
