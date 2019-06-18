@@ -1,9 +1,13 @@
 <h1>Reservation</h1>
 <h2>Start Date</h2>
-<p>{{reservation.mRoomReservation.startDate}}</p>
+<p>{{reservation.mRoomReservation.startDate | date}}</p>
 <h2>End Date</h2>
-<p>{{reservation.mRoomReservation.endDate}}</p>
-<h2>Room id</h2>
-<p>{{reservation.mRoomReservation.roomId}}</p>
+<p>{{reservation.mRoomReservation.endDate | date}}</p>
+<h2>Price</h2>
+<p>{{reservation.mRoomReservation.price}}</p>
+<h2>Number of beds</h2>
+<p>{{reservation.mRoomReservation.room.numOfBeds}}</p>
+<h2>Floor</h2>
+<p>{{reservation.mRoomReservation.room.floor}}</p>
 <button mat-button (click)="onMakeReservationClicked()">Make Reservation</button>
 <button mat-button (click)="onBackClicked()">Back</button>

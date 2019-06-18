@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {Hotel, QuickRoomReservation} from "../shared/sdk/models";
-import {HotelApi, MRoomReservationApi, QuickRoomReservationApi} from "../shared/sdk/services/custom";
+import {HotelApi, LoggedUserApi, MRoomReservationApi, QuickRoomReservationApi} from "../shared/sdk/services/custom";
 import {LoopBackConfig} from "../shared/sdk";
 import {API_VERSION} from "../shared/baseurl";
 import {ToastrService} from "ngx-toastr";
@@ -15,6 +15,7 @@ export class QuickHotelSectionComponent implements OnInit {
 
   hotel: Hotel = new Hotel();
   reservations: QuickRoomReservation[] = [];
+  isAdmin: boolean;
 
   displayedColumnsR: string[] = ['timeStamp', 'startDate', 'endDate', 'room', 'delete'];
 
@@ -23,6 +24,7 @@ export class QuickHotelSectionComponent implements OnInit {
               private mReservationApi: MRoomReservationApi,
               private quickReservationApi: QuickRoomReservationApi,
               private toastr: ToastrService,
+              private userApi: LoggedUserApi,
               @Inject('baseURL') private baseURL) {
     LoopBackConfig.setBaseURL(baseURL);
     LoopBackConfig.setApiVersion(API_VERSION);
@@ -30,9 +32,10 @@ export class QuickHotelSectionComponent implements OnInit {
 
   ngOnInit() {
     var hotelId = this.route.params['hotelId'];
-    this.hotelApi.findOne({where: {id: hotelId}, include: [{quickRoomReservations: 'mRoomReservation'}, 'rooms']}).subscribe((hotel: Hotel) => {
+    this.hotelApi.findOne({where: {id: hotelId}, include: [{quickRoomReservations: {mRoomReservation: 'room'}}, 'rooms']}).subscribe((hotel: Hotel) => {
       this.hotel = hotel;
       this.reservations = hotel.quickRoomReservations;
+      this.isAdmin = this.hotel.id == this.userApi.getCachedCurrent().hotelId;
     }, (err) => {
       this.toastr.error(err.message, 'ERROR');
     });
@@ -42,7 +45,7 @@ export class QuickHotelSectionComponent implements OnInit {
     this.mReservationApi.deleteById(reservation.mRoomReservation.id).subscribe(()=>{
       this.quickReservationApi.deleteById(reservation.id).subscribe(()=>{
         this.toastr.success('Quick reservation deleted');
-        this.hotelApi.findOne({where: {id: this.hotel.id}, include: [{quickRoomReservations: 'mRoomReservation'}, 'rooms']}).subscribe((hotel: Hotel) => {
+        this.hotelApi.findOne({where: {id: this.hotel.id}, include: [{quickRoomReservations: {mRoomReservation: 'room'}}, 'rooms']}).subscribe((hotel: Hotel) => {
           this.hotel = hotel;
           this.reservations = hotel.quickRoomReservations;
           this.toastr.success('Reservation deleted');

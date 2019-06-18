@@ -44,7 +44,7 @@
       <button mat-button (click)="goBack()">Back</button>
       <button mat-button (click)="addServClicked()" >Additinal services</button>
       <button mat-button *ngIf="readOnly && combinedActive" (click)="makeReservationClicked()">Make reservation</button>
-      <button mat-button *ngIf="!readOnly && combinedActive" [routerLink]="['/quickreservations', profile_new.id]">Quick reservations</button>
+      <button mat-button *ngIf="!readOnly || combinedActive" [routerLink]="['/quickreservations', profile_new.id]">Quick reservations</button>
       <button mat-button *ngIf="!readOnly" (click)="onSaveClick()">Save changes</button>
       <button mat-button *ngIf="!readOnly" (click)="onDeleteClick()">Delete hotel</button>
       <button mat-button [routerLink]="['/hotelreports', profile_new.id]">Reports</button>
@@ -52,7 +52,7 @@
     </mat-card-actions>
   </form>
   <app-room-add-form [hotel]="profile_new" *ngIf="!readOnly"></app-room-add-form>
-  <app-room-search [hotelid]="profile_new.id"></app-room-search>
+  <app-room-search *ngIf="readOnly" [hotelid]="profile_new.id"></app-room-search>
   <mat-card>
     <mat-card-content>
       <mat-grid-list cols="2">

@@ -1447,6 +1447,8 @@ export class LoggedUserApi extends BaseLoopBackApi {
    *
    *  - `quickRoomReservationId` – `{string}` - 
    *
+   *  - `combinedReservationId` – `{string}` - 
+   *
    * @returns {object} An empty reference that will be
    *   populated with the actual data once the response is returned
    *   from the server.
@@ -1455,7 +1457,7 @@ export class LoggedUserApi extends BaseLoopBackApi {
    *
    *  - `mRoomReservation` – `{object}` - 
    */
-  public createQuickRoomReservation(userId: any, quickRoomReservationId: any, customHeaders?: Function): Observable<any> {
+  public createQuickRoomReservation(userId: any, quickRoomReservationId: any, combinedReservationId: any, customHeaders?: Function): Observable<any> {
     let _method: string = "POST";
     let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
     "/LoggedUsers/quickReservation";
@@ -1464,6 +1466,7 @@ export class LoggedUserApi extends BaseLoopBackApi {
     let _urlParams: any = {};
     if (typeof userId !== 'undefined' && userId !== null) _urlParams.userId = userId;
     if (typeof quickRoomReservationId !== 'undefined' && quickRoomReservationId !== null) _urlParams.quickRoomReservationId = quickRoomReservationId;
+    if (typeof combinedReservationId !== 'undefined' && combinedReservationId !== null) _urlParams.combinedReservationId = combinedReservationId;
     let result = this.request(_method, _url, _routeParams, _urlParams, _postBody, null, customHeaders);
     return result;
   }

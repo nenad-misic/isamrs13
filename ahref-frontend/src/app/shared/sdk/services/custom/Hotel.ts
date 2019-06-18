@@ -874,6 +874,41 @@ export class HotelApi extends BaseLoopBackApi {
   }
 
   /**
+   * <em>
+         * (The remote method definition does not provide any description.)
+         * </em>
+   *
+   * @param {object} data Request data.
+   *
+   *  - `startDate` – `{string}` - 
+   *
+   *  - `endDate` – `{string}` - 
+   *
+   *  - `hotelId` – `{string}` - 
+   *
+   * @returns {object} An empty reference that will be
+   *   populated with the actual data once the response is returned
+   *   from the server.
+   *
+   * Data properties:
+   *
+   *  - `retval` – `{object}` - 
+   */
+  public getAvailableRooms(startDate: any, endDate: any, hotelId: any, customHeaders?: Function): Observable<any> {
+    let _method: string = "POST";
+    let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
+    "/Hotels/getAvailableRooms";
+    let _routeParams: any = {};
+    let _postBody: any = {};
+    let _urlParams: any = {};
+    if (typeof startDate !== 'undefined' && startDate !== null) _urlParams.startDate = startDate;
+    if (typeof endDate !== 'undefined' && endDate !== null) _urlParams.endDate = endDate;
+    if (typeof hotelId !== 'undefined' && hotelId !== null) _urlParams.hotelId = hotelId;
+    let result = this.request(_method, _url, _routeParams, _urlParams, _postBody, null, customHeaders);
+    return result;
+  }
+
+  /**
    * Creates a new instance in hPriceList of this model.
    *
    * @param {any} id Hotel id

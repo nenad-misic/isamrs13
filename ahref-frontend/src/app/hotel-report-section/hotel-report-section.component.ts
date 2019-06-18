@@ -97,6 +97,7 @@ export class HotelReportSectionComponent implements OnInit {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective;
 
   hotel: Hotel;
+  availableRooms = [];
 
   constructor(@Inject('baseURL') private baseURL,
               private route: ActivatedRoute,
@@ -365,6 +366,12 @@ export class HotelReportSectionComponent implements OnInit {
       });
 
     });
+  }
+
+  getAvailability() {
+    this.hotelApi.getAvailableRooms(this.startDate, this.endDate, this.hotel.id).subscribe((availableRooms: any) => {
+      this.availableRooms = availableRooms.retval;
+    })
   }
 
   getIncome() {

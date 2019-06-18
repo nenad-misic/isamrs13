@@ -15,6 +15,7 @@ export class CombinedService {
   combinedReservation = this.combinedReservationSource.asObservable();
   id: string;
   active = false;
+  numOfBeds = 0;
 
   constructor(private combinedReservationApi: CombinedReservationApi,
               @Inject('baseURL') private baseURL) {
@@ -44,6 +45,7 @@ export class CombinedService {
 
   finishReservation() {
     this.active = false;
+    this.numOfBeds = 0;
     this.combinedReservationSource.next(new CombinedReservation());
   }
 

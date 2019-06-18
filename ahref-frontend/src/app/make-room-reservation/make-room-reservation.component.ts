@@ -52,6 +52,11 @@ export class MakeRoomReservationComponent implements OnInit {
         }
         const days = (endDate - startDate) / (24 * 60 * 60 * 1000);
         this.price = days * startPrice.price;
+
+        for (let aservice of this.info.additionalServices) {
+          this.price += aservice.price;
+          this.price *= aservice.discount;
+        }
       });
     }, (err) => {
       this.toastr.error(err.message, 'ERROR');
@@ -60,6 +65,11 @@ export class MakeRoomReservationComponent implements OnInit {
   }
 
   onConfirm() {
+
+    if (this.combinedReservation.mFlightReservations.length < this.combinedService.numOfBeds + this.room.numOfBeds){
+      this.toastr.error("Number of beds can't exceed number of flight passengers!");
+      return;
+    }
     this.loggedUserApi.createMRoomReservations(this.loggedUserApi.getCachedCurrent().id,
       {
         roomId: this.room.id,
@@ -75,6 +85,7 @@ export class MakeRoomReservationComponent implements OnInit {
     ).subscribe((created) => {
       this.toastr.success('Reservation successful');
       this.combinedService.refreshCombinedReservation();
+      this.combinedService.numOfBeds += this.room.numOfBeds;
       this.router.navigate(['/flow']);
     }, (err) => this.toastr.error(err.message, 'ERROR'));
 

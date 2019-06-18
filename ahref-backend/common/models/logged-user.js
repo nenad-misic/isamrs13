@@ -82,6 +82,7 @@ module.exports = function(Loggeduser) {
     returns: {type: 'object', arg: 'retval'},
   });
 
+
   Loggeduser.assignHotelAdmin = function(loggedUserId, hotelId, cb) {
     Loggeduser.findOne({where: {id: loggedUserId}}).then((user) => {
       if (user.type != 'hotelAdmin') {
@@ -255,26 +256,30 @@ module.exports = function(Loggeduser) {
   Loggeduser.remoteMethod('createQuickRoomReservation', {
     accepts: [
       {arg: 'userId', type: 'string', required: true},
-      {arg: 'quickRoomReservationId', type:  'string', required: true}
+      {arg: 'quickRoomReservationId', type:  'string', required: true},
+      {arg: 'combinedReservationId', type: 'string', required: true}
     ],
     http: {path: '/quickReservation', verb: 'post'},
     returns: {type: 'object', arg: 'mRoomReservation'},
   })
 
-  Loggeduser.createQuickRoomReservation = function(userId, quickRoomReservationId, cb) {
+  Loggeduser.createQuickRoomReservation = function(userId, quickRoomReservationId, combinedReservationId, cb) {
     var models = Loggeduser.app.models;
 
     Loggeduser.findOne({id: userId}).then((user) => {
-      models.QuickRoomReservation.findOne({id: quickRoomReservationId}).then((quickReservation) => {
-        models.MRoomReservation.findOne({id: quickReservation.mRoomReservationId}).then((reservation) => {
-          var r = reservation;
-          models.MRoomReservation.updateAll({id: r.id}, {loggedUserId: userId}).then(() => {
-            models.QuickRoomReservation.deleteById(quickReservation.id).then(() => {
-              cb();
-            })
-          })
-        })
-      })
+      return models.QuickRoomReservation.findOne({id: quickRoomReservationId});
+    })
+    .then((quickReservation) => {
+      return models.MRoomReservation.findOne({id: quickReservation.mRoomReservationId});
+    })
+    .then((reservation) => {
+      return models.MRoomReservation.updateAll({id: reservation.id}, {loggedUserId: userId, combinedReservationId: combinedReservationId});
+    })
+    .then(() => {
+      return models.QuickRoomReservation.deleteById(quickReservation.id);
+    })
+    .then(() => {
+      cb(null, true);
     })
   }
 
