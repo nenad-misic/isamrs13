@@ -106,17 +106,16 @@ module.exports = function(Hotel) {
   
   Hotel.updateConcurrentSafe = function(new_hotel, cb) {
     // TODO
-    let timeout = TIMEOUT;
-      let sqlRac = Racservice.app.models.sRac;
-      sqlRac.beginTransaction({
-        isolationLevel: sqlRac.Transaction.READ_COMMITTED,
+    /*let timeout = TIMEOUT;
+      Hotel.beginTransaction({
+        isolationLevel: Hotel.Transaction.READ_COMMITTED,
       }, function(err, tx) {
         if (err) cb(null,{res:false});
         setTimeout(()=>{
-          var old_version = new_rac.version++;
-          Racservice.upsertWithWhere({'id':new_rac.id, 'version':old_version}, new_rac).then((succ)=>{
+          let old_version = new_hotel.version++;
+          Hotel.upsertWithWhere({'id':new_hotel.id, 'version':old_version}, new_hotel).then((succ)=>{
             tx.commit(function(err) {
-              if (err && flagCar)  cb(false);
+              if (err)  cb(false);
               else cb(null,{res:true});
             });
           }, (err)=>{
@@ -125,7 +124,18 @@ module.exports = function(Hotel) {
             });
           });       
         },timeout);
-      });      
+      });*/   
+    let old_version = new_hotel.version;
+    new_hotel.version += 1;
+    setTimeout(()=>{
+      Hotel.upsertWithWhere({'id': new_hotel.id, 'version': old_version}, new_hotel).then((succ) => {
+        cb(null, succ);
+      }, (err) => {
+        cb(err, new_hotel);
+      }, (err) => {
+        cb(err, new_hotel);
+      })
+    }, TIMEOUT)
   }
 
 

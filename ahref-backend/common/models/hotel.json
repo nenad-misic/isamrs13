@@ -35,6 +35,11 @@
       "type": "number",
       "required": true,
       "default": 0
+    },
+    "version": {
+      "type": "number",
+      "required": false,
+      "default": 0
     }
   },
   "validations": [],

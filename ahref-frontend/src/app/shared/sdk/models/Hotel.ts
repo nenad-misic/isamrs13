@@ -16,6 +16,7 @@ export interface HotelInterface {
   "description": string;
   "rating": number;
   "numOfRates": number;
+  "version"?: number;
   "id"?: any;
   "destinationId"?: any;
   destination?: Destination;
@@ -33,6 +34,7 @@ export class Hotel implements HotelInterface {
   "description": string;
   "rating": number;
   "numOfRates": number;
+  "version": number;
   "id": any;
   "destinationId": any;
   destination: Destination;
@@ -100,6 +102,11 @@ export class Hotel implements HotelInterface {
         },
         "numOfRates": {
           name: 'numOfRates',
+          type: 'number',
+          default: 0
+        },
+        "version": {
+          name: 'version',
           type: 'number',
           default: 0
         },

@@ -147,6 +147,7 @@ module.exports = function(Loggeduser) {
       } else {
         if (ctx.req.body.type != "regUser") {
           ctx.req.body.firstLogin = true;
+          ctx.req.body.emailVerified = true;
         }
         next();
       }

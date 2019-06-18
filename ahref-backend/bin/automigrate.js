@@ -45,3 +45,13 @@ ds.automigrate('sSeat', function(err) {
 	})
 })
 
+ds.automigrate('sHotel', function(err) {
+	app.models.Hotel.find(function(err, hotels){
+		hotels.forEach(function(hotel) {
+			app.models.sHotel.create({mongoId: hotel.id, version: 0}, function(err, a){
+				if (err) throw err;
+				console.log('Created: ', a);
+			})
+		})
+	})
+})

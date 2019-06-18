@@ -27,6 +27,7 @@ export class UsersDetailProfileComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.add = this.userApi.getCachedCurrent().type == 'regUser';
     const id = this.route.snapshot.params['id'];
     this.userApi.findOne({where: {id:id}}).subscribe((user: User)=> {
       this.profile_new = JSON.parse(JSON.stringify(user));
