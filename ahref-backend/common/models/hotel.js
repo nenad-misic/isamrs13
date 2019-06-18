@@ -1,5 +1,7 @@
 'use strict';
 
+var TIMEOUT = 3000;
+
 module.exports = function(Hotel) {
   Hotel.afterRemote('**', function(ctx, modelInstance, next)  {
     console.log('Hotel remote method: ' + ctx.method.name);
@@ -100,4 +102,42 @@ module.exports = function(Hotel) {
     http: {path: '/getAvailableRooms', verb: 'post'},
     returns: {type: 'object', arg: 'retval'},
   });
+
+  
+  Hotel.updateConcurrentSafe = function(new_hotel, cb) {
+    // TODO
+    let timeout = TIMEOUT;
+      let sqlRac = Racservice.app.models.sRac;
+      sqlRac.beginTransaction({
+        isolationLevel: sqlRac.Transaction.READ_COMMITTED,
+      }, function(err, tx) {
+        if (err) cb(null,{res:false});
+        setTimeout(()=>{
+          var old_version = new_rac.version++;
+          Racservice.upsertWithWhere({'id':new_rac.id, 'version':old_version}, new_rac).then((succ)=>{
+            tx.commit(function(err) {
+              if (err && flagCar)  cb(false);
+              else cb(null,{res:true});
+            });
+          }, (err)=>{
+            tx.rollback(function(err) {
+              cb(null,{res:false});
+            });
+          });       
+        },timeout);
+      });      
+  }
+
+
+  Hotel.remoteMethod('updateConcurrentSafe', {
+    accepts: [
+      {arg: 'new_hotel', type: 'object', http: { source: 'body' }}
+    ],
+    http: {path: '/updateHotelConcurrentSafe', verb: 'post'},
+    returns: {type: 'object', arg: 'retval'},
+  });
+
 };
+
+
+

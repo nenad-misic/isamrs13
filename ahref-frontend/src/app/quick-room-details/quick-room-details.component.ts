@@ -51,7 +51,8 @@ export class QuickRoomDetailsComponent implements OnInit {
     this.userApi.createQuickRoomReservation(
       this.userApi.getCachedCurrent().id,
       this.reservation.id,
-      this.combinedReservation.id)
+      this.combinedReservation.id,
+      this.reservation.mRoomReservation.room.id)
       .subscribe(() => {
         this.toastr.success('Reservation made');
         this.combinedService.refreshCombinedReservation();
