@@ -31,9 +31,10 @@
 </mat-card> -->
 <h1>Quick Room Reservations</h1>
 <mat-list *ngFor="let reserve of reservations">
-  <mat-list-item>{{reserve.mRoomReservation.startDate}}; {{reserve.mRoomReservation.endDate}}
-    {{reserve.mRoomReservation.roomId}};
-    <button mat-button (click)="deleteReservationClicked(reserve)">Delete</button>
+  <mat-list-item>{{reserve.mRoomReservation.startDate | date}} | {{reserve.mRoomReservation.endDate | date}} |
+    {{reserve.mRoomReservation.price}}$ | Beds: {{reserve.mRoomReservation.room.numOfBeds}};
+    <button mat-button *ngIf="isAdmin" (click)="deleteReservationClicked(reserve)">Delete</button>
+    <button mat-button *ngIf="!isAdmin" [routerLink]="['/quickroomdetails', reserve.id]">Make Reservation</button>
   </mat-list-item>
 </mat-list>
-<app-quick-room-add-form [hotel] = hotel></app-quick-room-add-form>
+<app-quick-room-add-form *ngIf="isAdmin" [hotel] = hotel></app-quick-room-add-form>

@@ -12,7 +12,7 @@ ds.automigrate('sRoom', function(err){
 		});
 	});
 });*/
-ds.automigrate('sRac', function(err){
+/*ds.automigrate('sRac', function(err){
 	app.models.RACService.find(function(err,model2){
 		model2.forEach(function(rac){
 			app.models.sRac.create({mongoId: rac.id}, function(err,a){
@@ -21,7 +21,27 @@ ds.automigrate('sRac', function(err){
 			});
 		});
 	});
-});	
+});	*/
 
+/*ds.automigrate('sFlight', function(err) {
+	app.models.Flight.find(function(err, model2) {
+		model2.forEach(function(flight){
+			app.models.sFlight.create({mongoId: flight.id}, function(err, a){
+				if(err) throw err;
+				console.log('Created: ', a);
+			})
+		})
+	})
+})*/
 
+ds.automigrate('sSeat', function(err) {
+	app.models.Seat.find(function(err, model2) {
+		model2.forEach(function(seat) {
+			app.models.sSeat.create({mongoId: seat.id}, function(err, a){
+				if(err) throw err;
+				console.log('Created: ', a);
+			})
+		})
+	})
+})
 

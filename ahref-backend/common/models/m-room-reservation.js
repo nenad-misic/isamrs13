@@ -1,5 +1,6 @@
 'use strict';
 
+var discount = 0.8;
 
 var flag = true;
 module.exports = function(Mroomreservation) {
@@ -37,6 +38,7 @@ function calculateRoomPrice(Mroomreservation, ctx, model, next, doNext , errorCa
     var models = Mroomreservation.app.models;
   
     models.DatePrice.find({roodId: ctx.req.body.roomId}).then((prices) => {
+      console.log(prices);
       if (prices == null) {
         errorCallback(new Error("room has no defined price"));
       }
@@ -46,8 +48,9 @@ function calculateRoomPrice(Mroomreservation, ctx, model, next, doNext , errorCa
         if (price.startDate > ctx.req.body.startDate) continue;
         if (price.startDate > startPrice.startDate) startPrice = price;
       }
-      var days = (ctx.req.body.endDate - ctx.req.body.startDate)/(24*60*60*1000);
-      ctx.req.body.price = days * startPrice.price;
+      var days = (new Date(ctx.req.body.endDate).getTime() - new Date(ctx.req.body.startDate).getTime())/(24*60*60*1000);
+      ctx.req.body.price = days * startPrice.price * discount;
+      console.log(ctx.req.body.price);
       doNext(Mroomreservation, ctx, model, next, errorCallback);
     })
   }
@@ -73,17 +76,17 @@ function doReservation(Mroomreservation, ctx, model, next, errorCallback) {
                         data.forEach((element) => {
                             if (flag) {
                                 // check if room is available during time period
-                                console.log(element);
+                                //console.log(element);
                                 var start1 = element.startDate.getTime();
                                 var end1 = element.endDate.getTime();
                                 var start2 = new Date(ctx.req.body.startDate).getTime();
                                 var end2 = new Date(ctx.req.body.endDate).getTime();
-                                console.log({
+                                /*console.log({
                                     start1: start1,
                                     end1: end1,
                                     start2: start2,
                                     end2: end2
-                                });
+                                });*/
                                 if ((start1 >= start2 && start1 <= end2) ||
                                     (start2 >= start1 && start2 <= end1)) {
                                     foundOne = true;

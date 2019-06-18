@@ -48,4 +48,56 @@ module.exports = function(Hotel) {
       next();
     });
   })
+
+  
+  Hotel.getAvailableRooms = function(startDate, endDate, hotelId, cb) {
+    let retval = []
+    const start = new Date(startDate).getTime();
+    const end = new Date(endDate).getTime();
+    Hotel.app.models.Room.find({where: {hotelId: hotelId}}).then((rooms) => {
+      let cnt = rooms.length;
+      if (cnt === 0) {
+        cb(null, retval);
+      }
+
+      rooms.forEach((room) => {
+        let append = true;
+        Hotel.app.models.mRoomReservation.find({where: {roomId: room.id}}).then((reservations) => {
+          let rcnt = reservations.length;
+          if (rcnt === 0) {
+            cnt--;
+            if (cnt === 0) {
+              cb(null, retval);
+            }
+          }
+          reservations.forEach((reservation) => {
+            const rstart = reservation.startDate.getTime();
+            const rend = reservation.endDate.getTime();
+            if ((rstart >= start && rstart <= end) ||
+                (start >= rstart && start <= rend)) {
+              append = false;
+            }
+            rcnt --;
+            if (rcnt === 0) {
+              if (append) retval.push(room.id);
+              cnt--;
+              if (cnt === 0) {
+                cb(null, retval);
+              }
+            }
+          })
+        })
+      })
+    })
+  }
+
+  Hotel.remoteMethod('getAvailableRooms', {
+    accepts: [
+      {arg: 'startDate', type: 'string', required: true},
+      {arg: 'endDate', type: 'string', required: true},
+      {arg: 'hotelId', type: 'string', required: true},
+    ],
+    http: {path: '/getAvailableRooms', verb: 'post'},
+    returns: {type: 'object', arg: 'retval'},
+  });
 };
