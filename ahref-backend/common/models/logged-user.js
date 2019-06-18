@@ -591,6 +591,9 @@ function doCarReservation(Mcarreservation, ctx, model, next, errorCallback) {
         var Role = Loggeduser.app.models.Role;
         var RoleMapping = Loggeduser.app.models.RoleMapping;
         if(ctx.result.type === "regUser"){
+
+          modelInstance.firstLogin = false;  
+          Loggeduser.upsert(modelInstance).then((succ) => {
             Role.findOne({where: {name: 'regUser'}}, (err, role) => {
                 if(!role){
                     Role.create({
@@ -631,30 +634,37 @@ function doCarReservation(Mcarreservation, ctx, model, next, errorCallback) {
 
                 console.log('> verification email sent:', response);
               });
-
+            });
         } else if (ctx.result.type === "hotelAdmin") {
+          modelInstance.emailVerified = true;  
+          Loggeduser.upsert(modelInstance).then((succ) => {
+
             Role.findOne({where: {name: "hotelAdmin"}}, (err, role) => {
-                if (!role) {
-                    Role.create({name: "hotelAdmin"}, (err, role) => {
-                        if (err) throw(err);
-                        console.log("New Role: ", role);
-                        role.principals.create({
-                            principalType: RoleMapping.USER,
-                            principalId: ctx.result.id
-                        }, (err, principal) => {
-                            if (err) throw(err);
-                        });
-                    })
-                } else {
-                    role.principals.create({
-                        principalType: RoleMapping.USER,
-                        principalId: ctx.result.id
-                    }, (err, principal) => {
-                        if (err) throw(err);
-                    });
-                }
-            })
+              if (!role) {
+                  Role.create({name: "hotelAdmin"}, (err, role) => {
+                      if (err) throw(err);
+                      console.log("New Role: ", role);
+                      role.principals.create({
+                          principalType: RoleMapping.USER,
+                          principalId: ctx.result.id
+                      }, (err, principal) => {
+                          if (err) throw(err);
+                      });
+                  })
+              } else {
+                  role.principals.create({
+                      principalType: RoleMapping.USER,
+                      principalId: ctx.result.id
+                  }, (err, principal) => {
+                      if (err) throw(err);
+                  });
+              }
+          })
+          })
         } else if (ctx.result.type === "racAdmin") {
+          modelInstance.emailVerified = true;  
+          Loggeduser.upsert(modelInstance).then((succ) => {
+
             Role.findOne({where: {name: "racAdmin"}}, (err, role) => {
                 if (!role) {
                     Role.create({name: "racAdmin"}, (err, role) => {
@@ -676,8 +686,12 @@ function doCarReservation(Mcarreservation, ctx, model, next, errorCallback) {
                     });
                 }
             })
+          })
 
         } else if (ctx.result.type === "airlineAdmin") {
+          modelInstance.emailVerified = true;  
+          Loggeduser.upsert(modelInstance).then((succ) => {
+
             Role.findOne({where: {name: "airlineAdmin"}}, (err, role) => {
                 if (!role) {
                     Role.create({name: "airlineAdmin"}, (err, role) => {
@@ -699,8 +713,12 @@ function doCarReservation(Mcarreservation, ctx, model, next, errorCallback) {
                     });
                 }
             })
+          })
 
         } else if (ctx.result.type === "sysAdmin") {
+          modelInstance.emailVerified = true;  
+          Loggeduser.upsert(modelInstance).then((succ) => {
+
             Role.findOne({where: {name: "sysAdmin"}}, (err, role) => {
                 if (!role) {
                     Role.create({name: "sysAdmin"}, (err, role) => {
@@ -723,6 +741,7 @@ function doCarReservation(Mcarreservation, ctx, model, next, errorCallback) {
                 }
             })
 
+          })
         }
 
 
