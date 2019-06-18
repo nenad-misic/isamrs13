@@ -12,6 +12,7 @@ export class RoomProfileComponent implements OnInit {
 
   @Input()
   room: Room;
+  rate;
 
   constructor(@Inject('baseURL') private baseURL) {
     LoopBackConfig.setBaseURL(baseURL);
@@ -19,6 +20,7 @@ export class RoomProfileComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.rate = Math.ceil(this.room.rating);
   }
 
 }

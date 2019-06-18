@@ -38,11 +38,11 @@ export class MakeCarReservationComponent implements OnInit {
     });
     this.carApi.findOne({where: {id: this.route.snapshot.params['id']}}).subscribe((car: Car) => {
       this.car = car;
-      this.racApi.findById(this.car.rACServiceId).subscribe((rac: RACService) => {
-        this.rpla.find({where: {rACServiceId: rac.id}, include: 'priceListItems'}).subscribe((priceList: RPriceList[]) => {
+      this.racApi.findById(this.car.rACServiceId).subscribe((rac: any) => {
+        this.rpla.find({where: {id: rac.rPriceListId}, include: 'priceListItems'}).subscribe((priceList: RPriceList[]) => {
           priceList[0].priceListItems.forEach((item: RPriceListItem) => {
-            if (item.carType === car.carType) {
-              this.totalCost = ((new Date(this.info.endDate).getTime() - new Date(this.info.startDate).getTime()) / ( 24 * 60 * 60 * 1000 )) * item.price;
+            if (item.carType.toLowerCase() === car.carType.toLowerCase()) {
+              this.totalCost = ((new Date(this.info.endDate).getTime() - new Date(this.info.startDate).getTime()) / (24 * 60 * 60 * 1000)) * item.price;
             }
           });
         });

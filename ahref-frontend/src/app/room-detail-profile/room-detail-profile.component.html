@@ -18,6 +18,8 @@
       </mat-form-field>
     </mat-card-content>
     <mat-card-actions>
+      <bar-rating [(rate)]="rate" [max]="4" [theme]="'horizontal'" [showText]="true" [readOnly]="true"
+                  [titles]="['Bad', 'Mediocre' , 'Good', 'Awesome']"></bar-rating>
       <button mat-button (click)="goBack()">Back</button>
       <button mat-button *ngIf="!readOnly" (click)="onSaveClick()">Save</button>
       <button mat-button *ngIf="!readOnly" (click)="onDeleteClick()">Delete</button>
