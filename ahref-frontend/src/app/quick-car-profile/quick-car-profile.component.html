@@ -1,12 +1,17 @@
 <mat-card>
   <mat-card-header>
-    <mat-card-title>{{qcr.id}}</mat-card-title>
-    <mat-card-subtitle>Quick car reservation</mat-card-subtitle>
+    <mat-card-title>{{qcr.car.name}}</mat-card-title>
+    <mat-card-subtitle>{{qcr.car.brand}}  {{qcr.car.model}}, {{qcr.car.year}}</mat-card-subtitle>
   </mat-card-header>
+  <img mat-card-image src="{{picturePath}}" alt="Sorry! Image not available at this time" (error)="changePicPath()">
   <mat-card-content>
-    <h4>Car id: </h4>
-    <p>{{qcr.carId}}</p>
-    <h4>mReservation id: </h4>
-    <p>{{qcr.mCarReservationId}}</p>
+    <h4>Car: </h4>
+    <p>{{qcr.car.brand + ' ' + qcr.car.model + ', ' + qcr.car.year}}</p>
+    <h4>From: </h4>
+    <p>{{qcr.mCarReservation.startDate | date}}</p>
+    <h4>To: </h4>
+    <p>{{qcr.mCarReservation.endDate | date}}</p>
+    <h4>Price: </h4>
+    <p>{{qcr.mCarReservation.price}}$</p>
   </mat-card-content>
 </mat-card>
