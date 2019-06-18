@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {CombinedService} from '../services/combined.service';
 import {CombinedReservation, MFlightReservation, MRoomReservation} from '../shared/sdk/models';
-import {LoopBackConfig} from '../shared/sdk';
+import {CombinedReservationApi, LoggedUserApi, LoopBackConfig, MCarReservationApi, MRoomReservationApi} from '../shared/sdk';
 import {API_VERSION} from '../shared/baseurl';
 
 @Component({
@@ -15,6 +15,10 @@ export class ReservationFlowComponent implements OnInit {
   totalPrice = 0;
 
   constructor(private combinedService: CombinedService,
+              private luapi: LoggedUserApi,
+              private carapi: MCarReservationApi,
+              private romapi: MRoomReservationApi,
+              private combinedApi: CombinedReservationApi,
               @Inject('baseURL') private baseURL) {
     LoopBackConfig.setBaseURL(baseURL);
     LoopBackConfig.setApiVersion(API_VERSION);
@@ -22,7 +26,7 @@ export class ReservationFlowComponent implements OnInit {
   ngOnInit() {
     this.combinedService.combinedReservation.subscribe((cr: CombinedReservation) => {
       this.combinedReservation = cr;
-      var totalPrice = 0;
+      let totalPrice = 0;
       if (cr.mFlightReservations != undefined) {
         cr.mFlightReservations.forEach((mfr: MFlightReservation) => {
           totalPrice += mfr.flight.ticketPrice;
@@ -50,8 +54,38 @@ export class ReservationFlowComponent implements OnInit {
   }
 
   onFinish() {
-    this.combinedService.finishReservation();
-    this.totalPrice = 0;
+    const roomlist = [];
+    var cnt = this.combinedReservation.mCarReservations.length + this.combinedReservation.mRoomReservations.length;
+    console.log('aaaaaaaaaa');
+    const carlist = [];
+    this.combinedReservation.mCarReservations.forEach((mc) => {
+      this.carapi.findById(mc.id, {include: {car: 'rACService'}}).subscribe((mcbogat) => {
+        carlist.push(mcbogat);
+        cnt--;
+        if (cnt == 0) {
+          console.log(cnt);
+          this.combinedApi.sendReservationInfoMail({objekat: this.luapi.getCachedCurrent().id}, {lista: carlist}, {lista: roomlist}
+          ).subscribe((succ) => {
+            this.combinedService.finishReservation();
+            this.totalPrice = 0;
+          });
+        }
+      });
+    });
 
+    this.combinedReservation.mRoomReservations.forEach((mr) => {
+      this.romapi.findById(mr.id, {include: {room: 'hotel'}}).subscribe((mrbogat) => {
+        roomlist.push(mrbogat);
+        cnt--;
+        if (cnt == 0) {
+          console.log(cnt);
+          this.combinedApi.sendReservationInfoMail({objekat: this.luapi.getCachedCurrent().id}, {lista: carlist}, {lista: roomlist}
+          ).subscribe((succ) => {
+            this.combinedService.finishReservation();
+            this.totalPrice = 0;
+          });
+        }
+      });
+    });
   }
 }
