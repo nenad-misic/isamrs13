@@ -10,19 +10,63 @@ var flagRoom = true;
 
 module.exports = function(Loggeduser) {
 
-  Loggeduser.bindQuick = function(luid, qrid, mcrid, cb) {
-    Loggeduser.findById(luid).then((user) => {
-      Loggeduser.app.models.quickCarReservation.findById(qrid).then((qr) => {
-        Loggeduser.app.models.MCarReservation.findById(mcrid).then((mr) => {
-          var mrc = mr;
-          Loggeduser.app.models.quickCarReservation.deleteById(qrid).then((del) => {
-            Loggeduser.app.models.MCarReservation.updateAll({id: mcrid}, {loggedUserId: luid}).then(() => {
-              cb(null, true);
+  Loggeduser.bindQuick = function(luid, qrid, mcrid, carId, combinedReservationId, cb) {
+
+    var sCar = Loggeduser.app.models.sCar;
+    // data source
+    var postgres = sCar.app.dataSources.postgres;
+    var sqlCarReservation = sCar.app.models.CarReservation;
+    // begin transaction
+    sqlCarReservation.beginTransaction({
+      isolationLevel: sqlCarReservation.Transaction.READ_COMMITTED,
+    }, function(err, tx) {
+      if (err) cb(err, null);
+      // lock car for update
+      postgres.connector.execute(
+        'SELECT * FROM sCar WHERE mongoid = $1 FOR UPDATE;',
+          [carId], {transaction: tx},
+          function(err, data) {
+            Loggeduser.findById(luid).then((user) => {
+              Loggeduser.app.models.quickCarReservation.findById(qrid).then((qr) => {
+                Loggeduser.app.models.MCarReservation.findById(mcrid).then((mr) => {
+                  var mrc = mr;
+                  Loggeduser.app.models.quickCarReservation.deleteById(qrid).then((del) => {
+                    Loggeduser.app.models.MCarReservation.updateAll({id: mcrid}, {loggedUserId: luid, combinedReservationId: combinedReservationId}).then(() => {
+                      tx.commit(function(err) {
+                        if (err) cb(err, false);
+                        cb(null, true);
+                      });
+                    }, (err)=>{
+                      tx.rollback(function(err) {
+                        if (err) cb(err, false);
+                        cb(err, false);
+                      });
+                    });
+                  }, (err)=>{
+                    tx.rollback(function(err) {
+                      if (err) cb(err, false);
+                      cb(err, false);
+                    });
+                  })
+                }, (err)=>{
+                  tx.rollback(function(err) {
+                    if (err) cb(err, false);
+                    cb(err, false);
+                  });
+                })
+              }, (err)=>{
+                tx.rollback(function(err) {
+                  if (err) cb(err, false);
+
+                  var error = new Error('Car is already reserved');
+                  error.statusCode = error.status = 404;
+                  cb(error, false);
+                });
+              })
             });
-          })
-        })
-      })
+      });
     });
+  
   };
 
   
@@ -31,6 +75,8 @@ module.exports = function(Loggeduser) {
       {arg: 'luid', type: 'string', required: true},
       {arg: 'qrid', type: 'string', required: true},
       {arg: 'mcrid', type: 'string', required: true},
+      {arg: 'carId', type: 'string', required: true},
+      {arg: 'combinedReservationId', type: 'string', required: true}
     ],
     http: {path: '/bindQuick', verb: 'post'},
     returns: {type: 'object', arg: 'retval'},
@@ -644,7 +690,7 @@ function calculateCarPrice(Loggeduser, ctx, callback) {
     //console.log(car);
     models.RACService.findOne({where: {id: car.rACServiceId}}).then((racService) => {
       //console.log(racService);
-      models.RPriceList.findOne({where: {rACServiceId: racService.id}}).then((priceList) => {
+      models.RPriceList.findOne({where: {id: racService.rPriceListId}}).then((priceList) => {
         models.RPriceListItem.find({where: {rPriceListId: priceList.id}}).then((items) => {
           if (items == []) {
             var error = new Error('Car has no price defined');

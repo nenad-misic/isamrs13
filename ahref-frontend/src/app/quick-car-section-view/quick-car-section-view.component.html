@@ -1,7 +1,9 @@
 <mat-card><mat-card-content>
 <mat-grid-list cols="2" rowHeight="3:4">
   <mat-grid-tile *ngFor="let qcr of qcres">
-    <app-quick-car-profile [qcr]="qcr" (click)="reserve(qcr)"></app-quick-car-profile>
+    <app-quick-car-profile *ngIf="combinedReservation" [qcr]="qcr" (click)="reserve(qcr)"
+                           matTooltip="Reserve this quick reservation"></app-quick-car-profile>
+    <app-quick-car-profile *ngIf="!combinedReservation" [qcr]="qcr"></app-quick-car-profile>
   </mat-grid-tile>
 </mat-grid-list>
 </mat-card-content>

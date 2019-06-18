@@ -131,31 +131,25 @@ module.exports = function(Racservice) {
 
     Racservice.updateConcurentSafe = function(new_rac, cb) {
       //OPTIMISTIC VERSION
-      var timeout = 10;
+      var timeout = 3000;
       var sqlRac = Racservice.app.models.sRac;
       sqlRac.beginTransaction({
         isolationLevel: sqlRac.Transaction.READ_COMMITTED,
       }, function(err, tx) {
         if (err) cb(null,{res:false});
         setTimeout(()=>{
-          Racservice.findById(new_rac.id).then((rac_current_state)=>{
-            if(rac_current_state.version == new_rac.version){
-              new_rac.version++;
-              Racservice.upsert(new_rac).then((rac)=>{
-                tx.commit(function(err) {
-                  if (err && flagCar)  cb(false);
-                  else cb(null,{res:true});
-                });
-              }, (err)=>{
-                tx.rollback(function(err) {
-                  cb(null,{res:false});
-                });
-              });
-            }else{
+          var old_version = new_rac.version++;
+          Racservice.upsertWithWhere({'id':new_rac.id, 'version':old_version}, new_rac).then((succ)=>{
+            tx.commit(function(err) {
+              if (err && flagCar)  cb(false);
+              else cb(null,{res:true});
+            });
+          }, (err)=>{
+            tx.rollback(function(err) {
               cb(null,{res:false});
-            }
-          })
-      },timeout);
+            });
+          });       
+        },timeout);
       });      
 
       //PESIMISTIC VERSION
