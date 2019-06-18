@@ -15,7 +15,7 @@ export interface RACServiceInterface {
   "description": string;
   "rating": number;
   "numOfRates": number;
-  "verison"?: number;
+  "version"?: number;
   "id"?: any;
   "destinationId"?: any;
   destination?: Destination;
@@ -32,7 +32,7 @@ export class RACService implements RACServiceInterface {
   "description": string;
   "rating": number;
   "numOfRates": number;
-  "verison": number;
+  "version": number;
   "id": any;
   "destinationId": any;
   destination: Destination;
@@ -102,8 +102,8 @@ export class RACService implements RACServiceInterface {
           type: 'number',
           default: 0
         },
-        "verison": {
-          name: 'verison',
+        "version": {
+          name: 'version',
           type: 'number',
           default: 1
         },

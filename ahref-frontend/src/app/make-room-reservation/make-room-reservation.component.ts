@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {RoomReservationDataService} from "../services/room-reservation-data.service";
+import {RoomReservationDataService} from '../services/room-reservation-data.service';
 import {DatePriceApi, LoggedUserApi, MRoomReservationApi, RoomApi} from '../shared/sdk/services/custom';
 import {ActivatedRoute, Router} from '@angular/router';
-import {ToastrService} from "ngx-toastr";
+import {ToastrService} from 'ngx-toastr';
 import {CombinedReservation, Room} from '../shared/sdk/models';
-import {RoomReservationInfo} from "../shared/room-reservation-info";
-import {Location} from "@angular/common";
+import {RoomReservationInfo} from '../shared/room-reservation-info';
+import {Location} from '@angular/common';
 import {CombinedService} from '../services/combined.service';
 
 @Component({
@@ -39,18 +39,18 @@ export class MakeRoomReservationComponent implements OnInit {
       this.roomReservationData.currentSearchParams.subscribe((info: RoomReservationInfo) => {
         this.info = info;
         if (room.datePrices == null) {
-          this.toastr.error("Room has no prices defined");
+          this.toastr.error('Room has no prices defined');
           this.location.back();
         }
         console.log(this.info);
-        var startDate = new Date(this.info.startDate).getTime();
-        var endDate = new Date(this.info.endDate).getTime();
-        var startPrice = room.datePrices[0];
-        for (let price of room.datePrices) {
-          if (price.startDate > startDate) continue;
-          if (price.startDate > startPrice.startDate) startPrice = price;
+        const startDate = new Date(this.info.startDate).getTime();
+        const endDate = new Date(this.info.endDate).getTime();
+        let startPrice = room.datePrices[0];
+        for (const price of room.datePrices) {
+          if (price.startDate > startDate) { continue; }
+          if (price.startDate > startPrice.startDate) { startPrice = price; }
         }
-        var days = (endDate - startDate)/(24*60*60*1000);
+        const days = (endDate - startDate) / (24 * 60 * 60 * 1000);
         this.price = days * startPrice.price;
 
         for (let aservice of this.info.additionalServices) {

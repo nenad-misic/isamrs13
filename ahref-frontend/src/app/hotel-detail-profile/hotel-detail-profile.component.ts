@@ -19,6 +19,7 @@ export class HotelDetailProfileComponent implements OnInit {
   rooms: Room[];
   readOnly: boolean;
   combinedActive = false;
+  rate: number;
   sysAdmin = false;
 
   constructor(private hotelService: HotelApi,
@@ -42,6 +43,7 @@ export class HotelDetailProfileComponent implements OnInit {
       this.profile_new = JSON.parse(JSON.stringify(this.profile)); // YAAS deep copy
       this.readOnly = this.profile.id !== this.userApi.getCachedCurrent().hotelId;
       this.sysAdmin = this.userApi.getCachedCurrent().type === 'sysAdmin';
+      this.rate =  Math.ceil(profile.rating);
     });
   }
 

@@ -17,7 +17,7 @@ export class HotelProfileComponent implements OnInit {
 
   destination = {name: '', country: ''};
 
-  rate = Math.floor(Math.random() * 4) + 1;
+  rate;
   picturePath: string;
 
   constructor(@Inject('baseURL') private baseURL,
@@ -30,6 +30,7 @@ export class HotelProfileComponent implements OnInit {
     // @ts-ignore
     this.dapi.findOne({where: {id: this.profile.destinationId}}).subscribe((dest) => this.destination = dest );
     this.picturePath = this.baseURL + '/hotelImages/' + this.profile.id + '.jpg';
+    this.rate = Math.ceil(this.profile.rating);
   }
 
   changePicPath(): void {

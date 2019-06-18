@@ -19,6 +19,7 @@ export class RoomDetailProfileComponent implements OnInit {
   new_price: DatePrice;
   new_date: string;
   errmsg: string;
+  rate;
 
   constructor( private route: ActivatedRoute,
                private location: Location,
@@ -37,8 +38,10 @@ export class RoomDetailProfileComponent implements OnInit {
     this.new_price = new DatePrice();
     this.roomApi.findById(id, {include: 'datePrices'}).subscribe((room: Room) => {
       this.room = room;
+      this.rate = Math.ceil(room.rating);
       this.hotelApi.findById(room.hotelId).subscribe((hotel: Hotel) => {
         if (hotel.id === this.loggedUserApi.getCachedCurrent().hotelId) {
+
           this.readOnly = false;
         } else {
           this.readOnly = true;

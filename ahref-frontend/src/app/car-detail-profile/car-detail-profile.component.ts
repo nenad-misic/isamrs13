@@ -21,6 +21,8 @@ export class CarDetailProfileComponent implements OnInit {
   reservable: boolean;
   errmsg: string;
 
+  rate: number;
+
   constructor(private route: ActivatedRoute,
               private location: Location,
               private carApi: CarApi,
@@ -53,6 +55,8 @@ export class CarDetailProfileComponent implements OnInit {
     this.carApi.findById(id).subscribe((car: Car) => {
       this.car = car;
       this.racServiceApi.findById(car.rACServiceId).subscribe((racService: RACService) => {
+
+        this.rate = Math.ceil(this.car.rating);
         if (racService.id === this.loggedUserApi.getCachedCurrent().rACServiceId) {
           this.readOnly = false;
         } else {
