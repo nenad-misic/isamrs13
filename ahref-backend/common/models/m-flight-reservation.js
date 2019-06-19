@@ -92,6 +92,7 @@ Mflightreservation.beforeRemote('deleteById',
 
 function doReservation(Mflightreservation, ctx, model, next, errorCallback) {
   // models
+  console.log(95)
   var sqlFlightReservation = Mflightreservation.app.models.FlightReservation;
   
   var sFlight = Mflightreservation.app.models.sFlight;
@@ -103,11 +104,15 @@ function doReservation(Mflightreservation, ctx, model, next, errorCallback) {
 	  isolationLevel: sqlFlightReservation.Transaction.READ_COMMITTED,
   }, function(err, tx) {
 	  if (err) errorCallback(err);
+    console.log(107)
 	  postgres.connector.execute(
-      'SELECT * FROM sFlight WHERE mongoId = $1 FOR UPDATE;'
+      'SELECT * FROM sflight WHERE mongoId = $1 FOR UPDATE;'
       , [ctx.req.body.flightId], function(err, data) {
+        console.log(111)
 		sFlight.findOne({where: {mongoId: ctx.req.body.flightId}}).then((flight)=>{
+      console.log(113)
 		sSeat.findOne({where: {mongoId: ctx.req.body.seatId}}).then((seat)=>{
+      console.log(115)
           console.log(seat);
           sqlFlightReservation.find({where: {sSeatId: seat.id}}).then((data)=> {
 				

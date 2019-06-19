@@ -12,6 +12,7 @@ app.start = function() {
   // start the web server
   return app.listen(function() {
     app.emit('started');
+    app.set('port', process.env.PORT || 3000);
     var baseUrl = app.get('url').replace(/\/$/, '');
     console.log('Web server listening at: %s', baseUrl);
     if (app.get('loopback-component-explorer')) {

@@ -4,13 +4,11 @@
     "connector": "memory"
   },
   "MongoDB": {
-    "host": "localhost",
-    "port": 27017,
-    "url": "",
+    "url": "mongodb+srv://ahrefadmin:ahrefadmin@ahref-mongo-ybysw.mongodb.net/ahref?retryWrites=true&w=majority",
     "database": "ahref",
-    "password": "",
+    "password": "ahrefadmin",
     "name": "MongoDB",
-    "user": "",
+    "user": "ahrefadmin",
     "connector": "mongodb"
   },
   "EmailDataSource": {
@@ -34,13 +32,14 @@
     ]
   },
   "postgres": {
-    "host": "localhost",
-    "port": 5432,
-    "url": "",
+    "host": "",
+    "port": 0,
+    "url": "postgres://ngwvplbh:nqvvUJb8mkhqNKcWp44wb_ytcCbywfSM@balarama.db.elephantsql.com:5432/ngwvplbh",
     "database": "AHREF",
     "password": "admin",
     "name": "postgres",
     "user": "postgres",
-    "connector": "postgresql"
+    "connector": "postgresql",
+    "max": 3
   }
 }
