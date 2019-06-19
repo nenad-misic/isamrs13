@@ -147,6 +147,7 @@ module.exports = function(Loggeduser) {
       } else {
         if (ctx.req.body.type != "regUser") {
           ctx.req.body.firstLogin = true;
+          ctx.req.body.emailVerified = true;
         }
         next();
       }
@@ -257,29 +258,74 @@ module.exports = function(Loggeduser) {
     accepts: [
       {arg: 'userId', type: 'string', required: true},
       {arg: 'quickRoomReservationId', type:  'string', required: true},
-      {arg: 'combinedReservationId', type: 'string', required: true}
+      {arg: 'combinedReservationId', type: 'string', required: true},
+      {arg: 'roomId', type: 'string', required: true}
     ],
     http: {path: '/quickReservation', verb: 'post'},
     returns: {type: 'object', arg: 'mRoomReservation'},
   })
 
-  Loggeduser.createQuickRoomReservation = function(userId, quickRoomReservationId, combinedReservationId, cb) {
+  Loggeduser.createQuickRoomReservation = function(userId, quickRoomReservationId, combinedReservationId, roomId, cb) {
     var models = Loggeduser.app.models;
 
-    Loggeduser.findOne({id: userId}).then((user) => {
-      return models.QuickRoomReservation.findOne({id: quickRoomReservationId});
-    })
-    .then((quickReservation) => {
-      return models.MRoomReservation.findOne({id: quickReservation.mRoomReservationId});
-    })
-    .then((reservation) => {
-      return models.MRoomReservation.updateAll({id: reservation.id}, {loggedUserId: userId, combinedReservationId: combinedReservationId});
-    })
-    .then(() => {
-      return models.QuickRoomReservation.deleteById(quickReservation.id);
-    })
-    .then(() => {
-      cb(null, true);
+    let sRoom = models.sRoom;
+    let postgres = sRoom.app.dataSources.postgres;
+    let sqlRoomReservation = models.RoomReservation;
+
+    sqlRoomReservation.beginTransaction({
+      isolationLevel: sqlRoomReservation.Transaction.READ_COMMITTED,
+    }, function(err, tx) {
+      if (err) cb(err, null);
+      // lock room for update
+      postgres.connector.execute(
+        'SELECT * FROM sRoom WHERE mongoid = $1 FOR UPDATE',
+        [roomId], {transaction: tx},
+        function(err, data) {
+          Loggeduser.findOne({id: userId}).then((user) => {
+            return models.QuickRoomReservation.findOne({id: quickRoomReservationId});
+          }, (err)=>{
+            tx.rollback(function(err) {
+              if (err) cb(err, false);
+              cb(err, false);
+            });
+          })
+          .then((quickReservation) => {
+            return models.MRoomReservation.findOne({id: quickReservation.mRoomReservationId});
+          }, (err)=>{
+            tx.rollback(function(err) {
+              if (err) cb(err, false);
+              cb(err, false);
+            });
+          })
+          .then((reservation) => {
+            return models.MRoomReservation.updateAll({id: reservation.id}, {loggedUserId: userId, combinedReservationId: combinedReservationId});
+          }, (err)=>{
+            tx.rollback(function(err) {
+              if (err) cb(err, false);
+              cb(err, false);
+            });
+          })
+          .then(() => {
+            return models.QuickRoomReservation.deleteById(quickReservation.id);
+          }, (err)=>{
+            tx.rollback(function(err) {
+              if (err) cb(err, false);
+              cb(err, false);
+            });
+          })
+          .then(() => {
+            tx.commit(function(err) {
+              if (err) cb(err, false);
+              else cb(null, true);
+            })
+          }, (err)=>{
+            tx.rollback(function(err) {
+              if (err) cb(err, false);
+              cb(err, false);
+            });
+          })
+        }
+      )
     })
   }
 

@@ -56,7 +56,7 @@ export class HotelDetailProfileComponent implements OnInit {
   }
 
   onSaveClick() {
-    this.hotelService.updateAttributes(this.profile.id, this.profile_new).subscribe(
+    this.hotelService.updateConcurrentSafe(this.profile_new).subscribe(
       () => {
         this.toastr.success(this.profile_new.name, 'Hotel updated')
       }, (err) => {

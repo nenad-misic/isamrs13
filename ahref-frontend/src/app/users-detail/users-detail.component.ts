@@ -16,6 +16,9 @@ export class UsersDetailComponent implements OnInit {
   username: String;
   email: String;
   searchResult: User[] = [];
+  isAdmin: boolean;
+  selected_type: "regUser";
+  types = ['', 'regUser', 'sysAdmin', 'hotelAdmin', 'racAdmin', 'airlineAdmin'];
 
   constructor(private userService: LoggedUserApi,
               private data: UserdataService,
@@ -25,17 +28,24 @@ export class UsersDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.isAdmin = this.userService.getCachedCurrent().type != 'regUser';
   }
 
   doSearch(): void {
-    const filter = {};
+    this.searchResult = [];
+    const filter: any = {};
     if (this.username) {
-      // @ts-ignore
       filter.username = this.username;
     }
     if (this.email) {
-      // @ts-ignore
       filter.email = this.email;
+    }
+
+    if (this.selected_type) {
+      filter.type = this.selected_type;
+      if (!this.isAdmin){
+        filter.type = 'regUser';
+      }
     }
 
 

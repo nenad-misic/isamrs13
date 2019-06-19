@@ -1,5 +1,7 @@
 'use strict';
 
+var TIMEOUT = 3000;
+
 module.exports = function(Hotel) {
   Hotel.afterRemote('**', function(ctx, modelInstance, next)  {
     console.log('Hotel remote method: ' + ctx.method.name);
@@ -100,4 +102,52 @@ module.exports = function(Hotel) {
     http: {path: '/getAvailableRooms', verb: 'post'},
     returns: {type: 'object', arg: 'retval'},
   });
+
+  
+  Hotel.updateConcurrentSafe = function(new_hotel, cb) {
+    // TODO
+    /*let timeout = TIMEOUT;
+      Hotel.beginTransaction({
+        isolationLevel: Hotel.Transaction.READ_COMMITTED,
+      }, function(err, tx) {
+        if (err) cb(null,{res:false});
+        setTimeout(()=>{
+          let old_version = new_hotel.version++;
+          Hotel.upsertWithWhere({'id':new_hotel.id, 'version':old_version}, new_hotel).then((succ)=>{
+            tx.commit(function(err) {
+              if (err)  cb(false);
+              else cb(null,{res:true});
+            });
+          }, (err)=>{
+            tx.rollback(function(err) {
+              cb(null,{res:false});
+            });
+          });       
+        },timeout);
+      });*/   
+    let old_version = new_hotel.version;
+    new_hotel.version += 1;
+    setTimeout(()=>{
+      Hotel.upsertWithWhere({'id': new_hotel.id, 'version': old_version}, new_hotel).then((succ) => {
+        cb(null, succ);
+      }, (err) => {
+        cb(err, new_hotel);
+      }, (err) => {
+        cb(err, new_hotel);
+      })
+    }, TIMEOUT)
+  }
+
+
+  Hotel.remoteMethod('updateConcurrentSafe', {
+    accepts: [
+      {arg: 'new_hotel', type: 'object', http: { source: 'body' }}
+    ],
+    http: {path: '/updateHotelConcurrentSafe', verb: 'post'},
+    returns: {type: 'object', arg: 'retval'},
+  });
+
 };
+
+
+
