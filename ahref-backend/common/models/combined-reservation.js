@@ -6,6 +6,19 @@ module.exports = function(Combinedreservation) {
         next();
       });
 
+    Combinedreservation.beforeRemote('create', function(ctx, model, next) {
+        if(ctx.req.body.loggedUserId == ctx.req.accessToken.userId){
+            next();
+        }else {
+            var e = new Error();
+            e.status = "Access denied";
+            e.statusCode = 401;
+            next(e);
+        }
+    });
+
+    
+
     Combinedreservation.sendReservationInfoMail = function(luid, mCarReservationList,mRoomReservationList, cb) {
         var luid2 = luid.objekat;
         console.log(mCarReservationList.lista);

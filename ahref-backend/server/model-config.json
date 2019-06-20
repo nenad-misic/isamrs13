@@ -111,11 +111,11 @@
   },
   "CarReservation": {
     "dataSource": "postgres",
-    "public": true
+    "public": false
   },
   "sCar": {
     "dataSource": "postgres",
-    "public": true
+    "public": false
   },
   "mCarReservation": {
     "dataSource": "MongoDB",
@@ -123,11 +123,11 @@
   },
   "sRoom": {
     "dataSource": "postgres",
-    "public": true
+    "public": false
   },
   "roomReservation": {
     "dataSource": "postgres",
-    "public": true
+    "public": false
   },
   "mRoomReservation": {
     "dataSource": "MongoDB",
@@ -147,7 +147,7 @@
   },
   "sSeat": {
     "dataSource": "postgres",
-    "public": true
+    "public": false
   },
   "Friendship": {
     "dataSource": "MongoDB",

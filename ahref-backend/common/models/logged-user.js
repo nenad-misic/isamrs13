@@ -10,6 +10,16 @@ var flagRoom = true;
 
 module.exports = function(Loggeduser) {
 
+  Loggeduser.beforeRemote('replaceById', (ctx, model, next) => {
+    if(ctx.req.body.id == ctx.req.accessToken.userId){
+      next();
+    }else {
+      var e = new Error();
+      e.status = "Access denied";
+      e.statusCode = 401;
+      next(e);
+    }
+  })
   Loggeduser.bindQuick = function(luid, qrid, mcrid, carId, combinedReservationId, cb) {
 
     var sCar = Loggeduser.app.models.sCar;

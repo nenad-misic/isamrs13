@@ -31,7 +31,7 @@ export class QuickHotelSectionComponent implements OnInit {
   }
 
   ngOnInit() {
-    var hotelId = this.route.params['hotelId'];
+    var hotelId = this.route.snapshot.params['hotelId'];
     this.hotelApi.findOne({where: {id: hotelId}, include: [{quickRoomReservations: {mRoomReservation: 'room'}}, 'rooms']}).subscribe((hotel: Hotel) => {
       this.hotel = hotel;
       this.reservations = hotel.quickRoomReservations;
