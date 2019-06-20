@@ -291,8 +291,8 @@ module.exports = function(Loggeduser) {
         'SELECT * FROM sRoom WHERE mongoid = $1 FOR UPDATE',
         [roomId], {transaction: tx},
         function(err, data) {
-          Loggeduser.findOne({id: userId}).then((user) => {
-            return models.QuickRoomReservation.findOne({id: quickRoomReservationId});
+          Loggeduser.findOne({where: {id: userId}}).then((user) => {
+            return models.QuickRoomReservation.findOne({where: {id: quickRoomReservationId}});
           }, (err)=>{
             tx.rollback(function(err) {
               if (err) cb(err, false);
@@ -300,7 +300,7 @@ module.exports = function(Loggeduser) {
             });
           })
           .then((quickReservation) => {
-            return models.MRoomReservation.findOne({id: quickReservation.mRoomReservationId});
+            return models.MRoomReservation.findOne({where: {id: quickReservation.mRoomReservationId}});
           }, (err)=>{
             tx.rollback(function(err) {
               if (err) cb(err, false);
