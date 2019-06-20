@@ -72,6 +72,20 @@
       "principalId": "regUser",
       "permission": "ALLOW",
       "property": "deleteById"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "hotelAdmin",
+      "permission": "ALLOW",
+      "property": "create"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "hotelAdmin",
+      "permission": "ALLOW",
+      "property": "deleteById"
     }
   ],
   "methods": {}

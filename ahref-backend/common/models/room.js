@@ -12,7 +12,11 @@ module.exports = function(Room) {
     var sqlRoom = Room.app.models.sRoom;
     var postgres = sRoom.app.dataSources.postgres;
     console.log(ctx.result);
-    next();
+    sqlRoom.create({mongoId: ctx.req.body.mongoId}).then((room) => {
+      next();
+    }, (err) => {
+      next(err);
+    })
   }) 
 
   
@@ -163,8 +167,9 @@ function doDelete(Room, ctx, model, next, errorCallback) {
         'SELECT * FROM sRoom WHERE mongoId = $1 FOR UPDATE;'
         , [ctx.req.params.id], function(err, data) {
           sRoom.findOne({where: {mongoId: ctx.req.params.id}}).then((room)=>{
+            console.log(room.id);
             sqlRoomReservation.find({
-              where: {sRoomid: room.id},
+              where: {sRoomId: room.id}
             }).then((data)=> {
               var cnt = data.length;
               data.forEach((element) => {
@@ -219,7 +224,7 @@ function doDelete(Room, ctx, model, next, errorCallback) {
         , [ctx.req.params.id], function(err, data) {
           sRoom.findOne({where: {mongoId: ctx.req.params.id}}).then((room)=>{
             sqlRoomReservation.find({
-              where: {sRoomid: room.id},
+              where: {sRoomId: room.id}
             }).then((data)=> {
               var cnt = data.length;
               data.forEach((element) => {
