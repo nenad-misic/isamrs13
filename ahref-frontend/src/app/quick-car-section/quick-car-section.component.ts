@@ -25,6 +25,8 @@ export class QuickCarSectionComponent implements OnInit {
   startDestination: string;
   endDestination: string;
 
+  public destinations;
+
   constructor(private racapi: RACServiceApi,
               private mCarResApi: MCarReservationApi,
               private route: ActivatedRoute,
@@ -36,8 +38,9 @@ export class QuickCarSectionComponent implements OnInit {
 
   ngOnInit() {
     this.racid = this.route.snapshot.params['id'];
-    this.racapi.findById(this.racid, {include: 'cars'}).subscribe((rac: RACService) => {
+    this.racapi.findById(this.racid, {include: ['cars', 'branchOffices']}).subscribe((rac: RACService) => {
       this.cars = rac.cars;
+      this.destinations = rac.branchOffices;
     });
   }
 

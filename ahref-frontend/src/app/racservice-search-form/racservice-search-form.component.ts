@@ -18,6 +18,8 @@ export class RacserviceSearchFormComponent implements OnInit {
   startDate: Date;
   endDate: Date;
 
+  public destinations;
+
 
   searchResult: RACService[] = [];
   constructor(private racServiceApi: RACServiceApi,
@@ -30,6 +32,9 @@ export class RacserviceSearchFormComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.destinationApi.find().subscribe((desti) => {
+      this.destinations = desti;
+    });
   }
 
   showAll(): void {
