@@ -10,6 +10,7 @@ module.exports = function(Hotel) {
 
   Hotel.beforeRemote('create', (ctx, model, next) => {
     var luid = ctx.req.body.loggedUserId;
+
     
     Hotel.app.models.LoggedUser.findById(luid).then((user) => {
       if(user.type != 'hotelAdmin') {
@@ -28,6 +29,37 @@ module.exports = function(Hotel) {
           next();
         })
       }
+    })
+  })
+
+  Hotel.beforeRemote('replaceById', (ctx, model, next) => {
+    Hotel.app.models.LoggedUser.findById(ctx.req.accessToken.userId).then((user)=>{
+      if (user.hotelId == ctx.req.body.id) {
+        next();
+      } else {
+        let e = new Error();
+        e.status="Acess denied";
+        e.statusCode = 401;
+        next(e);
+      }
+    }, (err) => {
+      next(err);
+    })
+  })
+
+  
+  Hotel.beforeRemote('deleteById', (ctx, model, next) => {
+    Hotel.app.models.LoggedUser.findById(ctx.req.accessToken.userId).then((user)=>{
+      if (user.hotelId == ctx.req.body.id) {
+        next();
+      } else {
+        let e = new Error();
+        e.status="Acess denied";
+        e.statusCode = 401;
+        next(e);
+      }
+    }, (err) => {
+      next(err);
     })
   })
 

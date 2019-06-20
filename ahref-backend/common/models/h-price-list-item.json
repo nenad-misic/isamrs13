@@ -33,6 +33,12 @@
       "principalType": "ROLE",
       "principalId": "$everyone",
       "permission": "ALLOW"
+    },
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "hotelAdmin",
+      "permission": "ALLOW"
     }
   ],
   "methods": {}
