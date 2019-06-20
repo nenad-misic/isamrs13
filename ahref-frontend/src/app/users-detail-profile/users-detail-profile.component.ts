@@ -5,6 +5,7 @@ import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 import {LoopBackConfig} from '../shared/sdk';
 import {API_VERSION} from '../shared/baseurl';
+import {WsFriendsService} from '../services/ws-friends.service';
 
 @Component({
   selector: 'app-users-detail-profile',
@@ -19,6 +20,7 @@ export class UsersDetailProfileComponent implements OnInit {
 
   constructor(private userApi: LoggedUserApi,
               private route: ActivatedRoute,
+              private wsService: WsFriendsService,
               private location: Location,
               private friendship: FriendshipApi,
               @Inject('baseURL') private baseURL) {
@@ -49,7 +51,9 @@ export class UsersDetailProfileComponent implements OnInit {
     this.friends.endUserId = this.profile_new.id;
     this.friends.accepted = false;
 
-    this.friendship.create(this.friends).subscribe((friends) => console.log('Success'));
-
+    this.friendship.create(this.friends).subscribe((friends) => {
+      console.log('Success');
+      this.wsService.sendMessage(this.profile_new.id);
+    });
   }
 }

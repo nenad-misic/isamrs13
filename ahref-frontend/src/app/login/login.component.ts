@@ -1,10 +1,12 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, Injectable, OnInit} from '@angular/core';
 import {Location} from '@angular/common';
 import {LoggedUserApi, RACServiceApi} from '../shared/sdk/services/custom';
 import {LoopBackConfig} from '../shared/sdk';
 import {API_VERSION} from '../shared/baseurl';
 import {Router} from '@angular/router';
 import {ToastrService} from "ngx-toastr";
+import {HttpClient} from '@angular/common/http';
+import {WsFriendsService} from '../services/ws-friends.service';
 
 @Component({
   selector: 'app-login',
@@ -21,6 +23,8 @@ export class LoginComponent implements OnInit {
               private location: Location,
               private router: Router,
               private toastr: ToastrService,
+              private wsService: WsFriendsService,
+              private http: HttpClient,
               @Inject('baseURL') private baseURL) {
     LoopBackConfig.setBaseURL(baseURL);
     LoopBackConfig.setApiVersion(API_VERSION); }
@@ -37,6 +41,9 @@ export class LoginComponent implements OnInit {
     this.userService.login({username: this.username, password: this.password}).subscribe((returned) => {
       console.log(returned);
       if (returned) {
+
+        this.wsService.connect(returned.user.id);
+
         this.toastr.success('Login successful', 'Welcome');
         this.waiting = false;
         if (returned.user.firstLogin) {

@@ -225,6 +225,7 @@ import { AssignRacAdminComponent } from './assign-rac-admin/assign-rac-admin.com
     MatProgressSpinnerModule,
     BarRatingModule,
     ChartsModule,
+    HttpClientModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBf77UiLC2QLbjq5UK6rVHIQHk2uJcwdU4'
     }),
