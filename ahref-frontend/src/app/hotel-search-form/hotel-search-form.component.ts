@@ -21,6 +21,7 @@ export class HotelSearchFormComponent implements OnInit {
   endDate: Date;
   searchResult: Hotel[] = [];
 
+  public destinations;
   constructor(private hotelService: HotelApi,
               private data: HotelDataService,
               private destinationApi: DestinationApi,
@@ -31,6 +32,9 @@ export class HotelSearchFormComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.destinationApi.find().subscribe((desti) => {
+      this.destinations = desti;
+    });
   }
 
   doSearch() {

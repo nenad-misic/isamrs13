@@ -2,11 +2,11 @@
   <form (ngSubmit)="doSearch()">
 
     <mat-form-field>
-      <input matInput [(ngModel)]="name" placeholder="City" name="city">
+      <input matInput list="destinationsCity" [(ngModel)]="name" placeholder="City" name="city">
     </mat-form-field>
 
     <mat-form-field>
-      <input matInput [(ngModel)]="country" placeholder="Country" name="country">
+      <input matInput list="destinationsCountry" [(ngModel)]="country" placeholder="Country" name="country">
     </mat-form-field>
 
     <mat-form-field>
@@ -21,7 +21,13 @@
       <input required matInput type="date" [(ngModel)]="endDate" placeholder="End date" name="endDate">
     </mat-form-field>
 
+    <datalist id="destinationsCity">
+      <option *ngFor="let d of destinations" value="{{d.name}}">
+    </datalist>
 
+    <datalist id="destinationsCountry">
+      <option *ngFor="let d of destinations" value="{{d.country}}">
+    </datalist>
     <button mat-button>SEARCH RAC SERVICES</button>
   </form>
   <button mat-button (click)="showAll()">SHOW ALL</button>

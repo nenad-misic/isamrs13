@@ -36,20 +36,6 @@
       "principalType": "ROLE",
       "principalId": "$everyone",
       "permission": "ALLOW"
-    },
-    {
-      "accessType": "EXECUTE",
-      "principalType": "ROLE",
-      "principalId": "regUser",
-      "permission": "ALLOW",
-      "property": "create"
-    },
-    {
-      "accessType": "EXECUTE",
-      "principalType": "ROLE",
-      "principalId": "regUser",
-      "permission": "ALLOW",
-      "property": "deleteById"
     }
   ],
   "methods": {}

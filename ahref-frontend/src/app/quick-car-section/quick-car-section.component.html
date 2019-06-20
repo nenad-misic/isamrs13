@@ -24,7 +24,7 @@
 
 
         <datalist id="destinations">
-          <option value="Under construction!">
+          <option *ngFor="let d of destinations" value="{{d.address}}">
         </datalist>
       </form>
     </div>
