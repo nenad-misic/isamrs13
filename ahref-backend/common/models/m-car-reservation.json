@@ -63,14 +63,14 @@
     {
       "accessType": "EXECUTE",
       "principalType": "ROLE",
-      "principalId": "regUser",
+      "principalId": "$everyone",
       "permission": "ALLOW",
       "property": "create"
     },
     {
       "accessType": "EXECUTE",
       "principalType": "ROLE",
-      "principalId": "regUser",
+      "principalId": "$everyone",
       "permission": "ALLOW",
       "property": "deleteById"
     }

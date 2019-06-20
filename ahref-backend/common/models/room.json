@@ -55,6 +55,13 @@
       "principalType": "ROLE",
       "principalId": "hotelAdmin",
       "permission": "ALLOW"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "method": "getMatching"
     }
   ],
   "methods": {}
