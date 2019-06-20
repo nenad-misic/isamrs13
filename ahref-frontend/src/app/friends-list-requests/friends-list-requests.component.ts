@@ -5,6 +5,7 @@ import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 import {LoopBackConfig} from '../shared/sdk';
 import {API_VERSION} from '../shared/baseurl';
+import {WsFriendsService} from '../services/ws-friends.service';
 
 @Component({
   selector: 'app-friends-list-requests',
@@ -19,6 +20,7 @@ export class FriendsListRequestsComponent implements OnInit {
               private route: ActivatedRoute,
               private location: Location,
               private friendship: FriendshipApi,
+              private wsService: WsFriendsService,
               @Inject('baseURL') private baseURL) {
     LoopBackConfig.setBaseURL(baseURL);
     LoopBackConfig.setApiVersion(API_VERSION);
@@ -35,6 +37,22 @@ export class FriendsListRequestsComponent implements OnInit {
           console.log('Frend req je');
           this.users.push(friendship.startUser);
         }
+      });
+    });
+
+    this.wsService.current_ws_state.subscribe((state) => {
+      console.log('OKINUO SAM SE');
+      this.users = [];
+      this.friendship.find({include: ['startUser', 'endUser']}).subscribe((searchParam: Friendship[]) => {
+        this.users = [];
+        searchParam.forEach((friendship: Friendship) => {
+          console.log('Friendship', friendship);
+          console.log(friendship.endUserId, ' - ', this.userApi.getCachedCurrent().id);
+          if (friendship.endUserId === this.userApi.getCachedCurrent().id && !friendship.accepted) {
+            console.log('Frend req je');
+            this.users.push(friendship.startUser);
+          }
+        });
       });
     });
 

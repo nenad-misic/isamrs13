@@ -5,6 +5,7 @@ import {RACServiceApi, UserApi, LoggedUserApi} from '../shared/sdk/services/cust
 import {LoggedUser} from '../shared/sdk/models';
 import {LoopBackConfig} from '../shared/sdk';
 import {API_VERSION} from '../shared/baseurl';
+import {WsFriendsService} from '../services/ws-friends.service';
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
@@ -18,6 +19,7 @@ export class UserProfileComponent implements OnInit {
   constructor(private loggedUserService: LoggedUserApi,
               private route: ActivatedRoute,
               private location: Location,
+              private wsService: WsFriendsService,
               private router: Router,
               @Inject('baseURL') private baseURL) {
     LoopBackConfig.setBaseURL(baseURL);
@@ -48,6 +50,7 @@ export class UserProfileComponent implements OnInit {
 
   logout() {
     this.loggedUserService.logout();
+    this.wsService.disconnect();
     this.router.navigate(['/home']);
   }
 
